@@ -1,0 +1,25 @@
+name: simple_video_converter
+description: "Simple Video Converter mit FFmpegKit (libx264)"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ffmpeg_kit_flutter_new: ^4.1.0    # Community-Fork: libx264 via Maven Central (com.antonkarpenko)
+  file_picker: ^10.1.2               # Video-Auswahl
+  video_player: ^2.10.0             # Video-Preview
+  path_provider: ^2.1.5              # Cache-Verzeichnis für Output-Datei
+  share_plus: ^10.1.2                # Output-Datei teilen/speichern
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
