@@ -1,3 +1,6 @@
+// Copyright (C) 2026 Androho Software info@androho.com
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 import 'dart:io';
 
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
@@ -7,6 +10,7 @@ import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 
@@ -29,9 +33,10 @@ class VideoMetadata {
 class QualityOption {
   final String name;
   final int maxDimension; // 0 = Original
-  final int bitrateBps;
+  final int crf; // libx264 CRF-Wert (18=sehr gut, 23=gut, 27=niedrig, 32=sehr niedrig)
+  final int estimatedBitrateBps; // Nur für Größenschätzung
 
-  const QualityOption(this.name, this.maxDimension, this.bitrateBps);
+  const QualityOption(this.name, this.maxDimension, this.crf, this.estimatedBitrateBps);
 }
 
 // ---------------------------------------------------------------------------
@@ -39,14 +44,24 @@ class QualityOption {
 // ---------------------------------------------------------------------------
 
 const List<QualityOption> qualityOptions = [
-  QualityOption('Original Auflösung (Bester Text!)', 0, 8000000),
-  QualityOption('Original Auflösung (Medium)', 0, 5000000),
-  QualityOption('1080p High', 1080, 12000000),
-  QualityOption('1080p Medium', 1080, 8000000),
-  QualityOption('720p High', 720, 8000000),
-  QualityOption('720p Medium', 720, 5000000),
-  QualityOption('480p High', 480, 4000000),
-  QualityOption('360p High', 360, 2000000),
+  QualityOption('Original Auflösung (Bester Text!)', 0,   18, 8000000),
+  QualityOption('Original Auflösung (Medium)',       0,   23, 5000000),
+  QualityOption('1080p High',     1080, 18, 8000000),
+  QualityOption('1080p Medium',   1080, 23, 4000000),
+  QualityOption('1080p Low',      1080, 27, 2000000),
+  QualityOption('1080p Very Low', 1080, 32, 1000000),
+  QualityOption('720p High',       720, 18, 4000000),
+  QualityOption('720p Medium',     720, 23, 2000000),
+  QualityOption('720p Low',        720, 27, 1000000),
+  QualityOption('720p Very Low',   720, 32,  500000),
+  QualityOption('480p High',       480, 18, 2000000),
+  QualityOption('480p Medium',     480, 23, 1000000),
+  QualityOption('480p Low',        480, 27,  500000),
+  QualityOption('480p Very Low',   480, 32,  250000),
+  QualityOption('360p High',       360, 18, 1000000),
+  QualityOption('360p Medium',     360, 23,  500000),
+  QualityOption('360p Low',        360, 27,  250000),
+  QualityOption('360p Very Low',   360, 32,  125000),
 ];
 
 // ---------------------------------------------------------------------------
@@ -110,13 +125,27 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   // -------------------------------------------------------------------------
 
   Future<void> _pickVideo() async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.video);
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['mp4', 'mkv', 'mov', 'avi', 'webm', '3gp', 'm4v', 'wmv', 'ts', 'flv'],
+    );
     if (result == null || result.files.single.path == null) return;
 
     final path = result.files.single.path!;
 
     // Metadaten extrahieren
     final meta = await _extractMetadata(path);
+
+    // Validierung: kein gültiges Video (keine Dimension oder Dauer)
+    if (meta.durationMs == 0 || meta.width == 0 || meta.height == 0) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Bitte eine gültige Videodatei auswählen.'),
+          backgroundColor: Colors.red,
+        ));
+      }
+      return;
+    }
 
     // Alten Controller freigeben
     await _playerController?.dispose();
@@ -129,7 +158,18 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       controller = VideoPlayerController.file(File(path));
     }
 
-    await controller.initialize();
+    try {
+      await controller.initialize();
+    } catch (_) {
+      await controller.dispose();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Die Datei konnte nicht geladen werden. Bitte eine Videodatei auswählen.'),
+          backgroundColor: Colors.red,
+        ));
+      }
+      return;
+    }
     controller.setLooping(true);
     controller.play();
 
@@ -190,7 +230,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final quality = qualityOptions[_selectedQualityIndex];
     final durationSec = (_trimEnd - _trimStart) * _metadata!.durationMs / 1000.0;
     final audioBitrate = _isMuted ? 0 : 128000;
-    final estimatedBytes = ((quality.bitrateBps + audioBitrate) / 8) * durationSec;
+    final estimatedBytes = ((quality.estimatedBitrateBps + audioBitrate) / 8) * durationSec;
     setState(() => _estimatedSizeMb = estimatedBytes / (1024 * 1024));
   }
 
@@ -260,7 +300,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
     final command =
         '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-        '-c:v libx264 -b:v ${quality.bitrateBps} -r 60 $audioOpt -y $outputArg';
+        '-c:v libx264 -crf ${quality.crf} -r 60 $audioOpt -y $outputArg';
 
     // Fortschritts-Callback registrieren
     FFmpegKitConfig.enableStatisticsCallback((stats) {
@@ -281,10 +321,44 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
           _isConverting = false;
           _progress = 1.0;
         });
-        await Share.shareXFiles(
-          [XFile(outputPath)],
-          text: 'Konvertiertes Video',
+
+        // Dateinamen ableiten: Original + "_konvertiert.mp4"
+        final originalName = _videoPath!.split('/').last;
+        final baseName = originalName.contains('.')
+            ? originalName.substring(0, originalName.lastIndexOf('.'))
+            : originalName;
+        final defaultFileName = '${baseName}_konvertiert.mp4';
+
+        // Videos-Ordner als Startverzeichnis ermitteln
+        String? moviesDir;
+        try {
+          final dirs = await getExternalStorageDirectories(type: StorageDirectory.movies);
+          if (dirs != null && dirs.isNotEmpty) moviesDir = dirs.first.path;
+        } catch (_) {}
+
+        // Bytes lesen + nativen Speichern-Dialog öffnen
+        final bytes = await File(outputPath).readAsBytes();
+        final savedPath = await FilePicker.platform.saveFile(
+          dialogTitle: 'Video speichern',
+          fileName: defaultFileName,
+          initialDirectory: moviesDir,
+          bytes: bytes,
         );
+
+        if (!mounted) return;
+
+        if (savedPath != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Gespeichert!'),
+              action: SnackBarAction(
+                label: 'Öffnen',
+                onPressed: () => OpenFilex.open(savedPath),
+              ),
+              duration: const Duration(seconds: 5),
+            ),
+          );
+        }
       } else {
         final log = await session.getFailStackTrace();
         setState(() => _isConverting = false);
