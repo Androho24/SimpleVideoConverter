@@ -16,6 +16,7 @@ dependencies:
   path_provider: ^2.1.5              # Cache-Verzeichnis für Output-Datei
   share_plus: ^10.1.2                # Output-Datei teilen/speichern
   open_filex: ^4.7.0                 # Gespeicherte Datei im Systemvideoplayer öffnen
+  permission_handler: ^11.3.1        # Runtime-Permissions (READ_MEDIA_VIDEO)
 
 dev_dependencies:
   flutter_test:

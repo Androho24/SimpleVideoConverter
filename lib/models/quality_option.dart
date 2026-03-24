@@ -11,8 +11,6 @@ class QualityOption {
 }
 
 const List<QualityOption> qualityOptions = [
-  QualityOption('Original Auflösung (Bester Text!)', 0,   18, 8000000),
-  QualityOption('Original Auflösung (Medium)',       0,   23, 5000000),
   QualityOption('1080p High',     1080, 18, 8000000),
   QualityOption('1080p Medium',   1080, 23, 4000000),
   QualityOption('1080p Low',      1080, 27, 2000000),

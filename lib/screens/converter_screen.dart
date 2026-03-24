@@ -1,6 +1,7 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
@@ -11,6 +12,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
 
 import '../models/quality_option.dart';
@@ -40,9 +42,26 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   double _estimatedSizeMb = 0.0;
 
   VideoPlayerController? _playerController;
+  Timer? _seekDebounce;
+
+  @override
+  void initState() {
+    super.initState();
+    _requestPermissions();
+  }
+
+  Future<void> _requestPermissions() async {
+    // Android 13+: READ_MEDIA_VIDEO, darunter: READ_EXTERNAL_STORAGE
+    if (await Permission.videos.isDenied) {
+      await Permission.videos.request();
+    } else if (await Permission.storage.isDenied) {
+      await Permission.storage.request();
+    }
+  }
 
   @override
   void dispose() {
+    _seekDebounce?.cancel();
     _playerController?.dispose();
     super.dispose();
   }
@@ -94,7 +113,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       return;
     }
     controller.setLooping(true);
-    controller.play();
 
     setState(() {
       _videoPath = path;
@@ -258,7 +276,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
               content: const Text('Gespeichert!'),
               action: SnackBarAction(
                 label: 'Öffnen',
-                onPressed: () => OpenFilex.open(savedPath),
+                onPressed: () => OpenFilex.open(outputPath, type: 'video/mp4'),
               ),
               duration: const Duration(seconds: 20),
             ),
@@ -306,7 +324,11 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
             if (hasVideo) ...[
               const SizedBox(height: 16),
 
-              VideoPreview(controller: _playerController!),
+              VideoPreview(
+                controller: _playerController!,
+                trimStart: _trimStart,
+                trimEnd: _trimEnd,
+              ),
               const SizedBox(height: 8),
 
               TrimSlider(
@@ -315,13 +337,19 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                 isConverting: _isConverting,
                 metadata: _metadata!,
                 onChanged: (values) {
+                  final seekFraction = values.start != _trimStart
+                      ? values.start
+                      : values.end;
                   setState(() {
                     _trimStart = values.start;
                     _trimEnd = values.end;
                   });
-                  _playerController?.seekTo(Duration(
-                    milliseconds: (values.start * _metadata!.durationMs).toInt(),
-                  ));
+                  _seekDebounce?.cancel();
+                  _seekDebounce = Timer(const Duration(milliseconds: 120), () {
+                    _playerController?.seekTo(Duration(
+                      milliseconds: (seekFraction * _metadata!.durationMs).toInt(),
+                    ));
+                  });
                   _updateEstimatedSize();
                 },
               ),
