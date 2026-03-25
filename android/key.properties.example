@@ -1,8 +1,0 @@
-# Kopiere diese Datei nach key.properties und fülle die Werte aus.
-# key.properties wird NICHT ins Git-Repo eingecheckt.
-#
-# Signing-Konfiguration für Release-Builds:
-storePassword=DEIN_KEYSTORE_PASSWORT
-keyPassword=DEIN_KEY_PASSWORT
-keyAlias=DEIN_KEY_ALIAS
-storeFile=../dein-keystore.jks

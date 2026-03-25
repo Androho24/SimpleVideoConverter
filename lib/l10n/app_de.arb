@@ -1,0 +1,57 @@
+{
+  "@@locale": "de",
+
+  "qualityLabel": "Qualität",
+  "@qualityLabel": { "description": "Label für das Qualitäts-Dropdown" },
+
+  "quality1080pHigh": "1080p Hoch",
+  "@quality1080pHigh": { "description": "Qualitätsstufe 1080p, hohe Qualität (CRF 18)" },
+
+  "quality1080pMedium": "1080p Mittel",
+  "@quality1080pMedium": { "description": "Qualitätsstufe 1080p, mittlere Qualität (CRF 23)" },
+
+  "quality1080pLow": "1080p Niedrig",
+  "@quality1080pLow": { "description": "Qualitätsstufe 1080p, niedrige Qualität (CRF 27)" },
+
+  "quality1080pVeryLow": "1080p Sehr Niedrig",
+  "@quality1080pVeryLow": { "description": "Qualitätsstufe 1080p, sehr niedrige Qualität (CRF 32)" },
+
+  "quality720pHigh": "720p Hoch",
+  "@quality720pHigh": { "description": "Qualitätsstufe 720p, hohe Qualität (CRF 18)" },
+
+  "quality720pMedium": "720p Mittel",
+  "@quality720pMedium": { "description": "Qualitätsstufe 720p, mittlere Qualität (CRF 23)" },
+
+  "quality720pLow": "720p Niedrig",
+  "@quality720pLow": { "description": "Qualitätsstufe 720p, niedrige Qualität (CRF 27)" },
+
+  "quality720pVeryLow": "720p Sehr Niedrig",
+  "@quality720pVeryLow": { "description": "Qualitätsstufe 720p, sehr niedrige Qualität (CRF 32)" },
+
+  "quality480pHigh": "480p Hoch",
+  "@quality480pHigh": { "description": "Qualitätsstufe 480p, hohe Qualität (CRF 18)" },
+
+  "quality480pMedium": "480p Mittel",
+  "@quality480pMedium": { "description": "Qualitätsstufe 480p, mittlere Qualität (CRF 23)" },
+
+  "quality480pLow": "480p Niedrig",
+  "@quality480pLow": { "description": "Qualitätsstufe 480p, niedrige Qualität (CRF 27)" },
+
+  "quality480pVeryLow": "480p Sehr Niedrig",
+  "@quality480pVeryLow": { "description": "Qualitätsstufe 480p, sehr niedrige Qualität (CRF 32)" },
+
+  "quality360pHigh": "360p Hoch",
+  "@quality360pHigh": { "description": "Qualitätsstufe 360p, hohe Qualität (CRF 18)" },
+
+  "quality360pMedium": "360p Mittel",
+  "@quality360pMedium": { "description": "Qualitätsstufe 360p, mittlere Qualität (CRF 23)" },
+
+  "quality360pLow": "360p Niedrig",
+  "@quality360pLow": { "description": "Qualitätsstufe 360p, niedrige Qualität (CRF 27)" },
+
+  "quality360pVeryLow": "360p Sehr Niedrig",
+  "@quality360pVeryLow": { "description": "Qualitätsstufe 360p, sehr niedrige Qualität (CRF 32)" },
+
+  "mute": "Stummschalten",
+  "@mute": {"description": "Entfernt Audio vom Video"}
+}

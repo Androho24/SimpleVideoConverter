@@ -3,11 +3,13 @@
 
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+
 class ConvertSection extends StatelessWidget {
   final bool isMuted;
   final bool isConverting;
   final double progress;
-  final double estimatedSizeMb;
+  final double? estimatedSizeMb;
   final ValueChanged<bool> onMuteChanged;
   final VoidCallback onConvert;
 
@@ -23,20 +25,22 @@ class ConvertSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SwitchListTile(
-          title: const Text('Stummschalten'),
+          title: Text(l.mute),
           value: isMuted,
           onChanged: isConverting ? null : onMuteChanged,
           contentPadding: EdgeInsets.zero,
         ),
         const SizedBox(height: 4),
-        Text(
-          'Geschätzte Größe: ${estimatedSizeMb.toStringAsFixed(1)} MB',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
+        if (estimatedSizeMb != null)
+          Text(
+            'Geschätzte Größe: ${estimatedSizeMb!.toStringAsFixed(1)} MB',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
         const SizedBox(height: 16),
         if (isConverting) ...[
           Text(

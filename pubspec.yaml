@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   ffmpeg_kit_flutter_new: ^4.1.0    # Community-Fork: libx264 via Maven Central (com.antonkarpenko)
   file_picker: ^10.1.2               # Video-Auswahl
   video_player: ^2.10.0             # Video-Preview
@@ -17,6 +19,12 @@ dependencies:
   share_plus: ^10.1.2                # Output-Datei teilen/speichern
   open_filex: ^4.7.0                 # Gespeicherte Datei im Systemvideoplayer öffnen
   permission_handler: ^11.3.1        # Runtime-Permissions (READ_MEDIA_VIDEO)
+  intl: ^0.20.2                      # Dart i18n (wird von flutter_localizations benötigt)
+  shared_preferences: ^2.3.4         # Persistente Einstellungen (analog zu Android SharedPreferences)
+  url_launcher: ^6.3.1               # URLs im Browser öffnen (GPL-Link, GitHub-Link)
+  firebase_core: ^3.13.0             # Firebase Grundpaket (Pflicht für alle Firebase-Dienste)
+  firebase_analytics: ^11.4.4        # Google Analytics für Firebase
+  firebase_crashlytics: ^4.3.4       # Crash-Reporting
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +33,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true          # Aktiviert flutter gen-l10n für ARB → Dart

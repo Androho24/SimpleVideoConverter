@@ -47,7 +47,7 @@ This app uses FFmpegKit which includes x264 (GPL). As a result, this app is also
 
 3. For release builds — create `android/key.properties` from the template:
    ```bash
-   cp android/key.properties.example android/key.properties
+   cp android/key.properties android/key.properties
    # Edit android/key.properties with your signing credentials
    ```
 

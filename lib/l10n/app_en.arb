@@ -1,0 +1,22 @@
+{
+  "@@locale": "en",
+
+  "qualityLabel": "Quality",
+  "quality1080pHigh": "1080p High",
+  "quality1080pMedium": "1080p Medium",
+  "quality1080pLow": "1080p Low",
+  "quality1080pVeryLow": "1080p Very Low",
+  "quality720pHigh": "720p High",
+  "quality720pMedium": "720p Medium",
+  "quality720pLow": "720p Low",
+  "quality720pVeryLow": "720p Very Low",
+  "quality480pHigh": "480p High",
+  "quality480pMedium": "480p Medium",
+  "quality480pLow": "480p Low",
+  "quality480pVeryLow": "480p Very Low",
+  "quality360pHigh": "360p High",
+  "quality360pMedium": "360p Medium",
+  "quality360pLow": "360p Low",
+  "quality360pVeryLow": "360p Very Low",
+  "mute": "Stummschalten"
+}
