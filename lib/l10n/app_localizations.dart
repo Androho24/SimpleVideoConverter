@@ -205,6 +205,390 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Stummschalten'**
   String get mute;
+
+  /// Bestätigungsknopf in Dialogen
+  ///
+  /// In de, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// Button zum Öffnen der Videogalerie
+  ///
+  /// In de, this message translates to:
+  /// **'Video auswählen'**
+  String get selectVideo;
+
+  /// Ladezustand beim Öffnen des Videos
+  ///
+  /// In de, this message translates to:
+  /// **'Video wird geladen…'**
+  String get videoLoading;
+
+  /// Normal-Modus Segment
+  ///
+  /// In de, this message translates to:
+  /// **'Normal'**
+  String get modeNormal;
+
+  /// Expert-Modus Segment
+  ///
+  /// In de, this message translates to:
+  /// **'Expert'**
+  String get modeExpert;
+
+  /// Fehlermeldung ungültige Datei
+  ///
+  /// In de, this message translates to:
+  /// **'Bitte eine gültige Videodatei auswählen.'**
+  String get invalidVideoFile;
+
+  /// Fehlermeldung Datei laden
+  ///
+  /// In de, this message translates to:
+  /// **'Die Datei konnte nicht geladen werden. Bitte eine Videodatei auswählen.'**
+  String get fileLoadError;
+
+  /// Hinweis wenn kein Video geladen
+  ///
+  /// In de, this message translates to:
+  /// **'Bitte zuerst ein Video laden.'**
+  String get noVideoLoaded;
+
+  /// Dialog-Titel Konvertierung abbrechen
+  ///
+  /// In de, this message translates to:
+  /// **'Konvertierung abbrechen?'**
+  String get cancelConversionTitle;
+
+  /// Dialog-Inhalt Konvertierung abbrechen
+  ///
+  /// In de, this message translates to:
+  /// **'Die bisherige Verarbeitung geht verloren.'**
+  String get cancelConversionContent;
+
+  /// Button Konvertierung fortsetzen
+  ///
+  /// In de, this message translates to:
+  /// **'Weiter'**
+  String get continueConversion;
+
+  /// Allgemeiner Abbrechen-Button
+  ///
+  /// In de, this message translates to:
+  /// **'Abbrechen'**
+  String get cancel;
+
+  /// Dialog-Titel Video verwerfen
+  ///
+  /// In de, this message translates to:
+  /// **'Video verwerfen?'**
+  String get discardVideoTitle;
+
+  /// Dialog-Inhalt Video verwerfen
+  ///
+  /// In de, this message translates to:
+  /// **'Das konvertierte Video wird gelöscht und nicht gespeichert.'**
+  String get discardVideoContent;
+
+  /// Button Video behalten
+  ///
+  /// In de, this message translates to:
+  /// **'Behalten'**
+  String get keep;
+
+  /// Button Video verwerfen
+  ///
+  /// In de, this message translates to:
+  /// **'Verwerfen'**
+  String get discard;
+
+  /// Button Video speichern
+  ///
+  /// In de, this message translates to:
+  /// **'Speichern'**
+  String get save;
+
+  /// Titel des nativen Speichern-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Video speichern'**
+  String get saveVideoDialogTitle;
+
+  /// Snackbar Erfolgsmeldung nach dem Speichern
+  ///
+  /// In de, this message translates to:
+  /// **'Gespeichert!'**
+  String get savedSuccess;
+
+  /// Snackbar-Action gespeichertes Video öffnen
+  ///
+  /// In de, this message translates to:
+  /// **'Öffnen'**
+  String get open;
+
+  /// Snackbar Fehler beim Speichern
+  ///
+  /// In de, this message translates to:
+  /// **'Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.'**
+  String get saveError;
+
+  /// Statustext nach abgeschlossener Konvertierung
+  ///
+  /// In de, this message translates to:
+  /// **'Fertig!'**
+  String get conversionDone;
+
+  /// Fortschrittstext während der Konvertierung
+  ///
+  /// In de, this message translates to:
+  /// **'Konvertierung: {percent}%'**
+  String conversionProgress(String percent);
+
+  /// Fehlermeldung wenn Konvertierung fehlschlägt
+  ///
+  /// In de, this message translates to:
+  /// **'Konvertierung fehlgeschlagen: {error}'**
+  String conversionFailed(String error);
+
+  /// Titel der Einstellungsseite und Tooltip
+  ///
+  /// In de, this message translates to:
+  /// **'Einstellungen'**
+  String get settingsTitle;
+
+  /// Lizenzen ListTile Titel
+  ///
+  /// In de, this message translates to:
+  /// **'Lizenzen'**
+  String get licensesTitle;
+
+  /// Lizenzen ListTile Untertitel
+  ///
+  /// In de, this message translates to:
+  /// **'Open-Source-Lizenzen dieser App'**
+  String get licensesSubtitle;
+
+  /// GPL-Lizenztext ListTile Titel
+  ///
+  /// In de, this message translates to:
+  /// **'GPL-3.0 Lizenztext'**
+  String get gplLicenseTitle;
+
+  /// Quellcode ListTile Titel
+  ///
+  /// In de, this message translates to:
+  /// **'Quellcode (GitHub)'**
+  String get sourceCodeTitle;
+
+  /// Datenschutz ListTile Titel
+  ///
+  /// In de, this message translates to:
+  /// **'Datenschutzerklärung'**
+  String get privacyPolicyTitle;
+
+  /// Impressum ListTile Titel
+  ///
+  /// In de, this message translates to:
+  /// **'Impressum'**
+  String get imprintTitle;
+
+  /// Snackbar wenn Link nicht geöffnet werden kann
+  ///
+  /// In de, this message translates to:
+  /// **'Link konnte nicht geöffnet werden.'**
+  String get linkOpenError;
+
+  /// Tooltip am Info-Button für Stummschalten
+  ///
+  /// In de, this message translates to:
+  /// **'Stummschalten erklärt'**
+  String get muteTooltip;
+
+  /// Inhalt des Stummschalten-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Entfernt den Ton vollständig aus dem konvertierten Video.\n\nNützlich z.B. um Hintergrundgeräusche zu entfernen oder die Dateigröße zu reduzieren.'**
+  String get muteInfoContent;
+
+  /// Geschätzte Dateigröße unter dem Konvertieren-Button
+  ///
+  /// In de, this message translates to:
+  /// **'Geschätzte Größe: {size} MB'**
+  String estimatedSize(String size);
+
+  /// Haupt-Konvertieren-Button
+  ///
+  /// In de, this message translates to:
+  /// **'Konvertieren'**
+  String get convertButton;
+
+  /// CRF-Label mit aktuellem Wert
+  ///
+  /// In de, this message translates to:
+  /// **'Videoqualität (CRF): {crf}'**
+  String crfLabel(String crf);
+
+  /// Titel des CRF-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'CRF — Videoqualität'**
+  String get crfInfoTitle;
+
+  /// Inhalt des CRF-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'0 → verlustfrei (sehr große Datei)\n18 → visuell nahezu verlustfrei\n23 → Standard (gute Balance)\n28 → sichtbare Qualitätseinbußen\n51 → niedrigste Qualität\n\nEmpfehlung: 18–28'**
+  String get crfInfoContent;
+
+  /// Label für die Breite/Höhe-Felder
+  ///
+  /// In de, this message translates to:
+  /// **'Auflösung'**
+  String get resolutionLabel;
+
+  /// Titel des Auflösungs-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Gängige Auflösungen'**
+  String get resolutionInfoTitle;
+
+  /// Inhalt des Auflösungs-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'3840 × 2160 — 4K UHD\n2560 × 1440 — 2K QHD\n1920 × 1080 — Full HD\n1280 ×  720 — HD\n 854 ×  480 — 480p\n 640 ×  360 — 360p\n 426 ×  240 — 240p\n\nTipp: Ein Feld leer lassen = das andere wird proportional berechnet.'**
+  String get resolutionInfoContent;
+
+  /// Label für das Breite-Textfeld
+  ///
+  /// In de, this message translates to:
+  /// **'Breite'**
+  String get widthLabel;
+
+  /// Label für das Höhe-Textfeld
+  ///
+  /// In de, this message translates to:
+  /// **'Höhe'**
+  String get heightLabel;
+
+  /// Hint-Text in den Breite/Höhe-Feldern
+  ///
+  /// In de, this message translates to:
+  /// **'Leer = Original'**
+  String get emptyEqualsOriginal;
+
+  /// Label für die FPS-Auswahl
+  ///
+  /// In de, this message translates to:
+  /// **'FPS'**
+  String get fpsLabel;
+
+  /// Titel des FPS-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Frames pro Sekunde'**
+  String get fpsInfoTitle;
+
+  /// Inhalt des FPS-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Orig  → FPS des Quellvideos beibehalten\n24    → Kino-Standard\n25    → PAL/TV-Standard (Europa)\n30    → NTSC/TV, Social Media\n60    → Flüssig, Gaming, Sport'**
+  String get fpsInfoContent;
+
+  /// Label für das Audio-Bitrate-Dropdown
+  ///
+  /// In de, this message translates to:
+  /// **'Audio-Bitrate'**
+  String get audioBitrateLabel;
+
+  /// Audio-Bitrate-Eintrag für kein Audio
+  ///
+  /// In de, this message translates to:
+  /// **'Stumm'**
+  String get silent;
+
+  /// Inhalt des Audio-Bitrate-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Stumm    → kein Audio\n64 kbps  → Sprache, Podcasts\n96 kbps  → gute Sprachqualität\n128 kbps → Standard-Musik\n192 kbps → hohe Audioqualität\n320 kbps → maximale MP3-Qualität'**
+  String get audioBitrateInfoContent;
+
+  /// Label für die Audio-Codec-Auswahl
+  ///
+  /// In de, this message translates to:
+  /// **'Audio-Codec'**
+  String get audioCodecLabel;
+
+  /// Inhalt des Audio-Codec-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV'**
+  String get audioCodecInfoContent;
+
+  /// Label für die Output-Format-Auswahl
+  ///
+  /// In de, this message translates to:
+  /// **'Output-Format'**
+  String get outputFormatLabel;
+
+  /// Inhalt des Output-Format-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'MP4 → universell, beste Kompatibilität\nMKV → flexibel, viele Codecs, weniger kompatibel\nMOV → Apple/QuickTime-Format\nAVI → veraltet, breite Kompatibilität\nTS  → MPEG Transport Stream, TV/Streaming'**
+  String get outputFormatInfoContent;
+
+  /// FPS-Option: Original-Framerate des Quellvideos
+  ///
+  /// In de, this message translates to:
+  /// **'Orig'**
+  String get orig;
+
+  /// Titel des Auflösungs-Erklärungs-Dialogs in QualitySelector
+  ///
+  /// In de, this message translates to:
+  /// **'Was bedeuten die Auflösungen?'**
+  String get resolutionExplainTitle;
+
+  /// Inhalt des Auflösungs-Erklärungs-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'360p  (640×360)   → sehr kleine Datei,\n                          z.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.'**
+  String get resolutionExplainContent;
+
+  /// Tooltip am Info-Button neben dem Qualitäts-Dropdown
+  ///
+  /// In de, this message translates to:
+  /// **'Auflösungen erklärt'**
+  String get resolutionTooltip;
+
+  /// Label über dem Trim-Slider
+  ///
+  /// In de, this message translates to:
+  /// **'Trim-Bereich'**
+  String get trimArea;
+
+  /// Startzeit des Trim-Bereichs
+  ///
+  /// In de, this message translates to:
+  /// **'Anfang: {time}'**
+  String trimStartLabel(String time);
+
+  /// Endzeit des Trim-Bereichs
+  ///
+  /// In de, this message translates to:
+  /// **'Ende: {time}'**
+  String trimEndLabel(String time);
+
+  /// Platzhaltertext während das Native Ad lädt
+  ///
+  /// In de, this message translates to:
+  /// **'Werbung wird geladen…'**
+  String get adLoading;
+
+  /// Prefix für den vorausgefüllten Dateinamen im Speichern-Dialog
+  ///
+  /// In de, this message translates to:
+  /// **'konvertiert_'**
+  String get convertedPrefix;
 }
 
 class _AppLocalizationsDelegate

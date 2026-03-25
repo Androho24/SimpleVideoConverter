@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/converter_screen.dart';
@@ -12,6 +13,7 @@ import 'screens/converter_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await MobileAds.instance.initialize();
 
   // Alle Flutter-Fehler an Crashlytics weiterleiten
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;

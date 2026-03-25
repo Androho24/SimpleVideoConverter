@@ -11,6 +11,9 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
+/lib/firebase_options.dart
+/lib/services/ad_config.dart
+firebase.json
 
 # IntelliJ related
 *.iml
@@ -53,6 +56,8 @@ android/key.properties
 
 # AdMob / API Keys (werden via local.properties injiziert)
 android/local.properties
+
+
 
 # Session-Management (intern, nicht für GitHub)
 SESSION_TODO.md

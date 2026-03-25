@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/video_metadata.dart';
 
 class TrimSlider extends StatelessWidget {
@@ -30,10 +31,11 @@ class TrimSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Trim-Bereich', style: Theme.of(context).textTheme.titleSmall),
+        Text(l.trimArea, style: Theme.of(context).textTheme.titleSmall),
         RangeSlider(
           values: RangeValues(trimStart, trimEnd),
           min: 0.0,
@@ -43,8 +45,8 @@ class TrimSlider extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Anfang: ${_formatDuration(trimStart)}'),
-            Text('Ende: ${_formatDuration(trimEnd)}'),
+            Text(l.trimStartLabel(_formatDuration(trimStart))),
+            Text(l.trimEndLabel(_formatDuration(trimEnd))),
           ],
         ),
       ],

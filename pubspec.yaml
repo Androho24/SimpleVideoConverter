@@ -13,7 +13,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   ffmpeg_kit_flutter_new: ^4.1.0    # Community-Fork: libx264 via Maven Central (com.antonkarpenko)
-  file_picker: ^10.1.2               # Video-Auswahl
+  file_picker: ^10.1.2               # Speichern-Dialog
+  image_picker: ^1.1.2               # Video-Auswahl (nativer Media-Picker mit Thumbnails)
   video_player: ^2.10.0             # Video-Preview
   path_provider: ^2.1.5              # Cache-Verzeichnis für Output-Datei
   share_plus: ^10.1.2                # Output-Datei teilen/speichern
@@ -25,12 +26,21 @@ dependencies:
   firebase_core: ^3.13.0             # Firebase Grundpaket (Pflicht für alle Firebase-Dienste)
   firebase_analytics: ^11.4.4        # Google Analytics für Firebase
   firebase_crashlytics: ^4.3.4       # Crash-Reporting
+  google_mobile_ads: ^5.3.0          # AdMob Native Ads
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1   # Icon-Generierung
 
 flutter:
   uses-material-design: true
   generate: true          # Aktiviert flutter gen-l10n für ARB → Dart
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/app_icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/app_icon.png"

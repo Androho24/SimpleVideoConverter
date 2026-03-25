@@ -35,6 +35,11 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
+        <!-- AdMob App-ID (Pflicht, sonst App-Crash beim Start) -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3520565655582046~7644453893"/>
+
         <!-- FileProvider für OpenFilex (Cache-Dateien an externe Apps weitergeben) -->
         <provider
             android:name="androidx.core.content.FileProvider"

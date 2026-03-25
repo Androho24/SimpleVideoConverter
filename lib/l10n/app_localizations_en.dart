@@ -60,5 +60,220 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quality360pVeryLow => '360p Very Low';
 
   @override
-  String get mute => 'Stummschalten';
+  String get mute => 'Mute';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get selectVideo => 'Select video';
+
+  @override
+  String get videoLoading => 'Loading video…';
+
+  @override
+  String get modeNormal => 'Normal';
+
+  @override
+  String get modeExpert => 'Expert';
+
+  @override
+  String get invalidVideoFile => 'Please select a valid video file.';
+
+  @override
+  String get fileLoadError =>
+      'The file could not be loaded. Please select a video file.';
+
+  @override
+  String get noVideoLoaded => 'Please load a video first.';
+
+  @override
+  String get cancelConversionTitle => 'Cancel conversion?';
+
+  @override
+  String get cancelConversionContent => 'The conversion progress will be lost.';
+
+  @override
+  String get continueConversion => 'Continue';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get discardVideoTitle => 'Discard video?';
+
+  @override
+  String get discardVideoContent =>
+      'The converted video will be deleted and not saved.';
+
+  @override
+  String get keep => 'Keep';
+
+  @override
+  String get discard => 'Discard';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get saveVideoDialogTitle => 'Save video';
+
+  @override
+  String get savedSuccess => 'Saved!';
+
+  @override
+  String get open => 'Open';
+
+  @override
+  String get saveError =>
+      'Error saving. There may not be enough storage space.';
+
+  @override
+  String get conversionDone => 'Done!';
+
+  @override
+  String conversionProgress(String percent) {
+    return 'Converting: $percent%';
+  }
+
+  @override
+  String conversionFailed(String error) {
+    return 'Conversion failed: $error';
+  }
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get licensesTitle => 'Licenses';
+
+  @override
+  String get licensesSubtitle => 'Open-source licenses of this app';
+
+  @override
+  String get gplLicenseTitle => 'GPL-3.0 License Text';
+
+  @override
+  String get sourceCodeTitle => 'Source Code (GitHub)';
+
+  @override
+  String get privacyPolicyTitle => 'Privacy Policy';
+
+  @override
+  String get imprintTitle => 'Imprint';
+
+  @override
+  String get linkOpenError => 'The link could not be opened.';
+
+  @override
+  String get muteTooltip => 'Mute explained';
+
+  @override
+  String get muteInfoContent =>
+      'Removes audio completely from the converted video.\n\nUseful e.g. to remove background noise or reduce file size.';
+
+  @override
+  String estimatedSize(String size) {
+    return 'Estimated size: $size MB';
+  }
+
+  @override
+  String get convertButton => 'Convert';
+
+  @override
+  String crfLabel(String crf) {
+    return 'Video quality (CRF): $crf';
+  }
+
+  @override
+  String get crfInfoTitle => 'CRF — Video quality';
+
+  @override
+  String get crfInfoContent =>
+      '0 → lossless (very large file)\n18 → visually nearly lossless\n23 → standard (good balance)\n28 → visible quality loss\n51 → lowest quality\n\nRecommended: 18–28';
+
+  @override
+  String get resolutionLabel => 'Resolution';
+
+  @override
+  String get resolutionInfoTitle => 'Common resolutions';
+
+  @override
+  String get resolutionInfoContent =>
+      '3840 × 2160 — 4K UHD\n2560 × 1440 — 2K QHD\n1920 × 1080 — Full HD\n1280 ×  720 — HD\n 854 ×  480 — 480p\n 640 ×  360 — 360p\n 426 ×  240 — 240p\n\nTip: Leave one field empty = the other will be calculated proportionally.';
+
+  @override
+  String get widthLabel => 'Width';
+
+  @override
+  String get heightLabel => 'Height';
+
+  @override
+  String get emptyEqualsOriginal => 'Empty = Original';
+
+  @override
+  String get fpsLabel => 'FPS';
+
+  @override
+  String get fpsInfoTitle => 'Frames per second';
+
+  @override
+  String get fpsInfoContent =>
+      'Orig  → Keep source video FPS\n24    → Cinema standard\n25    → PAL/TV standard (Europe)\n30    → NTSC/TV, social media\n60    → Smooth, gaming, sports';
+
+  @override
+  String get audioBitrateLabel => 'Audio bitrate';
+
+  @override
+  String get silent => 'Silent';
+
+  @override
+  String get audioBitrateInfoContent =>
+      'Silent   → no audio\n64 kbps  → voice, podcasts\n96 kbps  → good voice quality\n128 kbps → standard music\n192 kbps → high audio quality\n320 kbps → maximum MP3 quality';
+
+  @override
+  String get audioCodecLabel => 'Audio codec';
+
+  @override
+  String get audioCodecInfoContent =>
+      'AAC  → standard for MP4, best compatibility\nMP3  → widely used, slightly outdated\nOpus → modern & efficient, great for MKV';
+
+  @override
+  String get outputFormatLabel => 'Output format';
+
+  @override
+  String get outputFormatInfoContent =>
+      'MP4 → universal, best compatibility\nMKV → flexible, many codecs, less compatible\nMOV → Apple/QuickTime format\nAVI → outdated, broad compatibility\nTS  → MPEG transport stream, TV/streaming';
+
+  @override
+  String get orig => 'Orig';
+
+  @override
+  String get resolutionExplainTitle => 'What do the resolutions mean?';
+
+  @override
+  String get resolutionExplainContent =>
+      '360p  (640×360)   → very small file,\n                          e.g. for WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, good for mobile devices\n\n1080p (1920×1080) → Full HD, standard for\n                          YouTube & TV\n\nHigh/Medium/Low describes quality at the same resolution — higher = larger file.';
+
+  @override
+  String get resolutionTooltip => 'Resolutions explained';
+
+  @override
+  String get trimArea => 'Trim range';
+
+  @override
+  String trimStartLabel(String time) {
+    return 'Start: $time';
+  }
+
+  @override
+  String trimEndLabel(String time) {
+    return 'End: $time';
+  }
+
+  @override
+  String get adLoading => 'Loading ad…';
+
+  @override
+  String get convertedPrefix => 'converted_';
 }

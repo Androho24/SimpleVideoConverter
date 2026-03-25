@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../screens/settings_screen.dart';
 
 class AppHeader extends StatelessWidget {
@@ -9,6 +10,7 @@ class AppHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Row(
       children: [
         Expanded(
@@ -21,7 +23,7 @@ class AppHeader extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.settings_outlined),
-          tooltip: 'Einstellungen',
+          tooltip: l.settingsTitle,
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const SettingsScreen()),

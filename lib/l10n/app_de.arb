@@ -53,5 +53,227 @@
   "@quality360pVeryLow": { "description": "Qualitätsstufe 360p, sehr niedrige Qualität (CRF 32)" },
 
   "mute": "Stummschalten",
-  "@mute": {"description": "Entfernt Audio vom Video"}
+  "@mute": { "description": "Entfernt Audio vom Video" },
+
+  "ok": "OK",
+  "@ok": { "description": "Bestätigungsknopf in Dialogen" },
+
+  "selectVideo": "Video auswählen",
+  "@selectVideo": { "description": "Button zum Öffnen der Videogalerie" },
+
+  "videoLoading": "Video wird geladen…",
+  "@videoLoading": { "description": "Ladezustand beim Öffnen des Videos" },
+
+  "modeNormal": "Normal",
+  "@modeNormal": { "description": "Normal-Modus Segment" },
+
+  "modeExpert": "Expert",
+  "@modeExpert": { "description": "Expert-Modus Segment" },
+
+  "invalidVideoFile": "Bitte eine gültige Videodatei auswählen.",
+  "@invalidVideoFile": { "description": "Fehlermeldung ungültige Datei" },
+
+  "fileLoadError": "Die Datei konnte nicht geladen werden. Bitte eine Videodatei auswählen.",
+  "@fileLoadError": { "description": "Fehlermeldung Datei laden" },
+
+  "noVideoLoaded": "Bitte zuerst ein Video laden.",
+  "@noVideoLoaded": { "description": "Hinweis wenn kein Video geladen" },
+
+  "cancelConversionTitle": "Konvertierung abbrechen?",
+  "@cancelConversionTitle": { "description": "Dialog-Titel Konvertierung abbrechen" },
+
+  "cancelConversionContent": "Die bisherige Verarbeitung geht verloren.",
+  "@cancelConversionContent": { "description": "Dialog-Inhalt Konvertierung abbrechen" },
+
+  "continueConversion": "Weiter",
+  "@continueConversion": { "description": "Button Konvertierung fortsetzen" },
+
+  "cancel": "Abbrechen",
+  "@cancel": { "description": "Allgemeiner Abbrechen-Button" },
+
+  "discardVideoTitle": "Video verwerfen?",
+  "@discardVideoTitle": { "description": "Dialog-Titel Video verwerfen" },
+
+  "discardVideoContent": "Das konvertierte Video wird gelöscht und nicht gespeichert.",
+  "@discardVideoContent": { "description": "Dialog-Inhalt Video verwerfen" },
+
+  "keep": "Behalten",
+  "@keep": { "description": "Button Video behalten" },
+
+  "discard": "Verwerfen",
+  "@discard": { "description": "Button Video verwerfen" },
+
+  "save": "Speichern",
+  "@save": { "description": "Button Video speichern" },
+
+  "saveVideoDialogTitle": "Video speichern",
+  "@saveVideoDialogTitle": { "description": "Titel des nativen Speichern-Dialogs" },
+
+  "savedSuccess": "Gespeichert!",
+  "@savedSuccess": { "description": "Snackbar Erfolgsmeldung nach dem Speichern" },
+
+  "open": "Öffnen",
+  "@open": { "description": "Snackbar-Action gespeichertes Video öffnen" },
+
+  "saveError": "Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.",
+  "@saveError": { "description": "Snackbar Fehler beim Speichern" },
+
+  "conversionDone": "Fertig!",
+  "@conversionDone": { "description": "Statustext nach abgeschlossener Konvertierung" },
+
+  "conversionProgress": "Konvertierung: {percent}%",
+  "@conversionProgress": {
+    "description": "Fortschrittstext während der Konvertierung",
+    "placeholders": {
+      "percent": { "type": "String" }
+    }
+  },
+
+  "conversionFailed": "Konvertierung fehlgeschlagen: {error}",
+  "@conversionFailed": {
+    "description": "Fehlermeldung wenn Konvertierung fehlschlägt",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "settingsTitle": "Einstellungen",
+  "@settingsTitle": { "description": "Titel der Einstellungsseite und Tooltip" },
+
+  "licensesTitle": "Lizenzen",
+  "@licensesTitle": { "description": "Lizenzen ListTile Titel" },
+
+  "licensesSubtitle": "Open-Source-Lizenzen dieser App",
+  "@licensesSubtitle": { "description": "Lizenzen ListTile Untertitel" },
+
+  "gplLicenseTitle": "GPL-3.0 Lizenztext",
+  "@gplLicenseTitle": { "description": "GPL-Lizenztext ListTile Titel" },
+
+  "sourceCodeTitle": "Quellcode (GitHub)",
+  "@sourceCodeTitle": { "description": "Quellcode ListTile Titel" },
+
+  "privacyPolicyTitle": "Datenschutzerklärung",
+  "@privacyPolicyTitle": { "description": "Datenschutz ListTile Titel" },
+
+  "imprintTitle": "Impressum",
+  "@imprintTitle": { "description": "Impressum ListTile Titel" },
+
+  "linkOpenError": "Link konnte nicht geöffnet werden.",
+  "@linkOpenError": { "description": "Snackbar wenn Link nicht geöffnet werden kann" },
+
+  "muteTooltip": "Stummschalten erklärt",
+  "@muteTooltip": { "description": "Tooltip am Info-Button für Stummschalten" },
+
+  "muteInfoContent": "Entfernt den Ton vollständig aus dem konvertierten Video.\n\nNützlich z.B. um Hintergrundgeräusche zu entfernen oder die Dateigröße zu reduzieren.",
+  "@muteInfoContent": { "description": "Inhalt des Stummschalten-Info-Dialogs" },
+
+  "estimatedSize": "Geschätzte Größe: {size} MB",
+  "@estimatedSize": {
+    "description": "Geschätzte Dateigröße unter dem Konvertieren-Button",
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+
+  "convertButton": "Konvertieren",
+  "@convertButton": { "description": "Haupt-Konvertieren-Button" },
+
+  "crfLabel": "Videoqualität (CRF): {crf}",
+  "@crfLabel": {
+    "description": "CRF-Label mit aktuellem Wert",
+    "placeholders": {
+      "crf": { "type": "String" }
+    }
+  },
+
+  "crfInfoTitle": "CRF — Videoqualität",
+  "@crfInfoTitle": { "description": "Titel des CRF-Info-Dialogs" },
+
+  "crfInfoContent": "0 → verlustfrei (sehr große Datei)\n18 → visuell nahezu verlustfrei\n23 → Standard (gute Balance)\n28 → sichtbare Qualitätseinbußen\n51 → niedrigste Qualität\n\nEmpfehlung: 18–28",
+  "@crfInfoContent": { "description": "Inhalt des CRF-Info-Dialogs" },
+
+  "resolutionLabel": "Auflösung",
+  "@resolutionLabel": { "description": "Label für die Breite/Höhe-Felder" },
+
+  "resolutionInfoTitle": "Gängige Auflösungen",
+  "@resolutionInfoTitle": { "description": "Titel des Auflösungs-Info-Dialogs" },
+
+  "resolutionInfoContent": "3840 × 2160 — 4K UHD\n2560 × 1440 — 2K QHD\n1920 × 1080 — Full HD\n1280 ×  720 — HD\n 854 ×  480 — 480p\n 640 ×  360 — 360p\n 426 ×  240 — 240p\n\nTipp: Ein Feld leer lassen = das andere wird proportional berechnet.",
+  "@resolutionInfoContent": { "description": "Inhalt des Auflösungs-Info-Dialogs" },
+
+  "widthLabel": "Breite",
+  "@widthLabel": { "description": "Label für das Breite-Textfeld" },
+
+  "heightLabel": "Höhe",
+  "@heightLabel": { "description": "Label für das Höhe-Textfeld" },
+
+  "emptyEqualsOriginal": "Leer = Original",
+  "@emptyEqualsOriginal": { "description": "Hint-Text in den Breite/Höhe-Feldern" },
+
+  "fpsLabel": "FPS",
+  "@fpsLabel": { "description": "Label für die FPS-Auswahl" },
+
+  "fpsInfoTitle": "Frames pro Sekunde",
+  "@fpsInfoTitle": { "description": "Titel des FPS-Info-Dialogs" },
+
+  "fpsInfoContent": "Orig  → FPS des Quellvideos beibehalten\n24    → Kino-Standard\n25    → PAL/TV-Standard (Europa)\n30    → NTSC/TV, Social Media\n60    → Flüssig, Gaming, Sport",
+  "@fpsInfoContent": { "description": "Inhalt des FPS-Info-Dialogs" },
+
+  "audioBitrateLabel": "Audio-Bitrate",
+  "@audioBitrateLabel": { "description": "Label für das Audio-Bitrate-Dropdown" },
+
+  "silent": "Stumm",
+  "@silent": { "description": "Audio-Bitrate-Eintrag für kein Audio" },
+
+  "audioBitrateInfoContent": "Stumm    → kein Audio\n64 kbps  → Sprache, Podcasts\n96 kbps  → gute Sprachqualität\n128 kbps → Standard-Musik\n192 kbps → hohe Audioqualität\n320 kbps → maximale MP3-Qualität",
+  "@audioBitrateInfoContent": { "description": "Inhalt des Audio-Bitrate-Info-Dialogs" },
+
+  "audioCodecLabel": "Audio-Codec",
+  "@audioCodecLabel": { "description": "Label für die Audio-Codec-Auswahl" },
+
+  "audioCodecInfoContent": "AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV",
+  "@audioCodecInfoContent": { "description": "Inhalt des Audio-Codec-Info-Dialogs" },
+
+  "outputFormatLabel": "Output-Format",
+  "@outputFormatLabel": { "description": "Label für die Output-Format-Auswahl" },
+
+  "outputFormatInfoContent": "MP4 → universell, beste Kompatibilität\nMKV → flexibel, viele Codecs, weniger kompatibel\nMOV → Apple/QuickTime-Format\nAVI → veraltet, breite Kompatibilität\nTS  → MPEG Transport Stream, TV/Streaming",
+  "@outputFormatInfoContent": { "description": "Inhalt des Output-Format-Info-Dialogs" },
+
+  "orig": "Orig",
+  "@orig": { "description": "FPS-Option: Original-Framerate des Quellvideos" },
+
+  "resolutionExplainTitle": "Was bedeuten die Auflösungen?",
+  "@resolutionExplainTitle": { "description": "Titel des Auflösungs-Erklärungs-Dialogs in QualitySelector" },
+
+  "resolutionExplainContent": "360p  (640×360)   → sehr kleine Datei,\n                          z.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.",
+  "@resolutionExplainContent": { "description": "Inhalt des Auflösungs-Erklärungs-Dialogs" },
+
+  "resolutionTooltip": "Auflösungen erklärt",
+  "@resolutionTooltip": { "description": "Tooltip am Info-Button neben dem Qualitäts-Dropdown" },
+
+  "trimArea": "Trim-Bereich",
+  "@trimArea": { "description": "Label über dem Trim-Slider" },
+
+  "trimStartLabel": "Anfang: {time}",
+  "@trimStartLabel": {
+    "description": "Startzeit des Trim-Bereichs",
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+
+  "trimEndLabel": "Ende: {time}",
+  "@trimEndLabel": {
+    "description": "Endzeit des Trim-Bereichs",
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+
+  "adLoading": "Werbung wird geladen…",
+  "@adLoading": { "description": "Platzhaltertext während das Native Ad lädt" },
+
+  "convertedPrefix": "konvertiert_",
+  "@convertedPrefix": { "description": "Prefix für den vorausgefüllten Dateinamen im Speichern-Dialog" }
 }

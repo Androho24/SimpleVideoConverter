@@ -18,5 +18,87 @@
   "quality360pMedium": "360p Medium",
   "quality360pLow": "360p Low",
   "quality360pVeryLow": "360p Very Low",
-  "mute": "Stummschalten"
+
+  "mute": "Mute",
+
+  "ok": "OK",
+  "selectVideo": "Select video",
+  "videoLoading": "Loading video…",
+  "modeNormal": "Normal",
+  "modeExpert": "Expert",
+
+  "invalidVideoFile": "Please select a valid video file.",
+  "fileLoadError": "The file could not be loaded. Please select a video file.",
+  "noVideoLoaded": "Please load a video first.",
+
+  "cancelConversionTitle": "Cancel conversion?",
+  "cancelConversionContent": "The conversion progress will be lost.",
+  "continueConversion": "Continue",
+  "cancel": "Cancel",
+  "discardVideoTitle": "Discard video?",
+  "discardVideoContent": "The converted video will be deleted and not saved.",
+  "keep": "Keep",
+  "discard": "Discard",
+  "save": "Save",
+  "saveVideoDialogTitle": "Save video",
+  "savedSuccess": "Saved!",
+  "open": "Open",
+  "saveError": "Error saving. There may not be enough storage space.",
+  "conversionDone": "Done!",
+  "conversionProgress": "Converting: {percent}%",
+  "conversionFailed": "Conversion failed: {error}",
+
+  "settingsTitle": "Settings",
+  "licensesTitle": "Licenses",
+  "licensesSubtitle": "Open-source licenses of this app",
+  "gplLicenseTitle": "GPL-3.0 License Text",
+  "sourceCodeTitle": "Source Code (GitHub)",
+  "privacyPolicyTitle": "Privacy Policy",
+  "imprintTitle": "Imprint",
+  "linkOpenError": "The link could not be opened.",
+
+  "muteTooltip": "Mute explained",
+  "muteInfoContent": "Removes audio completely from the converted video.\n\nUseful e.g. to remove background noise or reduce file size.",
+  "estimatedSize": "Estimated size: {size} MB",
+  "convertButton": "Convert",
+
+  "crfLabel": "Video quality (CRF): {crf}",
+  "crfInfoTitle": "CRF — Video quality",
+  "crfInfoContent": "0 → lossless (very large file)\n18 → visually nearly lossless\n23 → standard (good balance)\n28 → visible quality loss\n51 → lowest quality\n\nRecommended: 18–28",
+
+  "resolutionLabel": "Resolution",
+  "resolutionInfoTitle": "Common resolutions",
+  "resolutionInfoContent": "3840 × 2160 — 4K UHD\n2560 × 1440 — 2K QHD\n1920 × 1080 — Full HD\n1280 ×  720 — HD\n 854 ×  480 — 480p\n 640 ×  360 — 360p\n 426 ×  240 — 240p\n\nTip: Leave one field empty = the other will be calculated proportionally.",
+
+  "widthLabel": "Width",
+  "heightLabel": "Height",
+  "emptyEqualsOriginal": "Empty = Original",
+
+  "fpsLabel": "FPS",
+  "fpsInfoTitle": "Frames per second",
+  "fpsInfoContent": "Orig  → Keep source video FPS\n24    → Cinema standard\n25    → PAL/TV standard (Europe)\n30    → NTSC/TV, social media\n60    → Smooth, gaming, sports",
+
+  "audioBitrateLabel": "Audio bitrate",
+  "silent": "Silent",
+  "audioBitrateInfoContent": "Silent   → no audio\n64 kbps  → voice, podcasts\n96 kbps  → good voice quality\n128 kbps → standard music\n192 kbps → high audio quality\n320 kbps → maximum MP3 quality",
+
+  "audioCodecLabel": "Audio codec",
+  "audioCodecInfoContent": "AAC  → standard for MP4, best compatibility\nMP3  → widely used, slightly outdated\nOpus → modern & efficient, great for MKV",
+
+  "outputFormatLabel": "Output format",
+  "outputFormatInfoContent": "MP4 → universal, best compatibility\nMKV → flexible, many codecs, less compatible\nMOV → Apple/QuickTime format\nAVI → outdated, broad compatibility\nTS  → MPEG transport stream, TV/streaming",
+
+  "orig": "Orig",
+
+  "resolutionExplainTitle": "What do the resolutions mean?",
+  "resolutionExplainContent": "360p  (640×360)   → very small file,\n                          e.g. for WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, good for mobile devices\n\n1080p (1920×1080) → Full HD, standard for\n                          YouTube & TV\n\nHigh/Medium/Low describes quality at the same resolution — higher = larger file.",
+  "resolutionTooltip": "Resolutions explained",
+
+  "trimArea": "Trim range",
+  "trimStartLabel": "Start: {time}",
+  "trimEndLabel": "End: {time}",
+
+  "adLoading": "Loading ad…",
+
+  "convertedPrefix": "converted_"
 }
