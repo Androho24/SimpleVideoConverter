@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../l10n/app_localizations.dart';
 import '../services/ad_config.dart';
+import '../services/preferences_service.dart';
 
 enum _AdState { loading, loaded, failed }
 
@@ -18,11 +19,16 @@ class NativeAdWidget extends StatefulWidget {
 class _NativeAdWidgetState extends State<NativeAdWidget> {
   NativeAd? _nativeAd;
   _AdState _adState = _AdState.loading;
+  bool _isPro = false;
 
   @override
   void initState() {
     super.initState();
-    _loadAd();
+    PreferencesService.getIsPro().then((isPro) {
+      if (!mounted) return;
+      setState(() => _isPro = isPro);
+      if (!isPro) _loadAd();
+    });
   }
 
   @override
@@ -57,6 +63,7 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isPro) return const SizedBox.shrink();
     return switch (_adState) {
       _AdState.loaded  => AdWidget(ad: _nativeAd!),
       _AdState.loading => _buildPlaceholder(context),

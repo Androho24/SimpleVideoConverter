@@ -9,6 +9,7 @@ class ExpertSettings {
   final int audioBitrate; // 0 = stumm, sonst kbps (64/96/128/192/320)
   final String audioCodec; // 'aac', 'mp3', 'opus'
   final String container;  // 'mp4', 'mkv', 'mov', 'avi', 'ts'
+  final bool audioOnly;    // true = nur Audiospur extrahieren, kein Video
 
   const ExpertSettings({
     this.crf = 23,
@@ -18,6 +19,7 @@ class ExpertSettings {
     this.audioBitrate = 128,
     this.audioCodec = 'aac',
     this.container = 'mp4',
+    this.audioOnly = false,
   });
 
   ExpertSettings copyWith({
@@ -28,6 +30,7 @@ class ExpertSettings {
     int? audioBitrate,
     String? audioCodec,
     String? container,
+    bool? audioOnly,
   }) {
     return ExpertSettings(
       crf: crf ?? this.crf,
@@ -37,6 +40,7 @@ class ExpertSettings {
       audioBitrate: audioBitrate ?? this.audioBitrate,
       audioCodec: audioCodec ?? this.audioCodec,
       container: container ?? this.container,
+      audioOnly: audioOnly ?? this.audioOnly,
     );
   }
 }

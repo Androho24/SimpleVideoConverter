@@ -10,6 +10,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../l10n/app_localizations.dart';
 import '../widgets/native_ad_widget.dart';
 
@@ -34,6 +35,15 @@ class ConversionScreen extends StatefulWidget {
     return dir;
   }
 
+  /// Löscht und recreiert den conversions/-Ordner. Aufrufbar von außen (z.B. App-Start).
+  static Future<void> cleanCacheDir() async {
+    try {
+      final dir = await getCacheDir();
+      await dir.delete(recursive: true);
+      await dir.create();
+    } catch (_) {}
+  }
+
   @override
   State<ConversionScreen> createState() => _ConversionScreenState();
 }
@@ -42,10 +52,12 @@ class _ConversionScreenState extends State<ConversionScreen> {
   double _progress = 0.0;
   bool _isDone = false;
   bool _isCancelled = false;
+  late String _currentOutputPath;
 
   @override
   void initState() {
     super.initState();
+    _currentOutputPath = widget.outputPath;
     _cleanCache();
     _startConversion();
   }
@@ -56,31 +68,15 @@ class _ConversionScreenState extends State<ConversionScreen> {
     super.dispose();
   }
 
-  static String _mimeType(String path) {
-    return switch (path.split('.').last.toLowerCase()) {
-      'mkv' => 'video/x-matroska',
-      'mov' => 'video/quicktime',
-      'avi' => 'video/x-msvideo',
-      'ts'  => 'video/mp2t',
-      _     => 'video/mp4',
-    };
-  }
-
   // ---------------------------------------------------------------------------
   // Cache-Verwaltung
   // ---------------------------------------------------------------------------
 
-  Future<void> _cleanCache() async {
-    try {
-      final dir = await ConversionScreen.getCacheDir();
-      await dir.delete(recursive: true);
-      await dir.create();
-    } catch (_) {}
-  }
+  Future<void> _cleanCache() => ConversionScreen.cleanCacheDir();
 
   Future<void> _deleteOutput() async {
     try {
-      await File(widget.outputPath).delete();
+      await File(_currentOutputPath).delete();
     } catch (_) {}
   }
 
@@ -182,35 +178,64 @@ class _ConversionScreenState extends State<ConversionScreen> {
   Future<void> _onSavePressed() async {
     final l = AppLocalizations.of(context)!;
     try {
-      final bytes = await File(widget.outputPath).readAsBytes();
+      final fileSize = await File(_currentOutputPath).length();
+      final fileSizeMb = fileSize / (1024 * 1024);
 
-      String? moviesDir;
-      try {
-        final dirs = await getExternalStorageDirectories(type: StorageDirectory.movies);
-        if (dirs != null && dirs.isNotEmpty) moviesDir = dirs.first.path;
-      } catch (_) {}
+      if (fileSizeMb < 500) {
+        // Kleine Datei: in RAM laden und via FilePicker in den Gerätespeicher speichern
+        final bytes = await File(_currentOutputPath).readAsBytes();
+        final savedPath = await FilePicker.platform.saveFile(
+          bytes: bytes,
+          fileName: widget.defaultFileName,
+          type: FileType.video,
+        );
+        if (savedPath == null) return; // User hat abgebrochen
 
-      final savedPath = await FilePicker.platform.saveFile(
-        dialogTitle: l.saveVideoDialogTitle,
-        fileName: widget.defaultFileName,
-        initialDirectory: moviesDir,
-        bytes: bytes,
-      );
-
-      if (savedPath != null) {
-        await _deleteOutput();
+        final cacheFilePath = _currentOutputPath;
         if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
+        final messenger = ScaffoldMessenger.of(context);
+        Navigator.pop(context);
+        messenger.showSnackBar(
           SnackBar(
             content: Text(l.savedSuccess),
             action: SnackBarAction(
               label: l.open,
-              onPressed: () => OpenFilex.open(savedPath, type: _mimeType(savedPath)),
+              onPressed: () => OpenFilex.open(cacheFilePath, type: 'video/*'),
             ),
             duration: const Duration(seconds: 20),
           ),
         );
+      } else {
+        // Große Datei (≥ 500 MB): nur Pfad übergeben, kein RAM-Laden
+        // Datei einmalig in lesbaren Namen umbenennen (idempotent bei Retry)
+        final dir = await ConversionScreen.getCacheDir();
+        final nicePath = '${dir.path}/${widget.defaultFileName}';
+        if (_currentOutputPath != nicePath) {
+          final renamed = await File(_currentOutputPath).rename(nicePath);
+          setState(() => _currentOutputPath = renamed.path);
+        }
+
+        final result = await Share.shareXFiles(
+          [XFile(_currentOutputPath)],
+          subject: widget.defaultFileName,
+        );
+
+        if (result.status == ShareResultStatus.dismissed) return;
+
+        final cacheFilePath = _currentOutputPath;
+        if (!mounted) return;
+        final messenger = ScaffoldMessenger.of(context);
         Navigator.pop(context);
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(l.savedSuccess),
+            action: SnackBarAction(
+              label: l.open,
+              onPressed: () => OpenFilex.open(cacheFilePath, type: 'video/*'),
+            ),
+            duration: const Duration(seconds: 20),
+          ),
+        );
       }
     } catch (_) {
       if (mounted) {
@@ -290,7 +315,7 @@ class _ConversionScreenState extends State<ConversionScreen> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: ElevatedButton.icon(
-                                  icon: const Icon(Icons.save),
+                                  icon: const Icon(Icons.share),
                                   label: Text(l.save),
                                   onPressed: _onSavePressed,
                                   style: ElevatedButton.styleFrom(

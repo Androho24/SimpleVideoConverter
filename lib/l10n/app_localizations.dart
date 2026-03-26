@@ -248,6 +248,18 @@ abstract class AppLocalizations {
   /// **'Die Datei konnte nicht geladen werden. Bitte eine Videodatei auswählen.'**
   String get fileLoadError;
 
+  /// Hinweis wenn Vorschau nicht möglich (z.B. Auflösung zu hoch)
+  ///
+  /// In de, this message translates to:
+  /// **'Vorschau nicht verfügbar. Das Video kann trotzdem konvertiert werden.'**
+  String get previewNotAvailable;
+
+  /// Platzhaltertext im UI wenn keine Vorschau angezeigt werden kann
+  ///
+  /// In de, this message translates to:
+  /// **'Vorschau nicht verfügbar\n(Auflösung zu hoch für dieses Gerät)'**
+  String get previewNotAvailableLabel;
+
   /// Hinweis wenn kein Video geladen
   ///
   /// In de, this message translates to:
@@ -422,11 +434,11 @@ abstract class AppLocalizations {
   /// **'Konvertieren'**
   String get convertButton;
 
-  /// CRF-Label mit aktuellem Wert
+  /// Label für den CRF-Dropdown
   ///
   /// In de, this message translates to:
-  /// **'Videoqualität (CRF): {crf}'**
-  String crfLabel(String crf);
+  /// **'Videoqualität (CRF)'**
+  String get crfLabel;
 
   /// Titel des CRF-Info-Dialogs
   ///
@@ -589,6 +601,72 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'konvertiert_'**
   String get convertedPrefix;
+
+  /// Titel des IAP-Eintrags im Settings-Screen
+  ///
+  /// In de, this message translates to:
+  /// **'Werbung entfernen'**
+  String get removeAdsTitle;
+
+  /// Untertitel mit dynamischem Preis aus dem Play Store
+  ///
+  /// In de, this message translates to:
+  /// **'Einmaliger Kauf – {price}'**
+  String removeAdsSubtitle(String price);
+
+  /// Titel wenn IAP bereits gekauft wurde
+  ///
+  /// In de, this message translates to:
+  /// **'Werbefrei ✓'**
+  String get removeAdsActiveTitle;
+
+  /// Untertitel wenn IAP bereits gekauft wurde
+  ///
+  /// In de, this message translates to:
+  /// **'Danke für deine Unterstützung!'**
+  String get removeAdsActiveSubtitle;
+
+  /// Button zum Wiederherstellen eines früheren IAP-Kaufs
+  ///
+  /// In de, this message translates to:
+  /// **'Kauf wiederherstellen'**
+  String get restorePurchasesTitle;
+
+  /// Kauf-Button im Settings-Screen
+  ///
+  /// In de, this message translates to:
+  /// **'Kaufen'**
+  String get purchaseButton;
+
+  /// Fehlermeldung bei gescheitertem IAP
+  ///
+  /// In de, this message translates to:
+  /// **'Kauf fehlgeschlagen. Bitte erneut versuchen.'**
+  String get purchaseError;
+
+  /// Erfolgsmeldung nach IAP-Kauf
+  ///
+  /// In de, this message translates to:
+  /// **'Danke! Werbung wurde deaktiviert.'**
+  String get purchaseSuccess;
+
+  /// Switch-Label für Audio-Only-Modus
+  ///
+  /// In de, this message translates to:
+  /// **'Nur Audio'**
+  String get audioOnly;
+
+  /// Tooltip am Info-Button für Nur-Audio
+  ///
+  /// In de, this message translates to:
+  /// **'Nur Audio erklärt'**
+  String get audioOnlyTooltip;
+
+  /// Inhalt des Nur-Audio-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Extrahiert nur die Audiospur aus dem Video – kein Bild.\n\nNormal-Modus: MP3 mit 192 kbps.\nExpert-Modus: Codec und Bitrate aus den Audio-Einstellungen.\n\nNützlich um z.B. Musik oder Podcasts aus Videos zu speichern.'**
+  String get audioOnlyInfoContent;
 }
 
 class _AppLocalizationsDelegate

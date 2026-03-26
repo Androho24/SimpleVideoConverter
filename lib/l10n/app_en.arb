@@ -29,6 +29,10 @@
 
   "invalidVideoFile": "Please select a valid video file.",
   "fileLoadError": "The file could not be loaded. Please select a video file.",
+
+  "previewNotAvailable": "Preview not available. The video can still be converted.",
+  "previewNotAvailableLabel": "Preview not available\n(Resolution too high for this device)",
+
   "noVideoLoaded": "Please load a video first.",
 
   "cancelConversionTitle": "Cancel conversion?",
@@ -62,7 +66,7 @@
   "estimatedSize": "Estimated size: {size} MB",
   "convertButton": "Convert",
 
-  "crfLabel": "Video quality (CRF): {crf}",
+  "crfLabel": "Video quality (CRF)",
   "crfInfoTitle": "CRF — Video quality",
   "crfInfoContent": "0 → lossless (very large file)\n18 → visually nearly lossless\n23 → standard (good balance)\n28 → visible quality loss\n51 → lowest quality\n\nRecommended: 18–28",
 
@@ -100,5 +104,18 @@
 
   "adLoading": "Loading ad…",
 
-  "convertedPrefix": "converted_"
+  "convertedPrefix": "converted_",
+
+  "removeAdsTitle": "Remove Ads",
+  "removeAdsSubtitle": "One-time purchase – {price}",
+  "removeAdsActiveTitle": "Ad-free ✓",
+  "removeAdsActiveSubtitle": "Thank you for your support!",
+  "restorePurchasesTitle": "Restore purchase",
+  "purchaseButton": "Buy",
+  "purchaseError": "Purchase failed. Please try again.",
+  "purchaseSuccess": "Thanks! Ads have been disabled.",
+
+  "audioOnly": "Audio Only",
+  "audioOnlyTooltip": "Audio Only explained",
+  "audioOnlyInfoContent": "Extracts only the audio track from the video — no picture.\n\nNormal mode: MP3 at 192 kbps.\nExpert mode: Codec and bitrate from the audio settings.\n\nUseful e.g. to save music or podcasts from videos."
 }

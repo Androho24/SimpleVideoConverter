@@ -85,6 +85,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'The file could not be loaded. Please select a video file.';
 
   @override
+  String get previewNotAvailable =>
+      'Preview not available. The video can still be converted.';
+
+  @override
+  String get previewNotAvailableLabel =>
+      'Preview not available\n(Resolution too high for this device)';
+
+  @override
   String get noVideoLoaded => 'Please load a video first.';
 
   @override
@@ -181,9 +189,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get convertButton => 'Convert';
 
   @override
-  String crfLabel(String crf) {
-    return 'Video quality (CRF): $crf';
-  }
+  String get crfLabel => 'Video quality (CRF)';
 
   @override
   String get crfInfoTitle => 'CRF — Video quality';
@@ -276,4 +282,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get convertedPrefix => 'converted_';
+
+  @override
+  String get removeAdsTitle => 'Remove Ads';
+
+  @override
+  String removeAdsSubtitle(String price) {
+    return 'One-time purchase – $price';
+  }
+
+  @override
+  String get removeAdsActiveTitle => 'Ad-free ✓';
+
+  @override
+  String get removeAdsActiveSubtitle => 'Thank you for your support!';
+
+  @override
+  String get restorePurchasesTitle => 'Restore purchase';
+
+  @override
+  String get purchaseButton => 'Buy';
+
+  @override
+  String get purchaseError => 'Purchase failed. Please try again.';
+
+  @override
+  String get purchaseSuccess => 'Thanks! Ads have been disabled.';
+
+  @override
+  String get audioOnly => 'Audio Only';
+
+  @override
+  String get audioOnlyTooltip => 'Audio Only explained';
+
+  @override
+  String get audioOnlyInfoContent =>
+      'Extracts only the audio track from the video — no picture.\n\nNormal mode: MP3 at 192 kbps.\nExpert mode: Codec and bitrate from the audio settings.\n\nUseful e.g. to save music or podcasts from videos.';
 }

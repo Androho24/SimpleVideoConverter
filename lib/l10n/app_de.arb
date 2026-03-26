@@ -76,6 +76,12 @@
   "fileLoadError": "Die Datei konnte nicht geladen werden. Bitte eine Videodatei auswählen.",
   "@fileLoadError": { "description": "Fehlermeldung Datei laden" },
 
+  "previewNotAvailable": "Vorschau nicht verfügbar. Das Video kann trotzdem konvertiert werden.",
+  "@previewNotAvailable": { "description": "Hinweis wenn Vorschau nicht möglich (z.B. Auflösung zu hoch)" },
+
+  "previewNotAvailableLabel": "Vorschau nicht verfügbar\n(Auflösung zu hoch für dieses Gerät)",
+  "@previewNotAvailableLabel": { "description": "Platzhaltertext im UI wenn keine Vorschau angezeigt werden kann" },
+
   "noVideoLoaded": "Bitte zuerst ein Video laden.",
   "@noVideoLoaded": { "description": "Hinweis wenn kein Video geladen" },
 
@@ -178,13 +184,8 @@
   "convertButton": "Konvertieren",
   "@convertButton": { "description": "Haupt-Konvertieren-Button" },
 
-  "crfLabel": "Videoqualität (CRF): {crf}",
-  "@crfLabel": {
-    "description": "CRF-Label mit aktuellem Wert",
-    "placeholders": {
-      "crf": { "type": "String" }
-    }
-  },
+  "crfLabel": "Videoqualität (CRF)",
+  "@crfLabel": { "description": "Label für den CRF-Dropdown" },
 
   "crfInfoTitle": "CRF — Videoqualität",
   "@crfInfoTitle": { "description": "Titel des CRF-Info-Dialogs" },
@@ -275,5 +276,43 @@
   "@adLoading": { "description": "Platzhaltertext während das Native Ad lädt" },
 
   "convertedPrefix": "konvertiert_",
-  "@convertedPrefix": { "description": "Prefix für den vorausgefüllten Dateinamen im Speichern-Dialog" }
+  "@convertedPrefix": { "description": "Prefix für den vorausgefüllten Dateinamen im Speichern-Dialog" },
+
+  "removeAdsTitle": "Werbung entfernen",
+  "@removeAdsTitle": { "description": "Titel des IAP-Eintrags im Settings-Screen" },
+
+  "removeAdsSubtitle": "Einmaliger Kauf – {price}",
+  "@removeAdsSubtitle": {
+    "description": "Untertitel mit dynamischem Preis aus dem Play Store",
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+
+  "removeAdsActiveTitle": "Werbefrei ✓",
+  "@removeAdsActiveTitle": { "description": "Titel wenn IAP bereits gekauft wurde" },
+
+  "removeAdsActiveSubtitle": "Danke für deine Unterstützung!",
+  "@removeAdsActiveSubtitle": { "description": "Untertitel wenn IAP bereits gekauft wurde" },
+
+  "restorePurchasesTitle": "Kauf wiederherstellen",
+  "@restorePurchasesTitle": { "description": "Button zum Wiederherstellen eines früheren IAP-Kaufs" },
+
+  "purchaseButton": "Kaufen",
+  "@purchaseButton": { "description": "Kauf-Button im Settings-Screen" },
+
+  "purchaseError": "Kauf fehlgeschlagen. Bitte erneut versuchen.",
+  "@purchaseError": { "description": "Fehlermeldung bei gescheitertem IAP" },
+
+  "purchaseSuccess": "Danke! Werbung wurde deaktiviert.",
+  "@purchaseSuccess": { "description": "Erfolgsmeldung nach IAP-Kauf" },
+
+  "audioOnly": "Nur Audio",
+  "@audioOnly": { "description": "Switch-Label für Audio-Only-Modus" },
+
+  "audioOnlyTooltip": "Nur Audio erklärt",
+  "@audioOnlyTooltip": { "description": "Tooltip am Info-Button für Nur-Audio" },
+
+  "audioOnlyInfoContent": "Extrahiert nur die Audiospur aus dem Video – kein Bild.\n\nNormal-Modus: MP3 mit 192 kbps.\nExpert-Modus: Codec und Bitrate aus den Audio-Einstellungen.\n\nNützlich um z.B. Musik oder Podcasts aus Videos zu speichern.",
+  "@audioOnlyInfoContent": { "description": "Inhalt des Nur-Audio-Info-Dialogs" }
 }

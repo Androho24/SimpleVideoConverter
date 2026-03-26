@@ -13,6 +13,7 @@
 migrate_working_dir/
 /lib/firebase_options.dart
 /lib/services/ad_config.dart
+/android/app/src/main/kotlin/com/androho/simplevideoconverter/ads/AdConfig.kt
 firebase.json
 
 # IntelliJ related
@@ -53,6 +54,7 @@ google-services.json
 android/key.properties
 **/*.keystore
 **/*.jks
+
 
 # AdMob / API Keys (werden via local.properties injiziert)
 android/local.properties

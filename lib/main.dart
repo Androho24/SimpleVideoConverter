@@ -9,11 +9,13 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/converter_screen.dart';
+import 'services/purchase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await MobileAds.instance.initialize();
+  await PurchaseService.initialize();
 
   // Alle Flutter-Fehler an Crashlytics weiterleiten
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -81,7 +83,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Simple Video Converter',
+      title: 'Video Converter FFmpeg',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
