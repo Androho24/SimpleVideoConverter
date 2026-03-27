@@ -108,6 +108,23 @@
   "appName": "Video Converter FFmpeg",
   "audioOnly": "Solo audio",
   "audioOnlyTooltip": "Spiegazione di Solo audio",
-  "audioOnlyInfoContent": "Estrae solo la traccia audio dal video – nessuna immagine.\n\nModalità Normale: MP3 a 192 kbps.\nModalità Esperto: codec e bitrate dalle impostazioni audio.\n\nUtile, ad esempio, per salvare musica o podcast dai video."
+  "audioOnlyInfoContent": "Estrae solo la traccia audio dal video – nessuna immagine.\n\nModalità Normale: MP3 a 192 kbps.\nModalità Esperto: codec e bitrate dalle impostazioni audio.\n\nUtile, ad esempio, per salvare musica o podcast dai video.",
+
+
+"aspectLocked": "Formato bloccato",
+  "aspectUnlocked": "Formato libero",
+  "cpuWarningTitle": "File di grandi dimensioni",
+  "cpuWarningContent": "Questo file supera i 200 MB. Su dispositivi meno recenti, la conversione potrebbe causare un carico eccessivo del processore – è normale.\n\nPuoi semplicemente mettere il cellulare da parte, l'app continuerà a funzionare in background.",
+  "cpuWarningCheckbox": "Non mostrare più",
+  "storageWarningTitle": "Spazio di archiviazione insufficiente",
+  "storageWarningContent": "Il tuo dispositivo ha solo {available} MB di spazio libero. Per la conversione sono necessari circa {required} MB. Libera prima dello spazio.",
+  "feedbackTitle": "Feedback e assistenza",
+  "feedbackSubtitle": "Segnala bug, miglioramenti o invia feedback",
+  "feedbackCategoryLabel": "Categoria",
+"feedbackCategoryBug": "Segnala un bug",
+  "feedbackCategoryFeature": "Suggerimento di miglioramento",
+  "feedbackCategoryFeedback": "Feedback generale",
+  "feedbackMessageHint": "Descrivi la tua richiesta…",
+  "feedbackSendButton": "Invia"
 
 }

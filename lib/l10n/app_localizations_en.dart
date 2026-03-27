@@ -321,4 +321,52 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get audioOnlyInfoContent =>
       'Extracts only the audio track from the video — no picture.\n\nNormal mode: MP3 at 192 kbps.\nExpert mode: Codec and bitrate from the audio settings.\n\nUseful e.g. to save music or podcasts from videos.';
+
+  @override
+  String get aspectLocked => 'Aspect ratio locked';
+
+  @override
+  String get aspectUnlocked => 'Aspect ratio unlocked';
+
+  @override
+  String get cpuWarningTitle => 'Large file';
+
+  @override
+  String get cpuWarningContent =>
+      'This file is larger than 200 MB. On older devices, the conversion may cause high CPU usage — that\'s normal.\n\nYou can just put your phone aside; the app will keep running in the background.';
+
+  @override
+  String get cpuWarningCheckbox => 'Don\'t show again';
+
+  @override
+  String get storageWarningTitle => 'Not enough storage';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'Your device only has $available MB free. The conversion needs approximately $required MB. Please free up some space first.';
+  }
+
+  @override
+  String get feedbackTitle => 'Feedback & Support';
+
+  @override
+  String get feedbackSubtitle => 'Send bugs, suggestions or feedback';
+
+  @override
+  String get feedbackCategoryLabel => 'Category';
+
+  @override
+  String get feedbackCategoryBug => 'Report a Bug';
+
+  @override
+  String get feedbackCategoryFeature => 'Feature Request';
+
+  @override
+  String get feedbackCategoryFeedback => 'General Feedback';
+
+  @override
+  String get feedbackMessageHint => 'Describe your issue…';
+
+  @override
+  String get feedbackSendButton => 'Send';
 }

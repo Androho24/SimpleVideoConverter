@@ -106,6 +106,28 @@
    "appName": "Video konvertor FFmpeg",
   "audioOnly": "Pouze zvuk",
    "audioOnlyTooltip": "Vysvětlení funkce Pouze zvuk",
-   "audioOnlyInfoContent": "Extrahuje z videa pouze zvukovou stopu – bez obrazu.\n\nNormální režim: MP3 s 192 kbps.\nRežim pro pokročilé: Kodek a datový tok podle nastavení zvuku.\n\nUžitečné například pro ukládání hudby nebo podcastů z videí."
+   "audioOnlyInfoContent": "Extrahuje z videa pouze zvukovou stopu – bez obrazu.\n\nNormální režim: MP3 s 192 kbps.\nRežim pro pokročilé: Kodek a datový tok podle nastavení zvuku.\n\nUžitečné například pro ukládání hudby nebo podcastů z videí.",
+
+
+"aspectLocked": "Poměr stran uzamčen",
+  "aspectUnlocked": "Poměr stran volný",
+  "cpuWarningTitle": "Velký soubor",
+  "cpuWarningContent": "Tento soubor je větší než 200 MB. Na starších zařízeních může konverze vést k vysokému zatížení procesoru – to je normální.\n\nMůžeš telefon jednoduše odložit, aplikace bude pokračovat v běhu na pozadí.",
+  "cpuWarningCheckbox": "Zobrazovat již ne",
+  "storageWarningTitle": "Nedostatek místa",
+  "storageWarningContent": "Tvé zařízení má volných pouze {available} MB. Pro konverzi je potřeba přibližně {required} MB. Nejprve uvolni místo.",
+
+
+  "feedbackTitle": "Zpětná vazba a podpora",
+  "feedbackSubtitle": "Odeslat chyby, návrhy na vylepšení nebo zpětnou vazbu",
+  "feedbackCategoryLabel": "Kategorie",
+  
+"feedbackCategoryBug": "Nahlásit chybu",
+  "feedbackCategoryFeature": "Návrh na vylepšení",
+  "feedbackCategoryFeedback": "Obecná zpětná vazba",
+  "feedbackMessageHint": "Popište svůj problém…",
+  "feedbackSendButton": "Odeslat"
+
+
 
  }

@@ -322,4 +322,52 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get audioOnlyInfoContent =>
       'Haal alleen de audiotrack uit de video – geen beeld.\n\nNormale modus: MP3 met 192 kbps.\nExpertmodus: codec en bitsnelheid uit de audio-instellingen.\n\nHandig om bijvoorbeeld muziek of podcasts uit video\'s op te slaan.';
+
+  @override
+  String get aspectLocked => 'Beeldverhouding vergrendeld';
+
+  @override
+  String get aspectUnlocked => 'Beeldverhouding vrij';
+
+  @override
+  String get cpuWarningTitle => 'Groot bestand';
+
+  @override
+  String get cpuWarningContent =>
+      'Dit bestand is groter dan 200 MB. Op oudere apparaten kan de conversie leiden tot een hoge processorbelasting – dit is normaal.\n\nJe kunt de telefoon gewoon opzij leggen, de app blijft op de achtergrond draaien.';
+
+  @override
+  String get cpuWarningCheckbox => 'Niet meer weergeven';
+
+  @override
+  String get storageWarningTitle => 'Onvoldoende opslagruimte';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'Je apparaat heeft nog maar $available MB vrij. Voor de conversie is ongeveer $required MB nodig. Maak eerst wat opslagruimte vrij.';
+  }
+
+  @override
+  String get feedbackTitle => 'Feedback & ondersteuning';
+
+  @override
+  String get feedbackSubtitle => 'Bugs, verbeteringen of feedback verzenden';
+
+  @override
+  String get feedbackCategoryLabel => 'Categorie';
+
+  @override
+  String get feedbackCategoryBug => 'Bug melden';
+
+  @override
+  String get feedbackCategoryFeature => 'Verbeteringsvoorstel';
+
+  @override
+  String get feedbackCategoryFeedback => 'Algemene feedback';
+
+  @override
+  String get feedbackMessageHint => 'Beschrijf je vraag…';
+
+  @override
+  String get feedbackSendButton => 'Verzenden';
 }

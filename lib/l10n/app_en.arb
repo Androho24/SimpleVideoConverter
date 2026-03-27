@@ -1,4 +1,4 @@
-{
+﻿{
   "@@locale": "en",
 
   "qualityLabel": "Quality",
@@ -119,5 +119,30 @@
 
   "audioOnly": "Audio Only",
   "audioOnlyTooltip": "Audio Only explained",
-  "audioOnlyInfoContent": "Extracts only the audio track from the video — no picture.\n\nNormal mode: MP3 at 192 kbps.\nExpert mode: Codec and bitrate from the audio settings.\n\nUseful e.g. to save music or podcasts from videos."
+  "audioOnlyInfoContent": "Extracts only the audio track from the video — no picture.\n\nNormal mode: MP3 at 192 kbps.\nExpert mode: Codec and bitrate from the audio settings.\n\nUseful e.g. to save music or podcasts from videos.",
+
+  "aspectLocked": "Aspect ratio locked",
+  "aspectUnlocked": "Aspect ratio unlocked",
+
+  "cpuWarningTitle": "Large file",
+  "cpuWarningContent": "This file is larger than 200 MB. On older devices, the conversion may cause high CPU usage — that's normal.\n\nYou can just put your phone aside; the app will keep running in the background.",
+  "cpuWarningCheckbox": "Don't show again",
+
+  "storageWarningTitle": "Not enough storage",
+  "storageWarningContent": "Your device only has {available} MB free. The conversion needs approximately {required} MB. Please free up some space first.",
+  "@storageWarningContent": {
+    "placeholders": {
+      "available": { "type": "String" },
+      "required": { "type": "String" }
+    }
+  },
+
+  "feedbackTitle": "Feedback & Support",
+  "feedbackSubtitle": "Send bugs, suggestions or feedback",
+  "feedbackCategoryLabel": "Category",
+  "feedbackCategoryBug": "Report a Bug",
+  "feedbackCategoryFeature": "Feature Request",
+  "feedbackCategoryFeedback": "General Feedback",
+  "feedbackMessageHint": "Describe your issue…",
+  "feedbackSendButton": "Send"
 }

@@ -324,4 +324,53 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get audioOnlyInfoContent =>
       'Videodan sadece ses parçasını çıkarır – görüntü yok.\n\nNormal Mod: 192 kbps MP3.\nUzman Mod: Ses ayarlarından kodek ve bit hızı.\n\nÖrneğin videolardan müzik veya podcast\'leri kaydetmek için kullanışlıdır.';
+
+  @override
+  String get aspectLocked => 'En boy oranı kilitli';
+
+  @override
+  String get aspectUnlocked => 'En boy oranı serbest';
+
+  @override
+  String get cpuWarningTitle => 'Büyük dosya';
+
+  @override
+  String get cpuWarningContent =>
+      'Bu dosya 200 MB\'den büyük. Eski cihazlarda dönüştürme işlemi işlemci yükünü artırabilir – bu normaldir.\n\nTelefonu bir kenara bırakabilirsin, uygulama arka planda çalışmaya devam eder.';
+
+  @override
+  String get cpuWarningCheckbox => 'Bir daha gösterme';
+
+  @override
+  String get storageWarningTitle => 'Yeterli depolama alanı yok';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'Cihazında sadece $available MB boş alan kaldı. Dönüştürme işlemi için yaklaşık $required MB gereklidir. Lütfen önce depolama alanını boşalt.';
+  }
+
+  @override
+  String get feedbackTitle => 'Geri Bildirim & Destek';
+
+  @override
+  String get feedbackSubtitle =>
+      'Hatalar, iyileştirmeler veya geri bildirim gönder';
+
+  @override
+  String get feedbackCategoryLabel => 'Kategori';
+
+  @override
+  String get feedbackCategoryBug => 'Hata bildir';
+
+  @override
+  String get feedbackCategoryFeature => 'İyileştirme önerisi';
+
+  @override
+  String get feedbackCategoryFeedback => 'Genel geri bildirim';
+
+  @override
+  String get feedbackMessageHint => 'Sorununuzu açıklayın…';
+
+  @override
+  String get feedbackSendButton => 'Gönder';
 }

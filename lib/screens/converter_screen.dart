@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:disk_space_plus/disk_space_plus.dart';
 import 'package:ffmpeg_kit_flutter_new/ffprobe_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +18,6 @@ import '../models/quality_option.dart';
 import '../models/video_metadata.dart';
 import '../screens/conversion_screen.dart';
 import '../services/preferences_service.dart';
-import '../services/review_service.dart';
 import '../widgets/app_header.dart';
 import '../widgets/convert_section.dart';
 import '../widgets/expert_controls.dart';
@@ -45,6 +45,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   bool _isAudioOnly = false;
   bool _isLoading = false;
   bool _isExpertMode = false;
+  bool _cpuWarningDismissed = false;
   ExpertSettings _expertSettings = const ExpertSettings();
   VideoPlayerController? _playerController;
   Timer? _seekDebounce;
@@ -55,7 +56,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     _requestPermissions();
     _loadPreferences();
     _cleanAppCache();
-    ReviewService.maybeRequestReview();
   }
 
   /// Bereinigt beim App-Start den Cache:
@@ -79,7 +79,13 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   Future<void> _loadPreferences() async {
     final expert = await PreferencesService.getExpertMode();
-    if (mounted) setState(() => _isExpertMode = expert);
+    final dismissed = await PreferencesService.getCpuWarningDismissed();
+    final quality = await PreferencesService.getLastQualityIndex();
+    if (mounted) setState(() {
+      _isExpertMode = expert;
+      _cpuWarningDismissed = dismissed;
+      _selectedQualityIndex = quality;
+    });
   }
 
   Future<void> _requestPermissions() async {
@@ -111,6 +117,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       return;
     }
 
+    final fileSizeBytes = await picked.length();
     final path = picked.path;
 
     final meta = await _extractMetadata(path);
@@ -151,12 +158,12 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       _metadata = meta;
       _trimStart = 0.0;
       _trimEnd = 1.0;
-      _selectedQualityIndex = 0;
       _isMuted = false;
       _playerController = previewFailed ? null : controller;
     });
 
     _updateEstimatedSize();
+    await _maybeShowCpuWarning(fileSizeBytes);
 
     if (previewFailed && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -164,6 +171,57 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         backgroundColor: Colors.orange,
       ));
     }
+  }
+
+  // -------------------------------------------------------------------------
+  // CPU-Warndialog bei großen Eingabedateien
+  // -------------------------------------------------------------------------
+
+  Future<void> _maybeShowCpuWarning(int fileSizeBytes) async {
+    const thresholdBytes = 200 * 1024 * 1024; // 200 MB
+    if (fileSizeBytes < thresholdBytes || _cpuWarningDismissed) return;
+    if (!mounted) return;
+
+    final l = AppLocalizations.of(context)!;
+    bool dontShowAgain = false;
+
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: Text(l.cpuWarningTitle),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l.cpuWarningContent),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Checkbox(
+                    value: dontShowAgain,
+                    onChanged: (v) => setDialogState(() => dontShowAgain = v ?? false),
+                  ),
+                  Expanded(child: Text(l.cpuWarningCheckbox)),
+                ],
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                if (dontShowAgain) {
+                  await PreferencesService.setCpuWarningDismissed();
+                  if (mounted) setState(() => _cpuWarningDismissed = true);
+                }
+                if (ctx.mounted) Navigator.pop(ctx);
+              },
+              child: Text(l.ok),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   // -------------------------------------------------------------------------
@@ -247,6 +305,33 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   // Konvertierung (FFmpegKit)
   // -------------------------------------------------------------------------
 
+  /// Prüft ob genug freier Speicher für die geschätzte Output-Datei vorhanden ist.
+  /// Gibt false zurück und zeigt einen Dialog, wenn der Speicher nicht reicht.
+  Future<bool> _checkStorage() async {
+    if (_estimatedSizeMb <= 0) return true; // Audio-Only: kein Check nötig
+    final freeSpaceMb = await DiskSpacePlus().getFreeDiskSpace;
+    if (freeSpaceMb == null) return true; // Nicht ermittelbar: nicht blockieren
+    final requiredMb = _estimatedSizeMb * 1.5;
+    if (freeSpaceMb >= requiredMb) return true;
+
+    if (!mounted) return false;
+    final l = AppLocalizations.of(context)!;
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.storageWarningTitle),
+        content: Text(l.storageWarningContent(
+          freeSpaceMb.toStringAsFixed(0),
+          requiredMb.toStringAsFixed(0),
+        )),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l.ok)),
+        ],
+      ),
+    );
+    return false;
+  }
+
   Future<void> _convertVideo() async {
     if (_videoPath == null || _metadata == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -254,6 +339,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       );
       return;
     }
+
+    if (!await _checkStorage()) return;
 
     final convertedPrefix = AppLocalizations.of(context)!.convertedPrefix;
 
@@ -397,8 +484,28 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                 onPressed: _isLoading ? null : _pickVideo,
               ),
 
-              if (hasVideo) ...[
-                const SizedBox(height: 16),
+              const SizedBox(height: 16),
+              if (!hasVideo)
+                // Platzhalter – gleiche Größe wie der Videoplayer, kein Layout-Sprung beim Laden
+                Card(
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.movie_outlined, size: 64,
+                            color: Theme.of(context).colorScheme.outlineVariant),
+                        const SizedBox(height: 8),
+                        Text(
+                          AppLocalizations.of(context)!.selectVideo,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.outlineVariant),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              else ...[
                 if (_playerController != null)
                   VideoPreview(
                     controller: _playerController!,
@@ -477,6 +584,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                   isConverting: false,
                   onChanged: (val) {
                     setState(() => _selectedQualityIndex = val);
+                    PreferencesService.setLastQualityIndex(val);
                     _updateEstimatedSize();
                   },
                 ),

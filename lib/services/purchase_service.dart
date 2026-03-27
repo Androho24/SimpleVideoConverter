@@ -18,6 +18,7 @@ class PurchaseService {
 
   static StreamSubscription<List<PurchaseDetails>>? _subscription;
   static ProductDetails? _productDetails;
+  static final _restoredProductIds = <String>{};
 
   /// Geladener Preis aus dem Play Store, z.B. "0,99 €". Bis zum Laden: "–".
   static String get price => _productDetails?.price ?? '–';
@@ -32,6 +33,12 @@ class PurchaseService {
       onError: (error) => debugPrint('PurchaseService: Stream-Fehler: $error'),
     );
     await _loadProductDetails();
+    try {
+      await InAppPurchase.instance.restorePurchases();
+      unawaited(_verifyPurchaseStatus());
+    } catch (_) {
+      // Play Store nicht erreichbar → lokaler isPro-Status bleibt unverändert
+    }
   }
 
   static Future<void> _loadProductDetails() async {
@@ -75,6 +82,7 @@ class PurchaseService {
 
       if (purchase.status == PurchaseStatus.purchased ||
           purchase.status == PurchaseStatus.restored) {
+        _restoredProductIds.add(purchase.productID);
         PreferencesService.setIsPro(true);
         _isProController.add(true);
         debugPrint('PurchaseService: Pro-Version aktiviert');
@@ -88,6 +96,16 @@ class PurchaseService {
       if (purchase.pendingCompletePurchase) {
         InAppPurchase.instance.completePurchase(purchase);
       }
+    }
+  }
+
+  static Future<void> _verifyPurchaseStatus() async {
+    await Future.delayed(const Duration(milliseconds: 1500));
+    final wasPro = await PreferencesService.getIsPro();
+    if (wasPro && !_restoredProductIds.contains(_productId)) {
+      await PreferencesService.setIsPro(false);
+      _isProController.add(false);
+      debugPrint('PurchaseService: Kauf nicht mehr aktiv – Pro-Status aufgehoben');
     }
   }
 

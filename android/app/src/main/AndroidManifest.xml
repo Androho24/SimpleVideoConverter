@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <!-- Galerie-Schreibzugriff für Android 7–9 (API 24–28); ab API 29 nicht mehr nötig -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
     <application
         android:label="@string/app_name"
         android:name=".SimpleVideoConverterApplication"

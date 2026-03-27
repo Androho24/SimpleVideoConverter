@@ -322,4 +322,52 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get audioOnlyInfoContent =>
       'Wyodrębnia tylko ścieżkę audio z filmu – bez obrazu.\n\nTryb normalny: MP3 z przepływnością 192 kbps.\nTryb ekspercki: kodek i przepływność z ustawień audio.\n\nPrzydatne np. do zapisywania muzyki lub podcastów z filmów.';
+
+  @override
+  String get aspectLocked => 'Zablokowany współczynnik proporcji';
+
+  @override
+  String get aspectUnlocked => 'Swobodny współczynnik proporcji';
+
+  @override
+  String get cpuWarningTitle => 'Duży plik';
+
+  @override
+  String get cpuWarningContent =>
+      'Ten plik ma rozmiar większy niż 200 MB. Na starszych urządzeniach konwersja może powodować wysokie obciążenie procesora – jest to normalne.\n\nMożesz po prostu odłożyć telefon na bok, aplikacja będzie nadal działać w tle.';
+
+  @override
+  String get cpuWarningCheckbox => 'Nie pokazuj więcej';
+
+  @override
+  String get storageWarningTitle => 'Za mało miejsca';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'Na Twoim urządzeniu pozostało tylko $available MB wolnego miejsca. Do konwersji potrzeba około $required MB. Najpierw zwolnij miejsce.';
+  }
+
+  @override
+  String get feedbackTitle => 'Opinie i wsparcie';
+
+  @override
+  String get feedbackSubtitle => 'Zgłoś błędy, sugestie ulepszeń lub opinie';
+
+  @override
+  String get feedbackCategoryLabel => 'Kategoria';
+
+  @override
+  String get feedbackCategoryBug => 'Zgłoś błąd';
+
+  @override
+  String get feedbackCategoryFeature => 'Propozycja ulepszenia';
+
+  @override
+  String get feedbackCategoryFeedback => 'Ogólna opinia';
+
+  @override
+  String get feedbackMessageHint => 'Opisz swoją sprawę…';
+
+  @override
+  String get feedbackSendButton => 'Wyślij';
 }

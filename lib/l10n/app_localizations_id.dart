@@ -322,4 +322,52 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get audioOnlyInfoContent =>
       'Hanya mengekstrak trek audio dari video – tanpa gambar.\n\nMode Normal: MP3 dengan 192 kbps.\nMode Ahli: Codec dan bitrate dari pengaturan audio.\n\nBerguna, misalnya, untuk menyimpan musik atau podcast dari video.';
+
+  @override
+  String get aspectLocked => 'Rasio aspek terkunci';
+
+  @override
+  String get aspectUnlocked => 'Rasio aspek bebas';
+
+  @override
+  String get cpuWarningTitle => 'File besar';
+
+  @override
+  String get cpuWarningContent =>
+      'File ini berukuran lebih dari 200 MB. Pada perangkat lama, proses konversi dapat menyebabkan penggunaan prosesor yang tinggi – hal ini normal.\n\nAnda dapat meletakkan ponsel di samping, aplikasi akan tetap berjalan di latar belakang.';
+
+  @override
+  String get cpuWarningCheckbox => 'Jangan tampilkan lagi';
+
+  @override
+  String get storageWarningTitle => 'Ruang penyimpanan tidak cukup';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'Perangkat Anda hanya memiliki sisa ruang $available MB. Konversi membutuhkan sekitar $required MB. Silakan kosongkan ruang penyimpanan terlebih dahulu.';
+  }
+
+  @override
+  String get feedbackTitle => 'Umpan Balik & Dukungan';
+
+  @override
+  String get feedbackSubtitle => 'Kirim bug, saran perbaikan, atau umpan balik';
+
+  @override
+  String get feedbackCategoryLabel => 'Kategori';
+
+  @override
+  String get feedbackCategoryBug => 'Laporkan bug';
+
+  @override
+  String get feedbackCategoryFeature => 'Saran perbaikan';
+
+  @override
+  String get feedbackCategoryFeedback => 'Umpan balik umum';
+
+  @override
+  String get feedbackMessageHint => 'Jelaskan masalah Anda…';
+
+  @override
+  String get feedbackSendButton => 'Kirim';
 }

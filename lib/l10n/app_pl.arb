@@ -108,6 +108,23 @@
   "appName": "Konwerter wideo FFmpeg",
   "audioOnly": "Tylko audio",
   "audioOnlyTooltip": "Wyjaśnienie opcji Tylko audio",
-  "audioOnlyInfoContent": "Wyodrębnia tylko ścieżkę audio z filmu – bez obrazu.\n\nTryb normalny: MP3 z przepływnością 192 kbps.\nTryb ekspercki: kodek i przepływność z ustawień audio.\n\nPrzydatne np. do zapisywania muzyki lub podcastów z filmów."
+  "audioOnlyInfoContent": "Wyodrębnia tylko ścieżkę audio z filmu – bez obrazu.\n\nTryb normalny: MP3 z przepływnością 192 kbps.\nTryb ekspercki: kodek i przepływność z ustawień audio.\n\nPrzydatne np. do zapisywania muzyki lub podcastów z filmów.",
+
+
+"aspectLocked": "Zablokowany współczynnik proporcji",
+  "aspectUnlocked": "Swobodny współczynnik proporcji",
+  "cpuWarningTitle": "Duży plik",
+  "cpuWarningContent": "Ten plik ma rozmiar większy niż 200 MB. Na starszych urządzeniach konwersja może powodować wysokie obciążenie procesora – jest to normalne.\n\nMożesz po prostu odłożyć telefon na bok, aplikacja będzie nadal działać w tle.",
+  "cpuWarningCheckbox": "Nie pokazuj więcej",
+  "storageWarningTitle": "Za mało miejsca",
+  "storageWarningContent": "Na Twoim urządzeniu pozostało tylko {available} MB wolnego miejsca. Do konwersji potrzeba około {required} MB. Najpierw zwolnij miejsce.",
+  "feedbackTitle": "Opinie i wsparcie",
+  "feedbackSubtitle": "Zgłoś błędy, sugestie ulepszeń lub opinie",
+  "feedbackCategoryLabel": "Kategoria",
+"feedbackCategoryBug": "Zgłoś błąd",
+  "feedbackCategoryFeature": "Propozycja ulepszenia",
+  "feedbackCategoryFeedback": "Ogólna opinia",
+  "feedbackMessageHint": "Opisz swoją sprawę…",
+  "feedbackSendButton": "Wyślij"
 
 }

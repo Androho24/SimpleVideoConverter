@@ -106,6 +106,24 @@
   "appName": "Conversor Vídeo FFmpeg",
   "audioOnly": "Somente áudio",
   "audioOnlyTooltip": "Explicação sobre Somente Áudio",
-  "audioOnlyInfoContent": "Extrai apenas a faixa de áudio do vídeo – sem imagem.\n\nModo Normal: MP3 a 192 kbps.\nModo Avançado: Codec e taxa de bits definidos nas configurações de áudio.\n\nÚtil, por exemplo, para salvar músicas ou podcasts de vídeos."
+  "audioOnlyInfoContent": "Extrai apenas a faixa de áudio do vídeo – sem imagem.\n\nModo Normal: MP3 a 192 kbps.\nModo Avançado: Codec e taxa de bits definidos nas configurações de áudio.\n\nÚtil, por exemplo, para salvar músicas ou podcasts de vídeos.",
+
+
+"aspectLocked": "Proporção da tela bloqueada",
+  "aspectUnlocked": "Proporção da tela livre",
+  "cpuWarningTitle": "Arquivo grande",
+  "cpuWarningContent": "Este arquivo tem mais de 200 MB. Em aparelhos mais antigos, a conversão pode causar alta utilização do processador – isso é normal.\n\nVocê pode simplesmente deixar o celular ao lado, o aplicativo continuará rodando em segundo plano.",
+  "cpuWarningCheckbox": "Não mostrar mais",
+  "storageWarningTitle": "Espaço de armazenamento insuficiente",
+  "storageWarningContent": "Seu dispositivo tem apenas {available} MB de espaço livre. A conversão requer aproximadamente {required} MB. Por favor, libere espaço primeiro.",
+  "feedbackTitle": "Feedback e suporte",
+  "feedbackSubtitle": "Enviar bugs, sugestões de melhorias ou feedback",
+  "feedbackCategoryLabel": "Categoria",
+
+"feedbackCategoryBug": "Relatar bug",
+  "feedbackCategoryFeature": "Sugestão de melhoria",
+  "feedbackCategoryFeedback": "Feedback geral",
+  "feedbackMessageHint": "Descreva sua solicitação…",
+  "feedbackSendButton": "Enviar"
 
 }

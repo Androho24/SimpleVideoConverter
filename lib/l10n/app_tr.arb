@@ -108,6 +108,23 @@
   "appName": "Video Dönüştürücü FFmpeg",
   "audioOnly": "Sadece Ses",
   "audioOnlyTooltip": "Sadece Ses Açıklaması",
-  "audioOnlyInfoContent": "Videodan sadece ses parçasını çıkarır – görüntü yok.\n\nNormal Mod: 192 kbps MP3.\nUzman Mod: Ses ayarlarından kodek ve bit hızı.\n\nÖrneğin videolardan müzik veya podcast'leri kaydetmek için kullanışlıdır."
+  "audioOnlyInfoContent": "Videodan sadece ses parçasını çıkarır – görüntü yok.\n\nNormal Mod: 192 kbps MP3.\nUzman Mod: Ses ayarlarından kodek ve bit hızı.\n\nÖrneğin videolardan müzik veya podcast'leri kaydetmek için kullanışlıdır.",
+
+
+"aspectLocked": "En boy oranı kilitli",
+  "aspectUnlocked": "En boy oranı serbest",
+  "cpuWarningTitle": "Büyük dosya",
+  "cpuWarningContent": "Bu dosya 200 MB'den büyük. Eski cihazlarda dönüştürme işlemi işlemci yükünü artırabilir – bu normaldir.\n\nTelefonu bir kenara bırakabilirsin, uygulama arka planda çalışmaya devam eder.",
+  "cpuWarningCheckbox": "Bir daha gösterme",
+  "storageWarningTitle": "Yeterli depolama alanı yok",
+  "storageWarningContent": "Cihazında sadece {available} MB boş alan kaldı. Dönüştürme işlemi için yaklaşık {required} MB gereklidir. Lütfen önce depolama alanını boşalt.",
+  "feedbackTitle": "Geri Bildirim & Destek",
+  "feedbackSubtitle": "Hatalar, iyileştirmeler veya geri bildirim gönder",
+  "feedbackCategoryLabel": "Kategori",
+"feedbackCategoryBug": "Hata bildir",
+  "feedbackCategoryFeature": "İyileştirme önerisi",
+  "feedbackCategoryFeedback": "Genel geri bildirim",
+  "feedbackMessageHint": "Sorununuzu açıklayın…",
+  "feedbackSendButton": "Gönder"
 
 }

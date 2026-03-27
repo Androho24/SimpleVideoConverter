@@ -322,6 +322,55 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get audioOnlyInfoContent =>
       'Extraia apenas a faixa de áudio do vídeo – sem imagem.\n\nModo Normal: MP3 a 192 kbps.\nModo Especialista: Codec e taxa de bits a partir das definições de áudio.\n\nÚtil, por exemplo, para guardar música ou podcasts a partir de vídeos.';
+
+  @override
+  String get aspectLocked => 'Proporção da imagem bloqueada';
+
+  @override
+  String get aspectUnlocked => 'Proporção da imagem livre';
+
+  @override
+  String get cpuWarningTitle => 'Ficheiro grande';
+
+  @override
+  String get cpuWarningContent =>
+      'Este ficheiro tem mais de 200 MB. Em dispositivos mais antigos, a conversão pode causar uma elevada utilização do processador – isto é normal.\n\nPodes simplesmente deixar o telemóvel ao lado, a aplicação continua a funcionar em segundo plano.';
+
+  @override
+  String get cpuWarningCheckbox => 'Não mostrar mais';
+
+  @override
+  String get storageWarningTitle => 'Espaço de armazenamento insuficiente';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'O seu dispositivo tem apenas $available MB de espaço livre. São necessários aproximadamente $required MB para a conversão. Por favor, liberte espaço primeiro.';
+  }
+
+  @override
+  String get feedbackTitle => 'Feedback e Suporte';
+
+  @override
+  String get feedbackSubtitle =>
+      'Enviar bugs, sugestões de melhorias ou feedback';
+
+  @override
+  String get feedbackCategoryLabel => 'Categoria';
+
+  @override
+  String get feedbackCategoryBug => 'Reportar bug';
+
+  @override
+  String get feedbackCategoryFeature => 'Sugestão de melhoria';
+
+  @override
+  String get feedbackCategoryFeedback => 'Feedback geral';
+
+  @override
+  String get feedbackMessageHint => 'Descreva o seu problema…';
+
+  @override
+  String get feedbackSendButton => 'Enviar';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -642,4 +691,53 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get audioOnlyInfoContent =>
       'Extrai apenas a faixa de áudio do vídeo – sem imagem.\n\nModo Normal: MP3 a 192 kbps.\nModo Avançado: Codec e taxa de bits definidos nas configurações de áudio.\n\nÚtil, por exemplo, para salvar músicas ou podcasts de vídeos.';
+
+  @override
+  String get aspectLocked => 'Proporção da tela bloqueada';
+
+  @override
+  String get aspectUnlocked => 'Proporção da tela livre';
+
+  @override
+  String get cpuWarningTitle => 'Arquivo grande';
+
+  @override
+  String get cpuWarningContent =>
+      'Este arquivo tem mais de 200 MB. Em aparelhos mais antigos, a conversão pode causar alta utilização do processador – isso é normal.\n\nVocê pode simplesmente deixar o celular ao lado, o aplicativo continuará rodando em segundo plano.';
+
+  @override
+  String get cpuWarningCheckbox => 'Não mostrar mais';
+
+  @override
+  String get storageWarningTitle => 'Espaço de armazenamento insuficiente';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'Seu dispositivo tem apenas $available MB de espaço livre. A conversão requer aproximadamente $required MB. Por favor, libere espaço primeiro.';
+  }
+
+  @override
+  String get feedbackTitle => 'Feedback e suporte';
+
+  @override
+  String get feedbackSubtitle =>
+      'Enviar bugs, sugestões de melhorias ou feedback';
+
+  @override
+  String get feedbackCategoryLabel => 'Categoria';
+
+  @override
+  String get feedbackCategoryBug => 'Relatar bug';
+
+  @override
+  String get feedbackCategoryFeature => 'Sugestão de melhoria';
+
+  @override
+  String get feedbackCategoryFeedback => 'Feedback geral';
+
+  @override
+  String get feedbackMessageHint => 'Descreva sua solicitação…';
+
+  @override
+  String get feedbackSendButton => 'Enviar';
 }

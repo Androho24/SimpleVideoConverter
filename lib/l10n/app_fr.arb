@@ -108,6 +108,23 @@
   "appName": "Convertisseur Vidéo FFmpeg",
   "audioOnly": "Audio uniquement",
   "audioOnlyTooltip": "Explication de l'option Audio uniquement",
-  "audioOnlyInfoContent": "Extrait uniquement la piste audio de la vidéo – pas d'image.\n\nMode Normal : MP3 à 192 kbps.\nMode Expert : codec et débit binaire définis dans les paramètres audio.\n\nUtile pour enregistrer, par exemple, de la musique ou des podcasts à partir de vidéos."
+  "audioOnlyInfoContent": "Extrait uniquement la piste audio de la vidéo – pas d'image.\n\nMode Normal : MP3 à 192 kbps.\nMode Expert : codec et débit binaire définis dans les paramètres audio.\n\nUtile pour enregistrer, par exemple, de la musique ou des podcasts à partir de vidéos.",
+
+
+"aspectLocked": "Format d'image verrouillé",
+  "aspectUnlocked": "Format d'image libre",
+  "cpuWarningTitle": "Fichier volumineux",
+  "cpuWarningContent" : "Ce fichier dépasse 200 Mo. Sur les appareils plus anciens, la conversion peut entraîner une utilisation élevée du processeur – c'est normal.\n\nTu peux simplement poser ton téléphone à côté, l'application continue de fonctionner en arrière-plan.",
+ "cpuWarningCheckbox":"Ne plus afficher",
+  "storageWarningTitle":"Espace de stockage insuffisant",
+ "storageWarningContent": "Il ne reste plus que {available} Mo d'espace libre sur votre appareil. La conversion nécessite environ {required} Mo. Veuillez libérer de l'espace au préalable.",
+  "feedbackTitle": "Commentaires et assistance",
+  "feedbackSubtitle": "Signaler des bugs, proposer des améliorations ou envoyer des commentaires",
+  "feedbackCategoryLabel": "Catégorie",
+"feedbackCategoryBug": "Signaler un bug",
+  "feedbackCategoryFeature": "Suggestion d'amélioration",
+  "feedbackCategoryFeedback": "Commentaires généraux",
+  "feedbackMessageHint": "Décrivez votre demande…",
+  "feedbackSendButton": "Envoyer"
 
 }

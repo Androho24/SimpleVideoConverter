@@ -320,4 +320,53 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get audioOnlyInfoContent =>
       'Extrahuje z videa pouze zvukovou stopu – bez obrazu.\n\nNormální režim: MP3 s 192 kbps.\nRežim pro pokročilé: Kodek a datový tok podle nastavení zvuku.\n\nUžitečné například pro ukládání hudby nebo podcastů z videí.';
+
+  @override
+  String get aspectLocked => 'Poměr stran uzamčen';
+
+  @override
+  String get aspectUnlocked => 'Poměr stran volný';
+
+  @override
+  String get cpuWarningTitle => 'Velký soubor';
+
+  @override
+  String get cpuWarningContent =>
+      'Tento soubor je větší než 200 MB. Na starších zařízeních může konverze vést k vysokému zatížení procesoru – to je normální.\n\nMůžeš telefon jednoduše odložit, aplikace bude pokračovat v běhu na pozadí.';
+
+  @override
+  String get cpuWarningCheckbox => 'Zobrazovat již ne';
+
+  @override
+  String get storageWarningTitle => 'Nedostatek místa';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'Tvé zařízení má volných pouze $available MB. Pro konverzi je potřeba přibližně $required MB. Nejprve uvolni místo.';
+  }
+
+  @override
+  String get feedbackTitle => 'Zpětná vazba a podpora';
+
+  @override
+  String get feedbackSubtitle =>
+      'Odeslat chyby, návrhy na vylepšení nebo zpětnou vazbu';
+
+  @override
+  String get feedbackCategoryLabel => 'Kategorie';
+
+  @override
+  String get feedbackCategoryBug => 'Nahlásit chybu';
+
+  @override
+  String get feedbackCategoryFeature => 'Návrh na vylepšení';
+
+  @override
+  String get feedbackCategoryFeedback => 'Obecná zpětná vazba';
+
+  @override
+  String get feedbackMessageHint => 'Popište svůj problém…';
+
+  @override
+  String get feedbackSendButton => 'Odeslat';
 }

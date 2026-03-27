@@ -696,6 +696,96 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Extrahiert nur die Audiospur aus dem Video – kein Bild.\n\nNormal-Modus: MP3 mit 192 kbps.\nExpert-Modus: Codec und Bitrate aus den Audio-Einstellungen.\n\nNützlich um z.B. Musik oder Podcasts aus Videos zu speichern.'**
   String get audioOnlyInfoContent;
+
+  /// Tooltip des Seitenverhältnis-Lock-Buttons (gesperrt)
+  ///
+  /// In de, this message translates to:
+  /// **'Seitenverhältnis gesperrt'**
+  String get aspectLocked;
+
+  /// Tooltip des Seitenverhältnis-Lock-Buttons (entsperrt)
+  ///
+  /// In de, this message translates to:
+  /// **'Seitenverhältnis frei'**
+  String get aspectUnlocked;
+
+  /// Titel des CPU-Warnhinweis-Dialogs bei großen Eingabedateien
+  ///
+  /// In de, this message translates to:
+  /// **'Große Datei'**
+  String get cpuWarningTitle;
+
+  /// Inhalt des CPU-Warnhinweis-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Diese Datei ist größer als 200 MB. Auf älteren Geräten kann die Konvertierung zu hoher Prozessorauslastung führen – das ist normal.\n\nDu kannst das Handy einfach daneben legen, die App läuft im Hintergrund weiter.'**
+  String get cpuWarningContent;
+
+  /// Checkbox-Label im CPU-Warnhinweis-Dialog
+  ///
+  /// In de, this message translates to:
+  /// **'Nicht mehr anzeigen'**
+  String get cpuWarningCheckbox;
+
+  /// Titel des Speicherplatz-Warndialogs vor der Konvertierung
+  ///
+  /// In de, this message translates to:
+  /// **'Nicht genug Speicherplatz'**
+  String get storageWarningTitle;
+
+  /// Inhalt des Speicherplatz-Warndialogs vor der Konvertierung
+  ///
+  /// In de, this message translates to:
+  /// **'Dein Gerät hat nur noch {available} MB frei. Für die Konvertierung werden ca. {required} MB benötigt. Bitte gib zuerst Speicher frei.'**
+  String storageWarningContent(String available, String required);
+
+  /// Titel des Feedback-Eintrags in den Einstellungen und des Screens
+  ///
+  /// In de, this message translates to:
+  /// **'Feedback & Support'**
+  String get feedbackTitle;
+
+  /// Untertitel des Feedback-Eintrags in den Einstellungen
+  ///
+  /// In de, this message translates to:
+  /// **'Bugs, Verbesserungen oder Feedback senden'**
+  String get feedbackSubtitle;
+
+  /// Label über dem Kategorie-Dropdown im Feedback-Screen
+  ///
+  /// In de, this message translates to:
+  /// **'Kategorie'**
+  String get feedbackCategoryLabel;
+
+  /// Dropdown-Option: Bug-Bericht
+  ///
+  /// In de, this message translates to:
+  /// **'Bug melden'**
+  String get feedbackCategoryBug;
+
+  /// Dropdown-Option: Feature-Wunsch
+  ///
+  /// In de, this message translates to:
+  /// **'Verbesserungsvorschlag'**
+  String get feedbackCategoryFeature;
+
+  /// Dropdown-Option: allgemeines Feedback
+  ///
+  /// In de, this message translates to:
+  /// **'Allgemeines Feedback'**
+  String get feedbackCategoryFeedback;
+
+  /// Placeholder-Text im Nachrichtenfeld des Feedback-Screens
+  ///
+  /// In de, this message translates to:
+  /// **'Beschreibe dein Anliegen…'**
+  String get feedbackMessageHint;
+
+  /// Beschriftung des Senden-Buttons im Feedback-Screen
+  ///
+  /// In de, this message translates to:
+  /// **'Senden'**
+  String get feedbackSendButton;
 }
 
 class _AppLocalizationsDelegate

@@ -7,6 +7,9 @@ import '../l10n/app_localizations.dart';
 import '../models/expert_settings.dart';
 import '../models/video_metadata.dart';
 
+/// Maximale Auflösung pro Seite (4K).
+const _maxDimension = 3840;
+
 /// Welche Audio-Codecs in welchem Container funktionieren.
 const _containerCodecs = <String, List<String>>{
   'mp4': ['aac'],
@@ -37,16 +40,37 @@ class ExpertControls extends StatefulWidget {
 class _ExpertControlsState extends State<ExpertControls> {
   late final TextEditingController _widthController;
   late final TextEditingController _heightController;
+  bool _aspectLocked = true;
 
   @override
   void initState() {
     super.initState();
+    // Bevorzuge explizit gesetzte Werte aus settings; falle auf Metadaten zurück
+    // (z.B. beim Wechsel Normal → Expert mit bereits geladenem Video)
+    final initWidth = widget.settings.width != 0
+        ? widget.settings.width
+        : (widget.metadata?.width ?? 0);
+    final initHeight = widget.settings.height != 0
+        ? widget.settings.height
+        : (widget.metadata?.height ?? 0);
     _widthController = TextEditingController(
-      text: widget.settings.width == 0 ? '' : widget.settings.width.toString(),
+      text: initWidth == 0 ? '' : initWidth.toString(),
     );
     _heightController = TextEditingController(
-      text: widget.settings.height == 0 ? '' : widget.settings.height.toString(),
+      text: initHeight == 0 ? '' : initHeight.toString(),
     );
+    // ExpertSettings im Parent synchronisieren, falls Metadaten verwendet wurden
+    if (widget.settings.width == 0 && widget.settings.height == 0 &&
+        widget.metadata != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          widget.onChanged(widget.settings.copyWith(
+            width: initWidth,
+            height: initHeight,
+          ));
+        }
+      });
+    }
   }
 
   @override
@@ -55,6 +79,7 @@ class _ExpertControlsState extends State<ExpertControls> {
     if (widget.metadata != oldWidget.metadata && widget.metadata != null) {
       _widthController.text = widget.metadata!.width.toString();
       _heightController.text = widget.metadata!.height.toString();
+      setState(() => _aspectLocked = true);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
           widget.onChanged(widget.settings.copyWith(
@@ -71,6 +96,85 @@ class _ExpertControlsState extends State<ExpertControls> {
     _widthController.dispose();
     _heightController.dispose();
     super.dispose();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Auflösungs-Hilfsmethoden
+  // ---------------------------------------------------------------------------
+
+  void _onWidthChanged(String v) {
+    int newWidth = int.tryParse(v) ?? 0;
+    if (newWidth > _maxDimension) {
+      newWidth = _maxDimension;
+      _widthController.text = _maxDimension.toString();
+      _widthController.selection = TextSelection.collapsed(offset: _widthController.text.length);
+    }
+    final s = widget.settings;
+    final meta = widget.metadata;
+    if (_aspectLocked && newWidth > 0 && meta != null && meta.height > 0) {
+      final aspectRatio = meta.width / meta.height;
+      int newHeight = (newWidth / aspectRatio).round();
+      newHeight = ((newHeight ~/ 2) * 2).clamp(2, _maxDimension);
+      _heightController.text = newHeight.toString();
+      widget.onChanged(s.copyWith(width: newWidth, height: newHeight));
+    } else {
+      widget.onChanged(s.copyWith(width: newWidth));
+    }
+  }
+
+  void _onHeightChanged(String v) {
+    int newHeight = int.tryParse(v) ?? 0;
+    if (newHeight > _maxDimension) {
+      newHeight = _maxDimension;
+      _heightController.text = _maxDimension.toString();
+      _heightController.selection = TextSelection.collapsed(offset: _heightController.text.length);
+    }
+    final s = widget.settings;
+    final meta = widget.metadata;
+    if (_aspectLocked && newHeight > 0 && meta != null && meta.width > 0) {
+      final aspectRatio = meta.width / meta.height;
+      int newWidth = (newHeight * aspectRatio).round();
+      newWidth = ((newWidth ~/ 2) * 2).clamp(2, _maxDimension);
+      _widthController.text = newWidth.toString();
+      widget.onChanged(s.copyWith(width: newWidth, height: newHeight));
+    } else {
+      widget.onChanged(s.copyWith(height: newHeight));
+    }
+  }
+
+  void _toggleAspectLock() {
+    final meta = widget.metadata;
+    if (!_aspectLocked && meta != null) {
+      // Sperren: dominante Seite des Originalvideos bestimmt welcher Wert berechnet wird
+      final currentWidth = int.tryParse(_widthController.text) ?? 0;
+      final currentHeight = int.tryParse(_heightController.text) ?? 0;
+      if (currentWidth > 0 || currentHeight > 0) {
+        if (meta.width >= meta.height) {
+          // Querformat: Breite dominant → Höhe neu berechnen
+          _onWidthChanged(currentWidth > 0 ? currentWidth.toString() : meta.width.toString());
+        } else {
+          // Hochformat: Höhe dominant → Breite neu berechnen
+          _onHeightChanged(currentHeight > 0 ? currentHeight.toString() : meta.height.toString());
+        }
+      }
+    }
+    setState(() => _aspectLocked = !_aspectLocked);
+  }
+
+  Widget _buildLockButton(AppLocalizations l) {
+    final meta = widget.metadata;
+    return SizedBox(
+      width: 40,
+      child: IconButton(
+        icon: Icon(
+          _aspectLocked ? Icons.link : Icons.link_off,
+          size: 20,
+        ),
+        onPressed: (meta != null && !widget.isConverting) ? _toggleAspectLock : null,
+        tooltip: _aspectLocked ? l.aspectLocked : l.aspectUnlocked,
+        padding: EdgeInsets.zero,
+      ),
+    );
   }
 
   // ---------------------------------------------------------------------------
@@ -189,12 +293,10 @@ class _ExpertControlsState extends State<ExpertControls> {
                       borderRadius: BorderRadius.circular(20)),
                   suffixText: 'px',
                 ),
-                onChanged: (v) => widget.onChanged(
-                  s.copyWith(width: int.tryParse(v) ?? 0),
-                ),
+                onChanged: _onWidthChanged,
               ),
             ),
-            const SizedBox(width: 12),
+            _buildLockButton(l),
             Expanded(
               child: TextField(
                 enabled: !widget.isConverting,
@@ -208,9 +310,7 @@ class _ExpertControlsState extends State<ExpertControls> {
                       borderRadius: BorderRadius.circular(20)),
                   suffixText: 'px',
                 ),
-                onChanged: (v) => widget.onChanged(
-                  s.copyWith(height: int.tryParse(v) ?? 0),
-                ),
+                onChanged: _onHeightChanged,
               ),
             ),
           ]),

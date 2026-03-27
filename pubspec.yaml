@@ -2,7 +2,7 @@ name: simple_video_converter
 description: "Simple Video Converter mit FFmpegKit (libx264)"
 publish_to: 'none'
 
-version: 1.0.0+8
+version: 1.0.0+9
 
 environment:
   sdk: ^3.6.0
@@ -29,6 +29,9 @@ dependencies:
   google_mobile_ads: ^7.0.0          # AdMob Native Ads
   in_app_purchase: ^3.2.0            # Einmaliger Kauf „Werbung entfernen"
   in_app_review: ^2.0.9              # Google Play In-App-Review-Dialog
+  gal: ^1.3.1                        # Video in Galerie speichern ohne RAM-Laden
+  disk_space_plus: ^0.2.6          # Freier interner Speicherplatz in MB
+  package_info_plus: ^4.2.0        # App-Version aus pubspec zur Laufzeit lesen
 
 dev_dependencies:
   flutter_test:

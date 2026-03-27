@@ -36,28 +36,28 @@ class AppLocalizationsHi extends AppLocalizations {
   String get quality720pVeryLow => '720p बहुत कम';
 
   @override
-  String get quality480pHigh => '480p High';
+  String get quality480pHigh => '480p हाई';
 
   @override
-  String get quality480pMedium => '480p Medium';
+  String get quality480pMedium => '480p मीडियम';
 
   @override
-  String get quality480pLow => '480p Low';
+  String get quality480pLow => '480p लो';
 
   @override
-  String get quality480pVeryLow => '480p Very Low';
+  String get quality480pVeryLow => '480p बहुत कम';
 
   @override
-  String get quality360pHigh => ' 360p High';
+  String get quality360pHigh => ' 360p हाई';
 
   @override
-  String get quality360pMedium => '360p Medium';
+  String get quality360pMedium => '360p मीडियम';
 
   @override
-  String get quality360pLow => '360p Low';
+  String get quality360pLow => '360p लो';
 
   @override
-  String get quality360pVeryLow => '360p Very Low';
+  String get quality360pVeryLow => '360p बहुत कम';
 
   @override
   String get mute => 'Mute';
@@ -115,26 +115,26 @@ class AppLocalizationsHi extends AppLocalizations {
       'परिवर्तित वीडियो हटा दिया जाएगा और सहेजा नहीं जाएगा।';
 
   @override
-  String get keep => 'Behalten';
+  String get keep => 'रखें';
 
   @override
-  String get discard => 'Verwerfen';
+  String get discard => 'ड्रॉप';
 
   @override
-  String get save => 'Speichern';
+  String get save => 'सहेजें';
 
   @override
-  String get saveVideoDialogTitle => 'Video speichern';
+  String get saveVideoDialogTitle => 'वीडियो सहेजें';
 
   @override
-  String get savedSuccess => 'Gespeichert!';
+  String get savedSuccess => 'सफलतापूर्वक सहेजा!';
 
   @override
-  String get open => 'Öffnen';
+  String get open => 'खोलें';
 
   @override
   String get saveError =>
-      'Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.';
+      'सहेजने में त्रुटि। संभवतः पर्याप्त भंडारण स्थान नहीं है।';
 
   @override
   String get conversionDone => 'हो गया!';
@@ -182,14 +182,14 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String estimatedSize(String size) {
-    return 'Geschätzte Größe: $size MB';
+    return 'अनुमानित आकार: $size एमबी';
   }
 
   @override
-  String get convertButton => 'Konvertieren';
+  String get convertButton => 'कन्वर्ट करें';
 
   @override
-  String get crfLabel => 'Videoqualität (CRF)';
+  String get crfLabel => 'वीडियो गुणवत्ता (CRF)';
 
   @override
   String get crfInfoTitle => 'सीआरएफ — वीडियो गुणवत्ता';
@@ -235,21 +235,21 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get audioBitrateInfoContent =>
-      'Stumm    → kein Audio\n64 kbps  → Sprache, Podcasts\n96 kbps  → gute Sprachqualität\n128 kbps → Standard-Musik\n192 kbps → hohe Audioqualität\n320 kbps → maximale MP3-Qualität';
+      'म्यूट → कोई ऑडियो नहीं\n64 kbps → भाषण, पॉडकास्ट\n96 kbps → अच्छा भाषण गुणवत्ता\n128 kbps → मानक संगीत\n192 kbps → उच्च ऑडियो गुणवत्ता\n320 kbps → अधिकतम MP3 गुणवत्ता';
 
   @override
-  String get audioCodecLabel => 'Audio-Codec';
+  String get audioCodecLabel => 'ऑडियो कोडेक';
 
   @override
   String get audioCodecInfoContent =>
-      'AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV';
+      'AAC → MP4 के लिए मानक, सर्वोत्तम संगतता\nMP3 → व्यापक रूप से उपयोग किया जाता है, थोड़ा पुराना\nOpus → आधुनिक और कुशल, MKV के लिए अच्छा';
 
   @override
-  String get outputFormatLabel => 'Output-Format';
+  String get outputFormatLabel => 'आउटपुट प्रारूप';
 
   @override
   String get outputFormatInfoContent =>
-      'MP4 → universell, beste Kompatibilität\nMKV → flexibel, viele Codecs, weniger kompatibel\nMOV → Apple/QuickTime-Format\nAVI → veraltet, breite Kompatibilität\nTS  → MPEG Transport Stream, TV/Streaming';
+      'MP4 → सार्वभौमिक, सर्वोत्तम संगतता\nMKV → लचीला, कई कोडेक, कम संगत\nMOV → Apple/QuickTime प्रारूप\nAVI → पुराना, व्यापक संगतता\nTS → MPEG ट्रांसपोर्ट स्ट्रीम, टीवी/स्ट्रीमिंग';
 
   @override
   String get orig => 'मूल';
@@ -274,21 +274,21 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String trimEndLabel(String time) {
-    return 'Ende: $time';
+    return 'अंत: $time';
   }
 
   @override
-  String get adLoading => 'Werbung wird geladen…';
+  String get adLoading => 'विज्ञापन लोड हो रहे हैं…';
 
   @override
-  String get convertedPrefix => 'konvertiert_';
+  String get convertedPrefix => 'परिवर्तित_';
 
   @override
-  String get removeAdsTitle => 'Werbung entfernen';
+  String get removeAdsTitle => 'विज्ञापन हटाएँ';
 
   @override
   String removeAdsSubtitle(String price) {
-    return 'Einmaliger Kauf – $price';
+    return 'एक-बार की खरीदारी – $price';
   }
 
   @override
@@ -321,4 +321,53 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get audioOnlyInfoContent =>
       'वीडियो से केवल ऑडियो ट्रैक निकालता है – कोई वीडियो नहीं।\n\nसामान्य मोड: 192 kbps पर MP3।\nविशेषज्ञ मोड: ऑडियो सेटिंग्स से कोडेक और बिटरेट।\n\nउदाहरण के लिए, वीडियो से संगीत या पॉडकास्ट सहेजने के लिए उपयोगी है।';
+
+  @override
+  String get aspectLocked => 'आस्पेक्ट रेशियो लॉक्ड';
+
+  @override
+  String get aspectUnlocked => 'आस्पेक्ट रेशियो अनलॉक्ड';
+
+  @override
+  String get cpuWarningTitle => 'बड़ी फ़ाइल';
+
+  @override
+  String get cpuWarningContent =>
+      'यह फ़ाइल 200 एमबी से बड़ी है। पुराने डिवाइसों पर, रूपांतरण के कारण उच्च सीपीयू उपयोग हो सकता है – यह सामान्य है। आप बस अपने फ़ोन को एक तरफ रख सकते हैं; ऐप बैकग्राउंड में चलता रहेगा।छिपाएँ';
+
+  @override
+  String get cpuWarningCheckbox => 'छिपाएँ';
+
+  @override
+  String get storageWarningTitle => 'पर्याप्त स्टोरेज स्थान नहीं है';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'आपके डिवाइस में केवल $available एमबी मुफ़्त स्थान है। रूपांतरण के लिए लगभग $required एमबी की आवश्यकता है। कृपया पहले कुछ स्टोरेज खाली करें।';
+  }
+
+  @override
+  String get feedbackTitle => 'प्रतिक्रिया और सहायता';
+
+  @override
+  String get feedbackSubtitle =>
+      'बग्स की रिपोर्ट करें, सुधार का सुझाव दें या प्रतिक्रिया भेजें';
+
+  @override
+  String get feedbackCategoryLabel => 'श्रेणी';
+
+  @override
+  String get feedbackCategoryBug => 'बग रिपोर्ट करें';
+
+  @override
+  String get feedbackCategoryFeature => 'सुधार के लिए सुझाव';
+
+  @override
+  String get feedbackCategoryFeedback => 'सामान्य प्रतिक्रिया';
+
+  @override
+  String get feedbackMessageHint => 'अपनी समस्या का वर्णन करें…';
+
+  @override
+  String get feedbackSendButton => 'भेजें';
 }

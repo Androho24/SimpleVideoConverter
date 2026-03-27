@@ -108,6 +108,23 @@
     "appName": "Kompres Video FFmpeg",
     "audioOnly": "Hanya Audio",
     "audioOnlyTooltip": "Penjelasan Hanya Audio",
-    "audioOnlyInfoContent": "Hanya mengekstrak trek audio dari video – tanpa gambar.\n\nMode Normal: MP3 dengan 192 kbps.\nMode Ahli: Codec dan bitrate dari pengaturan audio.\n\nBerguna, misalnya, untuk menyimpan musik atau podcast dari video."
+    "audioOnlyInfoContent": "Hanya mengekstrak trek audio dari video – tanpa gambar.\n\nMode Normal: MP3 dengan 192 kbps.\nMode Ahli: Codec dan bitrate dari pengaturan audio.\n\nBerguna, misalnya, untuk menyimpan musik atau podcast dari video.",
+
+
+"aspectLocked": "Rasio aspek terkunci",
+  "aspectUnlocked": "Rasio aspek bebas",
+  "cpuWarningTitle": "File besar",
+  "cpuWarningContent": "File ini berukuran lebih dari 200 MB. Pada perangkat lama, proses konversi dapat menyebabkan penggunaan prosesor yang tinggi – hal ini normal.\n\nAnda dapat meletakkan ponsel di samping, aplikasi akan tetap berjalan di latar belakang.",
+  "cpuWarningCheckbox": "Jangan tampilkan lagi",
+  "storageWarningTitle": "Ruang penyimpanan tidak cukup",
+  "storageWarningContent": "Perangkat Anda hanya memiliki sisa ruang {available} MB. Konversi membutuhkan sekitar {required} MB. Silakan kosongkan ruang penyimpanan terlebih dahulu.",
+  "feedbackTitle": "Umpan Balik & Dukungan",
+  "feedbackSubtitle": "Kirim bug, saran perbaikan, atau umpan balik",
+  "feedbackCategoryLabel": "Kategori",
+"feedbackCategoryBug": "Laporkan bug",
+  "feedbackCategoryFeature": "Saran perbaikan",
+  "feedbackCategoryFeedback": "Umpan balik umum",
+  "feedbackMessageHint": "Jelaskan masalah Anda…",
+  "feedbackSendButton": "Kirim"
 
   }

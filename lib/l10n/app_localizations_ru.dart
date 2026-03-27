@@ -323,4 +323,53 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get audioOnlyInfoContent =>
       'Извлекает из видео только аудиодорожку — без изображения.\n\nОбычный режим: MP3 с битрейтом 192 кбит/с.\nРежим Эксперт: кодек и битрейт из настроек аудио.\n\nПолезно, например, для сохранения музыки или подкастов из видео.';
+
+  @override
+  String get aspectLocked => 'Соотношение сторон заблокировано';
+
+  @override
+  String get aspectUnlocked => 'Соотношение сторон свободно';
+
+  @override
+  String get cpuWarningTitle => 'Большой файл';
+
+  @override
+  String get cpuWarningContent =>
+      'Размер этого файла превышает 200 МБ. На старых устройствах конвертация может привести к высокой загрузке процессора — это нормально.\n\nВы можете просто положить телефон рядом, приложение продолжит работать в фоновом режиме.';
+
+  @override
+  String get cpuWarningCheckbox => 'Больше не показывать';
+
+  @override
+  String get storageWarningTitle => 'Недостаточно места';
+
+  @override
+  String storageWarningContent(String available, String required) {
+    return 'На вашем устройстве осталось всего $available МБ свободного места. Для конвертации требуется около $required МБ. Пожалуйста, сначала освободите место.';
+  }
+
+  @override
+  String get feedbackTitle => 'Отзывы и поддержка';
+
+  @override
+  String get feedbackSubtitle =>
+      'Отправлять ошибки, предложения по улучшению или отзывы';
+
+  @override
+  String get feedbackCategoryLabel => 'Категория';
+
+  @override
+  String get feedbackCategoryBug => 'Сообщить об ошибке';
+
+  @override
+  String get feedbackCategoryFeature => 'Предложение по улучшению';
+
+  @override
+  String get feedbackCategoryFeedback => 'Общие отзывы';
+
+  @override
+  String get feedbackMessageHint => 'Опиши свою проблему…';
+
+  @override
+  String get feedbackSendButton => 'Отправить';
 }

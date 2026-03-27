@@ -1,17 +1,21 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit_config.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:gal/gal.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 import '../l10n/app_localizations.dart';
+import '../services/review_service.dart';
 import '../widgets/native_ad_widget.dart';
 
 class ConversionScreen extends StatefulWidget {
@@ -50,6 +54,8 @@ class ConversionScreen extends StatefulWidget {
 
 class _ConversionScreenState extends State<ConversionScreen> {
   double _progress = 0.0;
+  double _speed = 0.0;    // Encoding-Geschwindigkeit (z.B. 1.8 = 1.8× Echtzeit)
+  int _outputSizeKb = 0;  // Aktuelle Ausgabegröße in KB
   bool _isDone = false;
   bool _isCancelled = false;
   late String _currentOutputPath;
@@ -81,13 +87,54 @@ class _ConversionScreenState extends State<ConversionScreen> {
   }
 
   // ---------------------------------------------------------------------------
+  // Stats-Anzeige
+  // ---------------------------------------------------------------------------
+
+  String _buildStatsLine() {
+    final parts = <String>[];
+
+    // Geschwindigkeit
+    if (_speed > 0) parts.add('${_speed.toStringAsFixed(1)}×');
+
+    // Verbleibende Zeit
+    if (_speed > 0 && _progress > 0 && _progress < 1.0) {
+      final remainingMs = widget.totalDurationMs * (1.0 - _progress);
+      final remainingSec = (remainingMs / 1000 / _speed).round();
+      if (remainingSec >= 5) {
+        if (remainingSec < 60) {
+          parts.add('~${remainingSec}s');
+        } else {
+          final min = remainingSec ~/ 60;
+          final sec = remainingSec % 60;
+          parts.add(sec > 0 ? '~${min}m ${sec}s' : '~${min}m');
+        }
+      }
+    }
+
+    // Ausgabegröße
+    if (_outputSizeKb > 0) {
+      if (_outputSizeKb < 1024) {
+        parts.add('${_outputSizeKb} KB');
+      } else {
+        parts.add('${(_outputSizeKb / 1024).toStringAsFixed(1)} MB');
+      }
+    }
+
+    return parts.join(' · ');
+  }
+
+  // ---------------------------------------------------------------------------
   // Konvertierung
   // ---------------------------------------------------------------------------
 
   void _startConversion() {
     FFmpegKitConfig.enableStatisticsCallback((stats) {
       final p = (stats.getTime() / widget.totalDurationMs).clamp(0.0, 1.0);
-      if (mounted) setState(() => _progress = p);
+      if (mounted) setState(() {
+        _progress = p;
+        _speed = stats.getSpeed() ?? 0.0;
+        _outputSizeKb = stats.getSize() ?? 0;
+      });
     });
 
     FFmpegKit.executeAsync(widget.command, (session) async {
@@ -100,17 +147,24 @@ class _ConversionScreenState extends State<ConversionScreen> {
           _isDone = true;
           _progress = 1.0;
         });
+        unawaited(ReviewService.maybeRequestReview());
       } else if (_isCancelled || ReturnCode.isCancel(rc)) {
         await _deleteOutput();
         if (mounted) Navigator.pop(context);
       } else {
         await _deleteOutput();
-        final log = await session.getFailStackTrace();
+        final log = await session.getLogsAsString();
+        unawaited(FirebaseCrashlytics.instance.recordError(
+          Exception('FFmpeg conversion failed'),
+          null,
+          reason: log ?? 'no log',
+        ));
         if (mounted) {
           final l = AppLocalizations.of(context)!;
+          final shortLog = log != null ? log.substring(0, min(300, log.length)) : '';
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(l.conversionFailed(log ?? '')),
+              content: Text(l.conversionFailed(shortLog)),
               backgroundColor: Colors.red,
             ),
           );
@@ -178,70 +232,40 @@ class _ConversionScreenState extends State<ConversionScreen> {
   Future<void> _onSavePressed() async {
     final l = AppLocalizations.of(context)!;
     try {
-      final fileSize = await File(_currentOutputPath).length();
-      final fileSizeMb = fileSize / (1024 * 1024);
-
-      // Dateiendung bestimmt ob Audio- oder Video-Ordner vorgeschlagen wird
       const audioExtensions = {'mp3', 'm4a', 'opus', 'aac', 'ogg'};
       final ext = widget.defaultFileName.split('.').last.toLowerCase();
-      final fileType = audioExtensions.contains(ext) ? FileType.audio : FileType.video;
+      final isAudio = audioExtensions.contains(ext);
 
-      if (fileSizeMb < 500) {
-        // Kleine Datei: in RAM laden und via FilePicker in den Gerätespeicher speichern
+      final cacheFilePath = _currentOutputPath;
+
+      if (isAudio) {
+        // Audio: Bytes in RAM laden und via FilePicker in Ordner nach Wahl speichern.
+        // OOM-Risiko vertretbar, da komprimierte Audio-Dateien selten > 50 MB sind.
         final bytes = await File(_currentOutputPath).readAsBytes();
         final savedPath = await FilePicker.platform.saveFile(
           bytes: bytes,
           fileName: widget.defaultFileName,
-          type: fileType,
+          type: FileType.audio,
         );
         if (savedPath == null) return; // User hat abgebrochen
-
-        final cacheFilePath = _currentOutputPath;
-        if (!mounted) return;
-        final messenger = ScaffoldMessenger.of(context);
-        Navigator.pop(context);
-        messenger.showSnackBar(
-          SnackBar(
-            content: Text(l.savedSuccess),
-            action: SnackBarAction(
-              label: l.open,
-              onPressed: () => OpenFilex.open(cacheFilePath, type: 'video/*'),
-            ),
-            duration: const Duration(seconds: 20),
-          ),
-        );
       } else {
-        // Große Datei (≥ 500 MB): nur Pfad übergeben, kein RAM-Laden
-        // Datei einmalig in lesbaren Namen umbenennen (idempotent bei Retry)
-        final dir = await ConversionScreen.getCacheDir();
-        final nicePath = '${dir.path}/${widget.defaultFileName}';
-        if (_currentOutputPath != nicePath) {
-          final renamed = await File(_currentOutputPath).rename(nicePath);
-          setState(() => _currentOutputPath = renamed.path);
-        }
-
-        final result = await Share.shareXFiles(
-          [XFile(_currentOutputPath)],
-          subject: widget.defaultFileName,
-        );
-
-        if (result.status == ShareResultStatus.dismissed) return;
-
-        final cacheFilePath = _currentOutputPath;
-        if (!mounted) return;
-        final messenger = ScaffoldMessenger.of(context);
-        Navigator.pop(context);
-        messenger.showSnackBar(
-          SnackBar(
-            content: Text(l.savedSuccess),
-            action: SnackBarAction(
-              label: l.open,
-              onPressed: () => OpenFilex.open(cacheFilePath, type: 'video/*'),
-            ),
-            duration: const Duration(seconds: 20),
-          ),
-        );
+        // Video: direkt in Galerie via MediaStore — kein readAsBytes(), kein OOM-Risiko
+        await Gal.putVideo(_currentOutputPath, album: 'Video Converter');
       }
+
+      if (!mounted) return;
+      final messenger = ScaffoldMessenger.of(context);
+      Navigator.pop(context);
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l.savedSuccess),
+          action: SnackBarAction(
+            label: l.open,
+            onPressed: () => OpenFilex.open(cacheFilePath, type: isAudio ? 'audio/*' : 'video/*'),
+          ),
+          duration: const Duration(seconds: 20),
+        ),
+      );
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -299,6 +323,17 @@ class _ConversionScreenState extends State<ConversionScreen> {
                     }),
                     const SizedBox(height: 12),
                     LinearProgressIndicator(value: _progress),
+                    // Stats-Zeile: nur bei Videos > 30s und sobald Speed-Daten vorliegen
+                    if (!_isDone &&
+                        widget.totalDurationMs > 30000 &&
+                        _speed > 0) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        _buildStatsLine(),
+                        style: Theme.of(context).textTheme.bodySmall,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ],
                 ),
               ),

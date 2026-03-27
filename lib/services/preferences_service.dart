@@ -7,6 +7,9 @@ class PreferencesService {
   static const _keyExpertMode = 'expertMode';
   static const _keyIsPro = 'isPro';
   static const _keyLaunchCount = 'launchCount';
+  static const _keyCpuWarningDismissed = 'cpuWarningDismissed';
+  static const _keyConversionCount = 'conversionCount';
+  static const _keyLastQualityIndex = 'lastQualityIndex';
 
   static Future<bool> getExpertMode() async {
     final prefs = await SharedPreferences.getInstance();
@@ -26,6 +29,34 @@ class PreferencesService {
   static Future<void> setIsPro(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_keyIsPro, value);
+  }
+
+  static Future<bool> getCpuWarningDismissed() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyCpuWarningDismissed) ?? false;
+  }
+
+  static Future<void> setCpuWarningDismissed() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyCpuWarningDismissed, true);
+  }
+
+  static Future<int> getLastQualityIndex() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_keyLastQualityIndex) ?? 0;
+  }
+
+  static Future<void> setLastQualityIndex(int index) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_keyLastQualityIndex, index);
+  }
+
+  /// Erhöht den Konvertierungs-Zähler und gibt true zurück wenn das Intervall erreicht wurde.
+  static Future<bool> incrementConversionCountAndCheck(int interval) async {
+    final prefs = await SharedPreferences.getInstance();
+    final count = (prefs.getInt(_keyConversionCount) ?? 0) + 1;
+    await prefs.setInt(_keyConversionCount, count >= interval ? 0 : count);
+    return count >= interval;
   }
 
   /// Erhöht den Start-Zähler und gibt true zurück wenn das Intervall erreicht wurde.

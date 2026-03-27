@@ -3,8 +3,10 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
+import '../screens/feedback_screen.dart';
 import '../services/preferences_service.dart';
 import '../services/purchase_service.dart';
 
@@ -17,12 +19,16 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isPro = false;
+  String _appVersion = '';
   StreamSubscription<bool>? _proSub;
   StreamSubscription<String>? _errorSub;
 
   @override
   void initState() {
     super.initState();
+    PackageInfo.fromPlatform().then((info) {
+      if (mounted) setState(() => _appVersion = info.version);
+    });
     PreferencesService.getIsPro().then((v) {
       if (mounted) setState(() => _isPro = v);
     });
@@ -82,14 +88,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           ListTile(
+            leading: const Icon(Icons.feedback_outlined),
+            title: Text(l.feedbackTitle),
+            subtitle: Text(l.feedbackSubtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const FeedbackScreen())),
+          ),
+          const Divider(),
+          ListTile(
             leading: const Icon(Icons.description_outlined),
             title: Text(l.licensesTitle),
             subtitle: Text(l.licensesSubtitle),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => showLicensePage(
               context: context,
-              applicationName: 'Simple Video Converter',
-              applicationVersion: '1.0.0',
+              applicationName: l.appName,
+              applicationVersion: _appVersion,
               applicationLegalese: '© 2026 Androho Software',
             ),
           ),
