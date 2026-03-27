@@ -5,8 +5,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_cs.dart';
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_hi.dart';
+import 'app_localizations_id.dart';
+import 'app_localizations_it.dart';
+import 'app_localizations_nl.dart';
+import 'app_localizations_pl.dart';
+import 'app_localizations_pt.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_tr.dart';
 
 // ignore_for_file: type=lint
 
@@ -94,8 +105,20 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('cs'),
     Locale('de'),
-    Locale('en')
+    Locale('en'),
+    Locale('es'),
+    Locale('fr'),
+    Locale('hi'),
+    Locale('id'),
+    Locale('it'),
+    Locale('nl'),
+    Locale('pl'),
+    Locale('pt'),
+    Locale('pt', 'BR'),
+    Locale('ru'),
+    Locale('tr')
   ];
 
   /// Label für das Qualitäts-Dropdown
@@ -563,7 +586,7 @@ abstract class AppLocalizations {
   /// Inhalt des Auflösungs-Erklärungs-Dialogs
   ///
   /// In de, this message translates to:
-  /// **'360p  (640×360)   → sehr kleine Datei,\n                          z.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.'**
+  /// **'360p  (640×360)   → sehr kleine Datei,\nz.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.'**
   String get resolutionExplainContent;
 
   /// Tooltip am Info-Button neben dem Qualitäts-Dropdown
@@ -650,6 +673,12 @@ abstract class AppLocalizations {
   /// **'Danke! Werbung wurde deaktiviert.'**
   String get purchaseSuccess;
 
+  /// No description provided for @appName.
+  ///
+  /// In de, this message translates to:
+  /// **'Video Konverter FFmpeg'**
+  String get appName;
+
   /// Switch-Label für Audio-Only-Modus
   ///
   /// In de, this message translates to:
@@ -679,20 +708,67 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+        'cs',
+        'de',
+        'en',
+        'es',
+        'fr',
+        'hi',
+        'id',
+        'it',
+        'nl',
+        'pl',
+        'pt',
+        'ru',
+        'tr'
+      ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'pt':
+      {
+        switch (locale.countryCode) {
+          case 'BR':
+            return AppLocalizationsPtBr();
+        }
+        break;
+      }
+  }
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'cs':
+      return AppLocalizationsCs();
     case 'de':
       return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'hi':
+      return AppLocalizationsHi();
+    case 'id':
+      return AppLocalizationsId();
+    case 'it':
+      return AppLocalizationsIt();
+    case 'nl':
+      return AppLocalizationsNl();
+    case 'pl':
+      return AppLocalizationsPl();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'tr':
+      return AppLocalizationsTr();
   }
 
   throw FlutterError(

@@ -247,7 +247,7 @@
   "resolutionExplainTitle": "Was bedeuten die Auflösungen?",
   "@resolutionExplainTitle": { "description": "Titel des Auflösungs-Erklärungs-Dialogs in QualitySelector" },
 
-  "resolutionExplainContent": "360p  (640×360)   → sehr kleine Datei,\n                          z.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.",
+  "resolutionExplainContent": "360p  (640×360)   → sehr kleine Datei,\nz.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.",
   "@resolutionExplainContent": { "description": "Inhalt des Auflösungs-Erklärungs-Dialogs" },
 
   "resolutionTooltip": "Auflösungen erklärt",
@@ -306,6 +306,8 @@
 
   "purchaseSuccess": "Danke! Werbung wurde deaktiviert.",
   "@purchaseSuccess": { "description": "Erfolgsmeldung nach IAP-Kauf" },
+
+  "appName": "Video Konverter FFmpeg",
 
   "audioOnly": "Nur Audio",
   "@audioOnly": { "description": "Switch-Label für Audio-Only-Modus" },

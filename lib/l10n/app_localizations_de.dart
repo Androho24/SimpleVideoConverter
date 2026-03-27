@@ -260,7 +260,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get resolutionExplainContent =>
-      '360p  (640×360)   → sehr kleine Datei,\n                          z.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.';
+      '360p  (640×360)   → sehr kleine Datei,\nz.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.';
 
   @override
   String get resolutionTooltip => 'Auflösungen erklärt';
@@ -309,6 +309,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchaseSuccess => 'Danke! Werbung wurde deaktiviert.';
+
+  @override
+  String get appName => 'Video Konverter FFmpeg';
 
   @override
   String get audioOnly => 'Nur Audio';

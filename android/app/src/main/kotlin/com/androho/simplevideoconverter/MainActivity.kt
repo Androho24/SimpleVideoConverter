@@ -9,12 +9,15 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugins.GeneratedPluginRegistrant
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
 
 class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        super.configureFlutterEngine(flutterEngine)
+        // Plugins explizit registrieren bevor registerNativeAdFactory aufgerufen wird.
+        // super.configureFlutterEngine registriert auf manchen Geräten zu spät.
+        GeneratedPluginRegistrant.registerWith(flutterEngine)
         GoogleMobileAdsPlugin.registerNativeAdFactory(
             flutterEngine,
             "nativeAd",

@@ -95,7 +95,7 @@
   "orig": "Orig",
 
   "resolutionExplainTitle": "What do the resolutions mean?",
-  "resolutionExplainContent": "360p  (640×360)   → very small file,\n                          e.g. for WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, good for mobile devices\n\n1080p (1920×1080) → Full HD, standard for\n                          YouTube & TV\n\nHigh/Medium/Low describes quality at the same resolution — higher = larger file.",
+  "resolutionExplainContent": "360p  (640×360)   → very small file,\ne.g. for WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, good for mobile devices\n\n1080p (1920×1080) → Full HD, standard for\n                          YouTube & TV\n\nHigh/Medium/Low describes quality at the same resolution — higher = larger file.",
   "resolutionTooltip": "Resolutions explained",
 
   "trimArea": "Trim range",
@@ -114,6 +114,8 @@
   "purchaseButton": "Buy",
   "purchaseError": "Purchase failed. Please try again.",
   "purchaseSuccess": "Thanks! Ads have been disabled.",
+
+  "appName": "Video Converter FFmpeg",
 
   "audioOnly": "Audio Only",
   "audioOnlyTooltip": "Audio Only explained",

@@ -181,13 +181,18 @@ class _ConversionScreenState extends State<ConversionScreen> {
       final fileSize = await File(_currentOutputPath).length();
       final fileSizeMb = fileSize / (1024 * 1024);
 
+      // Dateiendung bestimmt ob Audio- oder Video-Ordner vorgeschlagen wird
+      const audioExtensions = {'mp3', 'm4a', 'opus', 'aac', 'ogg'};
+      final ext = widget.defaultFileName.split('.').last.toLowerCase();
+      final fileType = audioExtensions.contains(ext) ? FileType.audio : FileType.video;
+
       if (fileSizeMb < 500) {
         // Kleine Datei: in RAM laden und via FilePicker in den Gerätespeicher speichern
         final bytes = await File(_currentOutputPath).readAsBytes();
         final savedPath = await FilePicker.platform.saveFile(
           bytes: bytes,
           fileName: widget.defaultFileName,
-          type: FileType.video,
+          type: fileType,
         );
         if (savedPath == null) return; // User hat abgebrochen
 

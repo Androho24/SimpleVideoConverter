@@ -2,10 +2,10 @@ name: simple_video_converter
 description: "Simple Video Converter mit FFmpegKit (libx264)"
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.0+8
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.6.0
 
 dependencies:
   flutter:
@@ -26,8 +26,9 @@ dependencies:
   firebase_core: ^3.13.0             # Firebase Grundpaket (Pflicht für alle Firebase-Dienste)
   firebase_analytics: ^11.4.4        # Google Analytics für Firebase
   firebase_crashlytics: ^4.3.4       # Crash-Reporting
-  google_mobile_ads: ^5.3.0          # AdMob Native Ads
+  google_mobile_ads: ^7.0.0          # AdMob Native Ads
   in_app_purchase: ^3.2.0            # Einmaliger Kauf „Werbung entfernen"
+  in_app_review: ^2.0.9              # Google Play In-App-Review-Dialog
 
 dev_dependencies:
   flutter_test:

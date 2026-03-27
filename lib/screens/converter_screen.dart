@@ -17,6 +17,7 @@ import '../models/quality_option.dart';
 import '../models/video_metadata.dart';
 import '../screens/conversion_screen.dart';
 import '../services/preferences_service.dart';
+import '../services/review_service.dart';
 import '../widgets/app_header.dart';
 import '../widgets/convert_section.dart';
 import '../widgets/expert_controls.dart';
@@ -54,6 +55,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     _requestPermissions();
     _loadPreferences();
     _cleanAppCache();
+    ReviewService.maybeRequestReview();
   }
 
   /// Bereinigt beim App-Start den Cache:

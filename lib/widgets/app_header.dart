@@ -15,7 +15,7 @@ class AppHeader extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            'Video Converter FFmpeg',
+            l.appName,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
