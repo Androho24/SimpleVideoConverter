@@ -117,7 +117,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       return;
     }
 
-    final fileSizeBytes = await picked.length();
     final path = picked.path;
 
     final meta = await _extractMetadata(path);
@@ -133,7 +132,9 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       return;
     }
 
-    await _playerController?.dispose();
+    final oldController = _playerController;
+    setState(() => _playerController = null);
+    await oldController?.dispose();
 
     final VideoPlayerController controller;
     if (path.startsWith('content://')) {
@@ -163,7 +164,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     });
 
     _updateEstimatedSize();
-    await _maybeShowCpuWarning(fileSizeBytes);
+    await _maybeShowCpuWarning(_metadata!.durationMs);
 
     if (previewFailed && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -177,9 +178,9 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   // CPU-Warndialog bei großen Eingabedateien
   // -------------------------------------------------------------------------
 
-  Future<void> _maybeShowCpuWarning(int fileSizeBytes) async {
-    const thresholdBytes = 200 * 1024 * 1024; // 200 MB
-    if (fileSizeBytes < thresholdBytes || _cpuWarningDismissed) return;
+  Future<void> _maybeShowCpuWarning(int durationMs) async {
+    const thresholdMs = 5 * 60 * 1000; // 5 Minuten
+    if (durationMs < thresholdMs || _cpuWarningDismissed) return;
     if (!mounted) return;
 
     final l = AppLocalizations.of(context)!;
@@ -393,9 +394,10 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         final audioOpt = expert.audioBitrate == 0
             ? '-an'
             : '-c:a $encoderName -b:a ${expert.audioBitrate}k';
+        final videoCodec = expert.container == 'avi' ? 'mpeg4' : 'libx264';
         command =
             '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-            '-c:v libx264 -crf ${expert.crf} $fpsOpt $audioOpt -y "$outputPath"';
+            '-c:v $videoCodec -pix_fmt yuv420p -crf ${expert.crf} $fpsOpt $audioOpt -y "$outputPath"';
       }
     } else if (_isAudioOnly) {
       // ── Normal: nur Audio extrahieren (MP3 192k) ────────────────────────
@@ -414,7 +416,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       final audioOpt = _isMuted ? '-an' : '-c:a aac -b:a 128k';
       command =
           '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-          '-c:v libx264 -crf ${quality.crf} -r 60 $audioOpt -y "$outputPath"';
+          '-c:v libx264 -pix_fmt yuv420p -crf ${quality.crf} -r 60 $audioOpt -y "$outputPath"';
     }
 
     final originalName = _videoPath!.split('/').last;

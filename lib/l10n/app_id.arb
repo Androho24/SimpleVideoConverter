@@ -54,6 +54,7 @@
     "gplLicenseTitle": "Teks lisensi GPL-3.0",
     "sourceCodeTitle": "Kode sumber (GitHub)",
     "privacyPolicyTitle": "Kebijakan Privasi",
+    "adConsentTitle": "Pengaturan Privasi",
     "imprintTitle":
 
   "Imprint",
@@ -114,7 +115,7 @@
 "aspectLocked": "Rasio aspek terkunci",
   "aspectUnlocked": "Rasio aspek bebas",
   "cpuWarningTitle": "File besar",
-  "cpuWarningContent": "File ini berukuran lebih dari 200 MB. Pada perangkat lama, proses konversi dapat menyebabkan penggunaan prosesor yang tinggi – hal ini normal.\n\nAnda dapat meletakkan ponsel di samping, aplikasi akan tetap berjalan di latar belakang.",
+  "cpuWarningContent": "Video ini berdurasi lebih dari 5 menit. Pada perangkat lama, proses konversi dapat menyebabkan penggunaan prosesor yang tinggi – hal ini normal.\n\nAnda dapat meletakkan ponsel di samping, aplikasi akan tetap berjalan di latar belakang.",
   "cpuWarningCheckbox": "Jangan tampilkan lagi",
   "storageWarningTitle": "Ruang penyimpanan tidak cukup",
   "storageWarningContent": "Perangkat Anda hanya memiliki sisa ruang {available} MB. Konversi membutuhkan sekitar {required} MB. Silakan kosongkan ruang penyimpanan terlebih dahulu.",

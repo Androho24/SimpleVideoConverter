@@ -9,10 +9,13 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
 
 class MainActivity : FlutterActivity() {
+
+    private val ADS_CHANNEL = "com.androho.simplevideoconverter/ads"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         // Plugins explizit registrieren bevor registerNativeAdFactory aufgerufen wird.
@@ -23,6 +26,19 @@ class MainActivity : FlutterActivity() {
             "nativeAd",
             NativeAdFactoryImpl(layoutInflater)
         )
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ADS_CHANNEL)
+            .setMethodCallHandler { call, result ->
+                val adManager = (application as? SimpleVideoConverterApplication)?.getAppOpenAdManager()
+                when (call.method) {
+                    "isPrivacyOptionsRequired" ->
+                        result.success(adManager?.isPrivacyOptionsRequired(this) ?: false)
+                    "showPrivacyOptionsForm" ->
+                        adManager?.showPrivacyOptionsForm(this) { result.success(null) }
+                            ?: result.success(null)
+                    else -> result.notImplemented()
+                }
+            }
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {

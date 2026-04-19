@@ -54,6 +54,7 @@
   "gplLicenseTitle": "Tekst licencji GPL-3.0",
   "sourceCodeTitle": "Kod źródłowy (GitHub)",
   "privacyPolicyTitle": "Polityka prywatności",
+  "adConsentTitle": "Ustawienia prywatności",
   "imprintTitle":
 
 "Stopka redakcyjna",
@@ -114,7 +115,7 @@
 "aspectLocked": "Zablokowany współczynnik proporcji",
   "aspectUnlocked": "Swobodny współczynnik proporcji",
   "cpuWarningTitle": "Duży plik",
-  "cpuWarningContent": "Ten plik ma rozmiar większy niż 200 MB. Na starszych urządzeniach konwersja może powodować wysokie obciążenie procesora – jest to normalne.\n\nMożesz po prostu odłożyć telefon na bok, aplikacja będzie nadal działać w tle.",
+  "cpuWarningContent": "Ten film ma długość ponad 5 minut. Na starszych urządzeniach konwersja może powodować wysokie obciążenie procesora – jest to normalne.\n\nMożesz po prostu odłożyć telefon na bok, aplikacja będzie nadal działać w tle.",
   "cpuWarningCheckbox": "Nie pokazuj więcej",
   "storageWarningTitle": "Za mało miejsca",
   "storageWarningContent": "Na Twoim urządzeniu pozostało tylko {available} MB wolnego miejsca. Do konwersji potrzeba około {required} MB. Najpierw zwolnij miejsce.",

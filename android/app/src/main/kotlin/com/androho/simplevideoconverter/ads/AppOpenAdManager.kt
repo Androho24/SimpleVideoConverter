@@ -2,6 +2,7 @@ package com.androho.simplevideoconverter.ads
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 
 /**
  * Interface für App Open Ad Management.
@@ -14,6 +15,24 @@ interface AppOpenAdManager {
 
     /** Lädt eine neue App Open Ad im Hintergrund. */
     fun loadAd()
+
+    /**
+     * Führt den UMP-Consent-Flow durch und initialisiert danach MobileAds.
+     * Bei Pro-Nutzern wird der Consent-Flow übersprungen.
+     */
+    fun requestConsentAndInitialize(activity: Activity, onReady: () -> Unit)
+
+    /**
+     * Initialisiert MobileAds nach abgeschlossenem Consent.
+     * Idempotent: Bei bereits erfolgter Initialisierung sofortiger Callback.
+     */
+    fun initializeMobileAds(canShowAds: Boolean, onInitialized: () -> Unit)
+
+    /** Gibt zurück ob der User seinen Datenschutz-Consent anpassen kann (EU/CCPA). */
+    fun isPrivacyOptionsRequired(context: Context): Boolean
+
+    /** Zeigt das UMP Privacy Options Formular (für Settings-Screen). */
+    fun showPrivacyOptionsForm(activity: Activity, onDone: () -> Unit)
 
     /**
      * Cold-Start / Background-Return Modus via SplashActivity.

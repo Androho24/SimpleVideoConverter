@@ -54,6 +54,7 @@
   "gplLicenseTitle": "Texte de la licence GPL 3.0",
   "sourceCodeTitle": "Code source (GitHub)",
   "privacyPolicyTitle": "Politique de confidentialité",
+  "adConsentTitle": "Paramètres de confidentialité",
   "imprintTitle":
  
 "Mentions légales",
@@ -114,7 +115,7 @@
 "aspectLocked": "Format d'image verrouillé",
   "aspectUnlocked": "Format d'image libre",
   "cpuWarningTitle": "Fichier volumineux",
-  "cpuWarningContent" : "Ce fichier dépasse 200 Mo. Sur les appareils plus anciens, la conversion peut entraîner une utilisation élevée du processeur – c'est normal.\n\nTu peux simplement poser ton téléphone à côté, l'application continue de fonctionner en arrière-plan.",
+  "cpuWarningContent" : "Cette vidéo dépasse 5 minutes. Sur les appareils plus anciens, la conversion peut entraîner une utilisation élevée du processeur – c'est normal.\n\nTu peux simplement poser ton téléphone à côté, l'application continue de fonctionner en arrière-plan.",
  "cpuWarningCheckbox":"Ne plus afficher",
   "storageWarningTitle":"Espace de stockage insuffisant",
  "storageWarningContent": "Il ne reste plus que {available} Mo d'espace libre sur votre appareil. La conversion nécessite environ {required} Mo. Veuillez libérer de l'espace au préalable.",

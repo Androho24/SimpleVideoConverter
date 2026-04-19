@@ -169,6 +169,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get privacyPolicyTitle => 'Política de Privacidade';
 
   @override
+  String get adConsentTitle => 'Configurações de privacidade';
+
+  @override
   String get imprintTitle => 'Notas legais';
 
   @override
@@ -334,7 +337,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'Este ficheiro tem mais de 200 MB. Em dispositivos mais antigos, a conversão pode causar uma elevada utilização do processador – isto é normal.\n\nPodes simplesmente deixar o telemóvel ao lado, a aplicação continua a funcionar em segundo plano.';
+      'Este vídeo tem mais de 5 minutos. Em dispositivos mais antigos, a conversão pode causar uma elevada utilização do processador – isto é normal.\n\nPodes simplesmente deixar o telemóvel ao lado, a aplicação continua a funcionar em segundo plano.';
 
   @override
   String get cpuWarningCheckbox => 'Não mostrar mais';
@@ -538,6 +541,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get privacyPolicyTitle => 'Política de Privacidade';
 
   @override
+  String get adConsentTitle => 'Configurações de privacidade';
+
+  @override
   String get imprintTitle => 'Notas legais';
 
   @override
@@ -703,7 +709,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get cpuWarningContent =>
-      'Este arquivo tem mais de 200 MB. Em aparelhos mais antigos, a conversão pode causar alta utilização do processador – isso é normal.\n\nVocê pode simplesmente deixar o celular ao lado, o aplicativo continuará rodando em segundo plano.';
+      'Este vídeo tem mais de 5 minutos. Em aparelhos mais antigos, a conversão pode causar alta utilização do processador – isso é normal.\n\nVocê pode simplesmente deixar o celular ao lado, o aplicativo continuará rodando em segundo plano.';
 
   @override
   String get cpuWarningCheckbox => 'Não mostrar mais';

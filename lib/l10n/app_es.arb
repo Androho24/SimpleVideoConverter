@@ -54,6 +54,7 @@
     "gplLicenseTitle": "Texto de la licencia GPL-3.0",
     "sourceCodeTitle": "Código fuente (GitHub)",
     "privacyPolicyTitle": "Política de privacidad",
+    "adConsentTitle": "Configuración de privacidad",
     "imprintTitle":
    
   "Aviso legal",
@@ -114,7 +115,7 @@
 "aspectLocked": "Relación de aspecto bloqueada",
   "aspectUnlocked": "Relación de aspecto libre",
   "cpuWarningTitle": "Archivo grande",
-  "cpuWarningContent": "Este archivo tiene un tamaño superior a 200 MB. En dispositivos antiguos, la conversión puede provocar una elevada carga del procesador; esto es normal.\n\nPuedes dejar el móvil a un lado, la aplicación seguirá funcionando en segundo plano.",
+  "cpuWarningContent": "Este vídeo tiene una duración superior a 5 minutos. En dispositivos antiguos, la conversión puede provocar una elevada carga del procesador; esto es normal.\n\nPuedes dejar el móvil a un lado, la aplicación seguirá funcionando en segundo plano.",
   "cpuWarningCheckbox": "No volver a mostrar",
   "storageWarningTitle": "No hay suficiente espacio de almacenamiento",
   "storageWarningContent": "Tu dispositivo solo tiene {available} MB libres. Para la conversión se necesitan aprox. {required} MB. Por favor, libera espacio primero.",

@@ -169,6 +169,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get privacyPolicyTitle => 'Политика конфиденциальности';
 
   @override
+  String get adConsentTitle => 'Настройки конфиденциальности';
+
+  @override
   String get imprintTitle => 'Выходные данные';
 
   @override
@@ -335,7 +338,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'Размер этого файла превышает 200 МБ. На старых устройствах конвертация может привести к высокой загрузке процессора — это нормально.\n\nВы можете просто положить телефон рядом, приложение продолжит работать в фоновом режиме.';
+      'Длительность этого видео превышает 5 минут. На старых устройствах конвертация может привести к высокой загрузке процессора — это нормально.\n\nВы можете просто положить телефон рядом, приложение продолжит работать в фоновом режиме.';
 
   @override
   String get cpuWarningCheckbox => 'Больше не показывать';

@@ -1,0 +1,149 @@
+{
+  "@@locale": "th",
+
+  "qualityLabel": "คุณภาพ",
+  "quality1080pHigh": "1080p สูง",
+  "quality1080pMedium": "1080p ปานกลาง",
+  "quality1080pLow": "1080p ต่ำ",
+  "quality1080pVeryLow": "1080p ต่ำมาก",
+  "quality720pHigh": "720p สูง",
+  "quality720pMedium": "720p ปานกลาง",
+  "quality720pLow": "720p ต่ำ",
+  "quality720pVeryLow": "720p ต่ำมาก",
+  "quality480pHigh": "480p สูง",
+  "quality480pMedium": "480p ปานกลาง",
+  "quality480pLow": "480p ต่ำ",
+  "quality480pVeryLow": "480p ต่ำมาก",
+  "quality360pHigh": "360p สูง",
+  "quality360pMedium": "360p ปานกลาง",
+  "quality360pLow": "360p ต่ำ",
+  "quality360pVeryLow": "360p ต่ำมาก",
+
+  "mute": "ปิดเสียง",
+
+  "ok": "ตกลง",
+  "selectVideo": "เลือกวิดีโอ",
+  "videoLoading": "กำลังโหลดวิดีโอ…",
+  "modeNormal": "ปกติ",
+  "modeExpert": "ขั้นสูง",
+
+  "invalidVideoFile": "กรุณาเลือกไฟล์วิดีโอที่ถูกต้อง",
+  "fileLoadError": "ไม่สามารถโหลดไฟล์ได้ กรุณาเลือกไฟล์วิดีโอ",
+
+  "previewNotAvailable": "ไม่สามารถแสดงตัวอย่างได้ แต่วิดีโอยังสามารถแปลงได้",
+  "previewNotAvailableLabel": "ไม่สามารถแสดงตัวอย่างได้\n(ความละเอียดสูงเกินไปสำหรับอุปกรณ์นี้)",
+
+  "noVideoLoaded": "กรุณาโหลดวิดีโอก่อน",
+
+  "cancelConversionTitle": "ยกเลิกการแปลง?",
+  "cancelConversionContent": "ความคืบหน้าในการแปลงจะหายไป",
+  "continueConversion": "ดำเนินการต่อ",
+  "cancel": "ยกเลิก",
+  "discardVideoTitle": "ทิ้งวิดีโอ?",
+  "discardVideoContent": "วิดีโอที่แปลงแล้วจะถูกลบและจะไม่ถูกบันทึก",
+  "keep": "เก็บไว้",
+  "discard": "ทิ้ง",
+  "save": "บันทึก",
+  "saveVideoDialogTitle": "บันทึกวิดีโอ",
+  "savedSuccess": "บันทึกแล้ว!",
+  "open": "เปิด",
+  "saveError": "เกิดข้อผิดพลาดในการบันทึก อาจมีพื้นที่จัดเก็บไม่เพียงพอ",
+  "conversionDone": "เสร็จสิ้น!",
+  "conversionProgress": "กำลังแปลง: {percent}%",
+  "conversionFailed": "การแปลงล้มเหลว: {error}",
+
+  "settingsTitle": "การตั้งค่า",
+  "licensesTitle": "ใบอนุญาต",
+  "licensesSubtitle": "ใบอนุญาตโอเพนซอร์สของแอปนี้",
+  "gplLicenseTitle": "ข้อความใบอนุญาต GPL-3.0",
+  "sourceCodeTitle": "ซอร์สโค้ด (GitHub)",
+  "privacyPolicyTitle": "นโยบายความเป็นส่วนตัว",
+  "adConsentTitle": "การตั้งค่าความเป็นส่วนตัว",
+  "imprintTitle": "ข้อมูลผู้ให้บริการ",
+  "linkOpenError": "ไม่สามารถเปิดลิงก์ได้",
+
+  "muteTooltip": "คำอธิบายการปิดเสียง",
+  "muteInfoContent": "ลบเสียงออกจากวิดีโอที่แปลงแล้วทั้งหมด\n\nมีประโยชน์ เช่น ใช้ลบเสียงรบกวนพื้นหลังหรือลดขนาดไฟล์",
+  "estimatedSize": "ขนาดโดยประมาณ: {size} MB",
+  "convertButton": "แปลง",
+
+  "crfLabel": "คุณภาพวิดีโอ (CRF)",
+  "crfInfoTitle": "CRF — คุณภาพวิดีโอ",
+  "crfInfoContent": "0 → ไม่สูญเสียข้อมูล (ไฟล์ใหญ่มาก)\n18 → แทบไม่สูญเสียคุณภาพ\n23 → มาตรฐาน (สมดุลดี)\n28 → คุณภาพลดลงอย่างเห็นได้ชัด\n51 → คุณภาพต่ำสุด\n\nแนะนำ: 18–28",
+
+  "resolutionLabel": "ความละเอียด",
+  "resolutionInfoTitle": "ความละเอียดทั่วไป",
+  "resolutionInfoContent": "3840 × 2160 — 4K UHD\n2560 × 1440 — 2K QHD\n1920 × 1080 — Full HD\n1280 × 720 — HD\n854 × 480 — 480p\n640 × 360 — 360p\n426 × 240 — 240p\n\nคำแนะนำ: เว้นช่องหนึ่งไว้ = อีกช่องจะถูกคำนวณตามสัดส่วน",
+
+  "widthLabel": "ความกว้าง",
+  "heightLabel": "ความสูง",
+  "emptyEqualsOriginal": "ว่าง = ต้นฉบับ",
+
+  "fpsLabel": "FPS",
+  "fpsInfoTitle": "เฟรมต่อวินาที",
+  "fpsInfoContent": "ต้นฉบับ → ใช้ค่า FPS เดิมของวิดีโอต้นฉบับ\n24 → มาตรฐานภาพยนตร์\n25 → มาตรฐาน PAL/ทีวี (ยุโรป)\n30 → NTSC/ทีวี, โซเชียลมีเดีย\n60 → ลื่นไหล, เกม, กีฬา",
+
+  "audioBitrateLabel": "บิตเรตเสียง",
+  "silent": "ไม่มีเสียง",
+  "audioBitrateInfoContent": "ไม่มีเสียง → ไม่มีเสียงประกอบ\n64 kbps → เสียงพูด, พอดแคสต์\n96 kbps → คุณภาพเสียงพูดดี\n128 kbps → มาตรฐานสำหรับเพลง\n192 kbps → คุณภาพเสียงสูง\n320 kbps → คุณภาพ MP3 สูงสุด",
+
+  "audioCodecLabel": "โคเดกเสียง",
+  "audioCodecInfoContent": "AAC → มาตรฐานสำหรับ MP4, รองรับได้ดีที่สุด\nMP3 → ใช้กันอย่างแพร่หลาย, ค่อนข้างเก่า\nOpus → ทันสมัยและมีประสิทธิภาพ, เหมาะสำหรับ MKV",
+
+  "outputFormatLabel": "รูปแบบเอาต์พุต",
+  "outputFormatInfoContent": "MP4 → ใช้งานได้ทั่วไป, รองรับได้ดีที่สุด\nMKV → ยืดหยุ่น, รองรับโคเดกหลากหลาย, แต่เข้ากันได้น้อยกว่า\nMOV → รูปแบบของ Apple/QuickTime\nAVI → รูปแบบเก่า, รองรับได้กว้าง\nTS → MPEG transport stream, ใช้กับทีวี/สตรีมมิง",
+
+  "orig": "ต้นฉบับ",
+
+  "resolutionExplainTitle": "ความละเอียดหมายถึงอะไร?",
+  "resolutionExplainContent": "360p (640×360) → ไฟล์ขนาดเล็กมาก,\nเช่น สำหรับ WhatsApp\n\n480p (854×480) → ความละเอียดมาตรฐาน (SD)\n\n720p (1280×720) → HD, เหมาะสำหรับอุปกรณ์พกพา\n\n1080p (1920×1080) → Full HD, เป็นมาตรฐานสำหรับ\nYouTube และทีวี\n\nHigh/Medium/Low หมายถึงระดับคุณภาพที่ความละเอียดเดียวกัน — ยิ่งสูง ไฟล์ก็ยิ่งใหญ่",
+  "resolutionTooltip": "คำอธิบายความละเอียด",
+
+  "trimArea": "ช่วงการตัด",
+  "trimStartLabel": "เริ่มต้น: {time}",
+  "trimEndLabel": "สิ้นสุด: {time}",
+
+  "adLoading": "กำลังโหลดโฆษณา…",
+
+  "convertedPrefix": "converted_",
+
+  "removeAdsTitle": "ลบโฆษณา",
+  "removeAdsSubtitle": "ซื้อครั้งเดียว – {price}",
+  "removeAdsActiveTitle": "ไม่มีโฆษณา ✓",
+  "removeAdsActiveSubtitle": "ขอบคุณสำหรับการสนับสนุนของคุณ!",
+  "restorePurchasesTitle": "กู้คืนการซื้อ",
+  "purchaseButton": "ซื้อ",
+  "purchaseError": "การซื้อไม่สำเร็จ กรุณาลองอีกครั้ง",
+  "purchaseSuccess": "ขอบคุณ! ปิดโฆษณาแล้ว",
+
+  "appName": "ตัวแปลงวิดีโอ FFmpeg",
+
+  "audioOnly": "เสียงเท่านั้น",
+  "audioOnlyTooltip": "คำอธิบายโหมดเสียงเท่านั้น",
+  "audioOnlyInfoContent": "แยกเฉพาะแทร็กเสียงออกจากวิดีโอ — ไม่มีภาพ\n\nโหมดปกติ: MP3 ที่ 192 kbps\nโหมดขั้นสูง: ใช้โคเดกและบิตเรตจากการตั้งค่าเสียง\n\nมีประโยชน์ เช่น บันทึกเพลงหรือพอดแคสต์จากวิดีโอ",
+
+  "aspectLocked": "ล็อกอัตราส่วนภาพ",
+  "aspectUnlocked": "ปลดล็อกอัตราส่วนภาพ",
+
+  "cpuWarningTitle": "ไฟล์ขนาดใหญ่",
+  "cpuWarningContent": "วิดีโอนี้มีความยาวมากกว่า 5 นาที บนอุปกรณ์รุ่นเก่า การแปลงอาจใช้ CPU สูง — เป็นเรื่องปกติ\n\nคุณสามารถวางโทรศัพท์ทิ้งไว้ได้ แอปจะทำงานต่อในพื้นหลัง",
+  "cpuWarningCheckbox": "อย่าแสดงอีก",
+
+  "storageWarningTitle": "พื้นที่เก็บข้อมูลไม่เพียงพอ",
+  "storageWarningContent": "อุปกรณ์ของคุณมีพื้นที่ว่างเพียง {available} MB การแปลงต้องใช้พื้นที่ประมาณ {required} MB โปรด",
+  "@storageWarningContent": {
+    "placeholders": {
+      "available": { "type": "String" },
+      "required": { "type": "String" }
+    }
+  },
+
+  "feedbackTitle": "ข้อเสนอแนะและการสนับสนุน",
+  "feedbackSubtitle": "ส่งบั๊ก ข้อเสนอแนะ หรือความคิดเห็น",
+  "feedbackCategoryLabel": "หมวดหมู่",
+  "feedbackCategoryBug": "รายงานบั๊ก",
+  "feedbackCategoryFeature": "คำขอเพิ่มฟีเจอร์",
+  "feedbackCategoryFeedback": "ข้อเสนอแนะทั่วไป",
+  "feedbackMessageHint": "อธิบายปัญหาของคุณ…",
+  "feedbackSendButton": "ส่ง"
+}

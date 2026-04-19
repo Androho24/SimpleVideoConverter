@@ -58,6 +58,7 @@
   "gplLicenseTitle": "GPL-3.0 License Text",
   "sourceCodeTitle": "Source Code (GitHub)",
   "privacyPolicyTitle": "Privacy Policy",
+  "adConsentTitle": "Privacy Settings",
   "imprintTitle": "Imprint",
   "linkOpenError": "The link could not be opened.",
 
@@ -125,7 +126,7 @@
   "aspectUnlocked": "Aspect ratio unlocked",
 
   "cpuWarningTitle": "Large file",
-  "cpuWarningContent": "This file is larger than 200 MB. On older devices, the conversion may cause high CPU usage — that's normal.\n\nYou can just put your phone aside; the app will keep running in the background.",
+  "cpuWarningContent": "This video is longer than 5 minutes. On older devices, the conversion may cause high CPU usage — that's normal.\n\nYou can just put your phone aside; the app will keep running in the background.",
   "cpuWarningCheckbox": "Don't show again",
 
   "storageWarningTitle": "Not enough storage",

@@ -167,6 +167,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get privacyPolicyTitle => 'Zásady ochrany osobních údajů';
 
   @override
+  String get adConsentTitle => 'Nastavení soukromí';
+
+  @override
   String get imprintTitle => 'Impressum';
 
   @override
@@ -332,7 +335,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'Tento soubor je větší než 200 MB. Na starších zařízeních může konverze vést k vysokému zatížení procesoru – to je normální.\n\nMůžeš telefon jednoduše odložit, aplikace bude pokračovat v běhu na pozadí.';
+      'Toto video je delší než 5 minut. Na starších zařízeních může konverze vést k vysokému zatížení procesoru – to je normální.\n\nMůžeš telefon jednoduše odložit, aplikace bude pokračovat v běhu na pozadí.';
 
   @override
   String get cpuWarningCheckbox => 'Zobrazovat již ne';

@@ -161,6 +161,9 @@
   "privacyPolicyTitle": "Datenschutzerklärung",
   "@privacyPolicyTitle": { "description": "Datenschutz ListTile Titel" },
 
+  "adConsentTitle": "Datenschutz-Einstellungen",
+  "@adConsentTitle": { "description": "Ad Consent Settings ListTile Titel" },
+
   "imprintTitle": "Impressum",
   "@imprintTitle": { "description": "Impressum ListTile Titel" },
 
@@ -327,7 +330,7 @@
   "cpuWarningTitle": "Große Datei",
   "@cpuWarningTitle": { "description": "Titel des CPU-Warnhinweis-Dialogs bei großen Eingabedateien" },
 
-  "cpuWarningContent": "Diese Datei ist größer als 200 MB. Auf älteren Geräten kann die Konvertierung zu hoher Prozessorauslastung führen – das ist normal.\n\nDu kannst das Handy einfach daneben legen, die App läuft im Hintergrund weiter.",
+  "cpuWarningContent": "Dieses Video ist länger als 5 Minuten. Auf älteren Geräten kann die Konvertierung zu hoher Prozessorauslastung führen – das ist normal.\n\nDu kannst das Handy einfach daneben legen, die App läuft im Hintergrund weiter.",
   "@cpuWarningContent": { "description": "Inhalt des CPU-Warnhinweis-Dialogs" },
 
   "cpuWarningCheckbox": "Nicht mehr anzeigen",

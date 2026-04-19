@@ -169,6 +169,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get privacyPolicyTitle => 'Kebijakan Privasi';
 
   @override
+  String get adConsentTitle => 'Pengaturan Privasi';
+
+  @override
   String get imprintTitle => 'Imprint';
 
   @override
@@ -334,7 +337,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'File ini berukuran lebih dari 200 MB. Pada perangkat lama, proses konversi dapat menyebabkan penggunaan prosesor yang tinggi – hal ini normal.\n\nAnda dapat meletakkan ponsel di samping, aplikasi akan tetap berjalan di latar belakang.';
+      'Video ini berdurasi lebih dari 5 menit. Pada perangkat lama, proses konversi dapat menyebabkan penggunaan prosesor yang tinggi – hal ini normal.\n\nAnda dapat meletakkan ponsel di samping, aplikasi akan tetap berjalan di latar belakang.';
 
   @override
   String get cpuWarningCheckbox => 'Jangan tampilkan lagi';

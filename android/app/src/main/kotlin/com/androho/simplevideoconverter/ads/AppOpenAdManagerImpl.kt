@@ -10,20 +10,25 @@ import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
+import com.androho.simplevideoconverter.BuildConfig
 import com.androho.simplevideoconverter.SimpleVideoConverterApplication
 import com.androho.simplevideoconverter.SplashActivity
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.appopen.AppOpenAd
+import com.google.android.ump.ConsentInformation
+import com.google.android.ump.UserMessagingPlatform
 import java.util.Date
 
 /**
  * Implementierung des App Open Ad Managers für SimpleVideoConverter.
  *
  * Features:
- * - Frequenz-Limit: Max. 1 Ad alle 2 Stunden
+ * - UMP Consent-Flow vor MobileAds-Initialisierung
+ * - Frequenz-Limit: 2s (Debug) / 2h (Release)
  * - Ad-Caching: Max. 4 Stunden alte Ads
  * - Cold-Start + Background-Return via SplashActivity
  * - 1 Stunde Grace Period bei Erstinstallation
@@ -33,6 +38,8 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
     private var appOpenAd: AppOpenAd? = null
     private var isShowingAd = false
     private var isLoadingAd = false
+    @Volatile private var isMobileAdsInitialized = false
+    @Volatile private var adsAllowed = false
     private var loadTime: Long = 0
     private lateinit var application: Application
 
@@ -46,44 +53,101 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
     companion object {
         private const val TAG = "AppOpenAdManager"
 
-        // TODO: Produktions-Ad-Unit-ID aus AdMob eintragen (Typ: App Open)
-        // In AdMob → Apps → Simple Video Converter → Ad Units → App open erstellen
-
-        // Frequenz-Limit: Min. 2 Stunden zwischen Ads
-        private const val AD_FREQUENCY_HOURS = 2
-        private const val AD_FREQUENCY_MS = 7_200_000L
-
-        // Ad Cache Limit: Max. 4 Stunden alte Ads
+        private val AD_FREQUENCY_MS = if (BuildConfig.DEBUG) 10000L else 7_200_000L
+        private const val AD_FREQUENCY_HOURS = 1
         private const val AD_CACHE_MAX_AGE_MS = 4 * 60 * 60 * 1000L
 
-        // SharedPreferences
         private const val PREFS_NAME = "app_open_ad_prefs"
         private const val KEY_LAST_AD_TIME = "last_ad_show_time"
-
-        // Grace Period bei Erstinstallation: erste Ad frühestens nach 1 Stunde
         private const val FIRST_INSTALL_GRACE_PERIOD_MS = 1L * 60 * 60 * 1000L
-
-        // Timeout für Cold-Start-Ad-Loading: 3 Sekunden
         private const val COLD_START_TIMEOUT_MS = 3000L
     }
 
     override fun initialize(application: Application) {
         this.application = application
 
-        // Fresh-Install Check: Frequenz-Timestamp so setzen, dass erste Ad nach ~1h kommt
+        // Fresh-Install Check: erste Ad frühestens nach 1h
         val prefs = application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         if (!prefs.contains(KEY_LAST_AD_TIME)) {
-            val gracePeriodStart = System.currentTimeMillis() - FIRST_INSTALL_GRACE_PERIOD_MS
-            prefs.edit().putLong(KEY_LAST_AD_TIME, gracePeriodStart).apply()
-            Log.d(TAG, "Fresh install – erste Ad frühestens in 1h")
+            prefs.edit().putLong(KEY_LAST_AD_TIME, System.currentTimeMillis()).apply()
+            Log.d(TAG, "Fresh install – erste Ad frühestens in ${AD_FREQUENCY_MS / 1000}s")
         }
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-        loadAd()
-        Log.d(TAG, "AppOpenAdManager initialized")
+
+        // Frühzeitige MobileAds-Initialisierung für Bestandsnutzer mit gecachtem Consent.
+        // Spart ~400-700ms im Cold-Start-Pfad. Auf nächsten Main-Looper-Tick posten,
+        // damit Application.onCreate() schnell returned.
+        val consentInfo = UserMessagingPlatform.getConsentInformation(application)
+        if (consentInfo.canRequestAds()) {
+            mainHandler.post {
+                Log.d(TAG, "Consent bereits vorhanden – starte MobileAds früh")
+                MobileAds.initialize(application) {
+                    isMobileAdsInitialized = true
+                    adsAllowed = true
+                    Log.d(TAG, "MobileAds früh initialisiert – starte Ad-Load")
+                    loadAd()
+                }
+            }
+        } else {
+            Log.d(TAG, "Kein Consent gecacht – warte auf SplashActivity")
+        }
+    }
+
+    override fun initializeMobileAds(canShowAds: Boolean, onInitialized: () -> Unit) {
+        Log.d(TAG, "initializeMobileAds() canShowAds=$canShowAds")
+        if (isMobileAdsInitialized) {
+            Log.d(TAG, "MobileAds bereits initialisiert")
+            mainHandler.post { onInitialized() }
+            return
+        }
+        if (!canShowAds) {
+            Log.d(TAG, "canShowAds=false – MobileAds wird nicht initialisiert")
+            mainHandler.post { onInitialized() }
+            return
+        }
+        MobileAds.initialize(application) {
+            isMobileAdsInitialized = true
+            adsAllowed = true
+            Log.d(TAG, "MobileAds initialisiert nach Consent – starte Ad-Load")
+            loadAd()
+            mainHandler.post { onInitialized() }
+        }
+    }
+
+    override fun requestConsentAndInitialize(activity: Activity, onReady: () -> Unit) {
+        if (isProPurchased()) {
+            Log.d(TAG, "requestConsentAndInitialize: Pro aktiv – Consent übersprungen")
+            onReady()
+            return
+        }
+        ConsentHelper.requestAndShowIfRequired(activity) { canShowAds ->
+            initializeMobileAds(canShowAds) {
+                onReady()
+            }
+        }
+    }
+
+    override fun isPrivacyOptionsRequired(context: Context): Boolean {
+        val consentInfo = UserMessagingPlatform.getConsentInformation(context)
+        return consentInfo.privacyOptionsRequirementStatus ==
+                ConsentInformation.PrivacyOptionsRequirementStatus.REQUIRED
+    }
+
+    override fun showPrivacyOptionsForm(activity: Activity, onDone: () -> Unit) {
+        UserMessagingPlatform.showPrivacyOptionsForm(activity) { formError ->
+            if (formError != null) {
+                Log.w(TAG, "Privacy options form error: ${formError.message}")
+            }
+            onDone()
+        }
     }
 
     override fun loadAd() {
+        if (!adsAllowed) {
+            Log.d(TAG, "loadAd() skipped – adsAllowed=false")
+            return
+        }
         if (isAdAvailable()) {
             Log.d(TAG, "Ad bereits geladen und gültig")
             return
@@ -150,7 +214,6 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
         coldStartCallback = onAdFinished
         coldStartShowingCallback = onAdShowing
 
-        // Timeout: nach 3s wird Callback auf jeden Fall gefeuert
         coldStartTimeoutRunnable = Runnable {
             Log.w(TAG, "Cold-Start: Timeout (${COLD_START_TIMEOUT_MS}ms) – kein Ad geladen")
             fireColdStartCallback()
@@ -164,10 +227,12 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
         }
 
         if (isLoadingAd) {
-            Log.d(TAG, "Cold-Start: Ad lädt noch – warte auf onAdLoaded (Timeout: ${COLD_START_TIMEOUT_MS}ms)")
-        } else {
-            Log.d(TAG, "Cold-Start: Starte Ad-Load (Timeout: ${COLD_START_TIMEOUT_MS}ms)")
+            Log.d(TAG, "Cold-Start: Ad lädt noch – warte auf onAdLoaded")
+        } else if (adsAllowed) {
+            Log.d(TAG, "Cold-Start: Starte Ad-Load")
             loadAd()
+        } else {
+            Log.d(TAG, "Cold-Start: Warte auf MobileAds-Initialisierung")
         }
     }
 
@@ -197,7 +262,7 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
                 appOpenAd = null
                 isShowingAd = false
                 saveLastAdTime(activity)
-                loadAd() // Nächste Ad vorbereiten
+                loadAd()
                 Log.d(TAG, "App Open Ad dismissed")
                 onDismissed?.invoke()
             }
@@ -238,12 +303,10 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
             Log.d(TAG, "Ad wird bereits angezeigt")
             return false
         }
-
         if (!isFrequencyLimitReached(context)) {
             Log.d(TAG, "Frequenz-Limit noch nicht erreicht")
             return false
         }
-
         Log.d(TAG, "Alle Bedingungen erfüllt – Ad wird gezeigt")
         return true
     }
@@ -272,7 +335,6 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
         return (Date().time - loadTime) < AD_CACHE_MAX_AGE_MS
     }
 
-    /** Lifecycle: App kommt in den Foreground (Start oder Background-Return). */
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
         Log.d(TAG, "onStart() – App im Foreground")
@@ -281,9 +343,12 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
             Log.d(TAG, "onStart() übersprungen – Cold-Start-Modus aktiv")
             return
         }
-
         if (isProPurchased()) {
             Log.d(TAG, "Pro-Version aktiv – Background-Return-Ad übersprungen")
+            return
+        }
+        if (!adsAllowed) {
+            Log.d(TAG, "onStart() übersprungen – adsAllowed=false")
             return
         }
 
@@ -298,12 +363,10 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
                 Log.d(TAG, "Background-Return: SplashActivity bereits aktiv – überspringe")
                 return
             }
-
             if (!shouldShowAd(currentActivity)) {
                 Log.d(TAG, "Background-Return: shouldShowAd=false – kein Splash")
                 return
             }
-
             Log.d(TAG, "Background-Return: Starte SplashActivity über ${currentActivity.javaClass.simpleName}")
             val intent = Intent(currentActivity, SplashActivity::class.java).apply {
                 putExtra(SplashActivity.EXTRA_LAUNCH_MODE, SplashActivity.MODE_BACKGROUND_RETURN)
@@ -333,9 +396,8 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
         }
     }
 
-    /** Liest den isPro-Flag, den Flutter's shared_preferences in FlutterSharedPreferences speichert. */
     private fun isProPurchased(): Boolean =
-        application.getSharedPreferences("FlutterSharedPreferences", android.content.Context.MODE_PRIVATE)
+        application.getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
             .getBoolean("flutter.isPro", false)
 
     private fun Double.format(digits: Int) = "%.${digits}f".format(this)

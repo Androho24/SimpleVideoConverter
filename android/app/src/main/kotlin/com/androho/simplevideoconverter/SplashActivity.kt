@@ -3,17 +3,20 @@ package com.androho.simplevideoconverter
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 
 /**
  * SplashActivity — Launcher-Activity für SimpleVideoConverter.
  *
- * Cold Start:
- *   SplashActivity → (Ad oder Timeout 3s) → startet MainActivity → finish()
+ * Ablauf Cold Start:
+ *   Phase 1: Consent-Flow + MobileAds-Init (requestConsentAndInitialize)
+ *   Phase 2: Ad-Flow mit Safety-Timeout (showAdForColdStart)
+ *   → MainActivity starten → finish()
  *
- * Background Return:
- *   SplashActivity über MainActivity gelegt → (Ad oder Timeout 3s) → finish()
- *   (MainActivity wird danach sichtbar)
+ * Ablauf Background Return:
+ *   Gleicher Ablauf, aber am Ende nur finish() (MainActivity liegt bereits im Stack)
  */
 class SplashActivity : Activity() {
 
@@ -22,7 +25,12 @@ class SplashActivity : Activity() {
         const val EXTRA_LAUNCH_MODE = "launch_mode"
         const val MODE_COLD_START = "cold_start"
         const val MODE_BACKGROUND_RETURN = "background_return"
+        private const val SAFETY_TIMEOUT_MS = 3000L
     }
+
+    private var hasProceeded = false
+    private val safetyHandler = Handler(Looper.getMainLooper())
+    private var safetyRunnable: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,20 +48,38 @@ class SplashActivity : Activity() {
             return
         }
 
-        adManager.showAdForColdStart(
-            activity = this,
-            onAdShowing = {
-                Log.d(TAG, "Ad wird angezeigt")
-                // Ad übernimmt den Bildschirm – nichts zu tun
-            },
-            onAdFinished = {
-                Log.d(TAG, "Ad-Flow abgeschlossen – proceed()")
+        // Phase 1: Consent + MobileAds-Init
+        // Safety-Timeout startet erst in Phase 2, da Consent eigene Zeit braucht
+        adManager.requestConsentAndInitialize(this) {
+            // Phase 2: Ad-Flow
+            safetyRunnable = Runnable {
+                Log.w(TAG, "Safety-Timeout – weiter ohne Ad")
                 proceed(mode)
             }
-        )
+            safetyHandler.postDelayed(safetyRunnable!!, SAFETY_TIMEOUT_MS)
+
+            adManager.showAdForColdStart(
+                activity = this,
+                onAdShowing = {
+                    Log.d(TAG, "Ad sichtbar – Safety-Timeout gecancelt")
+                    safetyRunnable?.let { safetyHandler.removeCallbacks(it) }
+                    safetyRunnable = null
+                },
+                onAdFinished = {
+                    proceed(mode)
+                }
+            )
+        }
     }
 
     private fun proceed(mode: String) {
+        if (hasProceeded) return
+        hasProceeded = true
+
+        safetyRunnable?.let { safetyHandler.removeCallbacks(it) }
+        safetyRunnable = null
+
+        Log.d(TAG, "proceed() mode=$mode")
         if (mode == MODE_COLD_START) {
             startActivity(Intent(this, MainActivity::class.java))
         }

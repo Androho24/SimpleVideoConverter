@@ -169,6 +169,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get privacyPolicyTitle => 'Polityka prywatności';
 
   @override
+  String get adConsentTitle => 'Ustawienia prywatności';
+
+  @override
   String get imprintTitle => 'Stopka redakcyjna';
 
   @override
@@ -334,7 +337,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'Ten plik ma rozmiar większy niż 200 MB. Na starszych urządzeniach konwersja może powodować wysokie obciążenie procesora – jest to normalne.\n\nMożesz po prostu odłożyć telefon na bok, aplikacja będzie nadal działać w tle.';
+      'Ten film ma długość ponad 5 minut. Na starszych urządzeniach konwersja może powodować wysokie obciążenie procesora – jest to normalne.\n\nMożesz po prostu odłożyć telefon na bok, aplikacja będzie nadal działać w tle.';
 
   @override
   String get cpuWarningCheckbox => 'Nie pokazuj więcej';

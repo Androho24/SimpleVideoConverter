@@ -54,6 +54,7 @@
   "gplLicenseTitle": "GPL-3.0-licentietekst",
   "sourceCodeTitle": "Broncode (GitHub)",
   "privacyPolicyTitle": "Privacyverklaring",
+  "adConsentTitle": "Privacy-instellingen",
   "imprintTitle":
  
 "Colofon",
@@ -114,7 +115,7 @@
 "aspectLocked": "Beeldverhouding vergrendeld",
   "aspectUnlocked": "Beeldverhouding vrij",
   "cpuWarningTitle": "Groot bestand",
-  "cpuWarningContent": "Dit bestand is groter dan 200 MB. Op oudere apparaten kan de conversie leiden tot een hoge processorbelasting – dit is normaal.\n\nJe kunt de telefoon gewoon opzij leggen, de app blijft op de achtergrond draaien.",
+  "cpuWarningContent": "Deze video is langer dan 5 minuten. Op oudere apparaten kan de conversie leiden tot een hoge processorbelasting – dit is normaal.\n\nJe kunt de telefoon gewoon opzij leggen, de app blijft op de achtergrond draaien.",
   "cpuWarningCheckbox": "Niet meer weergeven",
   "storageWarningTitle": "Onvoldoende opslagruimte",
   "storageWarningContent": "Je apparaat heeft nog maar {available} MB vrij. Voor de conversie is ongeveer {required} MB nodig. Maak eerst wat opslagruimte vrij.",

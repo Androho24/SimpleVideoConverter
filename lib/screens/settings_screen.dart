@@ -3,6 +3,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
@@ -19,9 +20,12 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isPro = false;
+  bool _isPrivacyOptionsRequired = false;
   String _appVersion = '';
   StreamSubscription<bool>? _proSub;
   StreamSubscription<String>? _errorSub;
+
+  static const _adsChannel = MethodChannel('com.androho.simplevideoconverter/ads');
 
   @override
   void initState() {
@@ -29,6 +33,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     PackageInfo.fromPlatform().then((info) {
       if (mounted) setState(() => _appVersion = info.version);
     });
+    _adsChannel.invokeMethod<bool>('isPrivacyOptionsRequired').then((required) {
+      if (mounted) setState(() => _isPrivacyOptionsRequired = required ?? false);
+    }).catchError((_) {});
     PreferencesService.getIsPro().then((v) {
       if (mounted) setState(() => _isPro = v);
     });
@@ -131,6 +138,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             trailing: const Icon(Icons.open_in_new),
             onTap: () => _openUrl(context, privacyUrl),
           ),
+          if (!_isPro && _isPrivacyOptionsRequired) ...[
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.tune_outlined),
+              title: Text(l.adConsentTitle),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _adsChannel.invokeMethod('showPrivacyOptionsForm'),
+            ),
+          ],
           const Divider(),
           ListTile(
             leading: const Icon(Icons.info_outline),

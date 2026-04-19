@@ -169,6 +169,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get privacyPolicyTitle => 'Privacyverklaring';
 
   @override
+  String get adConsentTitle => 'Privacy-instellingen';
+
+  @override
   String get imprintTitle => 'Colofon';
 
   @override
@@ -334,7 +337,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'Dit bestand is groter dan 200 MB. Op oudere apparaten kan de conversie leiden tot een hoge processorbelasting – dit is normaal.\n\nJe kunt de telefoon gewoon opzij leggen, de app blijft op de achtergrond draaien.';
+      'Deze video is langer dan 5 minuten. Op oudere apparaten kan de conversie leiden tot een hoge processorbelasting – dit is normaal.\n\nJe kunt de telefoon gewoon opzij leggen, de app blijft op de achtergrond draaien.';
 
   @override
   String get cpuWarningCheckbox => 'Niet meer weergeven';

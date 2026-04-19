@@ -170,6 +170,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get privacyPolicyTitle => 'Gizlilik Politikası';
 
   @override
+  String get adConsentTitle => 'Gizlilik Ayarları';
+
+  @override
   String get imprintTitle => 'Yasal Uyarı';
 
   @override
@@ -336,7 +339,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'Bu dosya 200 MB\'den büyük. Eski cihazlarda dönüştürme işlemi işlemci yükünü artırabilir – bu normaldir.\n\nTelefonu bir kenara bırakabilirsin, uygulama arka planda çalışmaya devam eder.';
+      'Bu video 5 dakikadan uzun. Eski cihazlarda dönüştürme işlemi işlemci yükünü artırabilir – bu normaldir.\n\nTelefonu bir kenara bırakabilirsin, uygulama arka planda çalışmaya devam eder.';
 
   @override
   String get cpuWarningCheckbox => 'Bir daha gösterme';

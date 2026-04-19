@@ -55,7 +55,7 @@ class ConversionScreen extends StatefulWidget {
 class _ConversionScreenState extends State<ConversionScreen> {
   double _progress = 0.0;
   double _speed = 0.0;    // Encoding-Geschwindigkeit (z.B. 1.8 = 1.8× Echtzeit)
-  int _outputSizeKb = 0;  // Aktuelle Ausgabegröße in KB
+  int _outputSizeBytes = 0;
   bool _isDone = false;
   bool _isCancelled = false;
   late String _currentOutputPath;
@@ -64,7 +64,11 @@ class _ConversionScreenState extends State<ConversionScreen> {
   void initState() {
     super.initState();
     _currentOutputPath = widget.outputPath;
-    _cleanCache();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _cleanCache();
     _startConversion();
   }
 
@@ -112,11 +116,11 @@ class _ConversionScreenState extends State<ConversionScreen> {
     }
 
     // Ausgabegröße
-    if (_outputSizeKb > 0) {
-      if (_outputSizeKb < 1024) {
-        parts.add('${_outputSizeKb} KB');
+    if (_outputSizeBytes > 0) {
+      if (_outputSizeBytes < 1024 * 1024) {
+        parts.add('${(_outputSizeBytes / 1024).toStringAsFixed(0)} KB');
       } else {
-        parts.add('${(_outputSizeKb / 1024).toStringAsFixed(1)} MB');
+        parts.add('${(_outputSizeBytes / (1024 * 1024)).toStringAsFixed(1)} MB');
       }
     }
 
@@ -133,7 +137,7 @@ class _ConversionScreenState extends State<ConversionScreen> {
       if (mounted) setState(() {
         _progress = p;
         _speed = stats.getSpeed() ?? 0.0;
-        _outputSizeKb = stats.getSize() ?? 0;
+        _outputSizeBytes = stats.getSize() ?? 0;
       });
     });
 

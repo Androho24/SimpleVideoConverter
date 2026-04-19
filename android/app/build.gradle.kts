@@ -76,3 +76,7 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    implementation("com.google.android.ump:user-messaging-platform:3.1.0")
+}

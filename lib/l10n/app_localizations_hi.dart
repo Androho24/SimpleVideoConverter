@@ -168,6 +168,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get privacyPolicyTitle => 'गोपनीयता नीति';
 
   @override
+  String get adConsentTitle => 'गोपनीयता सेटिंग्स';
+
+  @override
   String get imprintTitle => 'कानूनी सूचना';
 
   @override
@@ -333,7 +336,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'यह फ़ाइल 200 एमबी से बड़ी है। पुराने डिवाइसों पर, रूपांतरण के कारण उच्च सीपीयू उपयोग हो सकता है – यह सामान्य है। आप बस अपने फ़ोन को एक तरफ रख सकते हैं; ऐप बैकग्राउंड में चलता रहेगा।छिपाएँ';
+      'यह वीडियो 5 मिनट से लंबा है। पुराने डिवाइसों पर, रूपांतरण के कारण उच्च सीपीयू उपयोग हो सकता है – यह सामान्य है।\n\nआप बस अपने फ़ोन को एक तरफ रख सकते हैं; ऐप बैकग्राउंड में चलता रहेगा।';
 
   @override
   String get cpuWarningCheckbox => 'छिपाएँ';

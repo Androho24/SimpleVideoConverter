@@ -170,6 +170,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get privacyPolicyTitle => 'Política de privacidad';
 
   @override
+  String get adConsentTitle => 'Configuración de privacidad';
+
+  @override
   String get imprintTitle => 'Aviso legal';
 
   @override
@@ -335,7 +338,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'Este archivo tiene un tamaño superior a 200 MB. En dispositivos antiguos, la conversión puede provocar una elevada carga del procesador; esto es normal.\n\nPuedes dejar el móvil a un lado, la aplicación seguirá funcionando en segundo plano.';
+      'Este vídeo tiene una duración superior a 5 minutos. En dispositivos antiguos, la conversión puede provocar una elevada carga del procesador; esto es normal.\n\nPuedes dejar el móvil a un lado, la aplicación seguirá funcionando en segundo plano.';
 
   @override
   String get cpuWarningCheckbox => 'No volver a mostrar';

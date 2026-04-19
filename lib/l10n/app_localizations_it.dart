@@ -169,6 +169,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get privacyPolicyTitle => 'Informativa sulla privacy';
 
   @override
+  String get adConsentTitle => 'Impostazioni privacy';
+
+  @override
   String get imprintTitle => 'Note legali';
 
   @override
@@ -334,7 +337,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'Questo file supera i 200 MB. Su dispositivi meno recenti, la conversione potrebbe causare un carico eccessivo del processore – è normale.\n\nPuoi semplicemente mettere il cellulare da parte, l\'app continuerà a funzionare in background.';
+      'Questo video supera i 5 minuti. Su dispositivi meno recenti, la conversione potrebbe causare un carico eccessivo del processore – è normale.\n\nPuoi semplicemente mettere il cellulare da parte, l\'app continuerà a funzionare in background.';
 
   @override
   String get cpuWarningCheckbox => 'Non mostrare più';

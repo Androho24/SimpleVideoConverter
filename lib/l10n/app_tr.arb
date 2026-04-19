@@ -54,6 +54,7 @@
   "gplLicenseTitle": "GPL-3.0 Lisans Metni",
   "sourceCodeTitle": "Kaynak Kodu (GitHub)",
   "privacyPolicyTitle": "Gizlilik Politikası",
+  "adConsentTitle": "Gizlilik Ayarları",
   "imprintTitle":
 
 "Yasal Uyarı",
@@ -114,7 +115,7 @@
 "aspectLocked": "En boy oranı kilitli",
   "aspectUnlocked": "En boy oranı serbest",
   "cpuWarningTitle": "Büyük dosya",
-  "cpuWarningContent": "Bu dosya 200 MB'den büyük. Eski cihazlarda dönüştürme işlemi işlemci yükünü artırabilir – bu normaldir.\n\nTelefonu bir kenara bırakabilirsin, uygulama arka planda çalışmaya devam eder.",
+  "cpuWarningContent": "Bu video 5 dakikadan uzun. Eski cihazlarda dönüştürme işlemi işlemci yükünü artırabilir – bu normaldir.\n\nTelefonu bir kenara bırakabilirsin, uygulama arka planda çalışmaya devam eder.",
   "cpuWarningCheckbox": "Bir daha gösterme",
   "storageWarningTitle": "Yeterli depolama alanı yok",
   "storageWarningContent": "Cihazında sadece {available} MB boş alan kaldı. Dönüştürme işlemi için yaklaşık {required} MB gereklidir. Lütfen önce depolama alanını boşalt.",

@@ -17,6 +17,7 @@ import 'app_localizations_nl.dart';
 import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
 import 'app_localizations_ru.dart';
+import 'app_localizations_th.dart';
 import 'app_localizations_tr.dart';
 
 // ignore_for_file: type=lint
@@ -118,6 +119,7 @@ abstract class AppLocalizations {
     Locale('pt'),
     Locale('pt', 'BR'),
     Locale('ru'),
+    Locale('th'),
     Locale('tr')
   ];
 
@@ -421,6 +423,12 @@ abstract class AppLocalizations {
   /// **'Datenschutzerklärung'**
   String get privacyPolicyTitle;
 
+  /// Ad Consent Settings ListTile Titel
+  ///
+  /// In de, this message translates to:
+  /// **'Datenschutz-Einstellungen'**
+  String get adConsentTitle;
+
   /// Impressum ListTile Titel
   ///
   /// In de, this message translates to:
@@ -718,7 +726,7 @@ abstract class AppLocalizations {
   /// Inhalt des CPU-Warnhinweis-Dialogs
   ///
   /// In de, this message translates to:
-  /// **'Diese Datei ist größer als 200 MB. Auf älteren Geräten kann die Konvertierung zu hoher Prozessorauslastung führen – das ist normal.\n\nDu kannst das Handy einfach daneben legen, die App läuft im Hintergrund weiter.'**
+  /// **'Dieses Video ist länger als 5 Minuten. Auf älteren Geräten kann die Konvertierung zu hoher Prozessorauslastung führen – das ist normal.\n\nDu kannst das Handy einfach daneben legen, die App läuft im Hintergrund weiter.'**
   String get cpuWarningContent;
 
   /// Checkbox-Label im CPU-Warnhinweis-Dialog
@@ -811,6 +819,7 @@ class _AppLocalizationsDelegate
         'pl',
         'pt',
         'ru',
+        'th',
         'tr'
       ].contains(locale.languageCode);
 
@@ -857,6 +866,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsPt();
     case 'ru':
       return AppLocalizationsRu();
+    case 'th':
+      return AppLocalizationsTh();
     case 'tr':
       return AppLocalizationsTr();
   }

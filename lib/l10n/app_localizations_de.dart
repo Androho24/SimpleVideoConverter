@@ -169,6 +169,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get privacyPolicyTitle => 'Datenschutzerklärung';
 
   @override
+  String get adConsentTitle => 'Datenschutz-Einstellungen';
+
+  @override
   String get imprintTitle => 'Impressum';
 
   @override
@@ -334,7 +337,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get cpuWarningContent =>
-      'Diese Datei ist größer als 200 MB. Auf älteren Geräten kann die Konvertierung zu hoher Prozessorauslastung führen – das ist normal.\n\nDu kannst das Handy einfach daneben legen, die App läuft im Hintergrund weiter.';
+      'Dieses Video ist länger als 5 Minuten. Auf älteren Geräten kann die Konvertierung zu hoher Prozessorauslastung führen – das ist normal.\n\nDu kannst das Handy einfach daneben legen, die App läuft im Hintergrund weiter.';
 
   @override
   String get cpuWarningCheckbox => 'Nicht mehr anzeigen';
