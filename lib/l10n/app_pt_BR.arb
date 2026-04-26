@@ -104,7 +104,7 @@
 "purchaseButton": "Comprar",
   "purchaseError": "Falha na compra. Tente novamente.",
   "purchaseSuccess": "Obrigado! Os anúncios foram desativados.",
-  "appName": "Conversor Vídeo FFmpeg",
+  "appName": "Conversor de Vídeo",
   "audioOnly": "Somente áudio",
   "audioOnlyTooltip": "Explicação sobre Somente Áudio",
   "audioOnlyInfoContent": "Extrai apenas a faixa de áudio do vídeo – sem imagem.\n\nModo Normal: MP3 a 192 kbps.\nModo Avançado: Codec e taxa de bits definidos nas configurações de áudio.\n\nÚtil, por exemplo, para salvar músicas ou podcasts de vídeos.",
@@ -125,6 +125,12 @@
   "feedbackCategoryFeature": "Sugestão de melhoria",
   "feedbackCategoryFeedback": "Feedback geral",
   "feedbackMessageHint": "Descreva sua solicitação…",
-  "feedbackSendButton": "Enviar"
+  "feedbackSendButton": "Enviar",
 
+  "notificationPermissionTitle": "Conversão em segundo plano",
+  "notificationPermissionContent": "Permita notificações para que a conversão continue enquanto você usa outros aplicativos. Sem essa permissão, o aplicativo precisa permanecer aberto.",
+  "notificationPermissionNotNow": "Não agora",
+  "notificationPermissionAllow": "Permitir",
+  "notificationPermissionDenied": "Ative as notificações nas configurações de conversão em segundo plano.",
+  "notificationPermissionOpenSettings": "Configurações"
 }

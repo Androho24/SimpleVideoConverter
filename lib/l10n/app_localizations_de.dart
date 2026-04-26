@@ -314,7 +314,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchaseSuccess => 'Danke! Werbung wurde deaktiviert.';
 
   @override
-  String get appName => 'Video Konverter FFmpeg';
+  String get appName => 'Video Konverter';
 
   @override
   String get audioOnly => 'Nur Audio';
@@ -373,4 +373,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get feedbackSendButton => 'Senden';
+
+  @override
+  String get notificationPermissionTitle => 'Hintergrundkonvertierung';
+
+  @override
+  String get notificationPermissionContent =>
+      'Erlaube Benachrichtigungen, damit die Konvertierung weiterlaufen kann während du andere Apps nutzt. Ohne diese Berechtigung muss die App geöffnet bleiben.';
+
+  @override
+  String get notificationPermissionNotNow => 'Nicht jetzt';
+
+  @override
+  String get notificationPermissionAllow => 'Erlauben';
+
+  @override
+  String get notificationPermissionDenied =>
+      'Aktiviere Benachrichtigungen in den Einstellungen für die Hintergrundkonvertierung.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Einstellungen';
 }

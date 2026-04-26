@@ -3,6 +3,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Werbe-ID für AdMob (Android 13+) -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+    <!-- ForegroundService für Hintergrund-Konvertierung -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <!-- Notification-Permission (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Lese-Zugriff auf externe Medien (file_picker + video_player) -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -52,10 +57,17 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-        <!-- AdMob App-ID (Pflicht, sonst App-Crash beim Start) -->
+        <!-- AdMob App-ID (Pflicht, sonst App-Crash beim Start) — Wert kommt aus local.properties -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3520565655582046~7644453893"/>
+            android:value="${admobAppId}"/>
+
+        <!-- ForegroundService für Hintergrund-Konvertierung -->
+        <service
+            android:name=".ConversionService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            android:stopWithTask="false" />
 
         <!-- FileProvider für OpenFilex (Cache-Dateien an externe Apps weitergeben) -->
         <provider

@@ -11,10 +11,13 @@ import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit_config.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:gal/gal.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import '../l10n/app_localizations.dart';
+import '../services/conversion_service_manager.dart';
+import '../services/preferences_service.dart';
 import '../services/review_service.dart';
 import '../widgets/native_ad_widget.dart';
 
@@ -52,7 +55,7 @@ class ConversionScreen extends StatefulWidget {
   State<ConversionScreen> createState() => _ConversionScreenState();
 }
 
-class _ConversionScreenState extends State<ConversionScreen> {
+class _ConversionScreenState extends State<ConversionScreen> with WidgetsBindingObserver {
   double _progress = 0.0;
   double _speed = 0.0;    // Encoding-Geschwindigkeit (z.B. 1.8 = 1.8× Echtzeit)
   int _outputSizeBytes = 0;
@@ -63,6 +66,7 @@ class _ConversionScreenState extends State<ConversionScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _currentOutputPath = widget.outputPath;
     _init();
   }
@@ -70,10 +74,31 @@ class _ConversionScreenState extends State<ConversionScreen> {
   Future<void> _init() async {
     await _cleanCache();
     _startConversion();
+    _maybeShowNotificationDeniedHint();
+  }
+
+  Future<void> _maybeShowNotificationDeniedHint() async {
+    if (!Platform.isAndroid) return;
+    final count = await PreferencesService.getNotificationDeniedHintCount();
+    if (count >= 3) return;
+    if (!(await Permission.notification.status).isPermanentlyDenied) return;
+    await PreferencesService.incrementNotificationDeniedHintCount();
+    if (!mounted) return;
+    final l = AppLocalizations.of(context)!;
+    final controller = ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(l.notificationPermissionDenied),
+      duration: const Duration(seconds: 3),
+      action: SnackBarAction(
+        label: l.notificationPermissionOpenSettings,
+        onPressed: openAppSettings,
+      ),
+    ));
+    Future.delayed(const Duration(seconds: 3), controller.close);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     FFmpegKitConfig.enableStatisticsCallback(null);
     super.dispose();
   }
@@ -132,6 +157,8 @@ class _ConversionScreenState extends State<ConversionScreen> {
   // ---------------------------------------------------------------------------
 
   void _startConversion() {
+    unawaited(ConversionServiceManager.startService(widget.defaultFileName));
+
     FFmpegKitConfig.enableStatisticsCallback((stats) {
       final p = (stats.getTime() / widget.totalDurationMs).clamp(0.0, 1.0);
       if (mounted) setState(() {
@@ -139,6 +166,10 @@ class _ConversionScreenState extends State<ConversionScreen> {
         _speed = stats.getSpeed() ?? 0.0;
         _outputSizeBytes = stats.getSize() ?? 0;
       });
+      unawaited(ConversionServiceManager.updateProgress(
+        (p * 100).round(),
+        _buildStatsLine(),
+      ));
     });
 
     FFmpegKit.executeAsync(widget.command, (session) async {
@@ -151,11 +182,20 @@ class _ConversionScreenState extends State<ConversionScreen> {
           _isDone = true;
           _progress = 1.0;
         });
+        final isBackground =
+            WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed;
+        if (isBackground) {
+          await ConversionServiceManager.showCompletion(widget.defaultFileName);
+        } else {
+          await ConversionServiceManager.stopService();
+        }
         unawaited(ReviewService.maybeRequestReview());
       } else if (_isCancelled || ReturnCode.isCancel(rc)) {
+        await ConversionServiceManager.stopService();
         await _deleteOutput();
         if (mounted) Navigator.pop(context);
       } else {
+        await ConversionServiceManager.stopService();
         await _deleteOutput();
         final log = await session.getLogsAsString();
         unawaited(FirebaseCrashlytics.instance.recordError(
@@ -228,6 +268,7 @@ class _ConversionScreenState extends State<ConversionScreen> {
       ),
     );
     if (confirmed == true) {
+      await ConversionServiceManager.stopService();
       await _deleteOutput();
       if (mounted) Navigator.pop(context);
     }
@@ -258,6 +299,7 @@ class _ConversionScreenState extends State<ConversionScreen> {
       }
 
       if (!mounted) return;
+      await ConversionServiceManager.stopService();
       final messenger = ScaffoldMessenger.of(context);
       Navigator.pop(context);
       messenger.showSnackBar(

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ตัวแปลงวิดีโอ</string>
+    <string name="notification_converting">กำลังแปลง...</string>
+    <string name="notification_done_title">แปลงเสร็จสมบูรณ์</string>
+    <string name="notification_done_tap">แตะที่นี่เพื่อบันทึกหรือยกเลิก</string>
+    <string name="notification_channel_progress">ความคืบหน้าการแปลง</string>
+    <string name="notification_channel_done">กำลังแปลง...</string>
+</resources>

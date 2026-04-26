@@ -116,7 +116,7 @@
   "purchaseError": "Purchase failed. Please try again.",
   "purchaseSuccess": "Thanks! Ads have been disabled.",
 
-  "appName": "Video Converter FFmpeg",
+  "appName": "Video Converter",
 
   "audioOnly": "Audio Only",
   "audioOnlyTooltip": "Audio Only explained",
@@ -145,5 +145,12 @@
   "feedbackCategoryFeature": "Feature Request",
   "feedbackCategoryFeedback": "General Feedback",
   "feedbackMessageHint": "Describe your issue…",
-  "feedbackSendButton": "Send"
+  "feedbackSendButton": "Send",
+
+  "notificationPermissionTitle": "Background Conversion",
+  "notificationPermissionContent": "Allow notifications so the conversion can continue while you use other apps. Without this, the app must stay open.",
+  "notificationPermissionNotNow": "Not Now",
+  "notificationPermissionAllow": "Allow",
+  "notificationPermissionDenied": "Enable notifications in Settings to convert in the background.",
+  "notificationPermissionOpenSettings": "Settings"
 }

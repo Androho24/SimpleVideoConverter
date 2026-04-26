@@ -316,7 +316,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get purchaseSuccess => 'Teşekkürler! Reklamlar devre dışı bırakıldı.';
 
   @override
-  String get appName => 'Video Dönüştürücü FFmpeg';
+  String get appName => 'Video Dönüştürücü';
 
   @override
   String get audioOnly => 'Sadece Ses';
@@ -376,4 +376,24 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get feedbackSendButton => 'Gönder';
+
+  @override
+  String get notificationPermissionTitle => 'Arka planda dönüştürme';
+
+  @override
+  String get notificationPermissionContent =>
+      'Diğer uygulamaları kullanırken dönüştürme işleminin devam edebilmesi için bildirimlere izin verin. Bu izin verilmezse, uygulamanın açık kalması gerekir.';
+
+  @override
+  String get notificationPermissionNotNow => 'Şimdi değil';
+
+  @override
+  String get notificationPermissionAllow => 'İzin ver';
+
+  @override
+  String get notificationPermissionDenied =>
+      'Arka planda dönüştürme ayarlarından bildirimleri etkinleştirin.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Ayarlar';
 }

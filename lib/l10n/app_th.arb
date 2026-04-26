@@ -116,7 +116,7 @@
   "purchaseError": "การซื้อไม่สำเร็จ กรุณาลองอีกครั้ง",
   "purchaseSuccess": "ขอบคุณ! ปิดโฆษณาแล้ว",
 
-  "appName": "ตัวแปลงวิดีโอ FFmpeg",
+  "appName": "ตัวแปลงวิดีโอ",
 
   "audioOnly": "เสียงเท่านั้น",
   "audioOnlyTooltip": "คำอธิบายโหมดเสียงเท่านั้น",
@@ -145,5 +145,12 @@
   "feedbackCategoryFeature": "คำขอเพิ่มฟีเจอร์",
   "feedbackCategoryFeedback": "ข้อเสนอแนะทั่วไป",
   "feedbackMessageHint": "อธิบายปัญหาของคุณ…",
-  "feedbackSendButton": "ส่ง"
+  "feedbackSendButton": "ส่ง",
+
+  "notificationPermissionTitle": "การแปลงพื้นหลัง",
+  "notificationPermissionContent": "อนุญาตการแจ้งเตือนเพื่อให้การแปลงสามารถดำเนินต่อไปได้ในขณะที่คุณใช้แอปอื่น ๆ หากไม่มีการอนุญาตนี้ แอปจะต้องเปิดอยู่ตลอดเวลา",
+  "notificationPermissionNotNow": "ไม่ตอนนี้",
+  "notificationPermissionAllow": "อนุญาต",
+  "notificationPermissionDenied": "เปิดการแจ้งเตือนในการตั้งค่าการแปลงพื้นหลัง",
+  "notificationPermissionOpenSettings": "การตั้งค่า"
 }

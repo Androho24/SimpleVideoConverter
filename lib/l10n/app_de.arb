@@ -310,7 +310,7 @@
   "purchaseSuccess": "Danke! Werbung wurde deaktiviert.",
   "@purchaseSuccess": { "description": "Erfolgsmeldung nach IAP-Kauf" },
 
-  "appName": "Video Konverter FFmpeg",
+  "appName": "Video Konverter",
 
   "audioOnly": "Nur Audio",
   "@audioOnly": { "description": "Switch-Label für Audio-Only-Modus" },
@@ -370,5 +370,12 @@
   "@feedbackMessageHint": { "description": "Placeholder-Text im Nachrichtenfeld des Feedback-Screens" },
 
   "feedbackSendButton": "Senden",
-  "@feedbackSendButton": { "description": "Beschriftung des Senden-Buttons im Feedback-Screen" }
+  "@feedbackSendButton": { "description": "Beschriftung des Senden-Buttons im Feedback-Screen" },
+
+  "notificationPermissionTitle": "Hintergrundkonvertierung",
+  "notificationPermissionContent": "Erlaube Benachrichtigungen, damit die Konvertierung weiterlaufen kann während du andere Apps nutzt. Ohne diese Berechtigung muss die App geöffnet bleiben.",
+  "notificationPermissionNotNow": "Nicht jetzt",
+  "notificationPermissionAllow": "Erlauben",
+  "notificationPermissionDenied": "Aktiviere Benachrichtigungen in den Einstellungen für die Hintergrundkonvertierung.",
+  "notificationPermissionOpenSettings": "Einstellungen"
 }

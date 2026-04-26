@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">वीडियो कनवर्टर FFmpeg</string>
+    <string name="app_name">वीडियो कनवर्टर</string>
+    <string name="notification_converting">परिवर्तित हो रहा है…</string>
+    <string name="notification_done_title">परिवर्तन पूरा हो गया</string>
+    <string name="notification_done_tap">सहेजें या हटाएँ</string>
+    <string name="notification_channel_progress">परिवर्तन की प्रगति</string>
+    <string name="notification_channel_done">परिवर्तन पूरा हो गया</string>
 </resources>

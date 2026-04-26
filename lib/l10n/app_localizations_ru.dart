@@ -315,7 +315,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get purchaseSuccess => 'Спасибо! Реклама отключена.';
 
   @override
-  String get appName => 'Видео конвертер FFmpeg';
+  String get appName => 'Видео конвертер';
 
   @override
   String get audioOnly => 'Только аудио';
@@ -375,4 +375,24 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get feedbackSendButton => 'Отправить';
+
+  @override
+  String get notificationPermissionTitle => 'Конвертация в фоновом режиме';
+
+  @override
+  String get notificationPermissionContent =>
+      'Разрешите уведомления, чтобы конвертация продолжалась, пока вы используете другие приложения. Без этого разрешения приложение должно оставаться открытым.';
+
+  @override
+  String get notificationPermissionNotNow => 'Не сейчас';
+
+  @override
+  String get notificationPermissionAllow => 'Разрешить';
+
+  @override
+  String get notificationPermissionDenied =>
+      'Включите уведомления в настройках конвертации в фоновом режиме.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Настройки';
 }

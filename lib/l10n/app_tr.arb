@@ -106,7 +106,7 @@
 "purchaseButton": "Satın al",
   "purchaseError": "Satın alma işlemi başarısız. Lütfen tekrar deneyin.",
   "purchaseSuccess": "Teşekkürler! Reklamlar devre dışı bırakıldı.",
-  "appName": "Video Dönüştürücü FFmpeg",
+  "appName": "Video Dönüştürücü",
   "audioOnly": "Sadece Ses",
   "audioOnlyTooltip": "Sadece Ses Açıklaması",
   "audioOnlyInfoContent": "Videodan sadece ses parçasını çıkarır – görüntü yok.\n\nNormal Mod: 192 kbps MP3.\nUzman Mod: Ses ayarlarından kodek ve bit hızı.\n\nÖrneğin videolardan müzik veya podcast'leri kaydetmek için kullanışlıdır.",
@@ -126,6 +126,12 @@
   "feedbackCategoryFeature": "İyileştirme önerisi",
   "feedbackCategoryFeedback": "Genel geri bildirim",
   "feedbackMessageHint": "Sorununuzu açıklayın…",
-  "feedbackSendButton": "Gönder"
+  "feedbackSendButton": "Gönder",
 
+  "notificationPermissionTitle": "Arka planda dönüştürme",
+  "notificationPermissionContent": "Diğer uygulamaları kullanırken dönüştürme işleminin devam edebilmesi için bildirimlere izin verin. Bu izin verilmezse, uygulamanın açık kalması gerekir.",
+  "notificationPermissionNotNow": "Şimdi değil",
+  "notificationPermissionAllow": "İzin ver",
+  "notificationPermissionDenied": "Arka planda dönüştürme ayarlarından bildirimleri etkinleştirin.",
+  "notificationPermissionOpenSettings": "Ayarlar"
 }

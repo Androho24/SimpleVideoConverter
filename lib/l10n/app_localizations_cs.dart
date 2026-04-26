@@ -312,7 +312,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get purchaseSuccess => 'Děkujeme! Reklama byla deaktivována.';
 
   @override
-  String get appName => 'Video konvertor FFmpeg';
+  String get appName => 'Převodník videa';
 
   @override
   String get audioOnly => 'Pouze zvuk';
@@ -372,4 +372,24 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get feedbackSendButton => 'Odeslat';
+
+  @override
+  String get notificationPermissionTitle => 'Převod na pozadí';
+
+  @override
+  String get notificationPermissionContent =>
+      'Povolte oznámení, aby převod mohl pokračovat i při používání jiných aplikací. Bez tohoto oprávnění musí aplikace zůstat spuštěná.';
+
+  @override
+  String get notificationPermissionNotNow => 'Ne teď';
+
+  @override
+  String get notificationPermissionAllow => 'Povolit';
+
+  @override
+  String get notificationPermissionDenied =>
+      'Zapněte oznámení v nastavení pro převod na pozadí.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Nastavení';
 }

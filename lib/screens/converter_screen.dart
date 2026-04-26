@@ -97,6 +97,43 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     }
   }
 
+  Future<void> _requestNotificationPermission() async {
+    if (!Platform.isAndroid) return;
+    final status = await Permission.notification.status;
+    if (status.isGranted) return;
+    if (!mounted) return;
+    final l = AppLocalizations.of(context)!;
+
+    if (status.isPermanentlyDenied) return;
+
+    // Rationale-Dialog nur einmal zeigen
+    final alreadyShown = await PreferencesService.getNotificationRationaleDismissed();
+    if (alreadyShown) {
+      await Permission.notification.request();
+      return;
+    }
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.notificationPermissionTitle),
+        content: Text(l.notificationPermissionContent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l.notificationPermissionNotNow),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(l.notificationPermissionAllow),
+          ),
+        ],
+      ),
+    );
+    await PreferencesService.setNotificationRationaleDismissed();
+    if (confirmed == true) await Permission.notification.request();
+  }
+
   @override
   void dispose() {
     _seekDebounce?.cancel();
@@ -425,6 +462,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         : originalName;
     final ext = outputPath.split('.').last;
     final defaultFileName = '$convertedPrefix$baseName.$ext';
+
+    await _requestNotificationPermission();
 
     if (!mounted) return;
     Navigator.push(

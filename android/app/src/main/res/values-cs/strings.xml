@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Video konvertor FFmpeg</string>
+    <string name="app_name">Převodník videa</string>
+    <string name="notification_converting">Probíhá převod…</string>
+    <string name="notification_done_title">Převod dokončen</string>
+    <string name="notification_done_tap">Klepněte sem pro uložení nebo zrušen</string>
+    <string name="notification_channel_progress">Průběh převodu</string>
+    <string name="notification_channel_done">Převod dokončen</string>
 </resources>

@@ -311,7 +311,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get purchaseSuccess => 'ขอบคุณ! ปิดโฆษณาแล้ว';
 
   @override
-  String get appName => 'ตัวแปลงวิดีโอ FFmpeg';
+  String get appName => 'ตัวแปลงวิดีโอ';
 
   @override
   String get audioOnly => 'เสียงเท่านั้น';
@@ -370,4 +370,24 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get feedbackSendButton => 'ส่ง';
+
+  @override
+  String get notificationPermissionTitle => 'การแปลงพื้นหลัง';
+
+  @override
+  String get notificationPermissionContent =>
+      'อนุญาตการแจ้งเตือนเพื่อให้การแปลงสามารถดำเนินต่อไปได้ในขณะที่คุณใช้แอปอื่น ๆ หากไม่มีการอนุญาตนี้ แอปจะต้องเปิดอยู่ตลอดเวลา';
+
+  @override
+  String get notificationPermissionNotNow => 'ไม่ตอนนี้';
+
+  @override
+  String get notificationPermissionAllow => 'อนุญาต';
+
+  @override
+  String get notificationPermissionDenied =>
+      'เปิดการแจ้งเตือนในการตั้งค่าการแปลงพื้นหลัง';
+
+  @override
+  String get notificationPermissionOpenSettings => 'การตั้งค่า';
 }

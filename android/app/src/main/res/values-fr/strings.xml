@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Convertisseur Vidéo FFmpeg</string>
+    <string name="app_name">Convertisseur Vidéo</string>
+    <string name="notification_converting">Conversion en cours…</string>
+    <string name="notification_done_title">Conversion terminée</string>
+    <string name="notification_done_tap">Appuyez ici pour enregistrer ou annuler</string>
+    <string name="notification_channel_progress">Progression de la conversion</string>
+    <string name="notification_channel_done">Conversion terminée</string>
 </resources>

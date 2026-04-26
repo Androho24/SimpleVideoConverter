@@ -104,7 +104,7 @@
  "purchaseButton": "Koupit",
    "purchaseError": "Nákup se nezdařil. Zkuste to prosím znovu.",
    "purchaseSuccess": "Děkujeme! Reklama byla deaktivována.",
-   "appName": "Video konvertor FFmpeg",
+   "appName": "Převodník videa",
   "audioOnly": "Pouze zvuk",
    "audioOnlyTooltip": "Vysvětlení funkce Pouze zvuk",
    "audioOnlyInfoContent": "Extrahuje z videa pouze zvukovou stopu – bez obrazu.\n\nNormální režim: MP3 s 192 kbps.\nRežim pro pokročilé: Kodek a datový tok podle nastavení zvuku.\n\nUžitečné například pro ukládání hudby nebo podcastů z videí.",
@@ -127,8 +127,12 @@
   "feedbackCategoryFeature": "Návrh na vylepšení",
   "feedbackCategoryFeedback": "Obecná zpětná vazba",
   "feedbackMessageHint": "Popište svůj problém…",
-  "feedbackSendButton": "Odeslat"
+  "feedbackSendButton": "Odeslat",
 
-
-
- }
+  "notificationPermissionTitle": "Převod na pozadí",
+  "notificationPermissionContent": "Povolte oznámení, aby převod mohl pokračovat i při používání jiných aplikací. Bez tohoto oprávnění musí aplikace zůstat spuštěná.",
+  "notificationPermissionNotNow": "Ne teď",
+  "notificationPermissionAllow": "Povolit",
+  "notificationPermissionDenied": "Zapněte oznámení v nastavení pro převod na pozadí.",
+  "notificationPermissionOpenSettings": "Nastavení"
+}

@@ -314,7 +314,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get purchaseSuccess => 'Dziękujemy! Reklamy zostały wyłączone.';
 
   @override
-  String get appName => 'Konwerter wideo FFmpeg';
+  String get appName => 'Konwerter wideo';
 
   @override
   String get audioOnly => 'Tylko audio';
@@ -373,4 +373,24 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get feedbackSendButton => 'Wyślij';
+
+  @override
+  String get notificationPermissionTitle => 'Konwersja w tle';
+
+  @override
+  String get notificationPermissionContent =>
+      'Zezwól na powiadomienia, aby konwersja mogła trwać podczas korzystania z innych aplikacji. Bez tego uprawnienia aplikacja musi pozostać otwarta.';
+
+  @override
+  String get notificationPermissionNotNow => 'Nie teraz';
+
+  @override
+  String get notificationPermissionAllow => 'Zezwól';
+
+  @override
+  String get notificationPermissionDenied =>
+      'Włącz powiadomienia w ustawieniach konwersji w tle.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Ustawienia';
 }

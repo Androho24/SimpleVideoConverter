@@ -313,7 +313,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get purchaseSuccess => 'धन्यवाद! विज्ञापन अक्षम कर दिए गए हैं।';
 
   @override
-  String get appName => 'वीडियो कनवर्टर FFmpeg';
+  String get appName => 'वीडियो कनवर्टर';
 
   @override
   String get audioOnly => 'केवल ऑडियो';
@@ -373,4 +373,24 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get feedbackSendButton => 'भेजें';
+
+  @override
+  String get notificationPermissionTitle => 'पृष्ठभूमि रूपांतरण';
+
+  @override
+  String get notificationPermissionContent =>
+      'सूचनाओं की अनुमति दें ताकि आप अन्य ऐप्स का उपयोग करते समय रूपांतरण जारी रख सकें। इस अनुमति के बिना, ऐप खुला रहना चाहिए।';
+
+  @override
+  String get notificationPermissionNotNow => 'अभी नहीं';
+
+  @override
+  String get notificationPermissionAllow => 'अनुमति दें';
+
+  @override
+  String get notificationPermissionDenied =>
+      'पृष्ठभूमि रूपांतरण सेटिंग्स में सूचनाएं सक्षम करें।';
+
+  @override
+  String get notificationPermissionOpenSettings => 'सेटिंग्स';
 }

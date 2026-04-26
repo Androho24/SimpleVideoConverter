@@ -106,7 +106,7 @@
 "purchaseButton": "Купить",
   "purchaseError": "Покупка не удалась. Пожалуйста, попробуйте еще раз.",
   "purchaseSuccess": "Спасибо! Реклама отключена.",
-  "appName": "Видео конвертер FFmpeg",
+  "appName": "Видео конвертер",
   "audioOnly": "Только аудио",
   "audioOnlyTooltip": "Объяснение режима Только аудио",
   "audioOnlyInfoContent": "Извлекает из видео только аудиодорожку — без изображения.\n\nОбычный режим: MP3 с битрейтом 192 кбит/с.\nРежим Эксперт: кодек и битрейт из настроек аудио.\n\nПолезно, например, для сохранения музыки или подкастов из видео.",
@@ -126,6 +126,12 @@
   "feedbackCategoryFeature": "Предложение по улучшению",
   "feedbackCategoryFeedback": "Общие отзывы",
   "feedbackMessageHint": "Опиши свою проблему…",
-  "feedbackSendButton": "Отправить"
+  "feedbackSendButton": "Отправить",
 
+  "notificationPermissionTitle": "Конвертация в фоновом режиме",
+  "notificationPermissionContent": "Разрешите уведомления, чтобы конвертация продолжалась, пока вы используете другие приложения. Без этого разрешения приложение должно оставаться открытым.",
+  "notificationPermissionNotNow": "Не сейчас",
+  "notificationPermissionAllow": "Разрешить",
+  "notificationPermissionDenied": "Включите уведомления в настройках конвертации в фоновом режиме.",
+  "notificationPermissionOpenSettings": "Настройки"
 }

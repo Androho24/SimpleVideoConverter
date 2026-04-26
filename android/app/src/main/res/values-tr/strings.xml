@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Video Dönüştürücü FFmpeg</string>
+    <string name="app_name">Video Dönüştürücü</string>
+    <string name="notification_converting">Dönüştürülüyor…</string>
+    <string name="notification_done_title">Dönüştürme tamamlandı</string>
+    <string name="notification_done_tap">Kaydetmek veya iptal etmek için buraya dokunun</string>
+    <string name="notification_channel_progress">Dönüştürme ilerleme durumu</string>
+    <string name="notification_channel_done">Dönüştürme tamamlandı</string>
 </resources>

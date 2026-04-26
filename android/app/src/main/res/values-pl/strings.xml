@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Konwerter wideo FFmpeg</string>
+    <string name="app_name">Konwerter wideo</string>
+    <string name="notification_converting">Trwa konwersja…</string>
+    <string name="notification_done_title">Konwersja zakończona</string>
+    <string name="notification_done_tap">Naciśnij tutaj, aby zapisać lub odrzucić</string>
+    <string name="notification_channel_progress">Postęp konwersji</string>
+    <string name="notification_channel_done">Konwersja zakończona</string>
 </resources>

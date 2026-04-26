@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Video Converter FFmpeg</string>
+    <string name="notification_converting">Converting…</string>
+    <string name="notification_done_title">Conversion complete</string>
+    <string name="notification_done_tap">Tap to save or discard</string>
+    <string name="notification_channel_progress">Conversion Progress</string>
+    <string name="notification_channel_done">Conversion Complete</string>
 </resources>

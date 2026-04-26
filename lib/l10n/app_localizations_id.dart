@@ -314,7 +314,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get purchaseSuccess => 'Terima kasih! Iklan telah dinonaktifkan.';
 
   @override
-  String get appName => 'Kompres Video FFmpeg';
+  String get appName => 'Konverter Video';
 
   @override
   String get audioOnly => 'Hanya Audio';
@@ -373,4 +373,24 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get feedbackSendButton => 'Kirim';
+
+  @override
+  String get notificationPermissionTitle => 'Konversi Latar Belakang';
+
+  @override
+  String get notificationPermissionContent =>
+      'Izinkan pemberitahuan agar proses konversi dapat terus berjalan saat Anda menggunakan aplikasi lain. Tanpa izin ini, aplikasi harus tetap terbuka.';
+
+  @override
+  String get notificationPermissionNotNow => 'Tidak Sekarang';
+
+  @override
+  String get notificationPermissionAllow => 'Izinkan';
+
+  @override
+  String get notificationPermissionDenied =>
+      'Aktifkan pemberitahuan di pengaturan untuk konversi latar belakang.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Pengaturan';
 }

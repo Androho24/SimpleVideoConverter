@@ -8,9 +8,11 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.androho.simplevideoconverter.BuildConfig
+import com.androho.simplevideoconverter.ConversionService
 import com.androho.simplevideoconverter.SimpleVideoConverterApplication
 import com.androho.simplevideoconverter.SplashActivity
 import com.google.android.gms.ads.AdError
@@ -49,6 +51,9 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
     private var inColdStartMode = false
     private var coldStartTimeoutRunnable: Runnable? = null
     private val mainHandler = Handler(Looper.getMainLooper())
+
+    // Background-Return: Retry-Runnable damit onStop() ihn canceln kann
+    private var backgroundReturnRetryRunnable: Runnable? = null
 
     companion object {
         private const val TAG = "AppOpenAdManager"
@@ -335,6 +340,13 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
         return (Date().time - loadTime) < AD_CACHE_MAX_AGE_MS
     }
 
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
+        Log.d(TAG, "onStop() – App im Background, pending Background-Return-Retries abgebrochen")
+        backgroundReturnRetryRunnable?.let { mainHandler.removeCallbacks(it) }
+        backgroundReturnRetryRunnable = null
+    }
+
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
         Log.d(TAG, "onStart() – App im Foreground")
@@ -356,11 +368,23 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
     }
 
     private fun tryLaunchSplashForBackgroundReturn(retryCount: Int, maxRetries: Int) {
+        backgroundReturnRetryRunnable = null
+
+        // Sicherstellen dass App noch im Foreground ist – verhindert Ad über Homescreen
+        if (!ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            Log.d(TAG, "Background-Return: App nicht mehr im Foreground – abgebrochen")
+            return
+        }
+
         val currentActivity = getCurrentActivity()
 
         if (currentActivity != null) {
             if (currentActivity is SplashActivity) {
                 Log.d(TAG, "Background-Return: SplashActivity bereits aktiv – überspringe")
+                return
+            }
+            if (ConversionService.isRunning) {
+                Log.d(TAG, "Background-Return: Konvertierung läuft – kein Splash")
                 return
             }
             if (!shouldShowAd(currentActivity)) {
@@ -384,7 +408,9 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
 
         val delayMs = when (retryCount) { 0 -> 50L; 1 -> 150L; else -> 300L }
         Log.d(TAG, "Background-Return: Retry ${retryCount + 1}/$maxRetries in ${delayMs}ms")
-        mainHandler.postDelayed({ tryLaunchSplashForBackgroundReturn(retryCount + 1, maxRetries) }, delayMs)
+        val runnable = Runnable { tryLaunchSplashForBackgroundReturn(retryCount + 1, maxRetries) }
+        backgroundReturnRetryRunnable = runnable
+        mainHandler.postDelayed(runnable, delayMs)
     }
 
     private fun getCurrentActivity(): Activity? {

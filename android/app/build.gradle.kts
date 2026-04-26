@@ -17,6 +17,12 @@ val keyProperties = Properties().apply {
     if (keyPropertiesFile.exists()) load(keyPropertiesFile.inputStream())
 }
 
+// local.properties einlesen (liegt außerhalb des Repos, siehe .gitignore)
+val localPropertiesFile = rootProject.file("local.properties")
+val localProperties = Properties().apply {
+    if (localPropertiesFile.exists()) load(localPropertiesFile.inputStream())
+}
+
 android {
     namespace = "com.androho.simplevideoconverter"
     compileSdk = flutter.compileSdkVersion
@@ -50,6 +56,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        manifestPlaceholders["admobAppId"] = localProperties.getProperty("admob.appId", "")
     }
 
     signingConfigs {

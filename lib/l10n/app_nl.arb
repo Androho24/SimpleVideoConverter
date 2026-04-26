@@ -106,7 +106,7 @@
 "purchaseButton": "Kopen",
   "purchaseError": "Aankoop mislukt. Probeer het opnieuw.",
   "purchaseSuccess": "Bedankt! Advertenties zijn uitgeschakeld.",
-  "appName": "Video Converter FFmpeg",
+  "appName": "Video Converter",
   "audioOnly": "Alleen audio",
   "audioOnlyTooltip": "Alleen audio uitgelegd",
   "audioOnlyInfoContent": "Haal alleen de audiotrack uit de video – geen beeld.\n\nNormale modus: MP3 met 192 kbps.\nExpertmodus: codec en bitsnelheid uit de audio-instellingen.\n\nHandig om bijvoorbeeld muziek of podcasts uit video's op te slaan.",
@@ -126,6 +126,12 @@
   "feedbackCategoryFeature": "Verbeteringsvoorstel",
   "feedbackCategoryFeedback": "Algemene feedback",
   "feedbackMessageHint": "Beschrijf je vraag…",
-  "feedbackSendButton": "Verzenden"
+  "feedbackSendButton": "Verzenden",
 
+  "notificationPermissionTitle": "Conversie op de achtergrond",
+  "notificationPermissionContent": "Sta meldingen toe, zodat de conversie kan doorgaan terwijl je andere apps gebruikt. Zonder deze toestemming moet de app geopend blijven.",
+  "notificationPermissionNotNow": "Niet nu",
+  "notificationPermissionAllow": "Toestaan",
+  "notificationPermissionDenied": "Schakel meldingen in via de instellingen voor conversie op de achtergrond.",
+  "notificationPermissionOpenSettings": "Instellingen"
 }

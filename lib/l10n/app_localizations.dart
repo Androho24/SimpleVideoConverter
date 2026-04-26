@@ -684,7 +684,7 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In de, this message translates to:
-  /// **'Video Konverter FFmpeg'**
+  /// **'Video Konverter'**
   String get appName;
 
   /// Switch-Label für Audio-Only-Modus
@@ -794,6 +794,42 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Senden'**
   String get feedbackSendButton;
+
+  /// No description provided for @notificationPermissionTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Hintergrundkonvertierung'**
+  String get notificationPermissionTitle;
+
+  /// No description provided for @notificationPermissionContent.
+  ///
+  /// In de, this message translates to:
+  /// **'Erlaube Benachrichtigungen, damit die Konvertierung weiterlaufen kann während du andere Apps nutzt. Ohne diese Berechtigung muss die App geöffnet bleiben.'**
+  String get notificationPermissionContent;
+
+  /// No description provided for @notificationPermissionNotNow.
+  ///
+  /// In de, this message translates to:
+  /// **'Nicht jetzt'**
+  String get notificationPermissionNotNow;
+
+  /// No description provided for @notificationPermissionAllow.
+  ///
+  /// In de, this message translates to:
+  /// **'Erlauben'**
+  String get notificationPermissionAllow;
+
+  /// No description provided for @notificationPermissionDenied.
+  ///
+  /// In de, this message translates to:
+  /// **'Aktiviere Benachrichtigungen in den Einstellungen für die Hintergrundkonvertierung.'**
+  String get notificationPermissionDenied;
+
+  /// No description provided for @notificationPermissionOpenSettings.
+  ///
+  /// In de, this message translates to:
+  /// **'Einstellungen'**
+  String get notificationPermissionOpenSettings;
 }
 
 class _AppLocalizationsDelegate

@@ -9,6 +9,8 @@ class PreferencesService {
   static const _keyLaunchCount = 'launchCount';
   static const _keyCpuWarningDismissed = 'cpuWarningDismissed';
   static const _keyConversionCount = 'conversionCount';
+  static const _keyNotificationRationaleDismissed = 'notificationRationaleDismissed';
+  static const _keyNotificationDeniedHintCount = 'notificationDeniedHintCount';
   static const _keyLastQualityIndex = 'lastQualityIndex';
 
   static Future<bool> getExpertMode() async {
@@ -29,6 +31,27 @@ class PreferencesService {
   static Future<void> setIsPro(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_keyIsPro, value);
+  }
+
+  static Future<bool> getNotificationRationaleDismissed() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyNotificationRationaleDismissed) ?? false;
+  }
+
+  static Future<void> setNotificationRationaleDismissed() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyNotificationRationaleDismissed, true);
+  }
+
+  static Future<int> getNotificationDeniedHintCount() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_keyNotificationDeniedHintCount) ?? 0;
+  }
+
+  static Future<void> incrementNotificationDeniedHintCount() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_keyNotificationDeniedHintCount,
+        (prefs.getInt(_keyNotificationDeniedHintCount) ?? 0) + 1);
   }
 
   static Future<bool> getCpuWarningDismissed() async {

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Kompres Video FFmpeg</string>
+    <string name="app_name">Konverter Video</string>
+    <string name="notification_converting">Sedang dikonversi…</string>
+    <string name="notification_done_title">Konversi selesai</string>
+    <string name="notification_done_tap">Ketuk di sini untuk menyimpan atau membatalkan</string>
+    <string name="notification_channel_progress">Kemajuan konversi</string>
+    <string name="notification_channel_done">Konversi selesai</string>
 </resources>

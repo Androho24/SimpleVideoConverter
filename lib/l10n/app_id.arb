@@ -106,7 +106,7 @@
   "purchaseButton": "Beli",
     "purchaseError": "Pembelian gagal. Silakan coba lagi.",
     "purchaseSuccess": "Terima kasih! Iklan telah dinonaktifkan.",
-    "appName": "Kompres Video FFmpeg",
+    "appName": "Konverter Video",
     "audioOnly": "Hanya Audio",
     "audioOnlyTooltip": "Penjelasan Hanya Audio",
     "audioOnlyInfoContent": "Hanya mengekstrak trek audio dari video – tanpa gambar.\n\nMode Normal: MP3 dengan 192 kbps.\nMode Ahli: Codec dan bitrate dari pengaturan audio.\n\nBerguna, misalnya, untuk menyimpan musik atau podcast dari video.",
@@ -126,6 +126,12 @@
   "feedbackCategoryFeature": "Saran perbaikan",
   "feedbackCategoryFeedback": "Umpan balik umum",
   "feedbackMessageHint": "Jelaskan masalah Anda…",
-  "feedbackSendButton": "Kirim"
+  "feedbackSendButton": "Kirim",
 
-  }
+  "notificationPermissionTitle": "Konversi Latar Belakang",
+  "notificationPermissionContent": "Izinkan pemberitahuan agar proses konversi dapat terus berjalan saat Anda menggunakan aplikasi lain. Tanpa izin ini, aplikasi harus tetap terbuka.",
+  "notificationPermissionNotNow": "Tidak Sekarang",
+  "notificationPermissionAllow": "Izinkan",
+  "notificationPermissionDenied": "Aktifkan pemberitahuan di pengaturan untuk konversi latar belakang.",
+  "notificationPermissionOpenSettings": "Pengaturan"
+}

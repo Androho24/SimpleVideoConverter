@@ -314,7 +314,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get purchaseSuccess => 'Obrigado! A publicidade foi desativada.';
 
   @override
-  String get appName => 'Conversor Vídeo FFmpeg';
+  String get appName => 'Conversor de Vídeo';
 
   @override
   String get audioOnly => 'Apenas áudio';
@@ -374,6 +374,26 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get feedbackSendButton => 'Enviar';
+
+  @override
+  String get notificationPermissionTitle => 'Conversão em segundo plano';
+
+  @override
+  String get notificationPermissionContent =>
+      'Permita notificações para que a conversão possa continuar enquanto utiliza outras aplicações. Sem esta autorização, a aplicação tem de permanecer aberta.';
+
+  @override
+  String get notificationPermissionNotNow => 'Não agora';
+
+  @override
+  String get notificationPermissionAllow => 'Permitir';
+
+  @override
+  String get notificationPermissionDenied =>
+      'Ative as notificações nas definições de conversão em segundo plano.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Definições';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -686,7 +706,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get purchaseSuccess => 'Obrigado! Os anúncios foram desativados.';
 
   @override
-  String get appName => 'Conversor Vídeo FFmpeg';
+  String get appName => 'Conversor de Vídeo';
 
   @override
   String get audioOnly => 'Somente áudio';
@@ -746,4 +766,24 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get feedbackSendButton => 'Enviar';
+
+  @override
+  String get notificationPermissionTitle => 'Conversão em segundo plano';
+
+  @override
+  String get notificationPermissionContent =>
+      'Permita notificações para que a conversão continue enquanto você usa outros aplicativos. Sem essa permissão, o aplicativo precisa permanecer aberto.';
+
+  @override
+  String get notificationPermissionNotNow => 'Não agora';
+
+  @override
+  String get notificationPermissionAllow => 'Permitir';
+
+  @override
+  String get notificationPermissionDenied =>
+      'Ative as notificações nas configurações de conversão em segundo plano.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Configurações';
 }

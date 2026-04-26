@@ -106,7 +106,7 @@
 "purchaseButton": "Kup",
   "purchaseError": "Nie udało się dokonać zakupu. Spróbuj ponownie.",
   "purchaseSuccess": "Dziękujemy! Reklamy zostały wyłączone.",
-  "appName": "Konwerter wideo FFmpeg",
+  "appName": "Konwerter wideo",
   "audioOnly": "Tylko audio",
   "audioOnlyTooltip": "Wyjaśnienie opcji Tylko audio",
   "audioOnlyInfoContent": "Wyodrębnia tylko ścieżkę audio z filmu – bez obrazu.\n\nTryb normalny: MP3 z przepływnością 192 kbps.\nTryb ekspercki: kodek i przepływność z ustawień audio.\n\nPrzydatne np. do zapisywania muzyki lub podcastów z filmów.",
@@ -126,6 +126,12 @@
   "feedbackCategoryFeature": "Propozycja ulepszenia",
   "feedbackCategoryFeedback": "Ogólna opinia",
   "feedbackMessageHint": "Opisz swoją sprawę…",
-  "feedbackSendButton": "Wyślij"
+  "feedbackSendButton": "Wyślij",
 
+  "notificationPermissionTitle": "Konwersja w tle",
+  "notificationPermissionContent": "Zezwól na powiadomienia, aby konwersja mogła trwać podczas korzystania z innych aplikacji. Bez tego uprawnienia aplikacja musi pozostać otwarta.",
+  "notificationPermissionNotNow": "Nie teraz",
+  "notificationPermissionAllow": "Zezwól",
+  "notificationPermissionDenied": "Włącz powiadomienia w ustawieniach konwersji w tle.",
+  "notificationPermissionOpenSettings": "Ustawienia"
 }
