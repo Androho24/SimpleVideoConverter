@@ -137,6 +137,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Ошибка при сохранении. Возможно, недостаточно места на диске.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Не хватает памяти для сохранения этого файла. Попробуйте сократить длительность ролика или снизить качество.';
+
+  @override
   String get conversionDone => 'Готово!';
 
   @override

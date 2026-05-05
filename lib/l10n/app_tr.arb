@@ -45,6 +45,7 @@
   "savedSuccess": "Kaydedildi!",
   "open": "Aç",
   "saveError": "Kaydetme hatası. Yeterli depolama alanı olmayabilir.",
+  "saveErrorOutOfMemory": "Bu dosyayı kaydetmek için yeterli bellek yok. Daha kısa bir klip veya daha düşük kaliteyi deneyin.",
   "conversionDone": "Tamam!",
   "conversionProgress": "Dönüştürme: {percent}%",
   "conversionFailed": "Dönüştürme başarısız: {error}",

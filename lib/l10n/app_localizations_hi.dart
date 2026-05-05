@@ -137,6 +137,10 @@ class AppLocalizationsHi extends AppLocalizations {
       'सहेजने में त्रुटि। संभवतः पर्याप्त भंडारण स्थान नहीं है।';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'इस फ़ाइल को सहेजने के लिए पर्याप्त मेमोरी नहीं है। एक छोटा क्लिप या कम गुणवत्ता आज़माएँ।';
+
+  @override
   String get conversionDone => 'हो गया!';
 
   @override

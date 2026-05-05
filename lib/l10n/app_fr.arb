@@ -45,6 +45,7 @@
   "savedSuccess": "Enregistré !",
   "open": "Ouvrir",
   "saveError": "Erreur lors de l'enregistrement. Espace de stockage insuffisant.",
+  "saveErrorOutOfMemory": "Il n'y a pas assez de mémoire pour enregistrer ce fichier. Essayez d'utiliser un extrait plus court ou de réduire la qualité.",
   "conversionDone": "Terminé !",
   "conversionProgress": "Conversion : {percent}%",
   "conversionFailed": "Échec de la conversion : {error}",

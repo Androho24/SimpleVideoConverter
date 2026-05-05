@@ -44,6 +44,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   bool _isAudioOnly = false;
   bool _isLoading = false;
+  bool _isConverting = false;
   bool _isExpertMode = false;
   bool _cpuWarningDismissed = false;
   ExpertSettings _expertSettings = const ExpertSettings();
@@ -53,7 +54,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   @override
   void initState() {
     super.initState();
-    _requestPermissions();
     _loadPreferences();
     _cleanAppCache();
   }
@@ -86,15 +86,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       _cpuWarningDismissed = dismissed;
       _selectedQualityIndex = quality;
     });
-  }
-
-  Future<void> _requestPermissions() async {
-    // Android 13+: READ_MEDIA_VIDEO, darunter: READ_EXTERNAL_STORAGE
-    if (await Permission.videos.isDenied) {
-      await Permission.videos.request();
-    } else if (await Permission.storage.isDenied) {
-      await Permission.storage.request();
-    }
   }
 
   Future<void> _requestNotificationPermission() async {
@@ -371,14 +362,19 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   }
 
   Future<void> _convertVideo() async {
+    if (_isConverting) return;
     if (_videoPath == null || _metadata == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(AppLocalizations.of(context)!.noVideoLoaded)),
       );
       return;
     }
+    setState(() => _isConverting = true);
 
-    if (!await _checkStorage()) return;
+    if (!await _checkStorage()) {
+      if (mounted) setState(() => _isConverting = false);
+      return;
+    }
 
     final convertedPrefix = AppLocalizations.of(context)!.convertedPrefix;
 
@@ -466,6 +462,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     await _requestNotificationPermission();
 
     if (!mounted) return;
+    setState(() => _isConverting = false);
     Navigator.push(
       context,
       MaterialPageRoute(

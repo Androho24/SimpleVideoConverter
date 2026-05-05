@@ -139,6 +139,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Erreur lors de l\'enregistrement. Espace de stockage insuffisant.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Il n\'y a pas assez de mémoire pour enregistrer ce fichier. Essayez d\'utiliser un extrait plus court ou de réduire la qualité.';
+
+  @override
   String get conversionDone => 'Terminé !';
 
   @override

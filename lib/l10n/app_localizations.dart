@@ -369,6 +369,12 @@ abstract class AppLocalizations {
   /// **'Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.'**
   String get saveError;
 
+  /// Snackbar Fehler beim Speichern – zu wenig RAM (Audio readAsBytes OOM)
+  ///
+  /// In de, this message translates to:
+  /// **'Nicht genug Arbeitsspeicher zum Speichern. Versuche einen kürzeren Clip oder niedrigere Qualität.'**
+  String get saveErrorOutOfMemory;
+
   /// Statustext nach abgeschlossener Konvertierung
   ///
   /// In de, this message translates to:

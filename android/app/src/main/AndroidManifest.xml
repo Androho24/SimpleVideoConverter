@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Netzwerkzugriff (AdMob, Firebase) -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Werbe-ID für AdMob (Android 13+) -->
@@ -8,17 +9,23 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <!-- Notification-Permission (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- Lese-Zugriff auf externe Medien (file_picker + video_player) -->
+    <!-- Video-Auswahl läuft über den System-Picker; kein breiter Medienzugriff nötig. -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+        tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"
+        tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"
+        tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED"
+        tools:node="remove" />
     <!-- Galerie-Schreibzugriff für Android 7–9 (API 24–28); ab API 29 nicht mehr nötig -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
     <application
         android:label="@string/app_name"
         android:name=".SimpleVideoConverterApplication"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:largeHeap="true">
         <!-- SplashActivity ist der Launcher und zeigt ggf. App Open Ad -->
         <activity
             android:name=".SplashActivity"

@@ -136,6 +136,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get saveError => 'Chyba při ukládání. Možná nemáte dostatek místa.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Není dostatek paměti pro uložení tohoto souboru. Zkuste použít kratší klip nebo nižší kvalitu.';
+
+  @override
   String get conversionDone => 'Hotovo!';
 
   @override

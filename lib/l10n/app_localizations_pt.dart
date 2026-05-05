@@ -138,6 +138,10 @@ class AppLocalizationsPt extends AppLocalizations {
       'Erro ao guardar. Talvez não haja espaço de armazenamento suficiente.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Não há memória suficiente para guardar este ficheiro. Tente um vídeo mais curto ou com qualidade inferior.';
+
+  @override
   String get conversionDone => 'Concluído!';
 
   @override
@@ -528,6 +532,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get saveError =>
       'Erro ao salvar. Talvez não haja espaço de armazenamento suficiente.';
+
+  @override
+  String get saveErrorOutOfMemory =>
+      'Não há memória suficiente para salvar este arquivo. Tente usar um clipe mais curto ou reduzir a qualidade.';
 
   @override
   String get conversionDone => 'Concluído!';

@@ -138,6 +138,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Errore durante il salvataggio. Forse non c\'è abbastanza spazio di archiviazione.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'La memoria disponibile non è sufficiente per salvare questo file. Prova a utilizzare un video più breve o a ridurre la qualità.';
+
+  @override
   String get conversionDone => 'Fatto!';
 
   @override

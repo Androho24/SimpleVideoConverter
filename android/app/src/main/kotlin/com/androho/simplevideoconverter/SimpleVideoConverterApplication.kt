@@ -6,14 +6,20 @@ import android.os.Bundle
 import android.util.Log
 import com.androho.simplevideoconverter.ads.AppOpenAdManager
 import com.androho.simplevideoconverter.ads.AppOpenAdManagerImpl
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.embedding.engine.dart.DartExecutor
+import io.flutter.plugins.GeneratedPluginRegistrant
 
 class SimpleVideoConverterApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     private val activeActivities = mutableSetOf<Activity>()
     private var appOpenAdManager: AppOpenAdManager? = null
+    private var mainFlutterEngine: FlutterEngine? = null
 
     companion object {
         private const val TAG = "SimpleVideoConverterApp"
+        const val MAIN_ENGINE_ID = "main_engine"
     }
 
     override fun onCreate() {
@@ -40,6 +46,31 @@ class SimpleVideoConverterApplication : Application(), Application.ActivityLifec
     fun getCurrentActivity(): Activity? = activeActivities.lastOrNull()
 
     fun getAppOpenAdManager(): AppOpenAdManager? = appOpenAdManager
+
+    fun getMainFlutterEngine(): FlutterEngine {
+        mainFlutterEngine?.let { return it }
+
+        val engine = FlutterEngine(this)
+        GeneratedPluginRegistrant.registerWith(engine)
+        engine.dartExecutor.executeDartEntrypoint(
+            DartExecutor.DartEntrypoint.createDefault()
+        )
+        FlutterEngineCache.getInstance().put(MAIN_ENGINE_ID, engine)
+        mainFlutterEngine = engine
+        Log.d(TAG, "Main FlutterEngine created and cached")
+        return engine
+    }
+
+    fun releaseMainFlutterEngineIfIdle() {
+        if (ConversionService.isRunning) return
+
+        mainFlutterEngine?.let {
+            FlutterEngineCache.getInstance().remove(MAIN_ENGINE_ID)
+            mainFlutterEngine = null
+            it.destroy()
+            Log.d(TAG, "Main FlutterEngine released and destroyed")
+        }
+    }
 
     // ActivityLifecycleCallbacks
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {

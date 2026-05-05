@@ -135,6 +135,10 @@ class AppLocalizationsTh extends AppLocalizations {
       'เกิดข้อผิดพลาดในการบันทึก อาจมีพื้นที่จัดเก็บไม่เพียงพอ';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'หน่วยความจำไม่เพียงพอที่จะบันทึกไฟล์นี้ กรุณาลองใช้คลิปที่สั้นกว่าหรือคุณภาพต่ำลง';
+
+  @override
   String get conversionDone => 'เสร็จสิ้น!';
 
   @override

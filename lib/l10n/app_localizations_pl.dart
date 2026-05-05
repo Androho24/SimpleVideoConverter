@@ -138,6 +138,10 @@ class AppLocalizationsPl extends AppLocalizations {
       'Błąd podczas zapisywania. Być może brakuje miejsca na dysku.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Za mało pamięci, aby zapisać ten plik. Spróbuj skrócić nagranie lub obniżyć jakość.';
+
+  @override
   String get conversionDone => 'Gotowe!';
 
   @override

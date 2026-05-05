@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 
 /**
  * SplashActivity — Launcher-Activity für SimpleVideoConverter.
@@ -34,7 +36,13 @@ class SplashActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Kein setContentView – Theme (LaunchTheme) liefert den windowBackground
+        setContentView(
+            View(this).apply { setBackgroundResource(R.drawable.launch_background) },
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
 
         val mode = intent.getStringExtra(EXTRA_LAUNCH_MODE) ?: MODE_COLD_START
         Log.d(TAG, "onCreate() mode=$mode")
@@ -85,5 +93,11 @@ class SplashActivity : Activity() {
         }
         finish()
         overridePendingTransition(0, 0)
+    }
+
+    override fun onDestroy() {
+        safetyRunnable?.let { safetyHandler.removeCallbacks(it) }
+        safetyRunnable = null
+        super.onDestroy()
     }
 }

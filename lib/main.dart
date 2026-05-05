@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
@@ -13,6 +14,7 @@ import 'services/purchase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(_systemUiOverlayStyle);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await MobileAds.instance.initialize();
   await PurchaseService.initialize();
@@ -77,21 +79,37 @@ void main() async {
   runApp(const App());
 }
 
+const _systemUiOverlayStyle = SystemUiOverlayStyle(
+  statusBarColor: Colors.white,
+  statusBarIconBrightness: Brightness.dark,
+  statusBarBrightness: Brightness.light,
+  systemNavigationBarColor: Colors.white,
+  systemNavigationBarIconBrightness: Brightness.dark,
+);
+
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: _systemUiOverlayStyle,
+      child: MaterialApp(
+        onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            systemOverlayStyle: _systemUiOverlayStyle,
+          ),
+          useMaterial3: true,
+        ),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const VideoConverterApp(),
       ),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: const VideoConverterApp(),
     );
   }
 }

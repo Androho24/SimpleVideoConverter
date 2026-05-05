@@ -138,6 +138,10 @@ class AppLocalizationsNl extends AppLocalizations {
       'Fout bij opslaan. Mogelijk onvoldoende opslagruimte.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Er is onvoldoende geheugen om dit bestand op te slaan. Probeer een korter fragment of een lagere kwaliteit.';
+
+  @override
   String get conversionDone => 'Klaar!';
 
   @override

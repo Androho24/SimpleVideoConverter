@@ -45,6 +45,7 @@
    "savedSuccess": "Uloženo!",
    "open": "Otevřít",
    "saveError": "Chyba při ukládání. Možná nemáte dostatek místa.",
+   "saveErrorOutOfMemory": "Není dostatek paměti pro uložení tohoto souboru. Zkuste použít kratší klip nebo nižší kvalitu.",
    "conversionDone": "Hotovo!",
    "conversionProgress": "Převod: {percent}%",
    "conversionFailed": "Převod se nezdařil: {error}",

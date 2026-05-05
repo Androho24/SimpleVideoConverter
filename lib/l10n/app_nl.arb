@@ -45,6 +45,7 @@
   "savedSuccess": "Opgeslagen!",
   "open": "Openen",
   "saveError": "Fout bij opslaan. Mogelijk onvoldoende opslagruimte.",
+  "saveErrorOutOfMemory": "Er is onvoldoende geheugen om dit bestand op te slaan. Probeer een korter fragment of een lagere kwaliteit.",
   "conversionDone": "Klaar!",
   "conversionProgress": "Conversie: {percent}%",
   "conversionFailed": "Conversie mislukt: {error}",

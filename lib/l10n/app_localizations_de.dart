@@ -138,6 +138,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Nicht genug Arbeitsspeicher zum Speichern. Versuche einen kürzeren Clip oder niedrigere Qualität.';
+
+  @override
   String get conversionDone => 'Fertig!';
 
   @override

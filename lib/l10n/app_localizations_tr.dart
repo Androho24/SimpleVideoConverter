@@ -139,6 +139,10 @@ class AppLocalizationsTr extends AppLocalizations {
       'Kaydetme hatası. Yeterli depolama alanı olmayabilir.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Bu dosyayı kaydetmek için yeterli bellek yok. Daha kısa bir klip veya daha düşük kaliteyi deneyin.';
+
+  @override
   String get conversionDone => 'Tamam!';
 
   @override

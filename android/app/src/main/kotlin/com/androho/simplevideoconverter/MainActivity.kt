@@ -4,21 +4,22 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugins.GeneratedPluginRegistrant
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
 
 class MainActivity : FlutterActivity() {
@@ -27,15 +28,23 @@ class MainActivity : FlutterActivity() {
     private val SERVICE_CHANNEL = "com.androho.simplevideoconverter/conversion_service"
 
     override fun provideFlutterEngine(context: Context): FlutterEngine? =
-        FlutterEngineCache.getInstance().get("main_engine")
+        (application as SimpleVideoConverterApplication).getMainFlutterEngine()
 
-    override fun shouldDestroyEngineWithHost(): Boolean = !ConversionService.isRunning
+    // Engine-Lifecycle liegt vollständig bei SimpleVideoConverterApplication.
+    // Die Activity zerstört die Engine nie selbst — erst detachen (super), dann ggf. destroyen.
+    override fun shouldDestroyEngineWithHost(): Boolean = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        applySystemBarStyle()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        applySystemBarStyle()
+    }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        // Plugins explizit registrieren bevor registerNativeAdFactory aufgerufen wird.
-        // super.configureFlutterEngine registriert auf manchen Geräten zu spät.
-        GeneratedPluginRegistrant.registerWith(flutterEngine)
-        FlutterEngineCache.getInstance().put("main_engine", flutterEngine)
         GoogleMobileAdsPlugin.registerNativeAdFactory(
             flutterEngine,
             "nativeAd",
@@ -115,10 +124,27 @@ class MainActivity : FlutterActivity() {
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
         GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "nativeAd")
-        if (shouldDestroyEngineWithHost()) {
-            FlutterEngineCache.getInstance().remove("main_engine")
-        }
+        // Erst super: Flutter detacht die Engine sauber von dieser Activity.
+        // Danach release: Engine ggf. zerstören — nie vorher, sonst hängt Flutter im Limbo.
         super.cleanUpFlutterEngine(flutterEngine)
+        (application as? SimpleVideoConverterApplication)?.releaseMainFlutterEngineIfIdle()
+    }
+
+    private fun applySystemBarStyle() {
+        window.statusBarColor = Color.WHITE
+        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+        insetsController.isAppearanceLightStatusBars = true
+
+        var flags = window.decorView.systemUiVisibility
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.navigationBarColor = Color.WHITE
+            insetsController.isAppearanceLightNavigationBars = true
+            flags = flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
+        window.decorView.systemUiVisibility = flags
     }
 }
 

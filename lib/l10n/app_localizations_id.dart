@@ -138,6 +138,10 @@ class AppLocalizationsId extends AppLocalizations {
       'Kesalahan saat menyimpan. Mungkin ruang penyimpanan tidak cukup.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Memori tidak cukup untuk menyimpan file ini. Coba gunakan klip yang lebih pendek atau kurangi kualitasnya.';
+
+  @override
   String get conversionDone => 'Selesai!';
 
   @override

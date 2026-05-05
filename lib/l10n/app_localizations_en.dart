@@ -137,6 +137,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Error saving. There may not be enough storage space.';
 
   @override
+  String get saveErrorOutOfMemory =>
+      'Not enough memory to save this file. Try a shorter clip or lower quality.';
+
+  @override
   String get conversionDone => 'Done!';
 
   @override

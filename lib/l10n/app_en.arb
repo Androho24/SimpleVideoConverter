@@ -48,6 +48,7 @@
   "savedSuccess": "Saved!",
   "open": "Open",
   "saveError": "Error saving. There may not be enough storage space.",
+  "saveErrorOutOfMemory": "Not enough memory to save this file. Try a shorter clip or lower quality.",
   "conversionDone": "Done!",
   "conversionProgress": "Converting: {percent}%",
   "conversionFailed": "Conversion failed: {error}",

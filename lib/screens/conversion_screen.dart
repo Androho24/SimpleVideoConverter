@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
@@ -285,8 +286,18 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
 
       if (isAudio) {
         // Audio: Bytes in RAM laden und via FilePicker in Ordner nach Wahl speichern.
-        // OOM-Risiko vertretbar, da komprimierte Audio-Dateien selten > 50 MB sind.
-        final bytes = await File(_currentOutputPath).readAsBytes();
+        final Uint8List bytes;
+        try {
+          bytes = await File(_currentOutputPath).readAsBytes();
+        } on OutOfMemoryError {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(l.saveErrorOutOfMemory),
+              backgroundColor: Colors.red,
+            ));
+          }
+          return;
+        }
         final savedPath = await FilePicker.platform.saveFile(
           bytes: bytes,
           fileName: widget.defaultFileName,
@@ -307,7 +318,9 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
           content: Text(l.savedSuccess),
           action: SnackBarAction(
             label: l.open,
-            onPressed: () => OpenFilex.open(cacheFilePath, type: isAudio ? 'audio/*' : 'video/*'),
+            onPressed: () {
+              OpenFilex.open(cacheFilePath, type: isAudio ? 'audio/*' : 'video/*').catchError((_) {});
+            },
           ),
           duration: const Duration(seconds: 20),
         ),

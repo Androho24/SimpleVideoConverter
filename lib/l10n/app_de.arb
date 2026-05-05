@@ -123,6 +123,8 @@
 
   "saveError": "Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.",
   "@saveError": { "description": "Snackbar Fehler beim Speichern" },
+  "saveErrorOutOfMemory": "Nicht genug Arbeitsspeicher zum Speichern. Versuche einen kürzeren Clip oder niedrigere Qualität.",
+  "@saveErrorOutOfMemory": { "description": "Snackbar Fehler beim Speichern – zu wenig RAM (Audio readAsBytes OOM)" },
 
   "conversionDone": "Fertig!",
   "@conversionDone": { "description": "Statustext nach abgeschlossener Konvertierung" },

@@ -45,6 +45,7 @@
   "savedSuccess": "Zapisano!",
   "open": "Otwórz",
   "saveError": "Błąd podczas zapisywania. Być może brakuje miejsca na dysku.",
+  "saveErrorOutOfMemory": "Za mało pamięci, aby zapisać ten plik. Spróbuj skrócić nagranie lub obniżyć jakość.",
   "conversionDone": "Gotowe!",
   "conversionProgress": "Konwersja: {percent}%",
   "conversionFailed": "Konwersja nie powiodła się: {error}",

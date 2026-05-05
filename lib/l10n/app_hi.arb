@@ -42,6 +42,7 @@
   "savedSuccess": "सफलतापूर्वक सहेजा!",
   "open": "खोलें",
   "saveError": "सहेजने में त्रुटि। संभवतः पर्याप्त भंडारण स्थान नहीं है।",
+  "saveErrorOutOfMemory": "इस फ़ाइल को सहेजने के लिए पर्याप्त मेमोरी नहीं है। एक छोटा क्लिप या कम गुणवत्ता आज़माएँ।",
   "conversionDone": "हो गया!",
   "conversionProgress": "रूपांतरण: {percent}%",
   "conversionFailed": "रूपांतरण विफल हो गया: {error}",
