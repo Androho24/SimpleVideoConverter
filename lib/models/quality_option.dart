@@ -11,6 +11,14 @@ class QualityOption {
 }
 
 const List<QualityOption> qualityOptions = [
+  QualityOption('2160p High',     2160, 18, 25000000),
+  QualityOption('2160p Medium',   2160, 23, 15000000),
+  QualityOption('2160p Low',      2160, 27,  8000000),
+  QualityOption('2160p Very Low', 2160, 32,  4000000),
+  QualityOption('1440p High',     1440, 18, 15000000),
+  QualityOption('1440p Medium',   1440, 23,  8000000),
+  QualityOption('1440p Low',      1440, 27,  4000000),
+  QualityOption('1440p Very Low', 1440, 32,  2000000),
   QualityOption('1080p High',     1080, 18, 8000000),
   QualityOption('1080p Medium',   1080, 23, 4000000),
   QualityOption('1080p Low',      1080, 27, 2000000),

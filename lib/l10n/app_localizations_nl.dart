@@ -12,6 +12,30 @@ class AppLocalizationsNl extends AppLocalizations {
   String get qualityLabel => 'Kwaliteit';
 
   @override
+  String get quality2160pHigh => '2160p Hoog';
+
+  @override
+  String get quality2160pMedium => '2160p Gemiddeld';
+
+  @override
+  String get quality2160pLow => '2160p Laag';
+
+  @override
+  String get quality2160pVeryLow => '2160p Zeer laag';
+
+  @override
+  String get quality1440pHigh => '1440p Hoog';
+
+  @override
+  String get quality1440pMedium => '1440p Gemiddeld';
+
+  @override
+  String get quality1440pLow => '1440p Laag';
+
+  @override
+  String get quality1440pVeryLow => '1440p Zeer laag';
+
+  @override
   String get quality1080pHigh => '1080p Hoog';
 
   @override
@@ -134,6 +158,19 @@ class AppLocalizationsNl extends AppLocalizations {
   String get open => 'Openen';
 
   @override
+  String get openGallery => 'Galerij openen';
+
+  @override
+  String get openVideo => 'Video openen';
+
+  @override
+  String get autoSaveTitle => 'Video\'s automatisch opslaan in galerij';
+
+  @override
+  String get autoSaveSubtitle =>
+      'Video\'s worden na conversie automatisch opgeslagen.';
+
+  @override
   String get saveError =>
       'Fout bij opslaan. Mogelijk onvoldoende opslagruimte.';
 
@@ -197,6 +234,15 @@ class AppLocalizationsNl extends AppLocalizations {
   String get convertButton => 'Converteren';
 
   @override
+  String get encodingModeLabel => 'Coderingmodus';
+
+  @override
+  String get encodingModeCrf => 'Kwaliteit (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Bitsnelheid';
+
+  @override
   String get crfLabel => 'Videokwaliteit (CRF)';
 
   @override
@@ -205,6 +251,16 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → verliesvrij (zeer groot bestand)\n18 → visueel vrijwel verliesvrij\n23 → Standaard (goede balans)\n28 → zichtbare kwaliteitsverlies\n51 → laagste kwaliteit\n\nAanbeveling: 18–28';
+
+  @override
+  String get targetBitrateLabel => 'Doelbitsnelheid';
+
+  @override
+  String get targetBitrateInfoTitle => 'Doelbitsnelheid';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → zware compressie, berichten\n4–8 Mbps → 1080p normale/goede kwaliteit\n12 Mbps → 1080p hoge / 4K lage kwaliteit\n20 Mbps → 4K-streamingkwaliteit\n\nAangepaste invoer: 500–40000 kbps of bijv. \"8 Mbps\"\n\nIn tegenstelling tot CRF kan de kwaliteit per scène variëren. Gebruik CRF voor betere resultaten bij dezelfde bestandsgrootte.';
 
   @override
   String get resolutionLabel => 'Resolutie';
@@ -251,6 +307,16 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → Standaard voor MP4, beste compatibiliteit\nMP3 → wijdverspreid, enigszins verouderd\nOpus → modern & efficiënt, goed voor MKV';
+
+  @override
+  String get audioChannelsLabel => 'Audiokanalen';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Origineel → behoud indeling van bronkanalen\nStereo → 2.0 (indien nodig downmixen)\nMono → 1 kanaal (kleinste bestand)\n5.1 → 6-kanaals surround (alleen voor surroundbronnen)\n\nDownmixen (bijv. 5.1 → Stereo) wordt ondersteund. Upmixen wordt niet aangeboden.';
+
+  @override
+  String get audioChannelOriginal => 'Origineel';
 
   @override
   String get outputFormatLabel => 'Uitvoerformaat';
@@ -397,4 +463,29 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get notificationPermissionOpenSettings => 'Instellingen';
+
+  @override
+  String get backButton => 'Terug';
+
+  @override
+  String get appSettingsTitle => 'App-instellingen';
+
+  @override
+  String get appSettingsSubtitle =>
+      'Instellingen voor automatisch opslaan en privacy';
+
+  @override
+  String get openSourceTitle => 'Open source';
+
+  @override
+  String get openSourceSubtitle => 'Licenties en broncode';
+
+  @override
+  String get openSourceLicensesTitle => 'Open source-licenties';
+
+  @override
+  String get legalSectionTitle => 'Juridisch';
+
+  @override
+  String get proSectionTitle => 'Pro';
 }

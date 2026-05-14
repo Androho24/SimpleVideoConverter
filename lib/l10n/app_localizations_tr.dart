@@ -12,6 +12,30 @@ class AppLocalizationsTr extends AppLocalizations {
   String get qualityLabel => 'Kalite';
 
   @override
+  String get quality2160pHigh => '2160p Yüksek';
+
+  @override
+  String get quality2160pMedium => '2160p Orta';
+
+  @override
+  String get quality2160pLow => '2160p Düşük';
+
+  @override
+  String get quality2160pVeryLow => '2160p Çok Düşük';
+
+  @override
+  String get quality1440pHigh => '1440p Yüksek';
+
+  @override
+  String get quality1440pMedium => '1440p Orta';
+
+  @override
+  String get quality1440pLow => '1440p Düşük';
+
+  @override
+  String get quality1440pVeryLow => '1440p Çok Düşük';
+
+  @override
   String get quality1080pHigh => '1080p Yüksek';
 
   @override
@@ -135,12 +159,25 @@ class AppLocalizationsTr extends AppLocalizations {
   String get open => 'Aç';
 
   @override
+  String get openGallery => 'Galeriyi aç';
+
+  @override
+  String get openVideo => 'Videoyu aç';
+
+  @override
+  String get autoSaveTitle => 'Videoları galeriye otomatik olarak kaydet';
+
+  @override
+  String get autoSaveSubtitle =>
+      'Videolar dönüştürüldükten sonra otomatik olarak kaydedilir.';
+
+  @override
   String get saveError =>
       'Kaydetme hatası. Yeterli depolama alanı olmayabilir.';
 
   @override
   String get saveErrorOutOfMemory =>
-      'Bu dosyayı kaydetmek için yeterli bellek yok. Daha kısa bir klip veya daha düşük kaliteyi deneyin.';
+      'Bu dosyayı kaydetmek için yeterli bellek yok. Daha kısa bir klip veya daha düşük kalite deneyin.';
 
   @override
   String get conversionDone => 'Tamam!';
@@ -198,6 +235,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get convertButton => 'Dönüştür';
 
   @override
+  String get encodingModeLabel => 'Kodlama Modu';
+
+  @override
+  String get encodingModeCrf => 'Kalite (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Bit Hızı';
+
+  @override
   String get crfLabel => 'Video kalitesi (CRF)';
 
   @override
@@ -206,6 +252,16 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → kayıpsız (çok büyük dosya)\n18 → görsel olarak neredeyse kayıpsız\n23 → Standart (iyi denge)\n28 → gözle görülür kalite kaybı\n51 → en düşük kalite\n\nÖneri: 18–28';
+
+  @override
+  String get targetBitrateLabel => 'Hedef Bit Hızı';
+
+  @override
+  String get targetBitrateInfoTitle => 'Hedef Bit Hızı';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → yoğun sıkıştırma, mesajlaşma\n4–8 Mbps → 1080p normal/iyi kalite\n12 Mbps → 1080p yüksek / 4K düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel giriş: 500–40000 kbps veya ör. \"8 Mbps\"\n\nCRF\'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF\'yi kullanın.';
 
   @override
   String get resolutionLabel => 'Çözünürlük';
@@ -252,6 +308,16 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → MP4 için standart, en iyi uyumluluk\nMP3 → yaygın olarak kullanılır, biraz eski\nOpus → modern ve verimli, MKV için iyi';
+
+  @override
+  String get audioChannelsLabel => 'Ses kanalları';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Orijinal → kaynak kanal düzenini koru\nStereo → 2.0 (gerekirse aşağı karıştırma)\nMono → 1 kanal (en küçük dosya)\n5.1 → 6 kanallı surround (sadece surround kaynaklar için)\n\nAşağı karıştırma (ör. 5.1 → Stereo) desteklenir. Yukarı karıştırma sunulmamaktadır.';
+
+  @override
+  String get audioChannelOriginal => 'Orijinal';
 
   @override
   String get outputFormatLabel => 'Çıkış Formatı';
@@ -400,4 +466,28 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get notificationPermissionOpenSettings => 'Ayarlar';
+
+  @override
+  String get backButton => 'Geri';
+
+  @override
+  String get appSettingsTitle => 'Uygulama Ayarları';
+
+  @override
+  String get appSettingsSubtitle => 'Otomatik kaydetme ve gizlilik ayarları';
+
+  @override
+  String get openSourceTitle => 'Açık Kaynak';
+
+  @override
+  String get openSourceSubtitle => 'Lisanslar ve kaynak kodu';
+
+  @override
+  String get openSourceLicensesTitle => 'Açık Kaynak Lisansları';
+
+  @override
+  String get legalSectionTitle => 'Yasal';
+
+  @override
+  String get proSectionTitle => 'Pro';
 }

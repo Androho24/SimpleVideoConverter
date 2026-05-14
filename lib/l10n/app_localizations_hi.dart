@@ -12,6 +12,30 @@ class AppLocalizationsHi extends AppLocalizations {
   String get qualityLabel => 'गुणवत्ता';
 
   @override
+  String get quality2160pHigh => '2160p उच्च';
+
+  @override
+  String get quality2160pMedium => '2160p मध्यम';
+
+  @override
+  String get quality2160pLow => '2160p निम्न';
+
+  @override
+  String get quality2160pVeryLow => '2160p बहुत कम';
+
+  @override
+  String get quality1440pHigh => '1440p उच्च';
+
+  @override
+  String get quality1440pMedium => '1440p मध्यम';
+
+  @override
+  String get quality1440pLow => '1440p निम्न';
+
+  @override
+  String get quality1440pVeryLow => '1440p बहुत कम';
+
+  @override
   String get quality1080pHigh => '1080p उच्च';
 
   @override
@@ -133,6 +157,19 @@ class AppLocalizationsHi extends AppLocalizations {
   String get open => 'खोलें';
 
   @override
+  String get openGallery => 'गैलरी खोलें';
+
+  @override
+  String get openVideo => 'वीडियो खोलें';
+
+  @override
+  String get autoSaveTitle => 'वीडियो स्वचालित रूप से गैलरी में सहेजे जाएँ';
+
+  @override
+  String get autoSaveSubtitle =>
+      'परिवर्तन के बाद वीडियो स्वचालित रूप से सहेजे जाते हैं।';
+
+  @override
   String get saveError =>
       'सहेजने में त्रुटि। संभवतः पर्याप्त भंडारण स्थान नहीं है।';
 
@@ -196,6 +233,15 @@ class AppLocalizationsHi extends AppLocalizations {
   String get convertButton => 'कन्वर्ट करें';
 
   @override
+  String get encodingModeLabel => 'एन्कोडिंग मोड';
+
+  @override
+  String get encodingModeCrf => 'गुणवत्ता (सीआरएफ)';
+
+  @override
+  String get encodingModeBitrate => 'बिटरेट';
+
+  @override
   String get crfLabel => 'वीडियो गुणवत्ता (CRF)';
 
   @override
@@ -204,6 +250,16 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → बिना हानि के (बहुत बड़ी फ़ाइल)\n18 → लगभग बिना हानि के\n23 → मानक (अच्छा संतुलन)\n28 → गुणवत्ता में स्पष्ट कमी\n51 → सबसे कम गुणवत्ता\n\nअनुशंसा: 18–28';
+
+  @override
+  String get targetBitrateLabel => 'लक्षित बिटरेट';
+
+  @override
+  String get targetBitrateInfoTitle => 'लक्षित बिटरेट';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → भारी संपीड़न, मैसेजिंग\n4–8 Mbps → 1080p सामान्य/अच्छी गुणवत्ता\n12 Mbps → 1080p उच्च / 4K कम गुणवत्ता\n20 Mbps → 4K स्ट्रीमिंग गुणवत्ता\n\nकस्टम इनपुट: 500–40000 kbps या उदाहरण के लिए \"8 Mbps\"\n\nCRF के विपरीत, गुणवत्ता दृश्यों के बीच भिन्न हो सकती है। समान फ़ाइल आकार पर बेहतर परिणामों के लिए CRF का उपयोग करें।';
 
   @override
   String get resolutionLabel => 'रिज़ॉल्यूशन';
@@ -250,6 +306,16 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → MP4 के लिए मानक, सर्वोत्तम संगतता\nMP3 → व्यापक रूप से उपयोग किया जाता है, थोड़ा पुराना\nOpus → आधुनिक और कुशल, MKV के लिए अच्छा';
+
+  @override
+  String get audioChannelsLabel => 'ऑडियो चैनल';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'मूल → स्रोत चैनल लेआउट बनाए रखें\nस्टीरियो → 2.0 (आवश्यकता पड़ने पर डाउनमिक्स)\nमोनो → 1 चैनल (सबसे छोटी फ़ाइल)\n5.1 → 6-चैनल सराउंड (केवल सराउंड स्रोतों के लिए)\n\nडाउनमिक्सिंग (जैसे 5.1 → स्टीरियो) समर्थित है। अपमिक्सिंग की पेशकश नहीं की जाती है।';
+
+  @override
+  String get audioChannelOriginal => 'मूल';
 
   @override
   String get outputFormatLabel => 'आउटपुट प्रारूप';
@@ -397,4 +463,28 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get notificationPermissionOpenSettings => 'सेटिंग्स';
+
+  @override
+  String get backButton => 'वापस';
+
+  @override
+  String get appSettingsTitle => 'ऐप सेटिंग्स';
+
+  @override
+  String get appSettingsSubtitle => 'स्वतः सहेजना और गोपनीयता सेटिंग्स';
+
+  @override
+  String get openSourceTitle => 'ओपन सोर्स';
+
+  @override
+  String get openSourceSubtitle => 'लाइसेंस और स्रोत कोड';
+
+  @override
+  String get openSourceLicensesTitle => 'ओपन सोर्स लाइसेंस';
+
+  @override
+  String get legalSectionTitle => 'कानूनी';
+
+  @override
+  String get proSectionTitle => 'प्रो';
 }

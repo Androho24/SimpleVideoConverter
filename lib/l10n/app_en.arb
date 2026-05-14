@@ -1,7 +1,15 @@
-﻿{
+{
   "@@locale": "en",
 
   "qualityLabel": "Quality",
+  "quality2160pHigh": "2160p High",
+  "quality2160pMedium": "2160p Medium",
+  "quality2160pLow": "2160p Low",
+  "quality2160pVeryLow": "2160p Very Low",
+  "quality1440pHigh": "1440p High",
+  "quality1440pMedium": "1440p Medium",
+  "quality1440pLow": "1440p Low",
+  "quality1440pVeryLow": "1440p Very Low",
   "quality1080pHigh": "1080p High",
   "quality1080pMedium": "1080p Medium",
   "quality1080pLow": "1080p Low",
@@ -47,6 +55,10 @@
   "saveVideoDialogTitle": "Save video",
   "savedSuccess": "Saved!",
   "open": "Open",
+  "openGallery": "Open gallery",
+  "openVideo": "Open video",
+  "autoSaveTitle": "Auto-save videos to gallery",
+  "autoSaveSubtitle": "Videos are saved automatically after conversion.",
   "saveError": "Error saving. There may not be enough storage space.",
   "saveErrorOutOfMemory": "Not enough memory to save this file. Try a shorter clip or lower quality.",
   "conversionDone": "Done!",
@@ -89,7 +101,7 @@
   "audioBitrateInfoContent": "Silent   → no audio\n64 kbps  → voice, podcasts\n96 kbps  → good voice quality\n128 kbps → standard music\n192 kbps → high audio quality\n320 kbps → maximum MP3 quality",
 
   "audioCodecLabel": "Audio codec",
-  "audioCodecInfoContent": "AAC  → standard for MP4, best compatibility\nMP3  → widely used, slightly outdated\nOpus → modern & efficient, great for MKV",
+  "audioCodecInfoContent": "AAC  → standard for MP4, best compatibility\nMP3  → widely used, slightly outdated\nOpus → modern & efficient, great for MKV\nAC3  → Dolby Digital, shown only for surround sources (≥ 3 channels)",
 
   "outputFormatLabel": "Output format",
   "outputFormatInfoContent": "MP4 → universal, best compatibility\nMKV → flexible, many codecs, less compatible\nMOV → Apple/QuickTime format\nAVI → outdated, broad compatibility\nTS  → MPEG transport stream, TV/streaming",
@@ -133,9 +145,9 @@
   "storageWarningTitle": "Not enough storage",
   "storageWarningContent": "Your device only has {available} MB free. The conversion needs approximately {required} MB. Please free up some space first.",
   "@storageWarningContent": {
-    "placeholders": {
-      "available": { "type": "String" },
-      "required": { "type": "String" }
+  "placeholders": {
+    "available": { "type": "String" },
+    "required": { "type": "String" }
     }
   },
 
@@ -153,5 +165,27 @@
   "notificationPermissionNotNow": "Not Now",
   "notificationPermissionAllow": "Allow",
   "notificationPermissionDenied": "Enable notifications in Settings to convert in the background.",
-  "notificationPermissionOpenSettings": "Settings"
+  "notificationPermissionOpenSettings": "Settings",
+
+  "backButton": "Back",
+  "appSettingsTitle": "App Settings",
+  "appSettingsSubtitle": "Auto-save & privacy settings",
+  "openSourceTitle": "Open Source",
+  "openSourceSubtitle": "Licenses & source code",
+  "openSourceLicensesTitle": "Open Source Licenses",
+  "legalSectionTitle": "Legal",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "Encoding Mode",
+  "encodingModeCrf": "Quality (CRF)",
+  "encodingModeBitrate": "Bitrate",
+
+  "audioChannelsLabel": "Audio channels",
+  "audioChannelsInfoContent": "Original → keep source channel layout\nStereo → 2.0 (downmix if needed)\nMono → 1 channel (smallest file)\n5.1 → 6-channel surround (only for surround sources)\n\nDownmixing (e.g. 5.1 → Stereo) is supported. Upmixing is not offered.",
+  "audioChannelOriginal": "Original",
+
+  "targetBitrateLabel": "Target Bitrate",
+  "targetBitrateInfoTitle": "Target Bitrate",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → heavy compression, messaging\n4–8 Mbps → 1080p normal/good quality\n12 Mbps → 1080p high / 4K low quality\n20 Mbps → 4K streaming quality\n\nCustom entry: 500–40000 kbps or e.g. \"8 Mbps\"\n\nUnlike CRF, quality may vary between scenes. Use CRF for better results at the same file size."
+
 }

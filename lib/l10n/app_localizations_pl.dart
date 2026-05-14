@@ -12,6 +12,30 @@ class AppLocalizationsPl extends AppLocalizations {
   String get qualityLabel => 'Jakość';
 
   @override
+  String get quality2160pHigh => '2160p Wysoka';
+
+  @override
+  String get quality2160pMedium => '2160p Średnia';
+
+  @override
+  String get quality2160pLow => '2160p Niska';
+
+  @override
+  String get quality2160pVeryLow => '2160p Bardzo niska';
+
+  @override
+  String get quality1440pHigh => '1440p Wysoka';
+
+  @override
+  String get quality1440pMedium => '1440p Średnia';
+
+  @override
+  String get quality1440pLow => '1440p Niska';
+
+  @override
+  String get quality1440pVeryLow => '1440p Bardzo niska';
+
+  @override
   String get quality1080pHigh => '1080p Wysoka';
 
   @override
@@ -134,6 +158,19 @@ class AppLocalizationsPl extends AppLocalizations {
   String get open => 'Otwórz';
 
   @override
+  String get openGallery => 'Otwórz galerię';
+
+  @override
+  String get openVideo => 'Otwórz film';
+
+  @override
+  String get autoSaveTitle => 'Automatyczne zapisywanie filmów w galerii';
+
+  @override
+  String get autoSaveSubtitle =>
+      'Filmy są zapisywane automatycznie po konwersji.';
+
+  @override
   String get saveError =>
       'Błąd podczas zapisywania. Być może brakuje miejsca na dysku.';
 
@@ -197,6 +234,15 @@ class AppLocalizationsPl extends AppLocalizations {
   String get convertButton => 'Konwertuj';
 
   @override
+  String get encodingModeLabel => 'Tryb kodowania';
+
+  @override
+  String get encodingModeCrf => 'Jakość (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Szybkość transmisji';
+
+  @override
   String get crfLabel => 'Jakość wideo (CRF)';
 
   @override
@@ -205,6 +251,16 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → bezstratne (bardzo duży plik)\n18 → wizualnie niemal bezstratne\n23 → standardowe (dobra równowaga)\n28 → widoczna utrata jakości\n51 → najniższa jakość\n\nZalecenie: 18–28';
+
+  @override
+  String get targetBitrateLabel => 'Docelowa przepływność';
+
+  @override
+  String get targetBitrateInfoTitle => 'Docelowa przepływność';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kb/s–2 Mb/s  → silna kompresja, komunikacja\n4–8 Mb/s → 1080p normalna/dobra jakość\n12 Mb/s → 1080p wysoka / 4K niska jakość\n20 Mb/s → jakość strumieniowania 4K\n\nWpis niestandardowy: 500–40000 kbps lub np. „8 Mbps”\n\nW przeciwieństwie do CRF, jakość może się różnić w zależności od sceny. Użyj CRF, aby uzyskać lepsze wyniki przy tym samym rozmiarze pliku.';
 
   @override
   String get resolutionLabel => 'Rozdzielczość';
@@ -251,6 +307,16 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → standard dla MP4, najlepsza kompatybilność\nMP3 → powszechnie stosowany, nieco przestarzały\nOpus → nowoczesny i wydajny, dobry dla MKV';
+
+  @override
+  String get audioChannelsLabel => 'Kanały audio';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Oryginalne → zachowaj układ kanałów źródłowych\nStereo → 2.0 (w razie potrzeby zredukuj miks)\nMono → 1 kanał (najmniejszy plik)\n5.1 → 6-kanałowy dźwięk przestrzenny (tylko dla źródeł przestrzennych)\n\nDownmixing (np. 5.1 → Stereo) jest obsługiwany. Upmixing nie jest dostępny.';
+
+  @override
+  String get audioChannelOriginal => 'Oryginalne';
 
   @override
   String get outputFormatLabel => 'Format wyjściowy';
@@ -397,4 +463,29 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get notificationPermissionOpenSettings => 'Ustawienia';
+
+  @override
+  String get backButton => 'Wstecz';
+
+  @override
+  String get appSettingsTitle => 'Ustawienia aplikacji';
+
+  @override
+  String get appSettingsSubtitle =>
+      'Ustawienia automatycznego zapisywania i prywatności';
+
+  @override
+  String get openSourceTitle => 'Open Source';
+
+  @override
+  String get openSourceSubtitle => 'Licencje i kod źródłowy';
+
+  @override
+  String get openSourceLicensesTitle => 'Licencje Open Source';
+
+  @override
+  String get legalSectionTitle => 'Informacje prawne';
+
+  @override
+  String get proSectionTitle => 'Pro';
 }

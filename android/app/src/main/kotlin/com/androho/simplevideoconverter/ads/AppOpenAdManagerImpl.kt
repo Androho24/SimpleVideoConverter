@@ -58,14 +58,14 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
     companion object {
         private const val TAG = "AppOpenAdManager"
 
-        private val AD_FREQUENCY_MS = if (BuildConfig.DEBUG) 10000L else 7_200_000L
+        private val AD_FREQUENCY_MS = if (BuildConfig.DEBUG) 100000L else 2_000_000L
         private const val AD_FREQUENCY_HOURS = 1
         private const val AD_CACHE_MAX_AGE_MS = 4 * 60 * 60 * 1000L
 
         private const val PREFS_NAME = "app_open_ad_prefs"
         private const val KEY_LAST_AD_TIME = "last_ad_show_time"
         private const val FIRST_INSTALL_GRACE_PERIOD_MS = 1L * 60 * 60 * 1000L
-        private const val COLD_START_TIMEOUT_MS = 3000L
+        private const val COLD_START_TIMEOUT_MS = 6000L
     }
 
     override fun initialize(application: Application) {
@@ -74,7 +74,7 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
         // Fresh-Install Check: erste Ad frühestens nach 1h
         val prefs = application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         if (!prefs.contains(KEY_LAST_AD_TIME)) {
-            prefs.edit().putLong(KEY_LAST_AD_TIME, System.currentTimeMillis()).apply()
+            prefs.edit().putLong(KEY_LAST_AD_TIME, System.currentTimeMillis()).commit()
             Log.d(TAG, "Fresh install – erste Ad frühestens in ${AD_FREQUENCY_MS / 1000}s")
         }
 
@@ -89,6 +89,7 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
                 Log.d(TAG, "Consent bereits vorhanden – starte MobileAds früh")
                 MobileAds.initialize(application) {
                     isMobileAdsInitialized = true
+                    MobileAds.setAppVolume(0.0f)
                     adsAllowed = true
                     Log.d(TAG, "MobileAds früh initialisiert – starte Ad-Load")
                     loadAd()
@@ -114,6 +115,7 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
         MobileAds.initialize(application) {
             isMobileAdsInitialized = true
             adsAllowed = true
+            MobileAds.setAppVolume(0.0f)
             Log.d(TAG, "MobileAds initialisiert nach Consent – starte Ad-Load")
             loadAd()
             mainHandler.post { onInitialized() }

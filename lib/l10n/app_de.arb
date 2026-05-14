@@ -4,52 +4,76 @@
   "qualityLabel": "Qualität",
   "@qualityLabel": { "description": "Label für das Qualitäts-Dropdown" },
 
-  "quality1080pHigh": "1080p Hoch",
+  "quality2160pHigh": "2160p hoch",
+  "@quality2160pHigh": { "description": "Qualitätsstufe 2160p, hohe Qualität (CRF 18)" },
+
+  "quality2160pMedium": "2160p mittel",
+  "@quality2160pMedium": { "description": "Qualitätsstufe 2160p, mittlere Qualität (CRF 23)" },
+
+  "quality2160pLow": "2160p niedrig",
+  "@quality2160pLow": { "description": "Qualitätsstufe 2160p, niedrige Qualität (CRF 27)" },
+
+  "quality2160pVeryLow": "2160p sehr niedrig",
+  "@quality2160pVeryLow": { "description": "Qualitätsstufe 2160p, sehr niedrige Qualität (CRF 32)" },
+
+  "quality1440pHigh": "1440p hoch",
+  "@quality1440pHigh": { "description": "Qualitätsstufe 1440p, hohe Qualität (CRF 18)" },
+
+  "quality1440pMedium": "1440p mittel",
+  "@quality1440pMedium": { "description": "Qualitätsstufe 1440p, mittlere Qualität (CRF 23)" },
+
+  "quality1440pLow": "1440p niedrig",
+  "@quality1440pLow": { "description": "Qualitätsstufe 1440p, niedrige Qualität (CRF 27)" },
+
+  "quality1440pVeryLow": "1440p sehr niedrig",
+  "@quality1440pVeryLow": { "description": "Qualitätsstufe 1440p, sehr niedrige Qualität (CRF 32)" },
+
+  "quality1080pHigh": "1080p hoch",
   "@quality1080pHigh": { "description": "Qualitätsstufe 1080p, hohe Qualität (CRF 18)" },
 
-  "quality1080pMedium": "1080p Mittel",
+  "quality1080pMedium": "1080p mittel",
   "@quality1080pMedium": { "description": "Qualitätsstufe 1080p, mittlere Qualität (CRF 23)" },
 
-  "quality1080pLow": "1080p Niedrig",
+  "quality1080pLow": "1080p niedrig",
   "@quality1080pLow": { "description": "Qualitätsstufe 1080p, niedrige Qualität (CRF 27)" },
 
-  "quality1080pVeryLow": "1080p Sehr Niedrig",
+  "quality1080pVeryLow": "1080p sehr niedrig",
   "@quality1080pVeryLow": { "description": "Qualitätsstufe 1080p, sehr niedrige Qualität (CRF 32)" },
 
-  "quality720pHigh": "720p Hoch",
+  "quality720pHigh": "720p hoch",
   "@quality720pHigh": { "description": "Qualitätsstufe 720p, hohe Qualität (CRF 18)" },
 
-  "quality720pMedium": "720p Mittel",
+  "quality720pMedium": "720p mittel",
   "@quality720pMedium": { "description": "Qualitätsstufe 720p, mittlere Qualität (CRF 23)" },
 
-  "quality720pLow": "720p Niedrig",
+  "quality720pLow": "720p niedrig",
   "@quality720pLow": { "description": "Qualitätsstufe 720p, niedrige Qualität (CRF 27)" },
 
-  "quality720pVeryLow": "720p Sehr Niedrig",
+  "quality720pVeryLow": "720p sehr niedrig",
   "@quality720pVeryLow": { "description": "Qualitätsstufe 720p, sehr niedrige Qualität (CRF 32)" },
 
-  "quality480pHigh": "480p Hoch",
+  "quality480pHigh": "480p hoch",
   "@quality480pHigh": { "description": "Qualitätsstufe 480p, hohe Qualität (CRF 18)" },
 
-  "quality480pMedium": "480p Mittel",
+  "quality480pMedium": "480p mittel",
   "@quality480pMedium": { "description": "Qualitätsstufe 480p, mittlere Qualität (CRF 23)" },
 
-  "quality480pLow": "480p Niedrig",
+  "quality480pLow": "480p niedrig",
   "@quality480pLow": { "description": "Qualitätsstufe 480p, niedrige Qualität (CRF 27)" },
 
-  "quality480pVeryLow": "480p Sehr Niedrig",
+  "quality480pVeryLow": "480p sehr niedrig",
   "@quality480pVeryLow": { "description": "Qualitätsstufe 480p, sehr niedrige Qualität (CRF 32)" },
 
-  "quality360pHigh": "360p Hoch",
+  "quality360pHigh": "360p hoch",
   "@quality360pHigh": { "description": "Qualitätsstufe 360p, hohe Qualität (CRF 18)" },
 
-  "quality360pMedium": "360p Mittel",
+  "quality360pMedium": "360p mittel",
   "@quality360pMedium": { "description": "Qualitätsstufe 360p, mittlere Qualität (CRF 23)" },
 
-  "quality360pLow": "360p Niedrig",
+  "quality360pLow": "360p niedrig",
   "@quality360pLow": { "description": "Qualitätsstufe 360p, niedrige Qualität (CRF 27)" },
 
-  "quality360pVeryLow": "360p Sehr Niedrig",
+  "quality360pVeryLow": "360p sehr niedrig",
   "@quality360pVeryLow": { "description": "Qualitätsstufe 360p, sehr niedrige Qualität (CRF 32)" },
 
   "mute": "Stummschalten",
@@ -121,9 +145,21 @@
   "open": "Öffnen",
   "@open": { "description": "Snackbar-Action gespeichertes Video öffnen" },
 
+  "openGallery": "Galerie öffnen",
+  "@openGallery": { "description": "Button öffnet die System-Galerie-App nach erfolgreichem Speichern" },
+
+  "openVideo": "Video öffnen",
+  "@openVideo": { "description": "Button öffnet das gespeicherte Video im System-Player (mit Album-Context via MediaStore-URI)" },
+
+  "autoSaveTitle": "Videos automatisch in der Galerie speichern",
+  "@autoSaveTitle": { "description": "Settings-Switch: Auto-Save für Video-Output" },
+
+  "autoSaveSubtitle": "Videos werden nach der Konvertierung automatisch gespeichert.",
+  "@autoSaveSubtitle": { "description": "Erklärungstext zum Auto-Save-Switch" },
+
   "saveError": "Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.",
   "@saveError": { "description": "Snackbar Fehler beim Speichern" },
-  "saveErrorOutOfMemory": "Nicht genug Arbeitsspeicher zum Speichern. Versuche einen kürzeren Clip oder niedrigere Qualität.",
+  "saveErrorOutOfMemory": "Nicht genug Arbeitsspeicher zum Speichern. Versuche es mit einem kürzeren Clip oder niedrigerer Qualität.",
   "@saveErrorOutOfMemory": { "description": "Snackbar Fehler beim Speichern – zu wenig RAM (Audio readAsBytes OOM)" },
 
   "conversionDone": "Fertig!",
@@ -189,6 +225,15 @@
   "convertButton": "Konvertieren",
   "@convertButton": { "description": "Haupt-Konvertieren-Button" },
 
+  "encodingModeLabel": "Encoding-Modus",
+  "@encodingModeLabel": { "description": "Label für den Encoding-Modus-Toggle (CRF vs. Bitrate)" },
+
+  "encodingModeCrf": "Qualität (CRF)",
+  "@encodingModeCrf": { "description": "Segment für CRF-Modus im Encoding-Toggle" },
+
+  "encodingModeBitrate": "Bitrate",
+  "@encodingModeBitrate": { "description": "Segment für Bitrate-Modus im Encoding-Toggle" },
+
   "crfLabel": "Videoqualität (CRF)",
   "@crfLabel": { "description": "Label für den CRF-Dropdown" },
 
@@ -197,6 +242,15 @@
 
   "crfInfoContent": "0 → verlustfrei (sehr große Datei)\n18 → visuell nahezu verlustfrei\n23 → Standard (gute Balance)\n28 → sichtbare Qualitätseinbußen\n51 → niedrigste Qualität\n\nEmpfehlung: 18–28",
   "@crfInfoContent": { "description": "Inhalt des CRF-Info-Dialogs" },
+
+  "targetBitrateLabel": "Ziel-Bitrate",
+  "@targetBitrateLabel": { "description": "Label für das Ziel-Bitrate-Dropdown" },
+
+  "targetBitrateInfoTitle": "Ziel-Bitrate",
+  "@targetBitrateInfoTitle": { "description": "Titel des Ziel-Bitrate-Info-Dialogs" },
+
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → stark komprimiert, Messaging\n4–8 Mbps → 1080p normal/gut\n12 Mbps → 1080p hoch / 4K niedrig\n20 Mbps → 4K Streaming-Niveau\n\nManuelle Eingabe: 500–40000 kbps oder z. B. \"8 Mbps\"\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.",
+  "@targetBitrateInfoContent": { "description": "Inhalt des Ziel-Bitrate-Info-Dialogs" },
 
   "resolutionLabel": "Auflösung",
   "@resolutionLabel": { "description": "Label für die Breite/Höhe-Felder" },
@@ -237,8 +291,17 @@
   "audioCodecLabel": "Audio-Codec",
   "@audioCodecLabel": { "description": "Label für die Audio-Codec-Auswahl" },
 
-  "audioCodecInfoContent": "AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV",
+  "audioCodecInfoContent": "AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV\nAC3  → Dolby Digital, nur bei Surround-Quellen (≥ 3 Kanäle) verfügbar",
   "@audioCodecInfoContent": { "description": "Inhalt des Audio-Codec-Info-Dialogs" },
+
+  "audioChannelsLabel": "Audiokanäle",
+  "@audioChannelsLabel": { "description": "Label für die Audiokanal-Auswahl" },
+
+  "audioChannelsInfoContent": "Original → Kanal-Layout der Quelle beibehalten\nStereo → 2.0 (Downmix falls nötig)\nMono → 1 Kanal (kleinste Datei)\n5.1 → 6-Kanal Surround (nur bei Surround-Quellen)\n\nDownmixing (z. B. 5.1 → Stereo) wird unterstützt. Upmixing wird nicht angeboten.",
+  "@audioChannelsInfoContent": { "description": "Inhalt des Audiokanal-Info-Dialogs" },
+
+  "audioChannelOriginal": "Original",
+  "@audioChannelOriginal": { "description": "Audiokanal-Option: Quell-Layout beibehalten" },
 
   "outputFormatLabel": "Output-Format",
   "@outputFormatLabel": { "description": "Label für die Output-Format-Auswahl" },
@@ -379,5 +442,14 @@
   "notificationPermissionNotNow": "Nicht jetzt",
   "notificationPermissionAllow": "Erlauben",
   "notificationPermissionDenied": "Aktiviere Benachrichtigungen in den Einstellungen für die Hintergrundkonvertierung.",
-  "notificationPermissionOpenSettings": "Einstellungen"
+  "notificationPermissionOpenSettings": "Einstellungen",
+
+  "backButton": "Zurück",
+  "appSettingsTitle": "App-Einstellungen",
+  "appSettingsSubtitle": "Autospeichern & Datenschutz",
+  "openSourceTitle": "Open Source",
+  "openSourceSubtitle": "Lizenzen & Quellcode",
+  "openSourceLicensesTitle": "Open Source Lizenzen",
+  "legalSectionTitle": "Rechtliches",
+  "proSectionTitle": "Pro"
 }

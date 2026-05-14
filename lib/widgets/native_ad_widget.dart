@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../l10n/app_localizations.dart';
 import '../services/ad_config.dart';
+import '../services/native_ad_preloader.dart';
 import '../services/preferences_service.dart';
 
 enum _AdState { loading, loaded, failed }
@@ -24,11 +25,34 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
   @override
   void initState() {
     super.initState();
-    PreferencesService.getIsPro().then((isPro) {
-      if (!mounted) return;
-      setState(() => _isPro = isPro);
-      if (!isPro) _loadAd();
-    });
+    _initAd();
+  }
+
+  Future<void> _initAd() async {
+    final isPro = await PreferencesService.getIsPro();
+    if (!mounted) return;
+    setState(() => _isPro = isPro);
+    if (isPro) return;
+
+    // Preloaded Ad konsumieren, falls vorhanden — spart die Ladezeit beim
+    // Öffnen des Conversion-Screens.
+    final preloadFuture = NativeAdPreloader.consume();
+    if (preloadFuture != null) {
+      final preloadedAd = await preloadFuture;
+      if (!mounted) {
+        preloadedAd?.dispose();
+        return;
+      }
+      if (preloadedAd != null) {
+        setState(() {
+          _nativeAd = preloadedAd;
+          _adState = _AdState.loaded;
+        });
+        return;
+      }
+      // Preload ist fehlgeschlagen → eigenen Load anstoßen.
+    }
+    _loadAd();
   }
 
   @override

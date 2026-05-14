@@ -12,6 +12,17 @@ class PreferencesService {
   static const _keyNotificationRationaleDismissed = 'notificationRationaleDismissed';
   static const _keyNotificationDeniedHintCount = 'notificationDeniedHintCount';
   static const _keyLastQualityIndex = 'lastQualityIndex';
+  static const _keyAutoSaveVideos = 'autoSaveVideos';
+
+  static Future<bool> getAutoSaveVideos() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyAutoSaveVideos) ?? false;
+  }
+
+  static Future<void> setAutoSaveVideos(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyAutoSaveVideos, value);
+  }
 
   static Future<bool> getExpertMode() async {
     final prefs = await SharedPreferences.getInstance();

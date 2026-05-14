@@ -3,6 +3,14 @@
 
 "qualityLabel": "Kalite",
 
+  "quality2160pHigh": "2160p Yüksek",
+  "quality2160pMedium": "2160p Orta",
+  "quality2160pLow": "2160p Düşük",
+  "quality2160pVeryLow": "2160p Çok Düşük",
+  "quality1440pHigh": "1440p Yüksek",
+  "quality1440pMedium": "1440p Orta",
+  "quality1440pLow": "1440p Düşük",
+  "quality1440pVeryLow": "1440p Çok Düşük",
   "quality1080pHigh": "1080p Yüksek",
   "quality1080pMedium": "1080p Orta",
   "quality1080pLow": "1080p Düşük",
@@ -44,8 +52,12 @@
   "saveVideoDialogTitle": "Videoyu kaydet",
   "savedSuccess": "Kaydedildi!",
   "open": "Aç",
+  "openGallery": "Galeriyi aç",
+  "openVideo": "Videoyu aç",
+  "autoSaveTitle": "Videoları galeriye otomatik olarak kaydet",
+  "autoSaveSubtitle": "Videolar dönüştürüldükten sonra otomatik olarak kaydedilir.",
   "saveError": "Kaydetme hatası. Yeterli depolama alanı olmayabilir.",
-  "saveErrorOutOfMemory": "Bu dosyayı kaydetmek için yeterli bellek yok. Daha kısa bir klip veya daha düşük kaliteyi deneyin.",
+  "saveErrorOutOfMemory": "Bu dosyayı kaydetmek için yeterli bellek yok. Daha kısa bir klip veya daha düşük kalite deneyin.",
   "conversionDone": "Tamam!",
   "conversionProgress": "Dönüştürme: {percent}%",
   "conversionFailed": "Dönüştürme başarısız: {error}",
@@ -134,5 +146,27 @@
   "notificationPermissionNotNow": "Şimdi değil",
   "notificationPermissionAllow": "İzin ver",
   "notificationPermissionDenied": "Arka planda dönüştürme ayarlarından bildirimleri etkinleştirin.",
-  "notificationPermissionOpenSettings": "Ayarlar"
+  "notificationPermissionOpenSettings": "Ayarlar",
+
+  "backButton": "Geri",
+  "appSettingsTitle": "Uygulama Ayarları",
+  "appSettingsSubtitle": "Otomatik kaydetme ve gizlilik ayarları",
+  "openSourceTitle": "Açık Kaynak",
+  "openSourceSubtitle": "Lisanslar ve kaynak kodu",
+  "openSourceLicensesTitle": "Açık Kaynak Lisansları",
+  "legalSectionTitle": "Yasal",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "Kodlama Modu",
+  "encodingModeCrf": "Kalite (CRF)",
+  "encodingModeBitrate": "Bit Hızı",
+
+  "audioChannelsLabel": "Ses kanalları",
+  "audioChannelsInfoContent": "Orijinal → kaynak kanal düzenini koru\nStereo → 2.0 (gerekirse aşağı karıştırma)\nMono → 1 kanal (en küçük dosya)\n5.1 → 6 kanallı surround (sadece surround kaynaklar için)\n\nAşağı karıştırma (ör. 5.1 → Stereo) desteklenir. Yukarı karıştırma sunulmamaktadır.",
+  "audioChannelOriginal": "Orijinal",
+
+  "targetBitrateLabel": "Hedef Bit Hızı",
+  "targetBitrateInfoTitle": "Hedef Bit Hızı",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → yoğun sıkıştırma, mesajlaşma\n4–8 Mbps → 1080p normal/iyi kalite\n12 Mbps → 1080p yüksek / 4K düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel giriş: 500–40000 kbps veya ör. \"8 Mbps\"\n\nCRF'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF'yi kullanın."
+
 }

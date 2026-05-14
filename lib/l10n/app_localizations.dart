@@ -129,100 +129,148 @@ abstract class AppLocalizations {
   /// **'Qualität'**
   String get qualityLabel;
 
+  /// Qualitätsstufe 2160p, hohe Qualität (CRF 18)
+  ///
+  /// In de, this message translates to:
+  /// **'2160p hoch'**
+  String get quality2160pHigh;
+
+  /// Qualitätsstufe 2160p, mittlere Qualität (CRF 23)
+  ///
+  /// In de, this message translates to:
+  /// **'2160p mittel'**
+  String get quality2160pMedium;
+
+  /// Qualitätsstufe 2160p, niedrige Qualität (CRF 27)
+  ///
+  /// In de, this message translates to:
+  /// **'2160p niedrig'**
+  String get quality2160pLow;
+
+  /// Qualitätsstufe 2160p, sehr niedrige Qualität (CRF 32)
+  ///
+  /// In de, this message translates to:
+  /// **'2160p sehr niedrig'**
+  String get quality2160pVeryLow;
+
+  /// Qualitätsstufe 1440p, hohe Qualität (CRF 18)
+  ///
+  /// In de, this message translates to:
+  /// **'1440p hoch'**
+  String get quality1440pHigh;
+
+  /// Qualitätsstufe 1440p, mittlere Qualität (CRF 23)
+  ///
+  /// In de, this message translates to:
+  /// **'1440p mittel'**
+  String get quality1440pMedium;
+
+  /// Qualitätsstufe 1440p, niedrige Qualität (CRF 27)
+  ///
+  /// In de, this message translates to:
+  /// **'1440p niedrig'**
+  String get quality1440pLow;
+
+  /// Qualitätsstufe 1440p, sehr niedrige Qualität (CRF 32)
+  ///
+  /// In de, this message translates to:
+  /// **'1440p sehr niedrig'**
+  String get quality1440pVeryLow;
+
   /// Qualitätsstufe 1080p, hohe Qualität (CRF 18)
   ///
   /// In de, this message translates to:
-  /// **'1080p Hoch'**
+  /// **'1080p hoch'**
   String get quality1080pHigh;
 
   /// Qualitätsstufe 1080p, mittlere Qualität (CRF 23)
   ///
   /// In de, this message translates to:
-  /// **'1080p Mittel'**
+  /// **'1080p mittel'**
   String get quality1080pMedium;
 
   /// Qualitätsstufe 1080p, niedrige Qualität (CRF 27)
   ///
   /// In de, this message translates to:
-  /// **'1080p Niedrig'**
+  /// **'1080p niedrig'**
   String get quality1080pLow;
 
   /// Qualitätsstufe 1080p, sehr niedrige Qualität (CRF 32)
   ///
   /// In de, this message translates to:
-  /// **'1080p Sehr Niedrig'**
+  /// **'1080p sehr niedrig'**
   String get quality1080pVeryLow;
 
   /// Qualitätsstufe 720p, hohe Qualität (CRF 18)
   ///
   /// In de, this message translates to:
-  /// **'720p Hoch'**
+  /// **'720p hoch'**
   String get quality720pHigh;
 
   /// Qualitätsstufe 720p, mittlere Qualität (CRF 23)
   ///
   /// In de, this message translates to:
-  /// **'720p Mittel'**
+  /// **'720p mittel'**
   String get quality720pMedium;
 
   /// Qualitätsstufe 720p, niedrige Qualität (CRF 27)
   ///
   /// In de, this message translates to:
-  /// **'720p Niedrig'**
+  /// **'720p niedrig'**
   String get quality720pLow;
 
   /// Qualitätsstufe 720p, sehr niedrige Qualität (CRF 32)
   ///
   /// In de, this message translates to:
-  /// **'720p Sehr Niedrig'**
+  /// **'720p sehr niedrig'**
   String get quality720pVeryLow;
 
   /// Qualitätsstufe 480p, hohe Qualität (CRF 18)
   ///
   /// In de, this message translates to:
-  /// **'480p Hoch'**
+  /// **'480p hoch'**
   String get quality480pHigh;
 
   /// Qualitätsstufe 480p, mittlere Qualität (CRF 23)
   ///
   /// In de, this message translates to:
-  /// **'480p Mittel'**
+  /// **'480p mittel'**
   String get quality480pMedium;
 
   /// Qualitätsstufe 480p, niedrige Qualität (CRF 27)
   ///
   /// In de, this message translates to:
-  /// **'480p Niedrig'**
+  /// **'480p niedrig'**
   String get quality480pLow;
 
   /// Qualitätsstufe 480p, sehr niedrige Qualität (CRF 32)
   ///
   /// In de, this message translates to:
-  /// **'480p Sehr Niedrig'**
+  /// **'480p sehr niedrig'**
   String get quality480pVeryLow;
 
   /// Qualitätsstufe 360p, hohe Qualität (CRF 18)
   ///
   /// In de, this message translates to:
-  /// **'360p Hoch'**
+  /// **'360p hoch'**
   String get quality360pHigh;
 
   /// Qualitätsstufe 360p, mittlere Qualität (CRF 23)
   ///
   /// In de, this message translates to:
-  /// **'360p Mittel'**
+  /// **'360p mittel'**
   String get quality360pMedium;
 
   /// Qualitätsstufe 360p, niedrige Qualität (CRF 27)
   ///
   /// In de, this message translates to:
-  /// **'360p Niedrig'**
+  /// **'360p niedrig'**
   String get quality360pLow;
 
   /// Qualitätsstufe 360p, sehr niedrige Qualität (CRF 32)
   ///
   /// In de, this message translates to:
-  /// **'360p Sehr Niedrig'**
+  /// **'360p sehr niedrig'**
   String get quality360pVeryLow;
 
   /// Entfernt Audio vom Video
@@ -363,6 +411,30 @@ abstract class AppLocalizations {
   /// **'Öffnen'**
   String get open;
 
+  /// Button öffnet die System-Galerie-App nach erfolgreichem Speichern
+  ///
+  /// In de, this message translates to:
+  /// **'Galerie öffnen'**
+  String get openGallery;
+
+  /// Button öffnet das gespeicherte Video im System-Player (mit Album-Context via MediaStore-URI)
+  ///
+  /// In de, this message translates to:
+  /// **'Video öffnen'**
+  String get openVideo;
+
+  /// Settings-Switch: Auto-Save für Video-Output
+  ///
+  /// In de, this message translates to:
+  /// **'Videos automatisch in der Galerie speichern'**
+  String get autoSaveTitle;
+
+  /// Erklärungstext zum Auto-Save-Switch
+  ///
+  /// In de, this message translates to:
+  /// **'Videos werden nach der Konvertierung automatisch gespeichert.'**
+  String get autoSaveSubtitle;
+
   /// Snackbar Fehler beim Speichern
   ///
   /// In de, this message translates to:
@@ -372,7 +444,7 @@ abstract class AppLocalizations {
   /// Snackbar Fehler beim Speichern – zu wenig RAM (Audio readAsBytes OOM)
   ///
   /// In de, this message translates to:
-  /// **'Nicht genug Arbeitsspeicher zum Speichern. Versuche einen kürzeren Clip oder niedrigere Qualität.'**
+  /// **'Nicht genug Arbeitsspeicher zum Speichern. Versuche es mit einem kürzeren Clip oder niedrigerer Qualität.'**
   String get saveErrorOutOfMemory;
 
   /// Statustext nach abgeschlossener Konvertierung
@@ -471,6 +543,24 @@ abstract class AppLocalizations {
   /// **'Konvertieren'**
   String get convertButton;
 
+  /// Label für den Encoding-Modus-Toggle (CRF vs. Bitrate)
+  ///
+  /// In de, this message translates to:
+  /// **'Encoding-Modus'**
+  String get encodingModeLabel;
+
+  /// Segment für CRF-Modus im Encoding-Toggle
+  ///
+  /// In de, this message translates to:
+  /// **'Qualität (CRF)'**
+  String get encodingModeCrf;
+
+  /// Segment für Bitrate-Modus im Encoding-Toggle
+  ///
+  /// In de, this message translates to:
+  /// **'Bitrate'**
+  String get encodingModeBitrate;
+
   /// Label für den CRF-Dropdown
   ///
   /// In de, this message translates to:
@@ -488,6 +578,24 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'0 → verlustfrei (sehr große Datei)\n18 → visuell nahezu verlustfrei\n23 → Standard (gute Balance)\n28 → sichtbare Qualitätseinbußen\n51 → niedrigste Qualität\n\nEmpfehlung: 18–28'**
   String get crfInfoContent;
+
+  /// Label für das Ziel-Bitrate-Dropdown
+  ///
+  /// In de, this message translates to:
+  /// **'Ziel-Bitrate'**
+  String get targetBitrateLabel;
+
+  /// Titel des Ziel-Bitrate-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Ziel-Bitrate'**
+  String get targetBitrateInfoTitle;
+
+  /// Inhalt des Ziel-Bitrate-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'500 kbps–2 Mbps  → stark komprimiert, Messaging\n4–8 Mbps → 1080p normal/gut\n12 Mbps → 1080p hoch / 4K niedrig\n20 Mbps → 4K Streaming-Niveau\n\nManuelle Eingabe: 500–40000 kbps oder z. B. \"8 Mbps\"\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.'**
+  String get targetBitrateInfoContent;
 
   /// Label für die Breite/Höhe-Felder
   ///
@@ -570,8 +678,26 @@ abstract class AppLocalizations {
   /// Inhalt des Audio-Codec-Info-Dialogs
   ///
   /// In de, this message translates to:
-  /// **'AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV'**
+  /// **'AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV\nAC3  → Dolby Digital, nur bei Surround-Quellen (≥ 3 Kanäle) verfügbar'**
   String get audioCodecInfoContent;
+
+  /// Label für die Audiokanal-Auswahl
+  ///
+  /// In de, this message translates to:
+  /// **'Audiokanäle'**
+  String get audioChannelsLabel;
+
+  /// Inhalt des Audiokanal-Info-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Original → Kanal-Layout der Quelle beibehalten\nStereo → 2.0 (Downmix falls nötig)\nMono → 1 Kanal (kleinste Datei)\n5.1 → 6-Kanal Surround (nur bei Surround-Quellen)\n\nDownmixing (z. B. 5.1 → Stereo) wird unterstützt. Upmixing wird nicht angeboten.'**
+  String get audioChannelsInfoContent;
+
+  /// Audiokanal-Option: Quell-Layout beibehalten
+  ///
+  /// In de, this message translates to:
+  /// **'Original'**
+  String get audioChannelOriginal;
 
   /// Label für die Output-Format-Auswahl
   ///
@@ -836,6 +962,54 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Einstellungen'**
   String get notificationPermissionOpenSettings;
+
+  /// No description provided for @backButton.
+  ///
+  /// In de, this message translates to:
+  /// **'Zurück'**
+  String get backButton;
+
+  /// No description provided for @appSettingsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'App-Einstellungen'**
+  String get appSettingsTitle;
+
+  /// No description provided for @appSettingsSubtitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Autospeichern & Datenschutz'**
+  String get appSettingsSubtitle;
+
+  /// No description provided for @openSourceTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Open Source'**
+  String get openSourceTitle;
+
+  /// No description provided for @openSourceSubtitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Lizenzen & Quellcode'**
+  String get openSourceSubtitle;
+
+  /// No description provided for @openSourceLicensesTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Open Source Lizenzen'**
+  String get openSourceLicensesTitle;
+
+  /// No description provided for @legalSectionTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Rechtliches'**
+  String get legalSectionTitle;
+
+  /// No description provided for @proSectionTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Pro'**
+  String get proSectionTitle;
 }
 
 class _AppLocalizationsDelegate

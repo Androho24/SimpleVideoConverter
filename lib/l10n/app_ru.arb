@@ -3,6 +3,14 @@
 
 "qualityLabel": "Качество",
 
+  "quality2160pHigh": "2160p Высокое",
+  "quality2160pMedium": "2160p Среднее",
+  "quality2160pLow": "2160p Низкое",
+  "quality2160pVeryLow": "2160p Очень низкое",
+  "quality1440pHigh": "1440p Высокое",
+  "quality1440pMedium": "1440p Среднее",
+  "quality1440pLow": "1440p Низкое",
+  "quality1440pVeryLow": "1440p Очень низкое",
   "quality1080pHigh": "1080p Высокое",
   "quality1080pMedium": "1080p Среднее",
   "quality1080pLow": "1080p Низкое",
@@ -44,6 +52,10 @@
   "saveVideoDialogTitle": "Сохранить видео",
   "savedSuccess": "Сохранено!",
   "open": "Открыть",
+  "openGallery": "Открыть галерею",
+  "openVideo": "Открыть видео",
+  "autoSaveTitle": "Автосохранение видео в галерее",
+  "autoSaveSubtitle": "Видео автоматически сохраняются после конвертации.",
   "saveError": "Ошибка при сохранении. Возможно, недостаточно места на диске.",
   "saveErrorOutOfMemory": "Не хватает памяти для сохранения этого файла. Попробуйте сократить длительность ролика или снизить качество.",
   "conversionDone": "Готово!",
@@ -134,5 +146,27 @@
   "notificationPermissionNotNow": "Не сейчас",
   "notificationPermissionAllow": "Разрешить",
   "notificationPermissionDenied": "Включите уведомления в настройках конвертации в фоновом режиме.",
-  "notificationPermissionOpenSettings": "Настройки"
+  "notificationPermissionOpenSettings": "Настройки",
+
+  "backButton": "Назад",
+  "appSettingsTitle": "Настройки приложения",
+  "appSettingsSubtitle": "Настройки автосохранения и конфиденциальности",
+  "openSourceTitle": "Открытый исходный код",
+  "openSourceSubtitle": "Лицензии и исходный код",
+  "openSourceLicensesTitle": "Лицензии на открытый исходный код",
+  "legalSectionTitle": "Юридическая информация",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "Режим кодирования",
+  "encodingModeCrf": "Качество (CRF)",
+  "encodingModeBitrate": "Битрейт",
+
+  "audioChannelsLabel": "Аудиоканалы",
+  "audioChannelsInfoContent": "Оригинал → сохранить расположение каналов источника\nСтерео → 2.0 (даунмикс при необходимости)\nМоно → 1 канал (наименьший размер файла)\n5.1 → 6-канальный объемный звук (только для объемных источников)\n\nДаунмиксинг (например, 5.1 → Стерео) поддерживается. Апмиксинг не предлагается.",
+  "audioChannelOriginal": "Исходный",
+
+  "targetBitrateLabel": "Целевой битрейт",
+  "targetBitrateInfoTitle": "Целевой битрейт",
+  "targetBitrateInfoContent": "500 кбит/с–2 Мбит/с  → сильное сжатие, обмен сообщениями\n4–8 Мбит/с → 1080p нормальное/хорошее качество\n12 Мбит/с → 1080p высокое / 4K низкое качество\n20 Мбит/с → качество потокового вещания 4K\n\nПользовательское значение: 500–40000 кбит/с или, например, «8 Мбит/с»\n\nВ отличие от CRF, качество может варьироваться между сценами. Используйте CRF для получения лучших результатов при том же размере файла."
+
 }

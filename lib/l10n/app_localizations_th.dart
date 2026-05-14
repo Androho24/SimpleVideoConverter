@@ -12,6 +12,30 @@ class AppLocalizationsTh extends AppLocalizations {
   String get qualityLabel => 'คุณภาพ';
 
   @override
+  String get quality2160pHigh => '2160p สูง';
+
+  @override
+  String get quality2160pMedium => '2160p ปานกลาง';
+
+  @override
+  String get quality2160pLow => '2160p ต่ำ';
+
+  @override
+  String get quality2160pVeryLow => '2160p ต่ำมาก';
+
+  @override
+  String get quality1440pHigh => '1440p สูง';
+
+  @override
+  String get quality1440pMedium => '1440p ปานกลาง';
+
+  @override
+  String get quality1440pLow => '1440p ต่ำ';
+
+  @override
+  String get quality1440pVeryLow => '1440p ต่ำมาก';
+
+  @override
   String get quality1080pHigh => '1080p สูง';
 
   @override
@@ -131,6 +155,18 @@ class AppLocalizationsTh extends AppLocalizations {
   String get open => 'เปิด';
 
   @override
+  String get openGallery => 'เปิดแกลเลอรี';
+
+  @override
+  String get openVideo => 'เปิดวิดีโอ';
+
+  @override
+  String get autoSaveTitle => 'บันทึกไฟล์วิดีโออัตโนมัติ';
+
+  @override
+  String get autoSaveSubtitle => 'ววิดีโอจะถูกบันทึกโดยอัตโนมัติหลังจากการแปลง';
+
+  @override
   String get saveError =>
       'เกิดข้อผิดพลาดในการบันทึก อาจมีพื้นที่จัดเก็บไม่เพียงพอ';
 
@@ -194,6 +230,15 @@ class AppLocalizationsTh extends AppLocalizations {
   String get convertButton => 'แปลง';
 
   @override
+  String get encodingModeLabel => 'โหมดการเข้ารหัส';
+
+  @override
+  String get encodingModeCrf => 'คุณภาพ (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'บิตเรต';
+
+  @override
   String get crfLabel => 'คุณภาพวิดีโอ (CRF)';
 
   @override
@@ -202,6 +247,16 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → ไม่สูญเสียข้อมูล (ไฟล์ใหญ่มาก)\n18 → แทบไม่สูญเสียคุณภาพ\n23 → มาตรฐาน (สมดุลดี)\n28 → คุณภาพลดลงอย่างเห็นได้ชัด\n51 → คุณภาพต่ำสุด\n\nแนะนำ: 18–28';
+
+  @override
+  String get targetBitrateLabel => 'เป้าหมายบิตเรต';
+
+  @override
+  String get targetBitrateInfoTitle => 'เป้าหมายบิตเรต';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → การบีบอัดสูง, การส่งข้อความ\n4–8 Mbps → 1080p คุณภาพปกติ/ดี\n12 Mbps → 1080p คุณภาพสูง / 4K คุณภาพต่ำ\n20 Mbps → คุณภาพสตรีมมิ่ง 4K\n\nค่ากำหนดเอง: 500–40000 kbps หรือ เช่น \"8 Mbps\"\n\nไม่เหมือนกับ CRF คุณภาพอาจแตกต่างกันระหว่างฉาก ใช้ CRF เพื่อผลลัพธ์ที่ดีกว่าที่ขนาดไฟล์เท่ากัน';
 
   @override
   String get resolutionLabel => 'ความละเอียด';
@@ -248,6 +303,16 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → มาตรฐานสำหรับ MP4, รองรับได้ดีที่สุด\nMP3 → ใช้กันอย่างแพร่หลาย, ค่อนข้างเก่า\nOpus → ทันสมัยและมีประสิทธิภาพ, เหมาะสำหรับ MKV';
+
+  @override
+  String get audioChannelsLabel => 'ช่องเสียง';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'ต้นฉบับ → รักษาการจัดวางช่องเสียงต้นฉบับ\nสเตอริโอ → 2.0 (ลดคุณภาพเป็น 2.0 หากจำเป็น)\nโมโน → 1 ช่อง (ไฟล์ขนาดเล็กที่สุด)\n5.1 → ลำโพงรอบทิศทาง 6 ช่อง (สำหรับแหล่งเสียงรอบทิศทางเท่านั้น)\n\nการลดคุณภาพเสียง (เช่น 5.1 → สเตอริโอ) รองรับ การเพิ่มคุณภาพเสียงไม่รองรับ';
+
+  @override
+  String get audioChannelOriginal => 'ต้นฉบับ';
 
   @override
   String get outputFormatLabel => 'รูปแบบเอาต์พุต';
@@ -394,4 +459,28 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get notificationPermissionOpenSettings => 'การตั้งค่า';
+
+  @override
+  String get backButton => 'ย้อนกลับ';
+
+  @override
+  String get appSettingsTitle => 'การตั้งค่าแอป';
+
+  @override
+  String get appSettingsSubtitle => 'การบันทึกอัตโนมัติและความเป็นส่วนตัว';
+
+  @override
+  String get openSourceTitle => 'โอเพนซอร์ส';
+
+  @override
+  String get openSourceSubtitle => 'ใบอนุญาตและซอร์สโค้ด';
+
+  @override
+  String get openSourceLicensesTitle => 'ใบอนุญาตโอเพนซอร์ส';
+
+  @override
+  String get legalSectionTitle => 'ข้อกฎหมาย';
+
+  @override
+  String get proSectionTitle => 'Pro';
 }

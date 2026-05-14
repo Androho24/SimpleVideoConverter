@@ -12,6 +12,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get qualityLabel => 'Qualité';
 
   @override
+  String get quality2160pHigh => '2160p Haute';
+
+  @override
+  String get quality2160pMedium => '2160p Moyenne';
+
+  @override
+  String get quality2160pLow => '2160p Faible';
+
+  @override
+  String get quality2160pVeryLow => '2160p Très faible';
+
+  @override
+  String get quality1440pHigh => '1440p Haute';
+
+  @override
+  String get quality1440pMedium => '1440p Moyenne';
+
+  @override
+  String get quality1440pLow => '1440p Faible';
+
+  @override
+  String get quality1440pVeryLow => '1440p Très faible';
+
+  @override
   String get quality1080pHigh => '1080p Haute';
 
   @override
@@ -135,12 +159,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get open => 'Ouvrir';
 
   @override
+  String get openGallery => 'Ouvrir la galerie';
+
+  @override
+  String get openVideo => 'Ouvrir la vidéo';
+
+  @override
+  String get autoSaveTitle =>
+      'Enregistrer automatiquement les vidéos dans la galerie';
+
+  @override
+  String get autoSaveSubtitle =>
+      'Les vidéos sont enregistrées automatiquement après la conversion.';
+
+  @override
   String get saveError =>
       'Erreur lors de l\'enregistrement. Espace de stockage insuffisant.';
 
   @override
   String get saveErrorOutOfMemory =>
-      'Il n\'y a pas assez de mémoire pour enregistrer ce fichier. Essayez d\'utiliser un extrait plus court ou de réduire la qualité.';
+      'Il n\'y a pas assez de mémoire pour enregistrer ce fichier. Essayez avec un clip plus court ou une qualité inférieure.';
 
   @override
   String get conversionDone => 'Terminé !';
@@ -198,6 +236,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get convertButton => 'Convertir';
 
   @override
+  String get encodingModeLabel => 'Mode d\'encodage';
+
+  @override
+  String get encodingModeCrf => 'Qualité (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Débit binaire';
+
+  @override
   String get crfLabel => 'Qualité vidéo (CRF)';
 
   @override
@@ -206,6 +253,16 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → sans perte (fichier très volumineux)\n18 → pratiquement sans perte visuelle\n23 → standard (bon équilibre)\n28 → perte de qualité visible\n51 → qualité la plus basse\n\nRecommandation : 18–28';
+
+  @override
+  String get targetBitrateLabel => 'Débit binaire cible';
+
+  @override
+  String get targetBitrateInfoTitle => 'Débit binaire cible';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → compression forte, messagerie\n4–8 Mbps → 1080p qualité normale/bonne\n12 Mbps → 1080p haute / 4K basse qualité\n20 Mbps → qualité de streaming 4K\n\nEntrée personnalisée : 500–40 000 kbps ou par exemple « 8 Mbps »\n\nContrairement au CRF, la qualité peut varier d\'une scène à l\'autre. Utilisez le CRF pour obtenir de meilleurs résultats avec une taille de fichier identique.';
 
   @override
   String get resolutionLabel => 'Résolution';
@@ -252,6 +309,16 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → standard pour MP4, meilleure compatibilité\nMP3 → très répandu, légèrement obsolète\nOpus → moderne et efficace, adapté au format MKV';
+
+  @override
+  String get audioChannelsLabel => 'Canaux audio';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Original → conserver la configuration des canaux source\nStéréo → 2.0 (mixage vers le bas si nécessaire)\nMono → 1 canal (fichier le plus petit)\n5.1 → son surround 6 canaux (uniquement pour les sources surround)\n\nLe mixage vers le bas (par ex. 5.1 → Stéréo) est pris en charge. Le mixage vers le haut n\'est pas proposé.';
+
+  @override
+  String get audioChannelOriginal => 'Original';
 
   @override
   String get outputFormatLabel => 'Format de sortie';
@@ -399,4 +466,29 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get notificationPermissionOpenSettings => 'Paramètres';
+
+  @override
+  String get backButton => 'Retour';
+
+  @override
+  String get appSettingsTitle => 'Paramètres de l\'application';
+
+  @override
+  String get appSettingsSubtitle =>
+      'Enregistrement automatique et paramètres de confidentialité';
+
+  @override
+  String get openSourceTitle => 'Open Source';
+
+  @override
+  String get openSourceSubtitle => 'Licences et code source';
+
+  @override
+  String get openSourceLicensesTitle => 'Licences Open Source';
+
+  @override
+  String get legalSectionTitle => 'Mentions légales';
+
+  @override
+  String get proSectionTitle => 'Pro';
 }

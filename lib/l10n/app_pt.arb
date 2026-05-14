@@ -3,6 +3,14 @@
 
 "qualityLabel": "Qualidade",
 
+  "quality2160pHigh": "2160p Alta",
+  "quality2160pMedium": "2160p Média",
+  "quality2160pLow": "2160p Baixa",
+  "quality2160pVeryLow": "2160p Muito Baixa",
+  "quality1440pHigh": "1440p Alta",
+  "quality1440pMedium": "1440p Média",
+  "quality1440pLow": "1440p Baixa",
+  "quality1440pVeryLow": "1440p Muito Baixa",
   "quality1080pHigh": "1080p Alta",
   "quality1080pMedium": "1080p Média",
   "quality1080pLow": "1080p Baixa",
@@ -44,6 +52,10 @@
   "saveVideoDialogTitle": "Guardar vídeo",
   "savedSuccess": "Guardado!",
   "open": "Abrir",
+  "openGallery": "Abrir galeria",
+  "openVideo": "Abrir vídeo",
+  "autoSaveTitle": "Guardar automaticamente os vídeos na galeria",
+  "autoSaveSubtitle": "Os vídeos são guardados automaticamente após a conversão.",
   "saveError": "Erro ao guardar. Talvez não haja espaço de armazenamento suficiente.",
   "saveErrorOutOfMemory": "Não há memória suficiente para guardar este ficheiro. Tente um vídeo mais curto ou com qualidade inferior.",
   "conversionDone": "Concluído!",
@@ -134,5 +146,27 @@
   "notificationPermissionNotNow": "Não agora",
   "notificationPermissionAllow": "Permitir",
   "notificationPermissionDenied": "Ative as notificações nas definições de conversão em segundo plano.",
-  "notificationPermissionOpenSettings": "Definições"
+  "notificationPermissionOpenSettings": "Definições",
+
+  "backButton": "Voltar",
+  "appSettingsTitle": "Definições da aplicação",
+  "appSettingsSubtitle": "Definições de gravação automática e privacidade",
+  "openSourceTitle": "Código aberto",
+  "openSourceSubtitle": "Licenças e código-fonte",
+  "openSourceLicensesTitle": "Licenças de código aberto",
+  "legalSectionTitle": "Legal",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "Modo de codificação",
+  "encodingModeCrf": "Qualidade (CRF)",
+  "encodingModeBitrate": "Taxa de bits",
+
+  "audioChannelsLabel": "Canais de áudio",
+  "audioChannelsInfoContent": "Original → mantém a disposição dos canais da fonte\nEstéreo → 2.0 (downmix, se necessário)\nMono → 1 canal (ficheiro mais pequeno)\n5.1 → som surround de 6 canais (apenas para fontes surround)\n\nO downmix (por exemplo, 5.1 → Estéreo) é suportado. O upmix não está disponível.",
+  "audioChannelOriginal": "Original",
+
+  "targetBitrateLabel": "Taxa de bits de destino",
+  "targetBitrateInfoTitle": "Taxa de bits de destino",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compressão elevada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40000 kbps ou, por exemplo, «8 Mbps»\n\nAo contrário do CRF, a qualidade pode variar entre cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de ficheiro."
+
 }

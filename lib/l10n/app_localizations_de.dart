@@ -12,52 +12,76 @@ class AppLocalizationsDe extends AppLocalizations {
   String get qualityLabel => 'Qualität';
 
   @override
-  String get quality1080pHigh => '1080p Hoch';
+  String get quality2160pHigh => '2160p hoch';
 
   @override
-  String get quality1080pMedium => '1080p Mittel';
+  String get quality2160pMedium => '2160p mittel';
 
   @override
-  String get quality1080pLow => '1080p Niedrig';
+  String get quality2160pLow => '2160p niedrig';
 
   @override
-  String get quality1080pVeryLow => '1080p Sehr Niedrig';
+  String get quality2160pVeryLow => '2160p sehr niedrig';
 
   @override
-  String get quality720pHigh => '720p Hoch';
+  String get quality1440pHigh => '1440p hoch';
 
   @override
-  String get quality720pMedium => '720p Mittel';
+  String get quality1440pMedium => '1440p mittel';
 
   @override
-  String get quality720pLow => '720p Niedrig';
+  String get quality1440pLow => '1440p niedrig';
 
   @override
-  String get quality720pVeryLow => '720p Sehr Niedrig';
+  String get quality1440pVeryLow => '1440p sehr niedrig';
 
   @override
-  String get quality480pHigh => '480p Hoch';
+  String get quality1080pHigh => '1080p hoch';
 
   @override
-  String get quality480pMedium => '480p Mittel';
+  String get quality1080pMedium => '1080p mittel';
 
   @override
-  String get quality480pLow => '480p Niedrig';
+  String get quality1080pLow => '1080p niedrig';
 
   @override
-  String get quality480pVeryLow => '480p Sehr Niedrig';
+  String get quality1080pVeryLow => '1080p sehr niedrig';
 
   @override
-  String get quality360pHigh => '360p Hoch';
+  String get quality720pHigh => '720p hoch';
 
   @override
-  String get quality360pMedium => '360p Mittel';
+  String get quality720pMedium => '720p mittel';
 
   @override
-  String get quality360pLow => '360p Niedrig';
+  String get quality720pLow => '720p niedrig';
 
   @override
-  String get quality360pVeryLow => '360p Sehr Niedrig';
+  String get quality720pVeryLow => '720p sehr niedrig';
+
+  @override
+  String get quality480pHigh => '480p hoch';
+
+  @override
+  String get quality480pMedium => '480p mittel';
+
+  @override
+  String get quality480pLow => '480p niedrig';
+
+  @override
+  String get quality480pVeryLow => '480p sehr niedrig';
+
+  @override
+  String get quality360pHigh => '360p hoch';
+
+  @override
+  String get quality360pMedium => '360p mittel';
+
+  @override
+  String get quality360pLow => '360p niedrig';
+
+  @override
+  String get quality360pVeryLow => '360p sehr niedrig';
 
   @override
   String get mute => 'Stummschalten';
@@ -134,12 +158,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get open => 'Öffnen';
 
   @override
+  String get openGallery => 'Galerie öffnen';
+
+  @override
+  String get openVideo => 'Video öffnen';
+
+  @override
+  String get autoSaveTitle => 'Videos automatisch in der Galerie speichern';
+
+  @override
+  String get autoSaveSubtitle =>
+      'Videos werden nach der Konvertierung automatisch gespeichert.';
+
+  @override
   String get saveError =>
       'Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.';
 
   @override
   String get saveErrorOutOfMemory =>
-      'Nicht genug Arbeitsspeicher zum Speichern. Versuche einen kürzeren Clip oder niedrigere Qualität.';
+      'Nicht genug Arbeitsspeicher zum Speichern. Versuche es mit einem kürzeren Clip oder niedrigerer Qualität.';
 
   @override
   String get conversionDone => 'Fertig!';
@@ -197,6 +234,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get convertButton => 'Konvertieren';
 
   @override
+  String get encodingModeLabel => 'Encoding-Modus';
+
+  @override
+  String get encodingModeCrf => 'Qualität (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Bitrate';
+
+  @override
   String get crfLabel => 'Videoqualität (CRF)';
 
   @override
@@ -205,6 +251,16 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → verlustfrei (sehr große Datei)\n18 → visuell nahezu verlustfrei\n23 → Standard (gute Balance)\n28 → sichtbare Qualitätseinbußen\n51 → niedrigste Qualität\n\nEmpfehlung: 18–28';
+
+  @override
+  String get targetBitrateLabel => 'Ziel-Bitrate';
+
+  @override
+  String get targetBitrateInfoTitle => 'Ziel-Bitrate';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → stark komprimiert, Messaging\n4–8 Mbps → 1080p normal/gut\n12 Mbps → 1080p hoch / 4K niedrig\n20 Mbps → 4K Streaming-Niveau\n\nManuelle Eingabe: 500–40000 kbps oder z. B. \"8 Mbps\"\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.';
 
   @override
   String get resolutionLabel => 'Auflösung';
@@ -250,7 +306,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get audioCodecInfoContent =>
-      'AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV';
+      'AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV\nAC3  → Dolby Digital, nur bei Surround-Quellen (≥ 3 Kanäle) verfügbar';
+
+  @override
+  String get audioChannelsLabel => 'Audiokanäle';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Original → Kanal-Layout der Quelle beibehalten\nStereo → 2.0 (Downmix falls nötig)\nMono → 1 Kanal (kleinste Datei)\n5.1 → 6-Kanal Surround (nur bei Surround-Quellen)\n\nDownmixing (z. B. 5.1 → Stereo) wird unterstützt. Upmixing wird nicht angeboten.';
+
+  @override
+  String get audioChannelOriginal => 'Original';
 
   @override
   String get outputFormatLabel => 'Output-Format';
@@ -397,4 +463,28 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get notificationPermissionOpenSettings => 'Einstellungen';
+
+  @override
+  String get backButton => 'Zurück';
+
+  @override
+  String get appSettingsTitle => 'App-Einstellungen';
+
+  @override
+  String get appSettingsSubtitle => 'Autospeichern & Datenschutz';
+
+  @override
+  String get openSourceTitle => 'Open Source';
+
+  @override
+  String get openSourceSubtitle => 'Lizenzen & Quellcode';
+
+  @override
+  String get openSourceLicensesTitle => 'Open Source Lizenzen';
+
+  @override
+  String get legalSectionTitle => 'Rechtliches';
+
+  @override
+  String get proSectionTitle => 'Pro';
 }

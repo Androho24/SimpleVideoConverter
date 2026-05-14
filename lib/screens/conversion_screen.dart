@@ -18,6 +18,7 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import '../l10n/app_localizations.dart';
 import '../services/conversion_service_manager.dart';
+import '../services/gallery_service.dart';
 import '../services/preferences_service.dart';
 import '../services/review_service.dart';
 import '../widgets/native_ad_widget.dart';
@@ -62,7 +63,15 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
   int _outputSizeBytes = 0;
   bool _isDone = false;
   bool _isCancelled = false;
+  bool _isSaved = false;
   late String _currentOutputPath;
+
+  static const _audioExtensions = {'mp3', 'm4a', 'opus', 'aac', 'ogg'};
+
+  bool get _isAudioOutput {
+    final ext = widget.defaultFileName.split('.').last.toLowerCase();
+    return _audioExtensions.contains(ext);
+  }
 
   @override
   void initState() {
@@ -162,11 +171,13 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
 
     FFmpegKitConfig.enableStatisticsCallback((stats) {
       final p = (stats.getTime() / widget.totalDurationMs).clamp(0.0, 1.0);
-      if (mounted) setState(() {
-        _progress = p;
-        _speed = stats.getSpeed() ?? 0.0;
-        _outputSizeBytes = stats.getSize() ?? 0;
-      });
+      if (mounted) {
+        setState(() {
+          _progress = p;
+          _speed = stats.getSpeed();
+          _outputSizeBytes = stats.getSize();
+        });
+      }
       unawaited(ConversionServiceManager.updateProgress(
         (p * 100).round(),
         _buildStatsLine(),
@@ -191,6 +202,13 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
           await ConversionServiceManager.stopService();
         }
         unawaited(ReviewService.maybeRequestReview());
+
+        // Auto-Save: nur Videos. Bei Fehler fällt der User auf den manuellen
+        // Save-Button zurück (saveError-SnackBar wird in _saveVideoToGallery gezeigt).
+        if (!_isAudioOutput && await PreferencesService.getAutoSaveVideos()) {
+          if (!mounted) return;
+          await _saveVideoToGallery();
+        }
       } else if (_isCancelled || ReturnCode.isCancel(rc)) {
         await ConversionServiceManager.stopService();
         await _deleteOutput();
@@ -202,11 +220,11 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
         unawaited(FirebaseCrashlytics.instance.recordError(
           Exception('FFmpeg conversion failed'),
           null,
-          reason: log ?? 'no log',
+          reason: log,
         ));
         if (mounted) {
           final l = AppLocalizations.of(context)!;
-          final shortLog = log != null ? log.substring(0, min(300, log.length)) : '';
+          final shortLog = log.substring(0, min(300, log.length));
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(l.conversionFailed(shortLog)),
@@ -276,41 +294,64 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
   }
 
   Future<void> _onSavePressed() async {
+    if (_isAudioOutput) {
+      await _saveAudioViaFilePicker();
+    } else {
+      await _saveVideoToGallery();
+    }
+  }
+
+  /// Video direkt in die Galerie (MediaStore). Bei Erfolg bleibt der Screen
+  /// offen und zeigt die Open-Folder/Open-Video-Buttons (_isSaved=true).
+  Future<void> _saveVideoToGallery() async {
     final l = AppLocalizations.of(context)!;
     try {
-      const audioExtensions = {'mp3', 'm4a', 'opus', 'aac', 'ogg'};
-      final ext = widget.defaultFileName.split('.').last.toLowerCase();
-      final isAudio = audioExtensions.contains(ext);
-
-      final cacheFilePath = _currentOutputPath;
-
-      if (isAudio) {
-        // Audio: Bytes in RAM laden und via FilePicker in Ordner nach Wahl speichern.
-        final Uint8List bytes;
-        try {
-          bytes = await File(_currentOutputPath).readAsBytes();
-        } on OutOfMemoryError {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(l.saveErrorOutOfMemory),
-              backgroundColor: Colors.red,
-            ));
-          }
-          return;
-        }
-        final savedPath = await FilePicker.platform.saveFile(
-          bytes: bytes,
-          fileName: widget.defaultFileName,
-          type: FileType.audio,
+      await Gal.putVideo(_currentOutputPath, album: 'Video Converter');
+      if (!mounted) return;
+      await ConversionServiceManager.stopService();
+      if (!mounted) return;
+      setState(() => _isSaved = true);
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(l.saveError),
+            backgroundColor: Colors.red,
+          ),
         );
-        if (savedPath == null) return; // User hat abgebrochen
-      } else {
-        // Video: direkt in Galerie via MediaStore — kein readAsBytes(), kein OOM-Risiko
-        await Gal.putVideo(_currentOutputPath, album: 'Video Converter');
       }
+    }
+  }
+
+  /// Audio: Bytes in RAM laden und via FilePicker in Ordner nach Wahl speichern.
+  /// Bisheriger Flow inkl. SnackBar mit "Öffnen" und Navigator.pop —
+  /// "Galerie öffnen" macht für Audio keinen Sinn.
+  Future<void> _saveAudioViaFilePicker() async {
+    final l = AppLocalizations.of(context)!;
+    try {
+      final cacheFilePath = _currentOutputPath;
+      final Uint8List bytes;
+      try {
+        bytes = await File(_currentOutputPath).readAsBytes();
+      } on OutOfMemoryError {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(l.saveErrorOutOfMemory),
+            backgroundColor: Colors.red,
+          ));
+        }
+        return;
+      }
+      final savedPath = await FilePicker.platform.saveFile(
+        bytes: bytes,
+        fileName: widget.defaultFileName,
+        type: FileType.audio,
+      );
+      if (savedPath == null) return; // User hat abgebrochen
 
       if (!mounted) return;
       await ConversionServiceManager.stopService();
+      if (!mounted) return;
       final messenger = ScaffoldMessenger.of(context);
       Navigator.pop(context);
       messenger.showSnackBar(
@@ -318,8 +359,10 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
           content: Text(l.savedSuccess),
           action: SnackBarAction(
             label: l.open,
-            onPressed: () {
-              OpenFilex.open(cacheFilePath, type: isAudio ? 'audio/*' : 'video/*').catchError((_) {});
+            onPressed: () async {
+              try {
+                await OpenFilex.open(cacheFilePath, type: 'audio/*');
+              } catch (_) {}
             },
           ),
           duration: const Duration(seconds: 20),
@@ -344,14 +387,13 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
+      canPop: _isSaved,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) {
-          if (_isDone) {
-            _onDiscardPressed();
-          } else {
-            _onCancelPressed();
-          }
+        if (didPop) return;
+        if (_isDone) {
+          _onDiscardPressed();
+        } else {
+          _onCancelPressed();
         }
       },
       child: Scaffold(
@@ -359,9 +401,10 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Native Ad
+              // Native Ad — kompakter als zuvor (flex 1 statt 2), damit
+              // die zwei Open-Buttons nach dem Speichern Platz haben.
               const Expanded(
-                flex: 2,
+                flex: 1,
                 child: NativeAdWidget(),
               ),
 
@@ -402,39 +445,84 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
                 child: Builder(builder: (context) {
                     final l = AppLocalizations.of(context)!;
-                    return _isDone
-                        ? Row(
-                            children: [
-                              Expanded(
-                                child: OutlinedButton(
-                                  onPressed: _onDiscardPressed,
-                                  child: Text(l.discard),
-                                ),
+                    if (_isSaved) {
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              icon: const Icon(Icons.photo_library_outlined),
+                              label: Text(l.openGallery),
+                              onPressed: () async {
+                                try {
+                                  await Gal.open();
+                                } catch (_) {}
+                              },
+                              style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(vertical: 14),
                               ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: ElevatedButton.icon(
-                                  icon: const Icon(Icons.share),
-                                  label: Text(l.save),
-                                  onPressed: _onSavePressed,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Theme.of(context).colorScheme.primary,
-                                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                                    padding: const EdgeInsets.symmetric(vertical: 14),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : OutlinedButton(
-                            onPressed: _onCancelPressed,
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: Theme.of(context).colorScheme.error,
-                              side: BorderSide(color: Theme.of(context).colorScheme.error),
-                              padding: const EdgeInsets.symmetric(vertical: 14),
                             ),
-                            child: Text(l.cancel),
-                          );
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              icon: const Icon(Icons.play_circle_outline),
+                              label: Text(l.openVideo),
+                              onPressed: () async {
+                                // Erst MediaStore-URI per ACTION_VIEW —
+                                // System-Galerie zeigt das Video mit Album-Context
+                                // (Back-Press landet im "Video Converter"-Album).
+                                // Fallback: Cache-Datei direkt im Player öffnen.
+                                final fileName = _currentOutputPath.split('/').last;
+                                final ok = await GalleryService.viewSavedVideo(fileName);
+                                if (ok) return;
+                                try {
+                                  await OpenFilex.open(_currentOutputPath, type: 'video/*');
+                                } catch (_) {}
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context).colorScheme.primary,
+                                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    if (_isDone) {
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: _onDiscardPressed,
+                              child: Text(l.discard),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              icon: const Icon(Icons.share),
+                              label: Text(l.save),
+                              onPressed: _onSavePressed,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context).colorScheme.primary,
+                                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    return OutlinedButton(
+                      onPressed: _onCancelPressed,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Theme.of(context).colorScheme.error,
+                        side: BorderSide(color: Theme.of(context).colorScheme.error),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      child: Text(l.cancel),
+                    );
                   }),
               ),
             ],

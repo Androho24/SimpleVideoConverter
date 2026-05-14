@@ -3,6 +3,14 @@
 
 "qualityLabel": "Jakość",
 
+  "quality2160pHigh": "2160p Wysoka",
+  "quality2160pMedium": "2160p Średnia",
+  "quality2160pLow": "2160p Niska",
+  "quality2160pVeryLow": "2160p Bardzo niska",
+  "quality1440pHigh": "1440p Wysoka",
+  "quality1440pMedium": "1440p Średnia",
+  "quality1440pLow": "1440p Niska",
+  "quality1440pVeryLow": "1440p Bardzo niska",
   "quality1080pHigh": "1080p Wysoka",
   "quality1080pMedium": "1080p Średnia",
   "quality1080pLow": "1080p Niska",
@@ -44,6 +52,10 @@
   "saveVideoDialogTitle": "Zapisz film",
   "savedSuccess": "Zapisano!",
   "open": "Otwórz",
+  "openGallery": "Otwórz galerię",
+  "openVideo": "Otwórz film",
+  "autoSaveTitle": "Automatyczne zapisywanie filmów w galerii",
+  "autoSaveSubtitle": "Filmy są zapisywane automatycznie po konwersji.",
   "saveError": "Błąd podczas zapisywania. Być może brakuje miejsca na dysku.",
   "saveErrorOutOfMemory": "Za mało pamięci, aby zapisać ten plik. Spróbuj skrócić nagranie lub obniżyć jakość.",
   "conversionDone": "Gotowe!",
@@ -134,5 +146,27 @@
   "notificationPermissionNotNow": "Nie teraz",
   "notificationPermissionAllow": "Zezwól",
   "notificationPermissionDenied": "Włącz powiadomienia w ustawieniach konwersji w tle.",
-  "notificationPermissionOpenSettings": "Ustawienia"
+  "notificationPermissionOpenSettings": "Ustawienia",
+
+  "backButton": "Wstecz",
+  "appSettingsTitle": "Ustawienia aplikacji",
+  "appSettingsSubtitle": "Ustawienia automatycznego zapisywania i prywatności",
+  "openSourceTitle": "Open Source",
+  "openSourceSubtitle": "Licencje i kod źródłowy",
+  "openSourceLicensesTitle": "Licencje Open Source",
+  "legalSectionTitle": "Informacje prawne",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "Tryb kodowania",
+  "encodingModeCrf": "Jakość (CRF)",
+  "encodingModeBitrate": "Szybkość transmisji",
+
+  "audioChannelsLabel": "Kanały audio",
+  "audioChannelsInfoContent": "Oryginalne → zachowaj układ kanałów źródłowych\nStereo → 2.0 (w razie potrzeby zredukuj miks)\nMono → 1 kanał (najmniejszy plik)\n5.1 → 6-kanałowy dźwięk przestrzenny (tylko dla źródeł przestrzennych)\n\nDownmixing (np. 5.1 → Stereo) jest obsługiwany. Upmixing nie jest dostępny.",
+  "audioChannelOriginal": "Oryginalne",
+
+  "targetBitrateLabel": "Docelowa przepływność",
+  "targetBitrateInfoTitle": "Docelowa przepływność",
+  "targetBitrateInfoContent": "500 kb/s–2 Mb/s  → silna kompresja, komunikacja\n4–8 Mb/s → 1080p normalna/dobra jakość\n12 Mb/s → 1080p wysoka / 4K niska jakość\n20 Mb/s → jakość strumieniowania 4K\n\nWpis niestandardowy: 500–40000 kbps lub np. „8 Mbps”\n\nW przeciwieństwie do CRF, jakość może się różnić w zależności od sceny. Użyj CRF, aby uzyskać lepsze wyniki przy tym samym rozmiarze pliku."
+
 }

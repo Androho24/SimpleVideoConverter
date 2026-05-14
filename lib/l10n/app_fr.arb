@@ -3,6 +3,14 @@
 
 "qualityLabel": "Qualité",
 
+  "quality2160pHigh": "2160p Haute",
+  "quality2160pMedium": "2160p Moyenne",
+  "quality2160pLow": "2160p Faible",
+  "quality2160pVeryLow": "2160p Très faible",
+  "quality1440pHigh": "1440p Haute",
+  "quality1440pMedium": "1440p Moyenne",
+  "quality1440pLow": "1440p Faible",
+  "quality1440pVeryLow": "1440p Très faible",
   "quality1080pHigh": "1080p Haute",
   "quality1080pMedium": "1080p Moyenne",
   "quality1080pLow": "1080p Faible",
@@ -44,8 +52,12 @@
   "saveVideoDialogTitle": "Enregistrer la vidéo",
   "savedSuccess": "Enregistré !",
   "open": "Ouvrir",
+  "openGallery" : "Ouvrir la galerie",
+  "openVideo" : "Ouvrir la vidéo",
+  "autoSaveTitle" : "Enregistrer automatiquement les vidéos dans la galerie",
+  "autoSaveSubtitle" : "Les vidéos sont enregistrées automatiquement après la conversion.",
   "saveError": "Erreur lors de l'enregistrement. Espace de stockage insuffisant.",
-  "saveErrorOutOfMemory": "Il n'y a pas assez de mémoire pour enregistrer ce fichier. Essayez d'utiliser un extrait plus court ou de réduire la qualité.",
+  "saveErrorOutOfMemory": "Il n'y a pas assez de mémoire pour enregistrer ce fichier. Essayez avec un clip plus court ou une qualité inférieure.",
   "conversionDone": "Terminé !",
   "conversionProgress": "Conversion : {percent}%",
   "conversionFailed": "Échec de la conversion : {error}",
@@ -134,5 +146,27 @@
   "notificationPermissionNotNow": "Pas maintenant",
   "notificationPermissionAllow": "Autoriser",
   "notificationPermissionDenied": "Activez les notifications dans les paramètres de conversion en arrière-plan.",
-  "notificationPermissionOpenSettings": "Paramètres"
+  "notificationPermissionOpenSettings": "Paramètres",
+
+  "backButton": "Retour",
+  "appSettingsTitle": "Paramètres de l'application",
+  "appSettingsSubtitle": "Enregistrement automatique et paramètres de confidentialité",
+  "openSourceTitle": "Open Source",
+  "openSourceSubtitle": "Licences et code source",
+  "openSourceLicensesTitle": "Licences Open Source",
+  "legalSectionTitle": "Mentions légales",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "Mode d'encodage",
+  "encodingModeCrf": "Qualité (CRF)",
+  "encodingModeBitrate": "Débit binaire",
+
+  "audioChannelsLabel": "Canaux audio",
+  "audioChannelsInfoContent": "Original → conserver la configuration des canaux source\nStéréo → 2.0 (mixage vers le bas si nécessaire)\nMono → 1 canal (fichier le plus petit)\n5.1 → son surround 6 canaux (uniquement pour les sources surround)\n\nLe mixage vers le bas (par ex. 5.1 → Stéréo) est pris en charge. Le mixage vers le haut n'est pas proposé.",
+  "audioChannelOriginal": "Original",
+
+  "targetBitrateLabel": "Débit binaire cible",
+  "targetBitrateInfoTitle": "Débit binaire cible",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compression forte, messagerie\n4–8 Mbps → 1080p qualité normale/bonne\n12 Mbps → 1080p haute / 4K basse qualité\n20 Mbps → qualité de streaming 4K\n\nEntrée personnalisée : 500–40 000 kbps ou par exemple « 8 Mbps »\n\nContrairement au CRF, la qualité peut varier d'une scène à l'autre. Utilisez le CRF pour obtenir de meilleurs résultats avec une taille de fichier identique."
+
 }

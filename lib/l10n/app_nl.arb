@@ -3,6 +3,14 @@
 
 "qualityLabel": "Kwaliteit",
 
+  "quality2160pHigh": "2160p Hoog",
+  "quality2160pMedium": "2160p Gemiddeld",
+  "quality2160pLow": "2160p Laag",
+  "quality2160pVeryLow": "2160p Zeer laag",
+  "quality1440pHigh": "1440p Hoog",
+  "quality1440pMedium": "1440p Gemiddeld",
+  "quality1440pLow": "1440p Laag",
+  "quality1440pVeryLow": "1440p Zeer laag",
   "quality1080pHigh": "1080p Hoog",
   "quality1080pMedium": "1080p Gemiddeld",
   "quality1080pLow": "1080p Laag",
@@ -44,6 +52,10 @@
   "saveVideoDialogTitle": "Video opslaan",
   "savedSuccess": "Opgeslagen!",
   "open": "Openen",
+  "openGallery": "Galerij openen",
+  "openVideo": "Video openen",
+  "autoSaveTitle": "Video's automatisch opslaan in galerij",
+  "autoSaveSubtitle": "Video's worden na conversie automatisch opgeslagen.",
   "saveError": "Fout bij opslaan. Mogelijk onvoldoende opslagruimte.",
   "saveErrorOutOfMemory": "Er is onvoldoende geheugen om dit bestand op te slaan. Probeer een korter fragment of een lagere kwaliteit.",
   "conversionDone": "Klaar!",
@@ -134,5 +146,27 @@
   "notificationPermissionNotNow": "Niet nu",
   "notificationPermissionAllow": "Toestaan",
   "notificationPermissionDenied": "Schakel meldingen in via de instellingen voor conversie op de achtergrond.",
-  "notificationPermissionOpenSettings": "Instellingen"
+  "notificationPermissionOpenSettings": "Instellingen",
+
+  "backButton": "Terug",
+  "appSettingsTitle": "App-instellingen",
+  "appSettingsSubtitle": "Instellingen voor automatisch opslaan en privacy",
+  "openSourceTitle": "Open source",
+  "openSourceSubtitle": "Licenties en broncode",
+  "openSourceLicensesTitle": "Open source-licenties",
+  "legalSectionTitle": "Juridisch",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "Coderingmodus",
+  "encodingModeCrf": "Kwaliteit (CRF)",
+  "encodingModeBitrate": "Bitsnelheid",
+
+  "audioChannelsLabel": "Audiokanalen",
+  "audioChannelsInfoContent": "Origineel → behoud indeling van bronkanalen\nStereo → 2.0 (indien nodig downmixen)\nMono → 1 kanaal (kleinste bestand)\n5.1 → 6-kanaals surround (alleen voor surroundbronnen)\n\nDownmixen (bijv. 5.1 → Stereo) wordt ondersteund. Upmixen wordt niet aangeboden.",
+  "audioChannelOriginal": "Origineel",
+
+  "targetBitrateLabel": "Doelbitsnelheid",
+  "targetBitrateInfoTitle": "Doelbitsnelheid",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → zware compressie, berichten\n4–8 Mbps → 1080p normale/goede kwaliteit\n12 Mbps → 1080p hoge / 4K lage kwaliteit\n20 Mbps → 4K-streamingkwaliteit\n\nAangepaste invoer: 500–40000 kbps of bijv. \"8 Mbps\"\n\nIn tegenstelling tot CRF kan de kwaliteit per scène variëren. Gebruik CRF voor betere resultaten bij dezelfde bestandsgrootte."
+
 }

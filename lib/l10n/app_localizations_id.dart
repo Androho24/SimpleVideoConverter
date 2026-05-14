@@ -12,6 +12,30 @@ class AppLocalizationsId extends AppLocalizations {
   String get qualityLabel => 'Kualitas';
 
   @override
+  String get quality2160pHigh => '2160p Tinggi';
+
+  @override
+  String get quality2160pMedium => '2160p Sedang';
+
+  @override
+  String get quality2160pLow => '2160p Rendah';
+
+  @override
+  String get quality2160pVeryLow => '2160p Sangat Rendah';
+
+  @override
+  String get quality1440pHigh => '1440p Tinggi';
+
+  @override
+  String get quality1440pMedium => '1440p Sedang';
+
+  @override
+  String get quality1440pLow => '1440p Rendah';
+
+  @override
+  String get quality1440pVeryLow => '1440p Sangat Rendah';
+
+  @override
   String get quality1080pHigh => '1080p Tinggi';
 
   @override
@@ -134,6 +158,19 @@ class AppLocalizationsId extends AppLocalizations {
   String get open => 'Buka';
 
   @override
+  String get openGallery => 'Buka galeri';
+
+  @override
+  String get openVideo => 'Buka video';
+
+  @override
+  String get autoSaveTitle => 'Simpan video secara otomatis ke galeri';
+
+  @override
+  String get autoSaveSubtitle =>
+      'Video disimpan secara otomatis setelah dikonversi.';
+
+  @override
   String get saveError =>
       'Kesalahan saat menyimpan. Mungkin ruang penyimpanan tidak cukup.';
 
@@ -197,6 +234,15 @@ class AppLocalizationsId extends AppLocalizations {
   String get convertButton => 'Konversi';
 
   @override
+  String get encodingModeLabel => 'Mode Pengkodean';
+
+  @override
+  String get encodingModeCrf => 'Kualitas (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Laju bit';
+
+  @override
   String get crfLabel => 'Kualitas Video (CRF)';
 
   @override
@@ -205,6 +251,16 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → tanpa kehilangan kualitas (file sangat besar)\n18 → hampir tanpa kehilangan kualitas secara visual\n23 → Standar (keseimbangan yang baik)\n28 → penurunan kualitas yang terlihat\n51 → kualitas terendah\n\nRekomendasi: 18–28';
+
+  @override
+  String get targetBitrateLabel => 'Bitrate Tujuan';
+
+  @override
+  String get targetBitrateInfoTitle => 'Bitrate Tujuan';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → kompresi tinggi, pesan\n4–8 Mbps → 1080p kualitas normal/baik\n12 Mbps → 1080p kualitas tinggi / 4K kualitas rendah\n20 Mbps → kualitas streaming 4K\n\nEntri kustom: 500–40000 kbps atau misalnya \"8 Mbps\"\n\nTidak seperti CRF, kualitas dapat bervariasi antar adegan. Gunakan CRF untuk hasil yang lebih baik pada ukuran file yang sama.';
 
   @override
   String get resolutionLabel => 'Resolusi';
@@ -251,6 +307,16 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → Standar untuk MP4, kompatibilitas terbaik\nMP3 → sangat umum, agak ketinggalan zaman\nOpus → modern & efisien, cocok untuk MKV';
+
+  @override
+  String get audioChannelsLabel => 'Saluran audio';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Asli → pertahankan tata letak saluran sumber\nStereo → 2.0 (downmix jika diperlukan)\nMono → 1 saluran (file terkecil)\n5.1 → surround 6 saluran (hanya untuk sumber surround)\n\nDownmixing (mis. 5.1 → Stereo) didukung. Upmixing tidak ditawarkan.';
+
+  @override
+  String get audioChannelOriginal => 'Asli';
 
   @override
   String get outputFormatLabel => 'Format Keluaran';
@@ -397,4 +463,28 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get notificationPermissionOpenSettings => 'Pengaturan';
+
+  @override
+  String get backButton => 'Kembali';
+
+  @override
+  String get appSettingsTitle => 'Pengaturan Aplikasi';
+
+  @override
+  String get appSettingsSubtitle => 'Pengaturan penyimpanan otomatis & privasi';
+
+  @override
+  String get openSourceTitle => 'Sumber Terbuka';
+
+  @override
+  String get openSourceSubtitle => 'Lisensi & kode sumber';
+
+  @override
+  String get openSourceLicensesTitle => 'Lisensi Sumber Terbuka';
+
+  @override
+  String get legalSectionTitle => 'Hukum';
+
+  @override
+  String get proSectionTitle => 'Pro';
 }

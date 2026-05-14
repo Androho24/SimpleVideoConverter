@@ -6,6 +6,14 @@ import '../l10n/app_localizations.dart';
 import '../models/quality_option.dart';
 
 List<String> _qualityLabels(AppLocalizations l) => [
+  l.quality2160pHigh,
+  l.quality2160pMedium,
+  l.quality2160pLow,
+  l.quality2160pVeryLow,
+  l.quality1440pHigh,
+  l.quality1440pMedium,
+  l.quality1440pLow,
+  l.quality1440pVeryLow,
   l.quality1080pHigh,
   l.quality1080pMedium,
   l.quality1080pLow,
@@ -28,12 +36,14 @@ class QualitySelector extends StatelessWidget {
   final int selectedIndex;
   final bool isConverting;
   final ValueChanged<int> onChanged;
+  final int? videoMaxDimension;
 
   const QualitySelector({
     super.key,
     required this.selectedIndex,
     required this.isConverting,
     required this.onChanged,
+    this.videoMaxDimension,
   });
 
   void _showResolutionInfo(BuildContext context) {
@@ -97,10 +107,12 @@ class QualitySelector extends StatelessWidget {
           ),
           initialSelection: selectedIndex,
           label: Text(l.qualityLabel),
-          dropdownMenuEntries: List.generate(
-            qualityOptions.length,
-            (i) => DropdownMenuEntry<int>(value: i, label: labels[i]),
-          ),
+          dropdownMenuEntries: [
+            for (int i = 0; i < qualityOptions.length; i++)
+              if (videoMaxDimension == null ||
+                  qualityOptions[i].maxDimension <= videoMaxDimension!)
+                DropdownMenuEntry<int>(value: i, label: labels[i]),
+          ],
           onSelected: (val) {
             if (val != null) onChanged(val);
           },

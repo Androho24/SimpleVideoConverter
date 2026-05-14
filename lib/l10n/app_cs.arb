@@ -3,6 +3,14 @@
 
  "qualityLabel": "Kvalita",
 
+   "quality2160pHigh": "2160p Vysoká",
+   "quality2160pMedium": "2160p Střední",
+   "quality2160pLow": "2160p Nízká",
+   "quality2160pVeryLow": "2160p velmi nízká",
+   "quality1440pHigh": "1440p Vysoká",
+   "quality1440pMedium": "1440p Střední",
+   "quality1440pLow": "1440p Nízká",
+   "quality1440pVeryLow": "1440p velmi nízká",
    "quality1080pHigh": "1080p Vysoká",
    "quality1080pMedium": "1080p Střední",
    "quality1080pLow": "1080p Nízká",
@@ -44,6 +52,10 @@
    "saveVideoDialogTitle": "Uložit video",
    "savedSuccess": "Uloženo!",
    "open": "Otevřít",
+   "openGallery": "Otevřít galerii",
+   "openVideo": "Otevřít video",
+   "autoSaveTitle": "Automatické ukládání videí do galerie",
+   "autoSaveSubtitle": "Videa se po převodu ukládají automaticky.",
    "saveError": "Chyba při ukládání. Možná nemáte dostatek místa.",
    "saveErrorOutOfMemory": "Není dostatek paměti pro uložení tohoto souboru. Zkuste použít kratší klip nebo nižší kvalitu.",
    "conversionDone": "Hotovo!",
@@ -135,5 +147,28 @@
   "notificationPermissionNotNow": "Ne teď",
   "notificationPermissionAllow": "Povolit",
   "notificationPermissionDenied": "Zapněte oznámení v nastavení pro převod na pozadí.",
-  "notificationPermissionOpenSettings": "Nastavení"
+  "notificationPermissionOpenSettings": "Nastavení",
+
+  "backButton": "Zpět",
+  "appSettingsTitle": "Nastavení aplikace",
+  "appSettingsSubtitle": "Nastavení automatického ukládání a ochrany osobních údajů",
+  "openSourceTitle": "Open Source",
+  "openSourceSubtitle": "Licence a zdrojový kód",
+  "openSourceLicensesTitle": "Licence Open Source",
+  "legalSectionTitle": "Právní informace",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "Režim kódování",
+  "encodingModeCrf": "Kvalita (CRF)",
+  "encodingModeBitrate": "Datový tok",
+
+  "audioChannelsLabel": "Zvukové kanály",
+  "audioChannelsInfoContent": "Originální → zachovat rozložení zdrojových kanálů\nStereo → 2.0 (v případě potřeby downmix)\nMono → 1 kanál (nejmenší soubor)\n5.1 → 6kanálový prostorový zvuk (pouze pro prostorové zdroje)\n\nDownmix (např. 5.1 → Stereo) je podporován. Upmix není k dispozici.",
+  "audioChannelOriginal": "Původní",
+
+  "targetBitrateLabel": "Cílová přenosová rychlost",
+  "targetBitrateInfoTitle": "Cílová přenosová rychlost",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → silná komprese, zasílání zpráv\n4–8 Mbps → 1080p normální/dobrá kvalita\n12 Mbps → 1080p vysoká / 4K nízká kvalita\n20 Mbps → kvalita streamování 4K\n\nVlastní zadání: 500–40000 kbps nebo např. „8 Mbps“\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF."
+
+
 }

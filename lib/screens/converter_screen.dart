@@ -3,6 +3,7 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:disk_space_plus/disk_space_plus.dart';
 import 'package:ffmpeg_kit_flutter_new/ffprobe_kit.dart';
@@ -17,6 +18,8 @@ import '../models/expert_settings.dart';
 import '../models/quality_option.dart';
 import '../models/video_metadata.dart';
 import '../screens/conversion_screen.dart';
+import '../screens/settings_screen.dart';
+import '../services/native_ad_preloader.dart';
 import '../services/preferences_service.dart';
 import '../widgets/app_header.dart';
 import '../widgets/convert_section.dart';
@@ -46,6 +49,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   bool _isLoading = false;
   bool _isConverting = false;
   bool _isExpertMode = false;
+  int _selectedNavIndex = 0;
   bool _cpuWarningDismissed = false;
   ExpertSettings _expertSettings = const ExpertSettings();
   VideoPlayerController? _playerController;
@@ -81,11 +85,14 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final expert = await PreferencesService.getExpertMode();
     final dismissed = await PreferencesService.getCpuWarningDismissed();
     final quality = await PreferencesService.getLastQualityIndex();
-    if (mounted) setState(() {
-      _isExpertMode = expert;
-      _cpuWarningDismissed = dismissed;
-      _selectedQualityIndex = quality;
-    });
+    if (mounted) {
+      setState(() {
+        _isExpertMode = expert;
+        _selectedNavIndex = expert ? 1 : 0;
+        _cpuWarningDismissed = dismissed;
+        _selectedQualityIndex = quality;
+      });
+    }
   }
 
   Future<void> _requestNotificationPermission() async {
@@ -104,6 +111,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       return;
     }
 
+    if (!mounted) return;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -139,7 +147,22 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   Future<void> _pickVideo() async {
     setState(() => _isLoading = true);
 
-    final picked = await ImagePicker().pickVideo(source: ImageSource.gallery);
+    final XFile? picked;
+    try {
+      picked = await ImagePicker().pickVideo(source: ImageSource.gallery);
+    } catch (_) {
+      // image_picker kann auf manchen Geräten (z. B. Chromebooks, exotische SAF-URIs)
+      // PlatformException(no_valid_video_uri) werfen, wenn das vom System gelieferte
+      // Video-URI nicht in einen lesbaren Pfad aufgelöst werden kann.
+      if (mounted) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.invalidVideoFile),
+          backgroundColor: Colors.red,
+        ));
+      }
+      return;
+    }
     if (picked == null) {
       setState(() => _isLoading = false);
       return;
@@ -181,6 +204,17 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     }
 
     if (!mounted) return;
+
+    final videoMaxDim = meta.width > meta.height ? meta.width : meta.height;
+    int adjustedQualityIndex = _selectedQualityIndex;
+    if (qualityOptions[_selectedQualityIndex].maxDimension > videoMaxDim) {
+      final firstValid = qualityOptions.indexWhere((q) => q.maxDimension <= videoMaxDim);
+      if (firstValid != -1) adjustedQualityIndex = firstValid;
+    }
+    if (adjustedQualityIndex != _selectedQualityIndex) {
+      PreferencesService.setLastQualityIndex(adjustedQualityIndex);
+    }
+
     setState(() {
       _isLoading = false;
       _videoPath = path;
@@ -188,6 +222,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       _trimStart = 0.0;
       _trimEnd = 1.0;
       _isMuted = false;
+      _selectedQualityIndex = adjustedQualityIndex;
       _playerController = previewFailed ? null : controller;
     });
 
@@ -238,12 +273,15 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
           ),
           actions: [
             TextButton(
-              onPressed: () async {
-                if (dontShowAgain) {
-                  await PreferencesService.setCpuWarningDismissed();
+              onPressed: () {
+                // Erst den Dialog schließen — sonst kann ein zwischengeschalteter
+                // Back-Press die Route entfernen, bevor der await zurückkommt.
+                final remember = dontShowAgain;
+                Navigator.pop(ctx);
+                if (remember) {
+                  PreferencesService.setCpuWarningDismissed();
                   if (mounted) setState(() => _cpuWarningDismissed = true);
                 }
-                if (ctx.mounted) Navigator.pop(ctx);
               },
               child: Text(l.ok),
             ),
@@ -274,6 +312,15 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       }
     }
 
+    dynamic audioStream;
+    try {
+      audioStream = streams?.firstWhere((s) => s.getType() == 'audio');
+    } catch (_) {}
+    final channelsRaw = audioStream?.getAllProperties()?['channels'];
+    final audioChannels = channelsRaw is int
+        ? channelsRaw
+        : int.tryParse(channelsRaw?.toString() ?? '0') ?? 0;
+
     final durationSec = double.tryParse(info?.getDuration() ?? '0') ?? 0.0;
     final rawWidth = videoStream?.getWidth();
     final rawHeight = videoStream?.getHeight();
@@ -282,6 +329,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       durationMs: (durationSec * 1000).toInt(),
       width: rawWidth is int ? rawWidth : int.tryParse(rawWidth?.toString() ?? '0') ?? 0,
       height: rawHeight is int ? rawHeight : int.tryParse(rawHeight?.toString() ?? '0') ?? 0,
+      audioChannels: audioChannels,
     );
   }
 
@@ -291,12 +339,55 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   void _updateEstimatedSize() {
     if (_metadata == null) return;
+    final durationSec = (_trimEnd - _trimStart) * _metadata!.durationMs / 1000.0;
+
+    if (_isExpertMode) {
+      final expert = _expertSettings;
+
+      if (expert.audioOnly) {
+        final bytes = (expert.audioBitrate * 1000 / 8) * durationSec;
+        setState(() => _estimatedSizeMb = bytes / (1024 * 1024));
+        return;
+      }
+
+      final int videoBps;
+      if (expert.bitrateMode == 'bitrate') {
+        videoBps = expert.targetBitrateKbps * 1000;
+      } else {
+        // CRF-Heuristik: skaliert nach Auflösung und CRF relativ zu 1080p CRF 23 → 4 Mbps
+        int outW, outH;
+        if (expert.width != 0 && expert.height != 0) {
+          outW = expert.width;
+          outH = expert.height;
+        } else if (expert.width != 0) {
+          outW = expert.width;
+          outH = ((outW * _metadata!.height / _metadata!.width).round() ~/ 2) * 2;
+        } else if (expert.height != 0) {
+          outH = expert.height;
+          outW = ((outH * _metadata!.width / _metadata!.height).round() ~/ 2) * 2;
+        } else {
+          outW = (_metadata!.width ~/ 2) * 2;
+          outH = (_metadata!.height ~/ 2) * 2;
+        }
+        const referencePixels = 1920.0 * 1080.0;
+        const referenceBitrateBps = 4000000.0; // 1080p CRF 23
+        final resolutionFactor = (outW * outH) / referencePixels;
+        final crfFactor = pow(2.0, (23 - expert.crf) / 6.0);
+        videoBps = (referenceBitrateBps * resolutionFactor * crfFactor).round();
+      }
+
+      final audioBps = expert.audioBitrate * 1000;
+      final bytes = ((videoBps + audioBps) / 8) * durationSec;
+      setState(() => _estimatedSizeMb = bytes / (1024 * 1024));
+      return;
+    }
+
+    // Normal-Modus
     if (_isAudioOnly) {
       setState(() => _estimatedSizeMb = 0.0);
       return;
     }
     final quality = qualityOptions[_selectedQualityIndex];
-    final durationSec = (_trimEnd - _trimStart) * _metadata!.durationMs / 1000.0;
     final audioBitrate = _isMuted ? 0 : 128000;
     final estimatedBytes = ((quality.estimatedBitrateBps + audioBitrate) / 8) * durationSec;
     setState(() => _estimatedSizeMb = estimatedBytes / (1024 * 1024));
@@ -371,11 +462,16 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     }
     setState(() => _isConverting = true);
 
+    // Native-Ad parallel zum FFmpeg-Setup vorladen, damit sie auf dem
+    // Conversion-Screen ohne Ladephase erscheint. Pro-User: skippt intern.
+    NativeAdPreloader.preload();
+
     if (!await _checkStorage()) {
       if (mounted) setState(() => _isConverting = false);
       return;
     }
 
+    if (!mounted) return;
     final convertedPrefix = AppLocalizations.of(context)!.convertedPrefix;
 
     final cacheDir = await ConversionScreen.getCacheDir();
@@ -391,19 +487,20 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final String outputPath;
 
     // FFmpeg-Encoder-Namen: 'mp3' → 'libmp3lame', 'opus' → 'libopus'
-    const ffmpegCodec = {'mp3': 'libmp3lame', 'opus': 'libopus'};
+    const ffmpegCodec = {'mp3': 'libmp3lame', 'opus': 'libopus', 'ac3': 'ac3'};
 
     if (_isExpertMode) {
       final expert = _expertSettings;
       if (expert.audioOnly) {
         // ── Expert: nur Audio extrahieren ─────────────────────────────────
-        const audioExt = {'aac': 'm4a', 'mp3': 'mp3', 'opus': 'opus'};
+        const audioExt = {'aac': 'm4a', 'mp3': 'mp3', 'opus': 'opus', 'ac3': 'ac3'};
         final ext = audioExt[expert.audioCodec] ?? 'mp3';
         outputPath = '${cacheDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.$ext';
         final encoderName = ffmpegCodec[expert.audioCodec] ?? expert.audioCodec;
+        final channelOptAudio = expert.audioChannels > 0 ? '-ac ${expert.audioChannels}' : '';
         command =
             '-i $inputArg -ss $startSec -to $endSec '
-            '-vn -c:a $encoderName -b:a ${expert.audioBitrate}k -y "$outputPath"';
+            '-vn -c:a $encoderName -b:a ${expert.audioBitrate}k $channelOptAudio -y "$outputPath"';
       } else {
         // ── Expert: Video konvertieren ────────────────────────────────────
         outputPath =
@@ -424,13 +521,17 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         }
         final fpsOpt = expert.fps != 0 ? '-r ${expert.fps}' : '';
         final encoderName = ffmpegCodec[expert.audioCodec] ?? expert.audioCodec;
+        final channelOpt = expert.audioChannels > 0 ? '-ac ${expert.audioChannels}' : '';
         final audioOpt = expert.audioBitrate == 0
             ? '-an'
-            : '-c:a $encoderName -b:a ${expert.audioBitrate}k';
+            : '-c:a $encoderName -b:a ${expert.audioBitrate}k $channelOpt';
         final videoCodec = expert.container == 'avi' ? 'mpeg4' : 'libx264';
+        final qualityOpt = expert.bitrateMode == 'bitrate'
+            ? '-b:v ${expert.targetBitrateKbps}k'
+            : '-crf ${expert.crf}';
         command =
             '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-            '-c:v $videoCodec -pix_fmt yuv420p -crf ${expert.crf} $fpsOpt $audioOpt -y "$outputPath"';
+            '-c:v $videoCodec -pix_fmt yuv420p $qualityOpt $fpsOpt $audioOpt -y "$outputPath"';
       }
     } else if (_isAudioOnly) {
       // ── Normal: nur Audio extrahieren (MP3 192k) ────────────────────────
@@ -485,7 +586,52 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   Widget build(BuildContext context) {
     final hasVideo = _videoPath != null && _metadata != null;
 
-    return Scaffold(
+    final l = AppLocalizations.of(context)!;
+    return PopScope(
+      canPop: _selectedNavIndex == 0,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) {
+          setState(() {
+            _selectedNavIndex = 0;
+            _isExpertMode = false;
+          });
+          PreferencesService.setExpertMode(false);
+        }
+      },
+      child: Scaffold(
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedNavIndex,
+        onDestinationSelected: (index) {
+          if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => SettingsScreen(
+                  onNavigate: (i) {
+                    setState(() {
+                      _selectedNavIndex = i;
+                      _isExpertMode = i == 1;
+                    });
+                    PreferencesService.setExpertMode(i == 1);
+                  },
+                ),
+              ),
+            );
+          } else {
+            final isExpert = index == 1;
+            setState(() {
+              _selectedNavIndex = index;
+              _isExpertMode = isExpert;
+            });
+            PreferencesService.setExpertMode(isExpert);
+          }
+        },
+        destinations: [
+          NavigationDestination(icon: const Icon(Icons.tune), label: l.modeNormal),
+          NavigationDestination(icon: const Icon(Icons.settings_applications), label: l.modeExpert),
+          NavigationDestination(icon: const Icon(Icons.settings_outlined), label: l.settingsTitle),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -493,21 +639,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const AppHeader(),
-              const SizedBox(height: 8),
-
-              // Normal / Expert Umschalter
-              SegmentedButton<bool>(
-                segments: [
-                  ButtonSegment(value: false, label: Text(AppLocalizations.of(context)!.modeNormal), icon: const Icon(Icons.tune)),
-                  ButtonSegment(value: true, label: Text(AppLocalizations.of(context)!.modeExpert), icon: const Icon(Icons.settings_applications)),
-                ],
-                selected: {_isExpertMode},
-                onSelectionChanged: (selection) {
-                  final value = selection.first;
-                  setState(() => _isExpertMode = value);
-                  PreferencesService.setExpertMode(value);
-                },
-              ),
               const SizedBox(height: 12),
 
               ElevatedButton.icon(
@@ -599,7 +730,10 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                   settings: _expertSettings,
                   isConverting: false,
                   metadata: _metadata,
-                  onChanged: (s) => setState(() => _expertSettings = s),
+                  onChanged: (s) {
+                    setState(() => _expertSettings = s);
+                    _updateEstimatedSize();
+                  },
                 ),
                 const SizedBox(height: 8),
                 ConvertSection(
@@ -607,7 +741,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                   showMute: false,
                   isAudioOnly: _expertSettings.audioOnly,
                   audioOnlySwitchEnabled: _expertSettings.audioBitrate != 0,
-                  estimatedSizeMb: null,
+                  estimatedSizeMb: _estimatedSizeMb,
                   onMuteChanged: (val) => setState(() =>
                     _expertSettings = _expertSettings.copyWith(
                       audioBitrate: val ? 0 : 128,
@@ -620,6 +754,11 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                 QualitySelector(
                   selectedIndex: _selectedQualityIndex,
                   isConverting: false,
+                  videoMaxDimension: _metadata != null
+                      ? (_metadata!.width > _metadata!.height
+                          ? _metadata!.width
+                          : _metadata!.height)
+                      : null,
                   onChanged: (val) {
                     setState(() => _selectedQualityIndex = val);
                     PreferencesService.setLastQualityIndex(val);
@@ -645,6 +784,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

@@ -1,12 +1,17 @@
 package com.androho.simplevideoconverter
 
 import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -26,6 +31,7 @@ class MainActivity : FlutterActivity() {
 
     private val ADS_CHANNEL = "com.androho.simplevideoconverter/ads"
     private val SERVICE_CHANNEL = "com.androho.simplevideoconverter/conversion_service"
+    private val GALLERY_CHANNEL = "com.androho.simplevideoconverter/gallery"
 
     override fun provideFlutterEngine(context: Context): FlutterEngine? =
         (application as SimpleVideoConverterApplication).getMainFlutterEngine()
@@ -45,11 +51,19 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        GoogleMobileAdsPlugin.registerNativeAdFactory(
-            flutterEngine,
-            "nativeAd",
-            NativeAdFactoryImpl(layoutInflater)
-        )
+        // GeneratedPluginRegistrant schluckt Konstruktor-Fehler des GMA-Plugins
+        // still (z. B. wenn Play Services fehlen) — die Plugin-Instanz fehlt dann
+        // im Engine-Cache und registerNativeAdFactory wirft IllegalStateException.
+        // Ohne try/catch killt das die Activity in onCreate.
+        try {
+            GoogleMobileAdsPlugin.registerNativeAdFactory(
+                flutterEngine,
+                "nativeAd",
+                NativeAdFactoryImpl(layoutInflater)
+            )
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Failed to register NativeAdFactory", e)
+        }
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ADS_CHANNEL)
             .setMethodCallHandler { call, result ->
@@ -120,10 +134,79 @@ class MainActivity : FlutterActivity() {
                     else -> result.notImplemented()
                 }
             }
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, GALLERY_CHANNEL)
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "viewSavedVideo" -> {
+                        val displayName = call.argument<String>("displayName") ?: ""
+                        result.success(viewSavedVideo(displayName))
+                    }
+                    else -> result.notImplemented()
+                }
+            }
+    }
+
+    /**
+     * Öffnet das zuletzt gespeicherte Video aus MediaStore via ACTION_VIEW.
+     * Die Galerie zeigt das Video direkt mit Album-Context an — unabhängig
+     * davon, welche Galerie-App der Hersteller voreingestellt hat.
+     *
+     * @return true wenn ein Handler gefunden und gestartet wurde, sonst false.
+     *         Der Aufrufer kann bei false auf Gal.open() zurückfallen.
+     */
+    private fun viewSavedVideo(displayName: String): Boolean {
+        if (displayName.isBlank()) return false
+        try {
+            val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+            } else {
+                MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+            }
+            val projection = arrayOf(MediaStore.Video.Media._ID)
+            // Nach DATE_ADDED DESC sortieren — falls eine alte Datei mit
+            // gleichem Namen noch im Index liegt, wird die neueste genommen.
+            val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC"
+            val selection = "${MediaStore.Video.Media.DISPLAY_NAME} = ?"
+            val selectionArgs = arrayOf(displayName)
+
+            val uri: Uri? = contentResolver.query(
+                collection, projection, selection, selectionArgs, sortOrder
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val id = cursor.getLong(
+                        cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
+                    )
+                    ContentUris.withAppendedId(collection, id)
+                } else null
+            }
+
+            if (uri == null) {
+                Log.w("MainActivity", "viewSavedVideo: kein MediaStore-Eintrag für '$displayName'")
+                return false
+            }
+
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(uri, "video/*")
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            startActivity(intent)
+            return true
+        } catch (e: ActivityNotFoundException) {
+            Log.w("MainActivity", "viewSavedVideo: kein Handler für ACTION_VIEW", e)
+            return false
+        } catch (e: Exception) {
+            Log.e("MainActivity", "viewSavedVideo: unerwarteter Fehler", e)
+            return false
+        }
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
-        GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "nativeAd")
+        try {
+            GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "nativeAd")
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Failed to unregister NativeAdFactory", e)
+        }
         // Erst super: Flutter detacht die Engine sauber von dieser Activity.
         // Danach release: Engine ggf. zerstören — nie vorher, sonst hängt Flutter im Limbo.
         super.cleanUpFlutterEngine(flutterEngine)

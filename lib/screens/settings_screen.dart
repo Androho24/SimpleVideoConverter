@@ -4,15 +4,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
+import '../screens/app_settings_screen.dart';
 import '../screens/feedback_screen.dart';
+import '../screens/open_source_screen.dart';
 import '../services/preferences_service.dart';
 import '../services/purchase_service.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  final void Function(int)? onNavigate;
+
+  const SettingsScreen({super.key, this.onNavigate});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -20,22 +23,17 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isPro = false;
-  bool _isPrivacyOptionsRequired = false;
-  String _appVersion = '';
   StreamSubscription<bool>? _proSub;
   StreamSubscription<String>? _errorSub;
 
-  static const _adsChannel = MethodChannel('com.androho.simplevideoconverter/ads');
+  static final _privacyDe = Uri.parse('https://androho.com/de/privacy-policy/');
+  static final _privacyEn = Uri.parse('https://androho.com/privacy-policy-2/');
+  static final _impressumDe = Uri.parse('https://androho.com/de/impressum/');
+  static final _impressumEn = Uri.parse('https://androho.com/98-2/');
 
   @override
   void initState() {
     super.initState();
-    PackageInfo.fromPlatform().then((info) {
-      if (mounted) setState(() => _appVersion = info.version);
-    });
-    _adsChannel.invokeMethod<bool>('isPrivacyOptionsRequired').then((required) {
-      if (mounted) setState(() => _isPrivacyOptionsRequired = required ?? false);
-    }).catchError((_) {});
     PreferencesService.getIsPro().then((v) {
       if (mounted) setState(() => _isPro = v);
     });
@@ -64,13 +62,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.dispose();
   }
 
-  static final _gplUrl = Uri.parse('https://www.gnu.org/licenses/gpl-3.0.html');
-  static final _githubUrl = Uri.parse('https://github.com/Androho24/SimpleVideoConverter');
-  static final _privacyDe = Uri.parse('https://androho.com/de/privacy-policy/');
-  static final _privacyEn = Uri.parse('https://androho.com/privacy-policy-2/');
-  static final _impressumDe = Uri.parse('https://androho.com/de/impressum/');
-  static final _impressumEn = Uri.parse('https://androho.com/98-2/');
-
   Future<void> _openUrl(BuildContext context, Uri url) async {
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       if (context.mounted) {
@@ -81,16 +72,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  Widget _sectionHeader(String title) => Padding(
+    padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
+    child: Text(
+      title,
+      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+        color: Theme.of(context).colorScheme.primary,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.8,
+      ),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     final isGerman = Localizations.localeOf(context).languageCode == 'de';
     final privacyUrl = isGerman ? _privacyDe : _privacyEn;
     final impressumUrl = isGerman ? _impressumDe : _impressumEn;
-
     final l = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.settingsTitle),
+        toolbarHeight: 0,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: 2,
+        onDestinationSelected: (index) {
+          if (index == 2) return;
+          Navigator.pop(context);
+          widget.onNavigate?.call(index);
+        },
+        destinations: [
+          NavigationDestination(icon: const Icon(Icons.tune), label: l.modeNormal),
+          NavigationDestination(icon: const Icon(Icons.settings_applications), label: l.modeExpert),
+          NavigationDestination(icon: const Icon(Icons.settings_outlined), label: l.settingsTitle),
+        ],
       ),
       body: ListView(
         children: [
@@ -104,49 +125,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.description_outlined),
-            title: Text(l.licensesTitle),
-            subtitle: Text(l.licensesSubtitle),
+            leading: const Icon(Icons.tune_outlined),
+            title: Text(l.appSettingsTitle),
+            subtitle: Text(l.appSettingsSubtitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => showLicensePage(
-              context: context,
-              applicationName: l.appName,
-              applicationVersion: _appVersion,
-              applicationLegalese: '© 2026 Androho Software',
-            ),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const AppSettingsScreen())),
           ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.balance_outlined),
-            title: Text(l.gplLicenseTitle),
-            subtitle: const Text('gnu.org/licenses/gpl-3.0.html'),
-            trailing: const Icon(Icons.open_in_new),
-            onTap: () => _openUrl(context, _gplUrl),
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.code),
-            title: Text(l.sourceCodeTitle),
-            subtitle: const Text('github.com/Androho24/SimpleVideoConverter'),
-            trailing: const Icon(Icons.open_in_new),
-            onTap: () => _openUrl(context, _githubUrl),
-          ),
-          const Divider(),
+          _sectionHeader(l.legalSectionTitle),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
             title: Text(l.privacyPolicyTitle),
             trailing: const Icon(Icons.open_in_new),
             onTap: () => _openUrl(context, privacyUrl),
           ),
-          if (!_isPro && _isPrivacyOptionsRequired) ...[
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.tune_outlined),
-              title: Text(l.adConsentTitle),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _adsChannel.invokeMethod('showPrivacyOptionsForm'),
-            ),
-          ],
           const Divider(),
           ListTile(
             leading: const Icon(Icons.info_outline),
@@ -155,6 +147,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: () => _openUrl(context, impressumUrl),
           ),
           const Divider(),
+          ListTile(
+            leading: const Icon(Icons.code),
+            title: Text(l.openSourceTitle),
+            subtitle: Text(l.openSourceSubtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const OpenSourceScreen())),
+          ),
+
+          _sectionHeader(l.proSectionTitle),
           if (_isPro)
             ListTile(
               leading: Icon(Icons.check_circle_outline,

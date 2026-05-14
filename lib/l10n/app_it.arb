@@ -3,6 +3,14 @@
 
 "qualityLabel": "Qualità",
 
+  "quality2160pHigh": "2160p Alta",
+  "quality2160pMedium": "2160p Media",
+  "quality2160pLow": "2160p Bassa",
+  "quality2160pVeryLow": "2160p Molto bassa",
+  "quality1440pHigh": "1440p Alta",
+  "quality1440pMedium": "1440p Media",
+  "quality1440pLow": "1440p Bassa",
+  "quality1440pVeryLow": "1440p Molto bassa",
   "quality1080pHigh": "1080p Alta",
   "quality1080pMedium": "1080p Media",
   "quality1080pLow": "1080p Bassa",
@@ -44,8 +52,12 @@
   "saveVideoDialogTitle": "Salva video",
   "savedSuccess": "Salvato!",
   "open": "Apri",
+  "openGallery": "Apri galleria",
+  "openVideo": "Apri video",
+  "autoSaveTitle": "Salva automaticamente i video nella galleria",
+  "autoSaveSubtitle": "I video vengono salvati automaticamente dopo la conversione.",
   "saveError": "Errore durante il salvataggio. Forse non c'è abbastanza spazio di archiviazione.",
-  "saveErrorOutOfMemory": "La memoria disponibile non è sufficiente per salvare questo file. Prova a utilizzare un video più breve o a ridurre la qualità.",
+  "saveErrorOutOfMemory": "La memoria disponibile non è sufficiente per salvare questo file. Prova con un clip più breve o una qualità inferiore.",
   "conversionDone": "Fatto!",
   "conversionProgress": "Conversione: {percent}%",
   "conversionFailed": "Conversione fallita: {error}",
@@ -134,5 +146,27 @@
   "notificationPermissionNotNow": "Non ora",
   "notificationPermissionAllow": "Consenti",
   "notificationPermissionDenied": "Attiva le notifiche nelle impostazioni per la conversione in background.",
-  "notificationPermissionOpenSettings": "Impostazioni"
+  "notificationPermissionOpenSettings": "Impostazioni",
+
+  "backButton": "Indietro",
+  "appSettingsTitle": "Impostazioni app",
+  "appSettingsSubtitle": "Salvataggio automatico e impostazioni sulla privacy",
+  "openSourceTitle": "Open Source",
+  "openSourceSubtitle": "Licenze e codice sorgente",
+  "openSourceLicensesTitle": "Licenze Open Source",
+  "legalSectionTitle": "Note legali",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "Modalità di codifica",
+  "encodingModeCrf": "Qualità (CRF)",
+  "encodingModeBitrate": "Bitrate",
+
+  "audioChannelsLabel": "Canali audio",
+  "audioChannelsInfoContent": "Originale → mantiene la configurazione dei canali della sorgente\nStereo → 2.0 (downmix se necessario)\nMono → 1 canale (file più piccolo)\n5.1 → surround a 6 canali (solo per sorgenti surround)\n\nIl downmixing (ad es. da 5.1 a stereo) è supportato. L'upmixing non è disponibile.",
+  "audioChannelOriginal": "Originale",
+
+  "targetBitrateLabel": "Bitrate di destinazione",
+  "targetBitrateInfoTitle": "Bitrate di destinazione",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compressione pesante, messaggistica\n4–8 Mbps → 1080p qualità normale/buona\n12 Mbps → 1080p alta / 4K bassa qualità\n20 Mbps → qualità streaming 4K\n\nVoce personalizzata: 500–40000 kbps o ad es. \"8 Mbps\"\n\nA differenza del CRF, la qualità può variare da una scena all'altra. Usa il CRF per ottenere risultati migliori a parità di dimensione del file."
+
 }

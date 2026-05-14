@@ -2,6 +2,14 @@
   "@@locale": "th",
 
   "qualityLabel": "คุณภาพ",
+  "quality2160pHigh": "2160p สูง",
+  "quality2160pMedium": "2160p ปานกลาง",
+  "quality2160pLow": "2160p ต่ำ",
+  "quality2160pVeryLow": "2160p ต่ำมาก",
+  "quality1440pHigh": "1440p สูง",
+  "quality1440pMedium": "1440p ปานกลาง",
+  "quality1440pLow": "1440p ต่ำ",
+  "quality1440pVeryLow": "1440p ต่ำมาก",
   "quality1080pHigh": "1080p สูง",
   "quality1080pMedium": "1080p ปานกลาง",
   "quality1080pLow": "1080p ต่ำ",
@@ -47,6 +55,10 @@
   "saveVideoDialogTitle": "บันทึกวิดีโอ",
   "savedSuccess": "บันทึกแล้ว!",
   "open": "เปิด",
+  "openGallery": "เปิดแกลเลอรี",
+  "openVideo": "เปิดวิดีโอ",
+  "autoSaveTitle": "บันทึกไฟล์วิดีโออัตโนมัติ",
+  "autoSaveSubtitle": "ววิดีโอจะถูกบันทึกโดยอัตโนมัติหลังจากการแปลง",
   "saveError": "เกิดข้อผิดพลาดในการบันทึก อาจมีพื้นที่จัดเก็บไม่เพียงพอ",
   "saveErrorOutOfMemory": "หน่วยความจำไม่เพียงพอที่จะบันทึกไฟล์นี้ กรุณาลองใช้คลิปที่สั้นกว่าหรือคุณภาพต่ำลง",
   "conversionDone": "เสร็จสิ้น!",
@@ -133,9 +145,9 @@
   "storageWarningTitle": "พื้นที่เก็บข้อมูลไม่เพียงพอ",
   "storageWarningContent": "อุปกรณ์ของคุณมีพื้นที่ว่างเพียง {available} MB การแปลงต้องใช้พื้นที่ประมาณ {required} MB โปรด",
   "@storageWarningContent": {
-    "placeholders": {
-      "available": { "type": "String" },
-      "required": { "type": "String" }
+  "placeholders": {
+    "available": { "type": "String" },
+    "required": { "type": "String" }
     }
   },
 
@@ -153,5 +165,27 @@
   "notificationPermissionNotNow": "ไม่ตอนนี้",
   "notificationPermissionAllow": "อนุญาต",
   "notificationPermissionDenied": "เปิดการแจ้งเตือนในการตั้งค่าการแปลงพื้นหลัง",
-  "notificationPermissionOpenSettings": "การตั้งค่า"
+  "notificationPermissionOpenSettings": "การตั้งค่า",
+
+  "backButton": "ย้อนกลับ",
+  "appSettingsTitle": "การตั้งค่าแอป",
+  "appSettingsSubtitle": "การบันทึกอัตโนมัติและความเป็นส่วนตัว",
+  "openSourceTitle": "โอเพนซอร์ส",
+  "openSourceSubtitle": "ใบอนุญาตและซอร์สโค้ด",
+  "openSourceLicensesTitle": "ใบอนุญาตโอเพนซอร์ส",
+  "legalSectionTitle": "ข้อกฎหมาย",
+  "proSectionTitle": "Pro",
+
+  "encodingModeLabel": "โหมดการเข้ารหัส",
+  "encodingModeCrf": "คุณภาพ (CRF)",
+  "encodingModeBitrate": "บิตเรต",
+
+  "audioChannelsLabel": "ช่องเสียง",
+  "audioChannelsInfoContent": "ต้นฉบับ → รักษาการจัดวางช่องเสียงต้นฉบับ\nสเตอริโอ → 2.0 (ลดคุณภาพเป็น 2.0 หากจำเป็น)\nโมโน → 1 ช่อง (ไฟล์ขนาดเล็กที่สุด)\n5.1 → ลำโพงรอบทิศทาง 6 ช่อง (สำหรับแหล่งเสียงรอบทิศทางเท่านั้น)\n\nการลดคุณภาพเสียง (เช่น 5.1 → สเตอริโอ) รองรับ การเพิ่มคุณภาพเสียงไม่รองรับ",
+  "audioChannelOriginal": "ต้นฉบับ",
+
+  "targetBitrateLabel": "เป้าหมายบิตเรต",
+  "targetBitrateInfoTitle": "เป้าหมายบิตเรต",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → การบีบอัดสูง, การส่งข้อความ\n4–8 Mbps → 1080p คุณภาพปกติ/ดี\n12 Mbps → 1080p คุณภาพสูง / 4K คุณภาพต่ำ\n20 Mbps → คุณภาพสตรีมมิ่ง 4K\n\nค่ากำหนดเอง: 500–40000 kbps หรือ เช่น \"8 Mbps\"\n\nไม่เหมือนกับ CRF คุณภาพอาจแตกต่างกันระหว่างฉาก ใช้ CRF เพื่อผลลัพธ์ที่ดีกว่าที่ขนาดไฟล์เท่ากัน"
+
 }

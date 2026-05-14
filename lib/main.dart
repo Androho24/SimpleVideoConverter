@@ -23,7 +23,14 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   // Dart-Fehler außerhalb des Flutter-Frameworks (z.B. in async code)
   PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    // Transiente Plugin-Fehler nicht als fatal melden:
+    // - MissingPluginException aus dem ffmpeg_kit-Channel: tritt auf, wenn ein
+    //   nativer FFmpeg-Komplettierungs-Callback nach Engine-Detach feuert.
+    //   Die App selbst läuft weiter; ein "Fatal Crash" wäre irreführend.
+    final isTransientPluginError = error is MissingPluginException ||
+        (error is PlatformException && error.code == 'channel-error');
+    FirebaseCrashlytics.instance
+        .recordError(error, stack, fatal: !isTransientPluginError);
     return true;
   };
 
