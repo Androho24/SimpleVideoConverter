@@ -61,17 +61,6 @@ class SimpleVideoConverterApplication : Application(), Application.ActivityLifec
         return engine
     }
 
-    fun releaseMainFlutterEngineIfIdle() {
-        if (ConversionService.isRunning) return
-
-        mainFlutterEngine?.let {
-            FlutterEngineCache.getInstance().remove(MAIN_ENGINE_ID)
-            mainFlutterEngine = null
-            it.destroy()
-            Log.d(TAG, "Main FlutterEngine released and destroyed")
-        }
-    }
-
     // ActivityLifecycleCallbacks
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         activeActivities.add(activity)

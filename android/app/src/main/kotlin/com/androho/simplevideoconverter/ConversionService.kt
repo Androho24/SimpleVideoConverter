@@ -6,8 +6,11 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import androidx.core.app.NotificationCompat
 
 class ConversionService : Service() {
@@ -28,14 +31,24 @@ class ConversionService : Service() {
         private const val NOTIFICATION_ID_DONE = 2002
         private const val CHANNEL_PROGRESS_ID = "conversion_progress"
         private const val CHANNEL_DONE_ID = "conversion_done"
+
+        // Watchdog: 4,5h — auf API 34 greift das dataSync-6h-Limit. Stoppen wir vorher sauber.
+        private const val WATCHDOG_MS = 4 * 60 * 60 * 1000L + 30 * 60 * 1000L
     }
 
     private lateinit var notificationManager: NotificationManager
     private var currentFileName = ""
 
+    private val watchdogHandler = Handler(Looper.getMainLooper())
+    private val watchdogRunnable = Runnable {
+        stopForegroundCompat()
+        stopSelf()
+    }
+
     override fun onCreate() {
         super.onCreate()
         isRunning = true
+        watchdogHandler.postDelayed(watchdogRunnable, WATCHDOG_MS)
         notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
@@ -59,7 +72,7 @@ class ConversionService : Service() {
         when (intent?.action) {
             ACTION_START -> {
                 currentFileName = intent.getStringExtra(EXTRA_FILE_NAME) ?: ""
-                startForeground(NOTIFICATION_ID_PROGRESS, buildProgressNotification(0, ""))
+                startForegroundWithType(buildProgressNotification(0, ""))
             }
             ACTION_UPDATE_PROGRESS -> {
                 val percent = intent.getIntExtra(EXTRA_PERCENT, 0)
@@ -85,6 +98,7 @@ class ConversionService : Service() {
     }
 
     override fun onDestroy() {
+        watchdogHandler.removeCallbacks(watchdogRunnable)
         isRunning = false
         super.onDestroy()
     }
@@ -127,6 +141,23 @@ class ConversionService : Service() {
             },
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+
+    // API 35+: mediaProcessing (kein dataSync-Timeout)
+    // API 29-34: dataSync
+    // API < 29: kein Type-Parameter
+    @Suppress("DEPRECATION")
+    private fun startForegroundWithType(notification: Notification) {
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM ->
+                startForeground(NOTIFICATION_ID_PROGRESS, notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROCESSING)
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ->
+                startForeground(NOTIFICATION_ID_PROGRESS, notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+            else ->
+                startForeground(NOTIFICATION_ID_PROGRESS, notification)
+        }
+    }
 
     @Suppress("DEPRECATION")
     private fun stopForegroundCompat() {

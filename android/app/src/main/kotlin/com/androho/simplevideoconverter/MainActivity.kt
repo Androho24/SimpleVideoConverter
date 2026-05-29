@@ -207,10 +207,13 @@ class MainActivity : FlutterActivity() {
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to unregister NativeAdFactory", e)
         }
-        // Erst super: Flutter detacht die Engine sauber von dieser Activity.
-        // Danach release: Engine ggf. zerstören — nie vorher, sonst hängt Flutter im Limbo.
+        // Engine wird bewusst NICHT zerstört — sie bleibt für die Prozess-Lebensdauer
+        // im Application-Scope gecacht. Das verhindert einen "FlutterJNI is not attached
+        // to native"-Crash, der entsteht wenn engine.destroy() läuft während noch
+        // ein Touch-Event in der MessageQueue liegt. Speicherkosten (~30-50 MB) sind
+        // gegenüber dem Crash-Risiko zu vernachlässigen; bei Prozess-Ende räumt
+        // Android sowieso auf.
         super.cleanUpFlutterEngine(flutterEngine)
-        (application as? SimpleVideoConverterApplication)?.releaseMainFlutterEngineIfIdle()
     }
 
     private fun applySystemBarStyle() {

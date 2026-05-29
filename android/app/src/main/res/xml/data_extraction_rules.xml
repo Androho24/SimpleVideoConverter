@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Ad-Timestamps nicht sichern – sonst erscheint bei Neuinstallation sofort eine Ad -->
+        <exclude domain="sharedpref" path="app_open_ad_prefs.xml"/>
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="app_open_ad_prefs.xml"/>
+    </device-transfer>
+</data-extraction-rules>

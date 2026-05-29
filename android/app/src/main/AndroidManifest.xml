@@ -7,6 +7,9 @@
     <!-- ForegroundService für Hintergrund-Konvertierung -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <!-- mediaProcessing-Type für Encoding (Android 15+, ersetzt dataSync ohne 6h-Limit) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING"
+        android:minSdkVersion="35" />
     <!-- Notification-Permission (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Video-Auswahl läuft über den System-Picker; kein breiter Medienzugriff nötig. -->
@@ -25,7 +28,10 @@
         android:label="@string/app_name"
         android:name=".SimpleVideoConverterApplication"
         android:icon="@mipmap/ic_launcher"
-        android:largeHeap="true">
+        android:largeHeap="true"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules">
         <!-- SplashActivity ist der Launcher und zeigt ggf. App Open Ad -->
         <activity
             android:name=".SplashActivity"
@@ -73,7 +79,7 @@
         <service
             android:name=".ConversionService"
             android:exported="false"
-            android:foregroundServiceType="dataSync"
+            android:foregroundServiceType="dataSync|mediaProcessing"
             android:stopWithTask="false" />
 
         <!-- FileProvider für OpenFilex (Cache-Dateien an externe Apps weitergeben) -->

@@ -211,7 +211,8 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
             return
         }
 
-        if (!shouldShowAd(activity)) {
+       // if (!shouldShowAd(activity)) {   ads vorrüberhend aus
+        if (true) {
             Log.d(TAG, "Cold-Start: shouldShowAd=false – sofort weiter")
             onAdFinished()
             return
@@ -353,7 +354,8 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
         super.onStart(owner)
         Log.d(TAG, "onStart() – App im Foreground")
 
-        if (inColdStartMode) {
+      //  if (inColdStartMode) {  Ad vorrübergehen aus
+        if (true) {
             Log.d(TAG, "onStart() übersprungen – Cold-Start-Modus aktiv")
             return
         }
@@ -361,7 +363,8 @@ class AppOpenAdManagerImpl : AppOpenAdManager, DefaultLifecycleObserver {
             Log.d(TAG, "Pro-Version aktiv – Background-Return-Ad übersprungen")
             return
         }
-        if (!adsAllowed) {
+
+        if (true) {
             Log.d(TAG, "onStart() übersprungen – adsAllowed=false")
             return
         }

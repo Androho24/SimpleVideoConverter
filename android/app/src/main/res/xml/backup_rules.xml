@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Ad-Timestamps nicht sichern – sonst erscheint bei Neuinstallation sofort eine Ad -->
+    <exclude domain="sharedpref" path="app_open_ad_prefs.xml"/>
+</full-backup-content>
