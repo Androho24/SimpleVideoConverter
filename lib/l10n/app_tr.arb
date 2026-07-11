@@ -167,6 +167,13 @@
 
   "targetBitrateLabel": "Hedef Bit Hızı",
   "targetBitrateInfoTitle": "Hedef Bit Hızı",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → yoğun sıkıştırma, mesajlaşma\n4–8 Mbps → 1080p normal/iyi kalite\n12 Mbps → 1080p yüksek / 4K düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel giriş: 500–40000 kbps veya ör. \"8 Mbps\"\n\nCRF'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF'yi kullanın."
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → yoğun sıkıştırma, mesajlaşma\n4–8 Mbps → 1080p normal/iyi kalite\n12 Mbps → 1080p yüksek / 4K düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel giriş: 500–40000 kbps veya ör. \"8 Mbps\"\n\nCRF'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF'yi kullanın.",
+
+    "rateAppTitle": "Uygulamayı Değerlendir",
+    "proHintTitle": "Reklamsız kullan",
+    "proHintBody": "Tek seferlik bir satın alma ile uygulamadaki reklamları kalıcı olarak kaldırabilirsin.",
+    "proHintLater": "Daha sonra",
+    "restoreError": "Satın alınanlar geri yüklenemedi. Play Store şu anda kullanılamıyor — lütfen daha sonra tekrar deneyin.",
+    "restoreNoPurchases": "Daha önceki satın alımlar bulunamadı."
 
 }

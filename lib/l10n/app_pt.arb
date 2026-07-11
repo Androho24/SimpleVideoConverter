@@ -167,6 +167,13 @@
 
   "targetBitrateLabel": "Taxa de bits de destino",
   "targetBitrateInfoTitle": "Taxa de bits de destino",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compressão elevada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40000 kbps ou, por exemplo, «8 Mbps»\n\nAo contrário do CRF, a qualidade pode variar entre cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de ficheiro."
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compressão elevada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40000 kbps ou, por exemplo, «8 Mbps»\n\nAo contrário do CRF, a qualidade pode variar entre cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de ficheiro.",
+
+    "rateAppTitle": "Avaliar a aplicação",
+    "proHintTitle": "Utilizar sem anúncios",
+    "proHintBody": "Com uma compra única, podes remover os anúncios da aplicação de forma permanente.",
+    "proHintLater": "Mais tarde",
+    "restoreError": "Não foi possível recuperar as compras. A Play Store está indisponível neste momento — por favor, tente novamente.",
+    "restoreNoPurchases": "Não foram encontradas compras anteriores."
 
 }

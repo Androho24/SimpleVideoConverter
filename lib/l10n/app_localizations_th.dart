@@ -483,4 +483,24 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'ให้คะแนนแอป';
+
+  @override
+  String get proHintTitle => 'เวอร์ชันไม่มีโฆษณา';
+
+  @override
+  String get proHintBody =>
+      'ด้วยการซื้อครั้งเดียว คุณสามารถลบโฆษณาออกจากแอปได้อย่างถาวร';
+
+  @override
+  String get proHintLater => 'ภายหลัง';
+
+  @override
+  String get restoreError =>
+      'ไม่สามารถกู้คืนการซื้อได้ ขณะนี้ Play Store ไม่สามารถใช้งานได้ — กรุณาลองใหม่อีกครั้ง';
+
+  @override
+  String get restoreNoPurchases => 'ไม่พบการซื้อครั้งก่อน';
 }

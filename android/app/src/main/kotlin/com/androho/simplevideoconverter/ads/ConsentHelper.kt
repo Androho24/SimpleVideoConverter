@@ -9,7 +9,7 @@ import com.google.android.ump.UserMessagingPlatform
  * Verwaltet den GDPR/CCPA-Einwilligungsfluss via Google UMP SDK.
  *
  * Muss vor MobileAds.initialize() aufgerufen werden (Google-Anforderung).
- * Wird von der SplashActivity gestartet, da ein Activity-Kontext benötigt wird.
+ * Wird von der MainActivity gestartet, da ein Activity-Kontext benötigt wird.
  *
  * Fehler-Strategie: Bei jedem Fehler wird onDone(canShowAds=true) aufgerufen,
  * damit der Ad-Flow nicht blockiert wird.
@@ -21,7 +21,7 @@ object ConsentHelper {
     /**
      * Startet den Consent-Informations-Update und zeigt ggf. das Consent-Formular.
      *
-     * @param activity  Die SplashActivity (benötigt für Formular-Anzeige)
+     * @param activity  Die aufrufende Activity (benötigt für Formular-Anzeige)
      * @param onDone    Callback nach Abschluss: canShowAds = ob Werbung erlaubt ist
      */
     fun requestAndShowIfRequired(activity: Activity, onDone: (canShowAds: Boolean) -> Unit) {

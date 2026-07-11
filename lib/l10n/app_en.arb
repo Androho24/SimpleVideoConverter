@@ -186,6 +186,12 @@
 
   "targetBitrateLabel": "Target Bitrate",
   "targetBitrateInfoTitle": "Target Bitrate",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → heavy compression, messaging\n4–8 Mbps → 1080p normal/good quality\n12 Mbps → 1080p high / 4K low quality\n20 Mbps → 4K streaming quality\n\nCustom entry: 500–40000 kbps or e.g. \"8 Mbps\"\n\nUnlike CRF, quality may vary between scenes. Use CRF for better results at the same file size."
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → heavy compression, messaging\n4–8 Mbps → 1080p normal/good quality\n12 Mbps → 1080p high / 4K low quality\n20 Mbps → 4K streaming quality\n\nCustom entry: 500–40000 kbps or e.g. \"8 Mbps\"\n\nUnlike CRF, quality may vary between scenes. Use CRF for better results at the same file size.",
 
+  "rateAppTitle": "Rate the App",
+  "proHintTitle": "Use without ads",
+  "proHintBody": "With a one-time purchase, you can permanently remove ads from the app.",
+  "proHintLater": "Later",
+    "restoreError": "Could not restore purchases. The Play Store is currently unavailable — please try again.",
+    "restoreNoPurchases": "No previous purchases found."
 }

@@ -167,6 +167,13 @@
 
   "targetBitrateLabel": "Bitrate di destinazione",
   "targetBitrateInfoTitle": "Bitrate di destinazione",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compressione pesante, messaggistica\n4–8 Mbps → 1080p qualità normale/buona\n12 Mbps → 1080p alta / 4K bassa qualità\n20 Mbps → qualità streaming 4K\n\nVoce personalizzata: 500–40000 kbps o ad es. \"8 Mbps\"\n\nA differenza del CRF, la qualità può variare da una scena all'altra. Usa il CRF per ottenere risultati migliori a parità di dimensione del file."
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compressione pesante, messaggistica\n4–8 Mbps → 1080p qualità normale/buona\n12 Mbps → 1080p alta / 4K bassa qualità\n20 Mbps → qualità streaming 4K\n\nVoce personalizzata: 500–40000 kbps o ad es. \"8 Mbps\"\n\nA differenza del CRF, la qualità può variare da una scena all'altra. Usa il CRF per ottenere risultati migliori a parità di dimensione del file.",
+
+    "rateAppTitle": "Valuta l'app",
+    "proHintTitle": "Usa l'app senza pubblicità",
+    "proHintBody": "Con un unico acquisto potrai rimuovere definitivamente la pubblicità dall'app.",
+    "proHintLater": "Più tardi",
+    "restoreError": "Impossibile ripristinare gli acquisti. Il Play Store non è attualmente disponibile: riprova più tardi.",
+    "restoreNoPurchases": "Non sono stati trovati acquisti precedenti."
 
 }

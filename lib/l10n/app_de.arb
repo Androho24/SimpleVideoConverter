@@ -451,5 +451,23 @@
   "openSourceSubtitle": "Lizenzen & Quellcode",
   "openSourceLicensesTitle": "Open Source Lizenzen",
   "legalSectionTitle": "Rechtliches",
-  "proSectionTitle": "Pro"
+  "proSectionTitle": "Pro",
+
+    "rateAppTitle": "App bewerten",
+    "@rateAppTitle": { "description": "Settings-Eintrag, öffnet die Play-Store-Detailseite zum Bewerten" },
+
+    "proHintTitle": "Werbefrei nutzen",
+    "@proHintTitle": { "description": "Titel des Pro-Hinweis-Dialogs nach mehreren Konvertierungen" },
+
+    "proHintBody": "Entferne Werbung dauerhaft mit einem einmaligen Kauf. Vielen Dank für deine Unterstützung.",
+    "@proHintBody": { "description": "Text des Pro-Hinweis-Dialogs" },
+
+    "proHintLater": "Später",
+    "@proHintLater": { "description": "Ablehnen-Button im Pro-Hinweis-Dialog" },
+
+  "restoreError": "Käufe konnten nicht wiederhergestellt werden. Der Play Store ist gerade nicht erreichbar – bitte erneut versuchen.",
+  "@restoreError": { "description": "Fehlermeldung wenn restorePurchases scheitert (BillingClient nicht verbunden)" },
+  "restoreNoPurchases": "Keine früheren Käufe gefunden.",
+  "@restoreNoPurchases": { "description": "Neutraler Hinweis nach restorePurchases, wenn nichts wiederherzustellen ist" }
+
 }

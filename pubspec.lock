@@ -325,14 +325,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  gma_mediation_meta:
+    dependency: "direct main"
+    description:
+      name: gma_mediation_meta
+      sha256: d65dd79c51f6161aaac8c9b07f9a921f73a560d275a15106f440be2016c766bc
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.2"
+  gma_mediation_pangle:
+    dependency: "direct main"
+    description:
+      name: gma_mediation_pangle
+      sha256: ea8112f5419c1606bc13d7fcdc75a716cf0bf27cb7d368c385543c0c5d41f9d6
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.6.0"
   google_mobile_ads:
     dependency: "direct main"
     description:
       name: google_mobile_ads
-      sha256: f35e040875bb54e8a3455bcffed3b4ac9e9263fbf7751b9fd1ae7f30793faee8
+      sha256: "50549f6c945d7a445d53c04f34d025b1a1723fbd02719de9e67de432e2597f40"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.0"
+    version: "8.0.0"
   html:
     dependency: transitive
     description:
@@ -934,26 +950,26 @@ packages:
     dependency: "direct main"
     description:
       name: video_player
-      sha256: "096bc28ce10d131be80dfb00c223024eb0fba301315a406728ab43dd99c45bdf"
+      sha256: "48a7bdaa38a3d50ec10c78627abdbfad863fdf6f0d6e08c7c3c040cfd80ae36f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.10.1"
+    version: "2.11.1"
   video_player_android:
     dependency: transitive
     description:
       name: video_player_android
-      sha256: "9862c67c4661c98f30fe707bc1a4f97d6a0faa76784f485d282668e4651a7ac3"
+      sha256: "877a6c7ba772456077d7bfd71314629b3fe2b73733ce503fc77c3314d43a0ca0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.4"
+    version: "2.9.5"
   video_player_avfoundation:
     dependency: transitive
     description:
       name: video_player_avfoundation
-      sha256: d1eb970495a76abb35e5fa93ee3c58bd76fb6839e2ddf2fbb636674f2b971dd4
+      sha256: "9338f3ec22774f88146b22f13273a446719b1da010fd200c4d1d97802156ac58"
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.9"
+    version: "2.9.7"
   video_player_platform_interface:
     dependency: transitive
     description:
@@ -1052,4 +1068,4 @@ packages:
     version: "3.1.3"
 sdks:
   dart: ">=3.10.0 <4.0.0"
-  flutter: ">=3.38.0"
+  flutter: ">=3.38.1"

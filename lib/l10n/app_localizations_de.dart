@@ -487,4 +487,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'App bewerten';
+
+  @override
+  String get proHintTitle => 'Werbefrei nutzen';
+
+  @override
+  String get proHintBody =>
+      'Entferne Werbung dauerhaft mit einem einmaligen Kauf. Vielen Dank für deine Unterstützung.';
+
+  @override
+  String get proHintLater => 'Später';
+
+  @override
+  String get restoreError =>
+      'Käufe konnten nicht wiederhergestellt werden. Der Play Store ist gerade nicht erreichbar – bitte erneut versuchen.';
+
+  @override
+  String get restoreNoPurchases => 'Keine früheren Käufe gefunden.';
 }

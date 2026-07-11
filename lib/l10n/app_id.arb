@@ -167,6 +167,13 @@
 
   "targetBitrateLabel": "Bitrate Tujuan",
   "targetBitrateInfoTitle": "Bitrate Tujuan",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → kompresi tinggi, pesan\n4–8 Mbps → 1080p kualitas normal/baik\n12 Mbps → 1080p kualitas tinggi / 4K kualitas rendah\n20 Mbps → kualitas streaming 4K\n\nEntri kustom: 500–40000 kbps atau misalnya \"8 Mbps\"\n\nTidak seperti CRF, kualitas dapat bervariasi antar adegan. Gunakan CRF untuk hasil yang lebih baik pada ukuran file yang sama."
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → kompresi tinggi, pesan\n4–8 Mbps → 1080p kualitas normal/baik\n12 Mbps → 1080p kualitas tinggi / 4K kualitas rendah\n20 Mbps → kualitas streaming 4K\n\nEntri kustom: 500–40000 kbps atau misalnya \"8 Mbps\"\n\nTidak seperti CRF, kualitas dapat bervariasi antar adegan. Gunakan CRF untuk hasil yang lebih baik pada ukuran file yang sama.",
+
+    "rateAppTitle": "Beri Peringkat Aplikasi",
+    "proHintTitle": "Gunakan tanpa iklan",
+    "proHintBody": "Dengan pembelian satu kali, Anda dapat menghapus iklan secara permanen dari aplikasi.",
+    "proHintLater": "Nanti",
+    "restoreError": "Tidak dapat memulihkan pembelian. Play Store saat ini sedang tidak tersedia — silakan coba lagi.",
+    "restoreNoPurchases": "Tidak ditemukan pembelian sebelumnya."
 
 }

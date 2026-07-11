@@ -60,16 +60,37 @@ class PurchaseService {
   // ---------------------------------------------------------------------------
 
   static Future<void> buyRemoveAds() async {
-    if (_productDetails == null) {
-      await _loadProductDetails();
-      if (_productDetails == null) return;
+    try {
+      if (_productDetails == null) {
+        await _loadProductDetails();
+        if (_productDetails == null) {
+          _errorController.add('product unavailable');
+          return;
+        }
+      }
+      final param = PurchaseParam(productDetails: _productDetails!);
+      await InAppPurchase.instance.buyNonConsumable(purchaseParam: param);
+    } catch (e) {
+      // Verbindungsfehler (z. B. „BillingClient is unset") werfen synchron —
+      // abfangen, damit kein fataler Crash entsteht. Eigentliche Kauf-Fehler
+      // kommen ohnehin über den purchaseStream (_handlePurchaseUpdate).
+      debugPrint('PurchaseService: buyRemoveAds fehlgeschlagen: $e');
+      _errorController.add(e.toString());
     }
-    final param = PurchaseParam(productDetails: _productDetails!);
-    await InAppPurchase.instance.buyNonConsumable(purchaseParam: param);
   }
 
-  static Future<void> restorePurchases() async {
-    await InAppPurchase.instance.restorePurchases();
+  /// Stellt frühere Käufe wieder her. Gibt `false` zurück, wenn der Billing-Dienst
+  /// nicht erreichbar ist (z. B. „BillingClient is unset / not connected") — der
+  /// Aufrufer kann dann eine Fehlermeldung anzeigen. Wirft bewusst nicht, damit
+  /// ein nicht verbundener BillingClient keinen (fatalen) Crash auslöst.
+  static Future<bool> restorePurchases() async {
+    try {
+      await InAppPurchase.instance.restorePurchases();
+      return true;
+    } catch (e) {
+      debugPrint('PurchaseService: restorePurchases fehlgeschlagen: $e');
+      return false;
+    }
   }
 
   // ---------------------------------------------------------------------------

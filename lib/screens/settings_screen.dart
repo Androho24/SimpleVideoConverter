@@ -11,6 +11,7 @@ import '../screens/feedback_screen.dart';
 import '../screens/open_source_screen.dart';
 import '../services/preferences_service.dart';
 import '../services/purchase_service.dart';
+import '../services/review_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   final void Function(int)? onNavigate;
@@ -60,6 +61,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _proSub?.cancel();
     _errorSub?.cancel();
     super.dispose();
+  }
+
+  /// Stellt frühere Käufe wieder her und zeigt bei nicht erreichbarem
+  /// Billing-Dienst eine Fehlermeldung. Bei erfolgreicher Wiederherstellung
+  /// eines Kaufs feuert PurchaseService.isProStream → „Werbefrei ✓" + Snackbar.
+  /// Wird kein Kauf gefunden, bleibt der Stream stumm — daher hier nach kurzer
+  /// Wartezeit ein neutraler Hinweis, damit der Button immer Feedback gibt.
+  Future<void> _restorePurchases() async {
+    final ok = await PurchaseService.restorePurchases();
+    if (!mounted) return;
+    if (!ok) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.restoreError),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
+      return;
+    }
+    // Wiederhergestellte Käufe kommen asynchron über den purchaseStream.
+    // Kurz warten; feuerte isProStream, ist _isPro bereits true → dann hat die
+    // purchaseSuccess-Snackbar schon Feedback gegeben.
+    await Future.delayed(const Duration(milliseconds: 1500));
+    if (!mounted || _isPro) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(AppLocalizations.of(context)!.restoreNoPurchases)),
+    );
   }
 
   Future<void> _openUrl(BuildContext context, Uri url) async {
@@ -125,6 +153,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const Divider(),
           ListTile(
+            leading: const Icon(Icons.star_outline),
+            title: Text(l.rateAppTitle),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: ReviewService.openStoreListing,
+          ),
+          const Divider(),
+          ListTile(
             leading: const Icon(Icons.tune_outlined),
             title: Text(l.appSettingsTitle),
             subtitle: Text(l.appSettingsSubtitle),
@@ -178,7 +213,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ListTile(
               leading: const Icon(Icons.restore),
               title: Text(l.restorePurchasesTitle),
-              onTap: PurchaseService.restorePurchases,
+              onTap: _restorePurchases,
             ),
           ],
         ],

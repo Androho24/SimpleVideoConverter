@@ -43,6 +43,15 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applySystemBarStyle()
+
+        // UMP-Consent-Flow + MobileAds-Init anstoßen (vorher in der SplashActivity).
+        // Wird für die Flutter-Native-Ads benötigt; das Consent-Formular erscheint
+        // ggf. als Dialog über dieser Activity. Bei Pro-Nutzern übersprungen.
+        (application as? SimpleVideoConverterApplication)
+            ?.getAppOpenAdManager()
+            ?.requestConsentAndInitialize(this) {
+                Log.d("MainActivity", "Consent + MobileAds-Init abgeschlossen")
+            }
     }
 
     override fun onResume() {

@@ -491,4 +491,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'Évaluer l\'application';
+
+  @override
+  String get proHintTitle => 'Utiliser sans publicité';
+
+  @override
+  String get proHintBody =>
+      'Un achat unique te permet de supprimer définitivement les publicités de l\'application.';
+
+  @override
+  String get proHintLater => 'Plus tard';
+
+  @override
+  String get restoreError =>
+      'Impossible de restaurer les achats. Le Play Store est actuellement indisponible. Veuillez réessayer.';
+
+  @override
+  String get restoreNoPurchases => 'Aucun achat antérieur n\'a été trouvé.';
 }

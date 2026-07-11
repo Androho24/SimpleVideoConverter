@@ -21,6 +21,8 @@ import '../screens/conversion_screen.dart';
 import '../screens/settings_screen.dart';
 import '../services/native_ad_preloader.dart';
 import '../services/preferences_service.dart';
+import '../services/pro_prompt_service.dart';
+import '../services/review_service.dart';
 import '../widgets/app_header.dart';
 import '../widgets/convert_section.dart';
 import '../widgets/expert_controls.dart';
@@ -60,6 +62,20 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     super.initState();
     _loadPreferences();
     _cleanAppCache();
+    // Fallback: Falls die Prompts nach einer Konvertierung nicht gezeigt wurden
+    // (App vorher geschlossen), spätestens beim nächsten Start nachholen.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _maybeShowEngagementPrompts();
+    });
+  }
+
+  /// Zeigt – falls fällig – nacheinander den Review-Dialog (ab 10 Konvertierungen)
+  /// und den Pro-Hinweis (ab 20). Wird bei Rückkehr aus der Konvertierung und als
+  /// Start-Fallback aufgerufen; jeder Prompt erscheint dank „shown"-Flag nur einmal.
+  Future<void> _maybeShowEngagementPrompts() async {
+    await ReviewService.maybeShowReview();
+    if (!mounted) return;
+    await ProPromptService.maybeShowProHint(context);
   }
 
   /// Bereinigt beim App-Start den Cache:
@@ -564,7 +580,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
     if (!mounted) return;
     setState(() => _isConverting = false);
-    Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
@@ -576,6 +592,9 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         ),
       ),
     );
+    // Zurück in der Hauptansicht (Konvertierung ist gespeichert/verworfen) →
+    // jetzt ggf. Review-/Pro-Prompt zeigen, ohne den Speichern-Flow zu stören.
+    if (mounted) await _maybeShowEngagementPrompts();
   }
 
   // -------------------------------------------------------------------------
@@ -657,20 +676,24 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
               if (!hasVideo)
                 // Platzhalter – gleiche Größe wie der Videoplayer, kein Layout-Sprung beim Laden
                 Card(
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.movie_outlined, size: 64,
-                            color: Theme.of(context).colorScheme.outlineVariant),
-                        const SizedBox(height: 8),
-                        Text(
-                          AppLocalizations.of(context)!.selectVideo,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: _isLoading ? null : _pickVideo,
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.movie_outlined, size: 64,
                               color: Theme.of(context).colorScheme.outlineVariant),
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          Text(
+                            AppLocalizations.of(context)!.selectVideo,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.outlineVariant),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 )

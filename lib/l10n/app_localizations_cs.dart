@@ -486,4 +486,24 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'Ohodnotit aplikaci';
+
+  @override
+  String get proHintTitle => 'Používat bez reklam';
+
+  @override
+  String get proHintBody =>
+      'Jednorázovým nákupem trvale odstraníš reklamy z aplikace.';
+
+  @override
+  String get proHintLater => 'Později';
+
+  @override
+  String get restoreError =>
+      'Přestavby nákupů se nepodařilo provést. Obchod Play není momentálně k dispozici – zkuste to prosím znovu.';
+
+  @override
+  String get restoreNoPurchases => 'Nebyly nalezeny žádné předchozí nákupy.';
 }

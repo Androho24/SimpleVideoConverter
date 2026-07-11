@@ -490,4 +490,24 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'Uygulamayı Değerlendir';
+
+  @override
+  String get proHintTitle => 'Reklamsız kullan';
+
+  @override
+  String get proHintBody =>
+      'Tek seferlik bir satın alma ile uygulamadaki reklamları kalıcı olarak kaldırabilirsin.';
+
+  @override
+  String get proHintLater => 'Daha sonra';
+
+  @override
+  String get restoreError =>
+      'Satın alınanlar geri yüklenemedi. Play Store şu anda kullanılamıyor — lütfen daha sonra tekrar deneyin.';
+
+  @override
+  String get restoreNoPurchases => 'Daha önceki satın alımlar bulunamadı.';
 }

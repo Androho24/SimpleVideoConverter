@@ -168,7 +168,15 @@
 
   "targetBitrateLabel": "Cílová přenosová rychlost",
   "targetBitrateInfoTitle": "Cílová přenosová rychlost",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → silná komprese, zasílání zpráv\n4–8 Mbps → 1080p normální/dobrá kvalita\n12 Mbps → 1080p vysoká / 4K nízká kvalita\n20 Mbps → kvalita streamování 4K\n\nVlastní zadání: 500–40000 kbps nebo např. „8 Mbps“\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF."
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → silná komprese, zasílání zpráv\n4–8 Mbps → 1080p normální/dobrá kvalita\n12 Mbps → 1080p vysoká / 4K nízká kvalita\n20 Mbps → kvalita streamování 4K\n\nVlastní zadání: 500–40000 kbps nebo např. „8 Mbps“\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF.",
+
+   "rateAppTitle": "Ohodnotit aplikaci",
+   "proHintTitle": "Používat bez reklam",
+   "proHintBody": "Jednorázovým nákupem trvale odstraníš reklamy z aplikace.",
+   "proHintLater": "Později",
+   "restoreError": "Přestavby nákupů se nepodařilo provést. Obchod Play není momentálně k dispozici – zkuste to prosím znovu.",
+   "restoreNoPurchases": "Nebyly nalezeny žádné předchozí nákupy."
+
 
 
 }

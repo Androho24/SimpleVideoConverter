@@ -488,4 +488,24 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'Oceń aplikację';
+
+  @override
+  String get proHintTitle => 'Korzystaj bez reklam';
+
+  @override
+  String get proHintBody =>
+      'Jednorazowy zakup pozwoli na trwałe usunięcie reklam z aplikacji.';
+
+  @override
+  String get proHintLater => 'Później';
+
+  @override
+  String get restoreError =>
+      'Nie udało się przywrócić zakupów. Sklep Play jest obecnie niedostępny — spróbuj ponownie.';
+
+  @override
+  String get restoreNoPurchases => 'Nie znaleziono wcześniejszych zakupów.';
 }

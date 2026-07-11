@@ -487,4 +487,24 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'प्रो';
+
+  @override
+  String get rateAppTitle => 'ऐप को रेट करें';
+
+  @override
+  String get proHintTitle => 'विज्ञापन-मुक्त संस्करण';
+
+  @override
+  String get proHintBody =>
+      'एक बार की खरीदारी से, आप ऐप से विज्ञापनों को स्थायी रूप से हटा सकते हैं।';
+
+  @override
+  String get proHintLater => 'बाद में';
+
+  @override
+  String get restoreError =>
+      'खरीदें पुनर्स्थापित नहीं की जा सकीं। Play Store वर्तमान में उपलब्ध नहीं है — कृपया फिर से प्रयास करें।';
+
+  @override
+  String get restoreNoPurchases => 'कोई पिछली खरीदारी नहीं मिली।';
 }

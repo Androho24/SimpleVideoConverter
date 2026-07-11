@@ -490,4 +490,24 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'Оценить приложение';
+
+  @override
+  String get proHintTitle => 'Использовать без рекламы';
+
+  @override
+  String get proHintBody =>
+      'Оплатив приложение один раз, вы навсегда избавитесь от рекламы.';
+
+  @override
+  String get proHintLater => 'Позже';
+
+  @override
+  String get restoreError =>
+      'Не удалось восстановить покупки. В настоящее время Play Store недоступен — попробуйте позже.';
+
+  @override
+  String get restoreNoPurchases => 'Предыдущие покупки не найдены.';
 }

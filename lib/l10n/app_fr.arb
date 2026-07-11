@@ -167,6 +167,13 @@
 
   "targetBitrateLabel": "Débit binaire cible",
   "targetBitrateInfoTitle": "Débit binaire cible",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compression forte, messagerie\n4–8 Mbps → 1080p qualité normale/bonne\n12 Mbps → 1080p haute / 4K basse qualité\n20 Mbps → qualité de streaming 4K\n\nEntrée personnalisée : 500–40 000 kbps ou par exemple « 8 Mbps »\n\nContrairement au CRF, la qualité peut varier d'une scène à l'autre. Utilisez le CRF pour obtenir de meilleurs résultats avec une taille de fichier identique."
+  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compression forte, messagerie\n4–8 Mbps → 1080p qualité normale/bonne\n12 Mbps → 1080p haute / 4K basse qualité\n20 Mbps → qualité de streaming 4K\n\nEntrée personnalisée : 500–40 000 kbps ou par exemple « 8 Mbps »\n\nContrairement au CRF, la qualité peut varier d'une scène à l'autre. Utilisez le CRF pour obtenir de meilleurs résultats avec une taille de fichier identique.",
+
+    "rateAppTitle": "Évaluer l'application",
+    "proHintTitle": "Utiliser sans publicité",
+    "proHintBody": "Un achat unique te permet de supprimer définitivement les publicités de l'application.",
+    "proHintLater": "Plus tard",
+    "restoreError": "Impossible de restaurer les achats. Le Play Store est actuellement indisponible. Veuillez réessayer.",
+    "restoreNoPurchases": "Aucun achat antérieur n'a été trouvé."
 
 }

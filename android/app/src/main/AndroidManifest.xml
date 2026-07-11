@@ -32,22 +32,12 @@
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules"
         android:dataExtractionRules="@xml/data_extraction_rules">
-        <!-- SplashActivity ist der Launcher und zeigt ggf. App Open Ad -->
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/LaunchTheme"
-            android:saveEnabled="false"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
+        <!-- MainActivity ist der Launcher. singleTop + leere taskAffinity sorgen dafür,
+             dass ein erneuter Launch dieselbe Instanz nach vorn bringt, statt eine
+             zweite (Engine-Attach-)Instanz zu erzeugen. -->
         <activity
             android:name=".MainActivity"
-            android:exported="false"
+            android:exported="true"
             android:launchMode="singleTop"
             android:taskAffinity=""
             android:theme="@style/LaunchTheme"
@@ -55,6 +45,10 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize"
             android:saveEnabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
@@ -74,6 +68,31 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="${admobAppId}"/>
+
+        <!-- Consent-Mode-Defaults: alle vier Signale zunächst 'denied', bis der
+             UMP-Consent ausgewertet ist. ConsentModeHelper aktualisiert sie zur
+             Laufzeit aus den IAB-TCF-Daten. -->
+        <meta-data
+            android:name="google_analytics_default_allow_analytics_storage"
+            android:value="false" />
+        <meta-data
+            android:name="google_analytics_default_allow_ad_storage"
+            android:value="false" />
+        <meta-data
+            android:name="google_analytics_default_allow_ad_user_data"
+            android:value="false" />
+        <meta-data
+            android:name="google_analytics_default_allow_ad_personalization_signals"
+            android:value="false" />
+
+        <!-- Collection erst nach Zustimmung (bzw. in Nicht-Dialog-Ländern)
+             einschalten — ConsentModeHelper übernimmt das zur Laufzeit. -->
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
 
         <!-- ForegroundService für Hintergrund-Konvertierung -->
         <service

@@ -489,6 +489,26 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'Avaliar a aplicação';
+
+  @override
+  String get proHintTitle => 'Utilizar sem anúncios';
+
+  @override
+  String get proHintBody =>
+      'Com uma compra única, podes remover os anúncios da aplicação de forma permanente.';
+
+  @override
+  String get proHintLater => 'Mais tarde';
+
+  @override
+  String get restoreError =>
+      'Não foi possível recuperar as compras. A Play Store está indisponível neste momento — por favor, tente novamente.';
+
+  @override
+  String get restoreNoPurchases => 'Não foram encontradas compras anteriores.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -976,4 +996,24 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'Avalie o aplicativo';
+
+  @override
+  String get proHintTitle => 'Use sem anúncios';
+
+  @override
+  String get proHintBody =>
+      'Com uma compra única, você remove os anúncios do aplicativo para sempre.';
+
+  @override
+  String get proHintLater => 'Mais tarde';
+
+  @override
+  String get restoreError =>
+      'Não foi possível restaurar as compras. A Play Store está indisponível no momento — tente novamente.';
+
+  @override
+  String get restoreNoPurchases => 'Não foram encontradas compras anteriores.';
 }

@@ -5,10 +5,8 @@
         <!-- Show a splash screen on the activity. Automatically removed when
              the Flutter engine draws its first frame -->
         <item name="android:windowBackground">@drawable/launch_background</item>
-        <!-- Prevent crash on API 34+: SplashActivity has no setContentView().
-             Both flags needed: windowContentTransitions covers content transitions,
-             windowActivityTransitions covers FEATURE_ACTIVITY_TRANSITIONS which triggers
-             getDecorView() in ActivityTransitionState.setEnterSceneTransitionInfo(). -->
+        <!-- Window-Transitions deaktiviert: vermeidet einen getDecorView()-Crash auf
+             API 34+ (FEATURE_ACTIVITY_TRANSITIONS in ActivityTransitionState). -->
         <item name="android:windowContentTransitions">false</item>
         <item name="android:windowActivityTransitions">false</item>
     </style>

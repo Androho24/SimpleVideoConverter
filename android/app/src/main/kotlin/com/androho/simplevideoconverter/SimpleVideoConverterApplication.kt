@@ -1,19 +1,17 @@
 package com.androho.simplevideoconverter
 
-import android.app.Activity
 import android.app.Application
-import android.os.Bundle
 import android.util.Log
 import com.androho.simplevideoconverter.ads.AppOpenAdManager
 import com.androho.simplevideoconverter.ads.AppOpenAdManagerImpl
+import com.androho.simplevideoconverter.ads.ConsentModeHelper
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 import io.flutter.plugins.GeneratedPluginRegistrant
 
-class SimpleVideoConverterApplication : Application(), Application.ActivityLifecycleCallbacks {
+class SimpleVideoConverterApplication : Application() {
 
-    private val activeActivities = mutableSetOf<Activity>()
     private var appOpenAdManager: AppOpenAdManager? = null
     private var mainFlutterEngine: FlutterEngine? = null
 
@@ -24,7 +22,10 @@ class SimpleVideoConverterApplication : Application(), Application.ActivityLifec
 
     override fun onCreate() {
         super.onCreate()
-        registerActivityLifecycleCallbacks(this)
+        // Gecachten Consent früh auf Firebase anwenden, bevor die UI/der Consent-Flow
+        // startet. So bleibt Analytics/Crashlytics für Bestandsnutzer korrekt (an/aus),
+        // ohne auf die MainActivity zu warten. Erstnutzer ohne TCF-Daten → Collection aus.
+        ConsentModeHelper.apply(this)
         initializeAppOpenAds()
     }
 
@@ -37,13 +38,6 @@ class SimpleVideoConverterApplication : Application(), Application.ActivityLifec
             Log.e(TAG, "Failed to initialize AppOpenAdManager", e)
         }
     }
-
-    override fun onTerminate() {
-        super.onTerminate()
-        unregisterActivityLifecycleCallbacks(this)
-    }
-
-    fun getCurrentActivity(): Activity? = activeActivities.lastOrNull()
 
     fun getAppOpenAdManager(): AppOpenAdManager? = appOpenAdManager
 
@@ -60,19 +54,4 @@ class SimpleVideoConverterApplication : Application(), Application.ActivityLifec
         Log.d(TAG, "Main FlutterEngine created and cached")
         return engine
     }
-
-    // ActivityLifecycleCallbacks
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        activeActivities.add(activity)
-    }
-
-    override fun onActivityDestroyed(activity: Activity) {
-        activeActivities.remove(activity)
-    }
-
-    override fun onActivityStarted(activity: Activity) {}
-    override fun onActivityResumed(activity: Activity) {}
-    override fun onActivityPaused(activity: Activity) {}
-    override fun onActivityStopped(activity: Activity) {}
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 }

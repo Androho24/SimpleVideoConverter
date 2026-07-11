@@ -6,9 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PreferencesService {
   static const _keyExpertMode = 'expertMode';
   static const _keyIsPro = 'isPro';
-  static const _keyLaunchCount = 'launchCount';
   static const _keyCpuWarningDismissed = 'cpuWarningDismissed';
   static const _keyConversionCount = 'conversionCount';
+  static const _keyReviewPrompted = 'reviewPrompted';
+  static const _keyProHintShown = 'proHintShown';
   static const _keyNotificationRationaleDismissed = 'notificationRationaleDismissed';
   static const _keyNotificationDeniedHintCount = 'notificationDeniedHintCount';
   static const _keyLastQualityIndex = 'lastQualityIndex';
@@ -85,20 +86,39 @@ class PreferencesService {
     await prefs.setInt(_keyLastQualityIndex, index);
   }
 
-  /// Erhöht den Konvertierungs-Zähler und gibt true zurück wenn das Intervall erreicht wurde.
-  static Future<bool> incrementConversionCountAndCheck(int interval) async {
+  /// Gesamtzahl erfolgreicher Konvertierungen (monoton). Basis für Review-/Pro-Prompts.
+  static Future<int> getSuccessfulConversions() async {
     final prefs = await SharedPreferences.getInstance();
-    final count = (prefs.getInt(_keyConversionCount) ?? 0) + 1;
-    await prefs.setInt(_keyConversionCount, count >= interval ? 0 : count);
-    return count >= interval;
+    return prefs.getInt(_keyConversionCount) ?? 0;
   }
 
-  /// Erhöht den Start-Zähler und gibt true zurück wenn das Intervall erreicht wurde.
-  /// Der Zähler rollt von 0 bis interval-1 → kein Überlauf möglich.
-  static Future<bool> incrementLaunchCountAndCheck(int interval) async {
+  /// Erhöht den monotonen Konvertierungs-Zähler um 1 und gibt den neuen Wert zurück.
+  static Future<int> incrementSuccessfulConversions() async {
     final prefs = await SharedPreferences.getInstance();
-    final count = (prefs.getInt(_keyLaunchCount) ?? 0) + 1;
-    await prefs.setInt(_keyLaunchCount, count >= interval ? 0 : count);
-    return count >= interval;
+    final count = (prefs.getInt(_keyConversionCount) ?? 0) + 1;
+    await prefs.setInt(_keyConversionCount, count);
+    return count;
+  }
+
+  /// Ob der In-App-Review-Dialog bereits (einmalig) angezeigt wurde.
+  static Future<bool> getReviewPrompted() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyReviewPrompted) ?? false;
+  }
+
+  static Future<void> setReviewPrompted() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyReviewPrompted, true);
+  }
+
+  /// Ob der Pro-/Werbung-entfernen-Hinweis bereits (einmalig) angezeigt wurde.
+  static Future<bool> getProHintShown() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyProHintShown) ?? false;
+  }
+
+  static Future<void> setProHintShown() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyProHintShown, true);
   }
 }

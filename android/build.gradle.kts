@@ -2,6 +2,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // Pangle-SDK für AdMob-Mediation (gma_mediation_pangle)
+        maven { url = uri("https://artifact.bytedance.com/repository/pangle/") }
     }
 }
 

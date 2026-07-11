@@ -167,6 +167,13 @@
 
   "targetBitrateLabel": "Docelowa przepływność",
   "targetBitrateInfoTitle": "Docelowa przepływność",
-  "targetBitrateInfoContent": "500 kb/s–2 Mb/s  → silna kompresja, komunikacja\n4–8 Mb/s → 1080p normalna/dobra jakość\n12 Mb/s → 1080p wysoka / 4K niska jakość\n20 Mb/s → jakość strumieniowania 4K\n\nWpis niestandardowy: 500–40000 kbps lub np. „8 Mbps”\n\nW przeciwieństwie do CRF, jakość może się różnić w zależności od sceny. Użyj CRF, aby uzyskać lepsze wyniki przy tym samym rozmiarze pliku."
+  "targetBitrateInfoContent": "500 kb/s–2 Mb/s  → silna kompresja, komunikacja\n4–8 Mb/s → 1080p normalna/dobra jakość\n12 Mb/s → 1080p wysoka / 4K niska jakość\n20 Mb/s → jakość strumieniowania 4K\n\nWpis niestandardowy: 500–40000 kbps lub np. „8 Mbps”\n\nW przeciwieństwie do CRF, jakość może się różnić w zależności od sceny. Użyj CRF, aby uzyskać lepsze wyniki przy tym samym rozmiarze pliku.",
+
+    "rateAppTitle": "Oceń aplikację",
+    "proHintTitle": "Korzystaj bez reklam",
+    "proHintBody": "Jednorazowy zakup pozwoli na trwałe usunięcie reklam z aplikacji.",
+    "proHintLater": "Później",
+    "restoreError": "Nie udało się przywrócić zakupów. Sklep Play jest obecnie niedostępny — spróbuj ponownie.",
+    "restoreNoPurchases": "Nie znaleziono wcześniejszych zakupów."
 
 }

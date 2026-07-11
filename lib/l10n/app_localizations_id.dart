@@ -487,4 +487,24 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'Beri Peringkat Aplikasi';
+
+  @override
+  String get proHintTitle => 'Gunakan tanpa iklan';
+
+  @override
+  String get proHintBody =>
+      'Dengan pembelian satu kali, Anda dapat menghapus iklan secara permanen dari aplikasi.';
+
+  @override
+  String get proHintLater => 'Nanti';
+
+  @override
+  String get restoreError =>
+      'Tidak dapat memulihkan pembelian. Play Store saat ini sedang tidak tersedia — silakan coba lagi.';
+
+  @override
+  String get restoreNoPurchases => 'Tidak ditemukan pembelian sebelumnya.';
 }

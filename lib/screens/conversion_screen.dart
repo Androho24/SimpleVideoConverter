@@ -201,7 +201,9 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
         } else {
           await ConversionServiceManager.stopService();
         }
-        unawaited(ReviewService.maybeRequestReview());
+        // Nur zählen — die Anzeige der Prompts übernimmt die Hauptansicht bei
+        // Rückkehr (converter_screen), damit der Speichern-/Share-Flow nicht bricht.
+        unawaited(ReviewService.recordSuccessfulConversion());
 
         // Auto-Save: nur Videos. Bei Fehler fällt der User auf den manuellen
         // Save-Button zurück (saveError-SnackBar wird in _saveVideoToGallery gezeigt).

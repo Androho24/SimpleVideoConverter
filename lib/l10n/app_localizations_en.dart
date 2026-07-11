@@ -486,4 +486,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'Rate the App';
+
+  @override
+  String get proHintTitle => 'Use without ads';
+
+  @override
+  String get proHintBody =>
+      'With a one-time purchase, you can permanently remove ads from the app.';
+
+  @override
+  String get proHintLater => 'Later';
+
+  @override
+  String get restoreError =>
+      'Could not restore purchases. The Play Store is currently unavailable — please try again.';
+
+  @override
+  String get restoreNoPurchases => 'No previous purchases found.';
 }

@@ -488,4 +488,24 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get rateAppTitle => 'De app beoordelen';
+
+  @override
+  String get proHintTitle => 'Zonder advertenties gebruiken';
+
+  @override
+  String get proHintBody =>
+      'Met een eenmalige aankoop verwijder je advertenties voorgoed uit de app.';
+
+  @override
+  String get proHintLater => 'Later';
+
+  @override
+  String get restoreError =>
+      'Aankopen konden niet worden hersteld. De Play Store is momenteel niet beschikbaar. Probeer het later nog eens.';
+
+  @override
+  String get restoreNoPurchases => 'Er zijn geen eerdere aankopen gevonden.';
 }

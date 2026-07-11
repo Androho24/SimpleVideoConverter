@@ -75,7 +75,7 @@ import 'app_localizations_tr.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -98,11 +98,11 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
@@ -120,7 +120,7 @@ abstract class AppLocalizations {
     Locale('pt', 'BR'),
     Locale('ru'),
     Locale('th'),
-    Locale('tr')
+    Locale('tr'),
   ];
 
   /// Label für das Qualitäts-Dropdown
@@ -1010,6 +1010,42 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Pro'**
   String get proSectionTitle;
+
+  /// Settings-Eintrag, öffnet die Play-Store-Detailseite zum Bewerten
+  ///
+  /// In de, this message translates to:
+  /// **'App bewerten'**
+  String get rateAppTitle;
+
+  /// Titel des Pro-Hinweis-Dialogs nach mehreren Konvertierungen
+  ///
+  /// In de, this message translates to:
+  /// **'Werbefrei nutzen'**
+  String get proHintTitle;
+
+  /// Text des Pro-Hinweis-Dialogs
+  ///
+  /// In de, this message translates to:
+  /// **'Entferne Werbung dauerhaft mit einem einmaligen Kauf. Vielen Dank für deine Unterstützung.'**
+  String get proHintBody;
+
+  /// Ablehnen-Button im Pro-Hinweis-Dialog
+  ///
+  /// In de, this message translates to:
+  /// **'Später'**
+  String get proHintLater;
+
+  /// Fehlermeldung wenn restorePurchases scheitert (BillingClient nicht verbunden)
+  ///
+  /// In de, this message translates to:
+  /// **'Käufe konnten nicht wiederhergestellt werden. Der Play Store ist gerade nicht erreichbar – bitte erneut versuchen.'**
+  String get restoreError;
+
+  /// Neutraler Hinweis nach restorePurchases, wenn nichts wiederherzustellen ist
+  ///
+  /// In de, this message translates to:
+  /// **'Keine früheren Käufe gefunden.'**
+  String get restoreNoPurchases;
 }
 
 class _AppLocalizationsDelegate
@@ -1023,21 +1059,21 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) => <String>[
-        'cs',
-        'de',
-        'en',
-        'es',
-        'fr',
-        'hi',
-        'id',
-        'it',
-        'nl',
-        'pl',
-        'pt',
-        'ru',
-        'th',
-        'tr'
-      ].contains(locale.languageCode);
+    'cs',
+    'de',
+    'en',
+    'es',
+    'fr',
+    'hi',
+    'id',
+    'it',
+    'nl',
+    'pl',
+    'pt',
+    'ru',
+    'th',
+    'tr',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1089,8 +1125,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }
