@@ -219,10 +219,15 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
         await ConversionServiceManager.stopService();
         await _deleteOutput();
         final log = await session.getLogsAsString();
+        // Nur den bereinigten Log an Crashlytics — der Roh-Log enthält den
+        // Eingabepfad (ggf. Original-Dateiname) und den Container-Metadaten-Block
+        // (GPS-Standort, Aufnahmezeit, Gerätemodell). Die on-device-SnackBar unten
+        // zeigt weiterhin den Roh-Log (eigene Daten des Nutzers, kein Datenschutz-
+        // Thema).
         unawaited(FirebaseCrashlytics.instance.recordError(
           Exception('FFmpeg conversion failed'),
           null,
-          reason: log,
+          reason: _sanitizeFfmpegLog(log),
         ));
         if (mounted) {
           final l = AppLocalizations.of(context)!;
@@ -532,5 +537,37 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
         ),
       ),
     );
+  }
+
+  /// Entfernt personenbezogene Daten aus dem FFmpeg-Log, bevor er an Crashlytics
+  /// geht. Betroffen sind (a) Eingabe-/Ausgabepfade — können den Original-
+  /// Dateinamen des Nutzers enthalten — und (b) der Container-Metadaten-Block,
+  /// den FFmpeg beim Default-Loglevel ausgibt (GPS-Standort, Aufnahmezeitpunkt,
+  /// Gerätehersteller/-modell). Der technisch relevante Rest (Encoder-Fehler,
+  /// "Conversion failed" etc.) bleibt fürs Debugging erhalten.
+  ///
+  /// Bewusst konservativ: lieber ein paar Metadaten-Zeilen zu viel entfernt als
+  /// versehentlich Standort/Dateiname durchgelassen.
+  static String _sanitizeFfmpegLog(String log) {
+    // Sensible Metadaten-Schlüssel aus dem Video-Container (case-insensitive).
+    final metadataKey = RegExp(
+      r"^\s*(location(-\w+)?|creation_time|com\.android\.[\w.]*|"
+      r"com\.apple\.[\w.]*|make|model|artist|title|album|comment|"
+      r"copyright|date)\s*:",
+      caseSensitive: false,
+    );
+    // Pfade in Anführungszeichen: Input #0 ... from '...' / Output #0 ... to '...'
+    final quotedPath = RegExp(r"(from|to)\s+'[^']*'");
+    // content://-URIs (SAF-Eingabe via file_picker).
+    final contentUri = RegExp(r"content://\S+");
+
+    final kept = log.split('\n').where((line) => !metadataKey.hasMatch(line));
+    return kept
+        .join('\n')
+        .replaceAllMapped(
+          quotedPath,
+          (m) => "${m[1]} '<${m[1] == 'from' ? 'input' : 'output'}>'",
+        )
+        .replaceAll(contentUri, 'content://<redacted>');
   }
 }

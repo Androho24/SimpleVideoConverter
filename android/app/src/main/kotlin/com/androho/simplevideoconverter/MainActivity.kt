@@ -60,20 +60,12 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        // GeneratedPluginRegistrant schluckt Konstruktor-Fehler des GMA-Plugins
-        // still (z. B. wenn Play Services fehlen) — die Plugin-Instanz fehlt dann
-        // im Engine-Cache und registerNativeAdFactory wirft IllegalStateException.
-        // Ohne try/catch killt das die Activity in onCreate.
-        try {
-            GoogleMobileAdsPlugin.registerNativeAdFactory(
-                flutterEngine,
-                "nativeAd",
-                NativeAdFactoryImpl(layoutInflater)
-            )
-        } catch (e: Exception) {
-            Log.e("MainActivity", "Failed to register NativeAdFactory", e)
-        }
-
+        // Die NativeAdFactory wird bewusst NICHT hier registriert, sondern
+        // engine-scoped in SimpleVideoConverterApplication.getMainFlutterEngine().
+        // Grund: Die Engine ist prozess-weit gecacht und läuft weiter, während
+        // keine Activity attached ist. Eine Activity-gebundene Registrierung würde
+        // beim Detach abgemeldet und ein Ad-Load aus dem NativeAdPreloader crasht
+        // dann mit "No NativeAdFactory with id: nativeAd".
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ADS_CHANNEL)
             .setMethodCallHandler { call, result ->
                 val adManager = (application as? SimpleVideoConverterApplication)?.getAppOpenAdManager()
@@ -211,11 +203,9 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
-        try {
-            GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "nativeAd")
-        } catch (e: Exception) {
-            Log.e("MainActivity", "Failed to unregister NativeAdFactory", e)
-        }
+        // Die NativeAdFactory wird bewusst NICHT abgemeldet — ihre Lebensdauer ist
+        // an die prozess-weit gecachte Engine gebunden (Registrierung in
+        // SimpleVideoConverterApplication), nicht an diese Activity.
         // Engine wird bewusst NICHT zerstört — sie bleibt für die Prozess-Lebensdauer
         // im Application-Scope gecacht. Das verhindert einen "FlutterJNI is not attached
         // to native"-Crash, der entsteht wenn engine.destroy() läuft während noch

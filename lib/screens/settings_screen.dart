@@ -27,10 +27,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   StreamSubscription<bool>? _proSub;
   StreamSubscription<String>? _errorSub;
 
-  static final _privacyDe = Uri.parse('https://androho.com/de/privacy-policy/');
-  static final _privacyEn = Uri.parse('https://androho.com/privacy-policy-2/');
-  static final _impressumDe = Uri.parse('https://androho.com/de/impressum/');
-  static final _impressumEn = Uri.parse('https://androho.com/98-2/');
+  static final _privacyDe = Uri.parse('https://www.androho.com/datenschutz/video-converter/');
+  static final _privacyEn = Uri.parse('https://www.androho.com/privacy-policy/video-converter/');
+  static final _impressumDe = Uri.parse('https://www.androho.com/impressum/');
+  static final _impressumEn = Uri.parse('https://www.androho.com/imprint/');
 
   @override
   void initState() {
