@@ -2,7 +2,7 @@ name: simple_video_converter
 description: "Simple Video Converter mit FFmpegKit (libx264)"
 publish_to: 'none'
 
-version: 1.1.1+23
+version: 1.1.2+24
 
 environment:
   sdk: ^3.10.0   # angehoben für google_mobile_ads 8.x (verlangt Dart >= 3.10.0)

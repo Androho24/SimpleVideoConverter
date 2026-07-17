@@ -13,12 +13,14 @@ import 'app_localizations_fr.dart';
 import 'app_localizations_hi.dart';
 import 'app_localizations_id.dart';
 import 'app_localizations_it.dart';
+import 'app_localizations_ja.dart';
 import 'app_localizations_nl.dart';
 import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
 import 'app_localizations_ru.dart';
 import 'app_localizations_th.dart';
 import 'app_localizations_tr.dart';
+import 'app_localizations_uk.dart';
 
 // ignore_for_file: type=lint
 
@@ -114,6 +116,7 @@ abstract class AppLocalizations {
     Locale('hi'),
     Locale('id'),
     Locale('it'),
+    Locale('ja'),
     Locale('nl'),
     Locale('pl'),
     Locale('pt'),
@@ -121,6 +124,7 @@ abstract class AppLocalizations {
     Locale('ru'),
     Locale('th'),
     Locale('tr'),
+    Locale('uk'),
   ];
 
   /// Label für das Qualitäts-Dropdown
@@ -1067,12 +1071,14 @@ class _AppLocalizationsDelegate
     'hi',
     'id',
     'it',
+    'ja',
     'nl',
     'pl',
     'pt',
     'ru',
     'th',
     'tr',
+    'uk',
   ].contains(locale.languageCode);
 
   @override
@@ -1110,6 +1116,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsId();
     case 'it':
       return AppLocalizationsIt();
+    case 'ja':
+      return AppLocalizationsJa();
     case 'nl':
       return AppLocalizationsNl();
     case 'pl':
@@ -1122,6 +1130,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsTh();
     case 'tr':
       return AppLocalizationsTr();
+    case 'uk':
+      return AppLocalizationsUk();
   }
 
   throw FlutterError(
