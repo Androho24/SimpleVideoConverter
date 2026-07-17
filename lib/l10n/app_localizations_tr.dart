@@ -235,15 +235,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get convertButton => 'Dönüştür';
 
   @override
-  String get encodingModeLabel => 'Kodlama Modu';
-
-  @override
-  String get encodingModeCrf => 'Kalite (CRF)';
-
-  @override
-  String get encodingModeBitrate => 'Bit Hızı';
-
-  @override
   String get crfLabel => 'Video kalitesi (CRF)';
 
   @override
@@ -252,16 +243,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → kayıpsız (çok büyük dosya)\n18 → görsel olarak neredeyse kayıpsız\n23 → Standart (iyi denge)\n28 → gözle görülür kalite kaybı\n51 → en düşük kalite\n\nÖneri: 18–28';
-
-  @override
-  String get targetBitrateLabel => 'Hedef Bit Hızı';
-
-  @override
-  String get targetBitrateInfoTitle => 'Hedef Bit Hızı';
-
-  @override
-  String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → yoğun sıkıştırma, mesajlaşma\n4–8 Mbps → 1080p normal/iyi kalite\n12 Mbps → 1080p yüksek / 4K düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel giriş: 500–40000 kbps veya ör. \"8 Mbps\"\n\nCRF\'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF\'yi kullanın.';
 
   @override
   String get resolutionLabel => 'Çözünürlük';
@@ -308,16 +289,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → MP4 için standart, en iyi uyumluluk\nMP3 → yaygın olarak kullanılır, biraz eski\nOpus → modern ve verimli, MKV için iyi';
-
-  @override
-  String get audioChannelsLabel => 'Ses kanalları';
-
-  @override
-  String get audioChannelsInfoContent =>
-      'Orijinal → kaynak kanal düzenini koru\nStereo → 2.0 (gerekirse aşağı karıştırma)\nMono → 1 kanal (en küçük dosya)\n5.1 → 6 kanallı surround (sadece surround kaynaklar için)\n\nAşağı karıştırma (ör. 5.1 → Stereo) desteklenir. Yukarı karıştırma sunulmamaktadır.';
-
-  @override
-  String get audioChannelOriginal => 'Orijinal';
 
   @override
   String get outputFormatLabel => 'Çıkış Formatı';
@@ -490,6 +461,35 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get encodingModeLabel => 'Kodlama Modu';
+
+  @override
+  String get encodingModeCrf => 'Kalite (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Bit Hızı';
+
+  @override
+  String get audioChannelsLabel => 'Ses kanalları';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Orijinal → kaynak kanal düzenini koru\nStereo → 2.0 (gerekirse aşağı karıştırma)\nMono → 1 kanal (en küçük dosya)\n5.1 → 6 kanallı surround (sadece surround kaynaklar için)\n\nAşağı karıştırma (ör. 5.1 → Stereo) desteklenir. Yukarı karıştırma sunulmamaktadır.';
+
+  @override
+  String get audioChannelOriginal => 'Orijinal';
+
+  @override
+  String get targetBitrateLabel => 'Hedef Bit Hızı';
+
+  @override
+  String get targetBitrateInfoTitle => 'Hedef Bit Hızı';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → yoğun sıkıştırma, mesajlaşma\n4–8 Mbps → 1080p normal/iyi kalite\n12 Mbps → 1080p yüksek / 4K düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel giriş: 500–40000 kbps veya ör. \"8 Mbps\"\n\nCRF\'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF\'yi kullanın.';
 
   @override
   String get rateAppTitle => 'Uygulamayı Değerlendir';

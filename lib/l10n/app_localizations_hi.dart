@@ -233,15 +233,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get convertButton => 'कन्वर्ट करें';
 
   @override
-  String get encodingModeLabel => 'एन्कोडिंग मोड';
-
-  @override
-  String get encodingModeCrf => 'गुणवत्ता (सीआरएफ)';
-
-  @override
-  String get encodingModeBitrate => 'बिटरेट';
-
-  @override
   String get crfLabel => 'वीडियो गुणवत्ता (CRF)';
 
   @override
@@ -250,16 +241,6 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → बिना हानि के (बहुत बड़ी फ़ाइल)\n18 → लगभग बिना हानि के\n23 → मानक (अच्छा संतुलन)\n28 → गुणवत्ता में स्पष्ट कमी\n51 → सबसे कम गुणवत्ता\n\nअनुशंसा: 18–28';
-
-  @override
-  String get targetBitrateLabel => 'लक्षित बिटरेट';
-
-  @override
-  String get targetBitrateInfoTitle => 'लक्षित बिटरेट';
-
-  @override
-  String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → भारी संपीड़न, मैसेजिंग\n4–8 Mbps → 1080p सामान्य/अच्छी गुणवत्ता\n12 Mbps → 1080p उच्च / 4K कम गुणवत्ता\n20 Mbps → 4K स्ट्रीमिंग गुणवत्ता\n\nकस्टम इनपुट: 500–40000 kbps या उदाहरण के लिए \"8 Mbps\"\n\nCRF के विपरीत, गुणवत्ता दृश्यों के बीच भिन्न हो सकती है। समान फ़ाइल आकार पर बेहतर परिणामों के लिए CRF का उपयोग करें।';
 
   @override
   String get resolutionLabel => 'रिज़ॉल्यूशन';
@@ -306,16 +287,6 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → MP4 के लिए मानक, सर्वोत्तम संगतता\nMP3 → व्यापक रूप से उपयोग किया जाता है, थोड़ा पुराना\nOpus → आधुनिक और कुशल, MKV के लिए अच्छा';
-
-  @override
-  String get audioChannelsLabel => 'ऑडियो चैनल';
-
-  @override
-  String get audioChannelsInfoContent =>
-      'मूल → स्रोत चैनल लेआउट बनाए रखें\nस्टीरियो → 2.0 (आवश्यकता पड़ने पर डाउनमिक्स)\nमोनो → 1 चैनल (सबसे छोटी फ़ाइल)\n5.1 → 6-चैनल सराउंड (केवल सराउंड स्रोतों के लिए)\n\nडाउनमिक्सिंग (जैसे 5.1 → स्टीरियो) समर्थित है। अपमिक्सिंग की पेशकश नहीं की जाती है।';
-
-  @override
-  String get audioChannelOriginal => 'मूल';
 
   @override
   String get outputFormatLabel => 'आउटपुट प्रारूप';
@@ -487,6 +458,35 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'प्रो';
+
+  @override
+  String get encodingModeLabel => 'एन्कोडिंग मोड';
+
+  @override
+  String get encodingModeCrf => 'गुणवत्ता (सीआरएफ)';
+
+  @override
+  String get encodingModeBitrate => 'बिटरेट';
+
+  @override
+  String get audioChannelsLabel => 'ऑडियो चैनल';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'मूल → स्रोत चैनल लेआउट बनाए रखें\nस्टीरियो → 2.0 (आवश्यकता पड़ने पर डाउनमिक्स)\nमोनो → 1 चैनल (सबसे छोटी फ़ाइल)\n5.1 → 6-चैनल सराउंड (केवल सराउंड स्रोतों के लिए)\n\nडाउनमिक्सिंग (जैसे 5.1 → स्टीरियो) समर्थित है। अपमिक्सिंग की पेशकश नहीं की जाती है।';
+
+  @override
+  String get audioChannelOriginal => 'मूल';
+
+  @override
+  String get targetBitrateLabel => 'लक्षित बिटरेट';
+
+  @override
+  String get targetBitrateInfoTitle => 'लक्षित बिटरेट';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → भारी संपीड़न, मैसेजिंग\n4–8 Mbps → 1080p सामान्य/अच्छी गुणवत्ता\n12 Mbps → 1080p उच्च / 4K कम गुणवत्ता\n20 Mbps → 4K स्ट्रीमिंग गुणवत्ता\n\nकस्टम इनपुट: 500–40000 kbps या उदाहरण के लिए \"8 Mbps\"\n\nCRF के विपरीत, गुणवत्ता दृश्यों के बीच भिन्न हो सकती है। समान फ़ाइल आकार पर बेहतर परिणामों के लिए CRF का उपयोग करें।';
 
   @override
   String get rateAppTitle => 'ऐप को रेट करें';

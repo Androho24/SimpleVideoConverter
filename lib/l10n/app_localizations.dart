@@ -125,926 +125,926 @@ abstract class AppLocalizations {
 
   /// Label für das Qualitäts-Dropdown
   ///
-  /// In de, this message translates to:
-  /// **'Qualität'**
+  /// In en, this message translates to:
+  /// **'Quality'**
   String get qualityLabel;
 
   /// Qualitätsstufe 2160p, hohe Qualität (CRF 18)
   ///
-  /// In de, this message translates to:
-  /// **'2160p hoch'**
+  /// In en, this message translates to:
+  /// **'2160p High'**
   String get quality2160pHigh;
 
   /// Qualitätsstufe 2160p, mittlere Qualität (CRF 23)
   ///
-  /// In de, this message translates to:
-  /// **'2160p mittel'**
+  /// In en, this message translates to:
+  /// **'2160p Medium'**
   String get quality2160pMedium;
 
   /// Qualitätsstufe 2160p, niedrige Qualität (CRF 27)
   ///
-  /// In de, this message translates to:
-  /// **'2160p niedrig'**
+  /// In en, this message translates to:
+  /// **'2160p Low'**
   String get quality2160pLow;
 
   /// Qualitätsstufe 2160p, sehr niedrige Qualität (CRF 32)
   ///
-  /// In de, this message translates to:
-  /// **'2160p sehr niedrig'**
+  /// In en, this message translates to:
+  /// **'2160p Very Low'**
   String get quality2160pVeryLow;
 
   /// Qualitätsstufe 1440p, hohe Qualität (CRF 18)
   ///
-  /// In de, this message translates to:
-  /// **'1440p hoch'**
+  /// In en, this message translates to:
+  /// **'1440p High'**
   String get quality1440pHigh;
 
   /// Qualitätsstufe 1440p, mittlere Qualität (CRF 23)
   ///
-  /// In de, this message translates to:
-  /// **'1440p mittel'**
+  /// In en, this message translates to:
+  /// **'1440p Medium'**
   String get quality1440pMedium;
 
   /// Qualitätsstufe 1440p, niedrige Qualität (CRF 27)
   ///
-  /// In de, this message translates to:
-  /// **'1440p niedrig'**
+  /// In en, this message translates to:
+  /// **'1440p Low'**
   String get quality1440pLow;
 
   /// Qualitätsstufe 1440p, sehr niedrige Qualität (CRF 32)
   ///
-  /// In de, this message translates to:
-  /// **'1440p sehr niedrig'**
+  /// In en, this message translates to:
+  /// **'1440p Very Low'**
   String get quality1440pVeryLow;
 
   /// Qualitätsstufe 1080p, hohe Qualität (CRF 18)
   ///
-  /// In de, this message translates to:
-  /// **'1080p hoch'**
+  /// In en, this message translates to:
+  /// **'1080p High'**
   String get quality1080pHigh;
 
   /// Qualitätsstufe 1080p, mittlere Qualität (CRF 23)
   ///
-  /// In de, this message translates to:
-  /// **'1080p mittel'**
+  /// In en, this message translates to:
+  /// **'1080p Medium'**
   String get quality1080pMedium;
 
   /// Qualitätsstufe 1080p, niedrige Qualität (CRF 27)
   ///
-  /// In de, this message translates to:
-  /// **'1080p niedrig'**
+  /// In en, this message translates to:
+  /// **'1080p Low'**
   String get quality1080pLow;
 
   /// Qualitätsstufe 1080p, sehr niedrige Qualität (CRF 32)
   ///
-  /// In de, this message translates to:
-  /// **'1080p sehr niedrig'**
+  /// In en, this message translates to:
+  /// **'1080p Very Low'**
   String get quality1080pVeryLow;
 
   /// Qualitätsstufe 720p, hohe Qualität (CRF 18)
   ///
-  /// In de, this message translates to:
-  /// **'720p hoch'**
+  /// In en, this message translates to:
+  /// **'720p High'**
   String get quality720pHigh;
 
   /// Qualitätsstufe 720p, mittlere Qualität (CRF 23)
   ///
-  /// In de, this message translates to:
-  /// **'720p mittel'**
+  /// In en, this message translates to:
+  /// **'720p Medium'**
   String get quality720pMedium;
 
   /// Qualitätsstufe 720p, niedrige Qualität (CRF 27)
   ///
-  /// In de, this message translates to:
-  /// **'720p niedrig'**
+  /// In en, this message translates to:
+  /// **'720p Low'**
   String get quality720pLow;
 
   /// Qualitätsstufe 720p, sehr niedrige Qualität (CRF 32)
   ///
-  /// In de, this message translates to:
-  /// **'720p sehr niedrig'**
+  /// In en, this message translates to:
+  /// **'720p Very Low'**
   String get quality720pVeryLow;
 
   /// Qualitätsstufe 480p, hohe Qualität (CRF 18)
   ///
-  /// In de, this message translates to:
-  /// **'480p hoch'**
+  /// In en, this message translates to:
+  /// **'480p High'**
   String get quality480pHigh;
 
   /// Qualitätsstufe 480p, mittlere Qualität (CRF 23)
   ///
-  /// In de, this message translates to:
-  /// **'480p mittel'**
+  /// In en, this message translates to:
+  /// **'480p Medium'**
   String get quality480pMedium;
 
   /// Qualitätsstufe 480p, niedrige Qualität (CRF 27)
   ///
-  /// In de, this message translates to:
-  /// **'480p niedrig'**
+  /// In en, this message translates to:
+  /// **'480p Low'**
   String get quality480pLow;
 
   /// Qualitätsstufe 480p, sehr niedrige Qualität (CRF 32)
   ///
-  /// In de, this message translates to:
-  /// **'480p sehr niedrig'**
+  /// In en, this message translates to:
+  /// **'480p Very Low'**
   String get quality480pVeryLow;
 
   /// Qualitätsstufe 360p, hohe Qualität (CRF 18)
   ///
-  /// In de, this message translates to:
-  /// **'360p hoch'**
+  /// In en, this message translates to:
+  /// **'360p High'**
   String get quality360pHigh;
 
   /// Qualitätsstufe 360p, mittlere Qualität (CRF 23)
   ///
-  /// In de, this message translates to:
-  /// **'360p mittel'**
+  /// In en, this message translates to:
+  /// **'360p Medium'**
   String get quality360pMedium;
 
   /// Qualitätsstufe 360p, niedrige Qualität (CRF 27)
   ///
-  /// In de, this message translates to:
-  /// **'360p niedrig'**
+  /// In en, this message translates to:
+  /// **'360p Low'**
   String get quality360pLow;
 
   /// Qualitätsstufe 360p, sehr niedrige Qualität (CRF 32)
   ///
-  /// In de, this message translates to:
-  /// **'360p sehr niedrig'**
+  /// In en, this message translates to:
+  /// **'360p Very Low'**
   String get quality360pVeryLow;
 
   /// Entfernt Audio vom Video
   ///
-  /// In de, this message translates to:
-  /// **'Stummschalten'**
+  /// In en, this message translates to:
+  /// **'Mute'**
   String get mute;
 
   /// Bestätigungsknopf in Dialogen
   ///
-  /// In de, this message translates to:
+  /// In en, this message translates to:
   /// **'OK'**
   String get ok;
 
   /// Button zum Öffnen der Videogalerie
   ///
-  /// In de, this message translates to:
-  /// **'Video auswählen'**
+  /// In en, this message translates to:
+  /// **'Select video'**
   String get selectVideo;
 
   /// Ladezustand beim Öffnen des Videos
   ///
-  /// In de, this message translates to:
-  /// **'Video wird geladen…'**
+  /// In en, this message translates to:
+  /// **'Loading video…'**
   String get videoLoading;
 
   /// Normal-Modus Segment
   ///
-  /// In de, this message translates to:
+  /// In en, this message translates to:
   /// **'Normal'**
   String get modeNormal;
 
   /// Expert-Modus Segment
   ///
-  /// In de, this message translates to:
+  /// In en, this message translates to:
   /// **'Expert'**
   String get modeExpert;
 
   /// Fehlermeldung ungültige Datei
   ///
-  /// In de, this message translates to:
-  /// **'Bitte eine gültige Videodatei auswählen.'**
+  /// In en, this message translates to:
+  /// **'Please select a valid video file.'**
   String get invalidVideoFile;
 
   /// Fehlermeldung Datei laden
   ///
-  /// In de, this message translates to:
-  /// **'Die Datei konnte nicht geladen werden. Bitte eine Videodatei auswählen.'**
+  /// In en, this message translates to:
+  /// **'The file could not be loaded. Please select a video file.'**
   String get fileLoadError;
 
   /// Hinweis wenn Vorschau nicht möglich (z.B. Auflösung zu hoch)
   ///
-  /// In de, this message translates to:
-  /// **'Vorschau nicht verfügbar. Das Video kann trotzdem konvertiert werden.'**
+  /// In en, this message translates to:
+  /// **'Preview not available. The video can still be converted.'**
   String get previewNotAvailable;
 
   /// Platzhaltertext im UI wenn keine Vorschau angezeigt werden kann
   ///
-  /// In de, this message translates to:
-  /// **'Vorschau nicht verfügbar\n(Auflösung zu hoch für dieses Gerät)'**
+  /// In en, this message translates to:
+  /// **'Preview not available\n(Resolution too high for this device)'**
   String get previewNotAvailableLabel;
 
   /// Hinweis wenn kein Video geladen
   ///
-  /// In de, this message translates to:
-  /// **'Bitte zuerst ein Video laden.'**
+  /// In en, this message translates to:
+  /// **'Please load a video first.'**
   String get noVideoLoaded;
 
   /// Dialog-Titel Konvertierung abbrechen
   ///
-  /// In de, this message translates to:
-  /// **'Konvertierung abbrechen?'**
+  /// In en, this message translates to:
+  /// **'Cancel conversion?'**
   String get cancelConversionTitle;
 
   /// Dialog-Inhalt Konvertierung abbrechen
   ///
-  /// In de, this message translates to:
-  /// **'Die bisherige Verarbeitung geht verloren.'**
+  /// In en, this message translates to:
+  /// **'The conversion progress will be lost.'**
   String get cancelConversionContent;
 
   /// Button Konvertierung fortsetzen
   ///
-  /// In de, this message translates to:
-  /// **'Weiter'**
+  /// In en, this message translates to:
+  /// **'Continue'**
   String get continueConversion;
 
   /// Allgemeiner Abbrechen-Button
   ///
-  /// In de, this message translates to:
-  /// **'Abbrechen'**
+  /// In en, this message translates to:
+  /// **'Cancel'**
   String get cancel;
 
   /// Dialog-Titel Video verwerfen
   ///
-  /// In de, this message translates to:
-  /// **'Video verwerfen?'**
+  /// In en, this message translates to:
+  /// **'Discard video?'**
   String get discardVideoTitle;
 
   /// Dialog-Inhalt Video verwerfen
   ///
-  /// In de, this message translates to:
-  /// **'Das konvertierte Video wird gelöscht und nicht gespeichert.'**
+  /// In en, this message translates to:
+  /// **'The converted video will be deleted and not saved.'**
   String get discardVideoContent;
 
   /// Button Video behalten
   ///
-  /// In de, this message translates to:
-  /// **'Behalten'**
+  /// In en, this message translates to:
+  /// **'Keep'**
   String get keep;
 
   /// Button Video verwerfen
   ///
-  /// In de, this message translates to:
-  /// **'Verwerfen'**
+  /// In en, this message translates to:
+  /// **'Discard'**
   String get discard;
 
   /// Button Video speichern
   ///
-  /// In de, this message translates to:
-  /// **'Speichern'**
+  /// In en, this message translates to:
+  /// **'Save'**
   String get save;
 
   /// Titel des nativen Speichern-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'Video speichern'**
+  /// In en, this message translates to:
+  /// **'Save video'**
   String get saveVideoDialogTitle;
 
   /// Snackbar Erfolgsmeldung nach dem Speichern
   ///
-  /// In de, this message translates to:
-  /// **'Gespeichert!'**
+  /// In en, this message translates to:
+  /// **'Saved!'**
   String get savedSuccess;
 
   /// Snackbar-Action gespeichertes Video öffnen
   ///
-  /// In de, this message translates to:
-  /// **'Öffnen'**
+  /// In en, this message translates to:
+  /// **'Open'**
   String get open;
 
   /// Button öffnet die System-Galerie-App nach erfolgreichem Speichern
   ///
-  /// In de, this message translates to:
-  /// **'Galerie öffnen'**
+  /// In en, this message translates to:
+  /// **'Open gallery'**
   String get openGallery;
 
   /// Button öffnet das gespeicherte Video im System-Player (mit Album-Context via MediaStore-URI)
   ///
-  /// In de, this message translates to:
-  /// **'Video öffnen'**
+  /// In en, this message translates to:
+  /// **'Open video'**
   String get openVideo;
 
   /// Settings-Switch: Auto-Save für Video-Output
   ///
-  /// In de, this message translates to:
-  /// **'Videos automatisch in der Galerie speichern'**
+  /// In en, this message translates to:
+  /// **'Auto-save videos to gallery'**
   String get autoSaveTitle;
 
   /// Erklärungstext zum Auto-Save-Switch
   ///
-  /// In de, this message translates to:
-  /// **'Videos werden nach der Konvertierung automatisch gespeichert.'**
+  /// In en, this message translates to:
+  /// **'Videos are saved automatically after conversion.'**
   String get autoSaveSubtitle;
 
   /// Snackbar Fehler beim Speichern
   ///
-  /// In de, this message translates to:
-  /// **'Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.'**
+  /// In en, this message translates to:
+  /// **'Error saving. There may not be enough storage space.'**
   String get saveError;
 
   /// Snackbar Fehler beim Speichern – zu wenig RAM (Audio readAsBytes OOM)
   ///
-  /// In de, this message translates to:
-  /// **'Nicht genug Arbeitsspeicher zum Speichern. Versuche es mit einem kürzeren Clip oder niedrigerer Qualität.'**
+  /// In en, this message translates to:
+  /// **'Not enough memory to save this file. Try a shorter clip or lower quality.'**
   String get saveErrorOutOfMemory;
 
   /// Statustext nach abgeschlossener Konvertierung
   ///
-  /// In de, this message translates to:
-  /// **'Fertig!'**
+  /// In en, this message translates to:
+  /// **'Done!'**
   String get conversionDone;
 
   /// Fortschrittstext während der Konvertierung
   ///
-  /// In de, this message translates to:
-  /// **'Konvertierung: {percent}%'**
+  /// In en, this message translates to:
+  /// **'Converting: {percent}%'**
   String conversionProgress(String percent);
 
   /// Fehlermeldung wenn Konvertierung fehlschlägt
   ///
-  /// In de, this message translates to:
-  /// **'Konvertierung fehlgeschlagen: {error}'**
+  /// In en, this message translates to:
+  /// **'Conversion failed: {error}'**
   String conversionFailed(String error);
 
   /// Titel der Einstellungsseite und Tooltip
   ///
-  /// In de, this message translates to:
-  /// **'Einstellungen'**
+  /// In en, this message translates to:
+  /// **'Settings'**
   String get settingsTitle;
 
   /// Lizenzen ListTile Titel
   ///
-  /// In de, this message translates to:
-  /// **'Lizenzen'**
+  /// In en, this message translates to:
+  /// **'Licenses'**
   String get licensesTitle;
 
   /// Lizenzen ListTile Untertitel
   ///
-  /// In de, this message translates to:
-  /// **'Open-Source-Lizenzen dieser App'**
+  /// In en, this message translates to:
+  /// **'Open-source licenses of this app'**
   String get licensesSubtitle;
 
   /// GPL-Lizenztext ListTile Titel
   ///
-  /// In de, this message translates to:
-  /// **'GPL-3.0 Lizenztext'**
+  /// In en, this message translates to:
+  /// **'GPL-3.0 License Text'**
   String get gplLicenseTitle;
 
   /// Quellcode ListTile Titel
   ///
-  /// In de, this message translates to:
-  /// **'Quellcode (GitHub)'**
+  /// In en, this message translates to:
+  /// **'Source Code (GitHub)'**
   String get sourceCodeTitle;
 
   /// Datenschutz ListTile Titel
   ///
-  /// In de, this message translates to:
-  /// **'Datenschutzerklärung'**
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
   String get privacyPolicyTitle;
 
   /// Ad Consent Settings ListTile Titel
   ///
-  /// In de, this message translates to:
-  /// **'Datenschutz-Einstellungen'**
+  /// In en, this message translates to:
+  /// **'Privacy Settings'**
   String get adConsentTitle;
 
   /// Impressum ListTile Titel
   ///
-  /// In de, this message translates to:
-  /// **'Impressum'**
+  /// In en, this message translates to:
+  /// **'Imprint'**
   String get imprintTitle;
 
   /// Snackbar wenn Link nicht geöffnet werden kann
   ///
-  /// In de, this message translates to:
-  /// **'Link konnte nicht geöffnet werden.'**
+  /// In en, this message translates to:
+  /// **'The link could not be opened.'**
   String get linkOpenError;
 
   /// Tooltip am Info-Button für Stummschalten
   ///
-  /// In de, this message translates to:
-  /// **'Stummschalten erklärt'**
+  /// In en, this message translates to:
+  /// **'Mute explained'**
   String get muteTooltip;
 
   /// Inhalt des Stummschalten-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'Entfernt den Ton vollständig aus dem konvertierten Video.\n\nNützlich z.B. um Hintergrundgeräusche zu entfernen oder die Dateigröße zu reduzieren.'**
+  /// In en, this message translates to:
+  /// **'Removes audio completely from the converted video.\n\nUseful e.g. to remove background noise or reduce file size.'**
   String get muteInfoContent;
 
   /// Geschätzte Dateigröße unter dem Konvertieren-Button
   ///
-  /// In de, this message translates to:
-  /// **'Geschätzte Größe: {size} MB'**
+  /// In en, this message translates to:
+  /// **'Estimated size: {size} MB'**
   String estimatedSize(String size);
 
   /// Haupt-Konvertieren-Button
   ///
-  /// In de, this message translates to:
-  /// **'Konvertieren'**
+  /// In en, this message translates to:
+  /// **'Convert'**
   String get convertButton;
-
-  /// Label für den Encoding-Modus-Toggle (CRF vs. Bitrate)
-  ///
-  /// In de, this message translates to:
-  /// **'Encoding-Modus'**
-  String get encodingModeLabel;
-
-  /// Segment für CRF-Modus im Encoding-Toggle
-  ///
-  /// In de, this message translates to:
-  /// **'Qualität (CRF)'**
-  String get encodingModeCrf;
-
-  /// Segment für Bitrate-Modus im Encoding-Toggle
-  ///
-  /// In de, this message translates to:
-  /// **'Bitrate'**
-  String get encodingModeBitrate;
 
   /// Label für den CRF-Dropdown
   ///
-  /// In de, this message translates to:
-  /// **'Videoqualität (CRF)'**
+  /// In en, this message translates to:
+  /// **'Video quality (CRF)'**
   String get crfLabel;
 
   /// Titel des CRF-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'CRF — Videoqualität'**
+  /// In en, this message translates to:
+  /// **'CRF — Video quality'**
   String get crfInfoTitle;
 
   /// Inhalt des CRF-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'0 → verlustfrei (sehr große Datei)\n18 → visuell nahezu verlustfrei\n23 → Standard (gute Balance)\n28 → sichtbare Qualitätseinbußen\n51 → niedrigste Qualität\n\nEmpfehlung: 18–28'**
+  /// In en, this message translates to:
+  /// **'0 → lossless (very large file)\n18 → visually nearly lossless\n23 → standard (good balance)\n28 → visible quality loss\n51 → lowest quality\n\nRecommended: 18–28'**
   String get crfInfoContent;
-
-  /// Label für das Ziel-Bitrate-Dropdown
-  ///
-  /// In de, this message translates to:
-  /// **'Ziel-Bitrate'**
-  String get targetBitrateLabel;
-
-  /// Titel des Ziel-Bitrate-Info-Dialogs
-  ///
-  /// In de, this message translates to:
-  /// **'Ziel-Bitrate'**
-  String get targetBitrateInfoTitle;
-
-  /// Inhalt des Ziel-Bitrate-Info-Dialogs
-  ///
-  /// In de, this message translates to:
-  /// **'500 kbps–2 Mbps  → stark komprimiert, Messaging\n4–8 Mbps → 1080p normal/gut\n12 Mbps → 1080p hoch / 4K niedrig\n20 Mbps → 4K Streaming-Niveau\n\nManuelle Eingabe: 500–40000 kbps oder z. B. \"8 Mbps\"\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.'**
-  String get targetBitrateInfoContent;
 
   /// Label für die Breite/Höhe-Felder
   ///
-  /// In de, this message translates to:
-  /// **'Auflösung'**
+  /// In en, this message translates to:
+  /// **'Resolution'**
   String get resolutionLabel;
 
   /// Titel des Auflösungs-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'Gängige Auflösungen'**
+  /// In en, this message translates to:
+  /// **'Common resolutions'**
   String get resolutionInfoTitle;
 
   /// Inhalt des Auflösungs-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'3840 × 2160 — 4K UHD\n2560 × 1440 — 2K QHD\n1920 × 1080 — Full HD\n1280 ×  720 — HD\n 854 ×  480 — 480p\n 640 ×  360 — 360p\n 426 ×  240 — 240p\n\nTipp: Ein Feld leer lassen = das andere wird proportional berechnet.'**
+  /// In en, this message translates to:
+  /// **'3840 × 2160 — 4K UHD\n2560 × 1440 — 2K QHD\n1920 × 1080 — Full HD\n1280 ×  720 — HD\n 854 ×  480 — 480p\n 640 ×  360 — 360p\n 426 ×  240 — 240p\n\nTip: Leave one field empty = the other will be calculated proportionally.'**
   String get resolutionInfoContent;
 
   /// Label für das Breite-Textfeld
   ///
-  /// In de, this message translates to:
-  /// **'Breite'**
+  /// In en, this message translates to:
+  /// **'Width'**
   String get widthLabel;
 
   /// Label für das Höhe-Textfeld
   ///
-  /// In de, this message translates to:
-  /// **'Höhe'**
+  /// In en, this message translates to:
+  /// **'Height'**
   String get heightLabel;
 
   /// Hint-Text in den Breite/Höhe-Feldern
   ///
-  /// In de, this message translates to:
-  /// **'Leer = Original'**
+  /// In en, this message translates to:
+  /// **'Empty = Original'**
   String get emptyEqualsOriginal;
 
   /// Label für die FPS-Auswahl
   ///
-  /// In de, this message translates to:
+  /// In en, this message translates to:
   /// **'FPS'**
   String get fpsLabel;
 
   /// Titel des FPS-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'Frames pro Sekunde'**
+  /// In en, this message translates to:
+  /// **'Frames per second'**
   String get fpsInfoTitle;
 
   /// Inhalt des FPS-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'Orig  → FPS des Quellvideos beibehalten\n24    → Kino-Standard\n25    → PAL/TV-Standard (Europa)\n30    → NTSC/TV, Social Media\n60    → Flüssig, Gaming, Sport'**
+  /// In en, this message translates to:
+  /// **'Orig  → Keep source video FPS\n24    → Cinema standard\n25    → PAL/TV standard (Europe)\n30    → NTSC/TV, social media\n60    → Smooth, gaming, sports'**
   String get fpsInfoContent;
 
   /// Label für das Audio-Bitrate-Dropdown
   ///
-  /// In de, this message translates to:
-  /// **'Audio-Bitrate'**
+  /// In en, this message translates to:
+  /// **'Audio bitrate'**
   String get audioBitrateLabel;
 
   /// Audio-Bitrate-Eintrag für kein Audio
   ///
-  /// In de, this message translates to:
-  /// **'Stumm'**
+  /// In en, this message translates to:
+  /// **'Silent'**
   String get silent;
 
   /// Inhalt des Audio-Bitrate-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'Stumm    → kein Audio\n64 kbps  → Sprache, Podcasts\n96 kbps  → gute Sprachqualität\n128 kbps → Standard-Musik\n192 kbps → hohe Audioqualität\n320 kbps → maximale MP3-Qualität'**
+  /// In en, this message translates to:
+  /// **'Silent   → no audio\n64 kbps  → voice, podcasts\n96 kbps  → good voice quality\n128 kbps → standard music\n192 kbps → high audio quality\n320 kbps → maximum MP3 quality'**
   String get audioBitrateInfoContent;
 
   /// Label für die Audio-Codec-Auswahl
   ///
-  /// In de, this message translates to:
-  /// **'Audio-Codec'**
+  /// In en, this message translates to:
+  /// **'Audio codec'**
   String get audioCodecLabel;
 
   /// Inhalt des Audio-Codec-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV\nAC3  → Dolby Digital, nur bei Surround-Quellen (≥ 3 Kanäle) verfügbar'**
+  /// In en, this message translates to:
+  /// **'AAC  → standard for MP4, best compatibility\nMP3  → widely used, slightly outdated\nOpus → modern & efficient, great for MKV\nAC3  → Dolby Digital, shown only for surround sources (≥ 3 channels)'**
   String get audioCodecInfoContent;
-
-  /// Label für die Audiokanal-Auswahl
-  ///
-  /// In de, this message translates to:
-  /// **'Audiokanäle'**
-  String get audioChannelsLabel;
-
-  /// Inhalt des Audiokanal-Info-Dialogs
-  ///
-  /// In de, this message translates to:
-  /// **'Original → Kanal-Layout der Quelle beibehalten\nStereo → 2.0 (Downmix falls nötig)\nMono → 1 Kanal (kleinste Datei)\n5.1 → 6-Kanal Surround (nur bei Surround-Quellen)\n\nDownmixing (z. B. 5.1 → Stereo) wird unterstützt. Upmixing wird nicht angeboten.'**
-  String get audioChannelsInfoContent;
-
-  /// Audiokanal-Option: Quell-Layout beibehalten
-  ///
-  /// In de, this message translates to:
-  /// **'Original'**
-  String get audioChannelOriginal;
 
   /// Label für die Output-Format-Auswahl
   ///
-  /// In de, this message translates to:
-  /// **'Output-Format'**
+  /// In en, this message translates to:
+  /// **'Output format'**
   String get outputFormatLabel;
 
   /// Inhalt des Output-Format-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'MP4 → universell, beste Kompatibilität\nMKV → flexibel, viele Codecs, weniger kompatibel\nMOV → Apple/QuickTime-Format\nAVI → veraltet, breite Kompatibilität\nTS  → MPEG Transport Stream, TV/Streaming'**
+  /// In en, this message translates to:
+  /// **'MP4 → universal, best compatibility\nMKV → flexible, many codecs, less compatible\nMOV → Apple/QuickTime format\nAVI → outdated, broad compatibility\nTS  → MPEG transport stream, TV/streaming'**
   String get outputFormatInfoContent;
 
   /// FPS-Option: Original-Framerate des Quellvideos
   ///
-  /// In de, this message translates to:
+  /// In en, this message translates to:
   /// **'Orig'**
   String get orig;
 
   /// Titel des Auflösungs-Erklärungs-Dialogs in QualitySelector
   ///
-  /// In de, this message translates to:
-  /// **'Was bedeuten die Auflösungen?'**
+  /// In en, this message translates to:
+  /// **'What do the resolutions mean?'**
   String get resolutionExplainTitle;
 
   /// Inhalt des Auflösungs-Erklärungs-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'360p  (640×360)   → sehr kleine Datei,\nz.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.'**
+  /// In en, this message translates to:
+  /// **'360p  (640×360)   → very small file,\ne.g. for WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, good for mobile devices\n\n1080p (1920×1080) → Full HD, standard for\n                          YouTube & TV\n\nHigh/Medium/Low describes quality at the same resolution — higher = larger file.'**
   String get resolutionExplainContent;
 
   /// Tooltip am Info-Button neben dem Qualitäts-Dropdown
   ///
-  /// In de, this message translates to:
-  /// **'Auflösungen erklärt'**
+  /// In en, this message translates to:
+  /// **'Resolutions explained'**
   String get resolutionTooltip;
 
   /// Label über dem Trim-Slider
   ///
-  /// In de, this message translates to:
-  /// **'Trim-Bereich'**
+  /// In en, this message translates to:
+  /// **'Trim range'**
   String get trimArea;
 
   /// Startzeit des Trim-Bereichs
   ///
-  /// In de, this message translates to:
-  /// **'Anfang: {time}'**
+  /// In en, this message translates to:
+  /// **'Start: {time}'**
   String trimStartLabel(String time);
 
   /// Endzeit des Trim-Bereichs
   ///
-  /// In de, this message translates to:
-  /// **'Ende: {time}'**
+  /// In en, this message translates to:
+  /// **'End: {time}'**
   String trimEndLabel(String time);
 
   /// Platzhaltertext während das Native Ad lädt
   ///
-  /// In de, this message translates to:
-  /// **'Werbung wird geladen…'**
+  /// In en, this message translates to:
+  /// **'Loading ad…'**
   String get adLoading;
 
   /// Prefix für den vorausgefüllten Dateinamen im Speichern-Dialog
   ///
-  /// In de, this message translates to:
-  /// **'konvertiert_'**
+  /// In en, this message translates to:
+  /// **'converted_'**
   String get convertedPrefix;
 
   /// Titel des IAP-Eintrags im Settings-Screen
   ///
-  /// In de, this message translates to:
-  /// **'Werbung entfernen'**
+  /// In en, this message translates to:
+  /// **'Remove Ads'**
   String get removeAdsTitle;
 
   /// Untertitel mit dynamischem Preis aus dem Play Store
   ///
-  /// In de, this message translates to:
-  /// **'Einmaliger Kauf – {price}'**
+  /// In en, this message translates to:
+  /// **'One-time purchase – {price}'**
   String removeAdsSubtitle(String price);
 
   /// Titel wenn IAP bereits gekauft wurde
   ///
-  /// In de, this message translates to:
-  /// **'Werbefrei ✓'**
+  /// In en, this message translates to:
+  /// **'Ad-free ✓'**
   String get removeAdsActiveTitle;
 
   /// Untertitel wenn IAP bereits gekauft wurde
   ///
-  /// In de, this message translates to:
-  /// **'Danke für deine Unterstützung!'**
+  /// In en, this message translates to:
+  /// **'Thank you for your support!'**
   String get removeAdsActiveSubtitle;
 
   /// Button zum Wiederherstellen eines früheren IAP-Kaufs
   ///
-  /// In de, this message translates to:
-  /// **'Kauf wiederherstellen'**
+  /// In en, this message translates to:
+  /// **'Restore purchase'**
   String get restorePurchasesTitle;
 
   /// Kauf-Button im Settings-Screen
   ///
-  /// In de, this message translates to:
-  /// **'Kaufen'**
+  /// In en, this message translates to:
+  /// **'Buy'**
   String get purchaseButton;
 
   /// Fehlermeldung bei gescheitertem IAP
   ///
-  /// In de, this message translates to:
-  /// **'Kauf fehlgeschlagen. Bitte erneut versuchen.'**
+  /// In en, this message translates to:
+  /// **'Purchase failed. Please try again.'**
   String get purchaseError;
 
   /// Erfolgsmeldung nach IAP-Kauf
   ///
-  /// In de, this message translates to:
-  /// **'Danke! Werbung wurde deaktiviert.'**
+  /// In en, this message translates to:
+  /// **'Thanks! Ads have been disabled.'**
   String get purchaseSuccess;
 
   /// No description provided for @appName.
   ///
-  /// In de, this message translates to:
-  /// **'Video Konverter'**
+  /// In en, this message translates to:
+  /// **'Video Converter'**
   String get appName;
 
   /// Switch-Label für Audio-Only-Modus
   ///
-  /// In de, this message translates to:
-  /// **'Nur Audio'**
+  /// In en, this message translates to:
+  /// **'Audio Only'**
   String get audioOnly;
 
   /// Tooltip am Info-Button für Nur-Audio
   ///
-  /// In de, this message translates to:
-  /// **'Nur Audio erklärt'**
+  /// In en, this message translates to:
+  /// **'Audio Only explained'**
   String get audioOnlyTooltip;
 
   /// Inhalt des Nur-Audio-Info-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'Extrahiert nur die Audiospur aus dem Video – kein Bild.\n\nNormal-Modus: MP3 mit 192 kbps.\nExpert-Modus: Codec und Bitrate aus den Audio-Einstellungen.\n\nNützlich um z.B. Musik oder Podcasts aus Videos zu speichern.'**
+  /// In en, this message translates to:
+  /// **'Extracts only the audio track from the video — no picture.\n\nNormal mode: MP3 at 192 kbps.\nExpert mode: Codec and bitrate from the audio settings.\n\nUseful e.g. to save music or podcasts from videos.'**
   String get audioOnlyInfoContent;
 
   /// Tooltip des Seitenverhältnis-Lock-Buttons (gesperrt)
   ///
-  /// In de, this message translates to:
-  /// **'Seitenverhältnis gesperrt'**
+  /// In en, this message translates to:
+  /// **'Aspect ratio locked'**
   String get aspectLocked;
 
   /// Tooltip des Seitenverhältnis-Lock-Buttons (entsperrt)
   ///
-  /// In de, this message translates to:
-  /// **'Seitenverhältnis frei'**
+  /// In en, this message translates to:
+  /// **'Aspect ratio unlocked'**
   String get aspectUnlocked;
 
   /// Titel des CPU-Warnhinweis-Dialogs bei großen Eingabedateien
   ///
-  /// In de, this message translates to:
-  /// **'Große Datei'**
+  /// In en, this message translates to:
+  /// **'Large file'**
   String get cpuWarningTitle;
 
   /// Inhalt des CPU-Warnhinweis-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'Dieses Video ist länger als 5 Minuten. Auf älteren Geräten kann die Konvertierung zu hoher Prozessorauslastung führen – das ist normal.\n\nDu kannst das Handy einfach daneben legen, die App läuft im Hintergrund weiter.'**
+  /// In en, this message translates to:
+  /// **'This video is longer than 5 minutes. On older devices, the conversion may cause high CPU usage — that\'s normal.\n\nYou can just put your phone aside; the app will keep running in the background.'**
   String get cpuWarningContent;
 
   /// Checkbox-Label im CPU-Warnhinweis-Dialog
   ///
-  /// In de, this message translates to:
-  /// **'Nicht mehr anzeigen'**
+  /// In en, this message translates to:
+  /// **'Don\'t show again'**
   String get cpuWarningCheckbox;
 
   /// Titel des Speicherplatz-Warndialogs vor der Konvertierung
   ///
-  /// In de, this message translates to:
-  /// **'Nicht genug Speicherplatz'**
+  /// In en, this message translates to:
+  /// **'Not enough storage'**
   String get storageWarningTitle;
 
-  /// Inhalt des Speicherplatz-Warndialogs vor der Konvertierung
+  /// No description provided for @storageWarningContent.
   ///
-  /// In de, this message translates to:
-  /// **'Dein Gerät hat nur noch {available} MB frei. Für die Konvertierung werden ca. {required} MB benötigt. Bitte gib zuerst Speicher frei.'**
+  /// In en, this message translates to:
+  /// **'Your device only has {available} MB free. The conversion needs approximately {required} MB. Please free up some space first.'**
   String storageWarningContent(String available, String required);
 
   /// Titel des Feedback-Eintrags in den Einstellungen und des Screens
   ///
-  /// In de, this message translates to:
+  /// In en, this message translates to:
   /// **'Feedback & Support'**
   String get feedbackTitle;
 
   /// Untertitel des Feedback-Eintrags in den Einstellungen
   ///
-  /// In de, this message translates to:
-  /// **'Bugs, Verbesserungen oder Feedback senden'**
+  /// In en, this message translates to:
+  /// **'Send bugs, suggestions or feedback'**
   String get feedbackSubtitle;
 
   /// Label über dem Kategorie-Dropdown im Feedback-Screen
   ///
-  /// In de, this message translates to:
-  /// **'Kategorie'**
+  /// In en, this message translates to:
+  /// **'Category'**
   String get feedbackCategoryLabel;
 
   /// Dropdown-Option: Bug-Bericht
   ///
-  /// In de, this message translates to:
-  /// **'Bug melden'**
+  /// In en, this message translates to:
+  /// **'Report a Bug'**
   String get feedbackCategoryBug;
 
   /// Dropdown-Option: Feature-Wunsch
   ///
-  /// In de, this message translates to:
-  /// **'Verbesserungsvorschlag'**
+  /// In en, this message translates to:
+  /// **'Feature Request'**
   String get feedbackCategoryFeature;
 
   /// Dropdown-Option: allgemeines Feedback
   ///
-  /// In de, this message translates to:
-  /// **'Allgemeines Feedback'**
+  /// In en, this message translates to:
+  /// **'General Feedback'**
   String get feedbackCategoryFeedback;
 
   /// Placeholder-Text im Nachrichtenfeld des Feedback-Screens
   ///
-  /// In de, this message translates to:
-  /// **'Beschreibe dein Anliegen…'**
+  /// In en, this message translates to:
+  /// **'Describe your issue…'**
   String get feedbackMessageHint;
 
   /// Beschriftung des Senden-Buttons im Feedback-Screen
   ///
-  /// In de, this message translates to:
-  /// **'Senden'**
+  /// In en, this message translates to:
+  /// **'Send'**
   String get feedbackSendButton;
 
   /// No description provided for @notificationPermissionTitle.
   ///
-  /// In de, this message translates to:
-  /// **'Hintergrundkonvertierung'**
+  /// In en, this message translates to:
+  /// **'Background Conversion'**
   String get notificationPermissionTitle;
 
   /// No description provided for @notificationPermissionContent.
   ///
-  /// In de, this message translates to:
-  /// **'Erlaube Benachrichtigungen, damit die Konvertierung weiterlaufen kann während du andere Apps nutzt. Ohne diese Berechtigung muss die App geöffnet bleiben.'**
+  /// In en, this message translates to:
+  /// **'Allow notifications so the conversion can continue while you use other apps. Without this, the app must stay open.'**
   String get notificationPermissionContent;
 
   /// No description provided for @notificationPermissionNotNow.
   ///
-  /// In de, this message translates to:
-  /// **'Nicht jetzt'**
+  /// In en, this message translates to:
+  /// **'Not Now'**
   String get notificationPermissionNotNow;
 
   /// No description provided for @notificationPermissionAllow.
   ///
-  /// In de, this message translates to:
-  /// **'Erlauben'**
+  /// In en, this message translates to:
+  /// **'Allow'**
   String get notificationPermissionAllow;
 
   /// No description provided for @notificationPermissionDenied.
   ///
-  /// In de, this message translates to:
-  /// **'Aktiviere Benachrichtigungen in den Einstellungen für die Hintergrundkonvertierung.'**
+  /// In en, this message translates to:
+  /// **'Enable notifications in Settings to convert in the background.'**
   String get notificationPermissionDenied;
 
   /// No description provided for @notificationPermissionOpenSettings.
   ///
-  /// In de, this message translates to:
-  /// **'Einstellungen'**
+  /// In en, this message translates to:
+  /// **'Settings'**
   String get notificationPermissionOpenSettings;
 
   /// No description provided for @backButton.
   ///
-  /// In de, this message translates to:
-  /// **'Zurück'**
+  /// In en, this message translates to:
+  /// **'Back'**
   String get backButton;
 
   /// No description provided for @appSettingsTitle.
   ///
-  /// In de, this message translates to:
-  /// **'App-Einstellungen'**
+  /// In en, this message translates to:
+  /// **'App Settings'**
   String get appSettingsTitle;
 
   /// No description provided for @appSettingsSubtitle.
   ///
-  /// In de, this message translates to:
-  /// **'Autospeichern & Datenschutz'**
+  /// In en, this message translates to:
+  /// **'Auto-save & privacy settings'**
   String get appSettingsSubtitle;
 
   /// No description provided for @openSourceTitle.
   ///
-  /// In de, this message translates to:
+  /// In en, this message translates to:
   /// **'Open Source'**
   String get openSourceTitle;
 
   /// No description provided for @openSourceSubtitle.
   ///
-  /// In de, this message translates to:
-  /// **'Lizenzen & Quellcode'**
+  /// In en, this message translates to:
+  /// **'Licenses & source code'**
   String get openSourceSubtitle;
 
   /// No description provided for @openSourceLicensesTitle.
   ///
-  /// In de, this message translates to:
-  /// **'Open Source Lizenzen'**
+  /// In en, this message translates to:
+  /// **'Open Source Licenses'**
   String get openSourceLicensesTitle;
 
   /// No description provided for @legalSectionTitle.
   ///
-  /// In de, this message translates to:
-  /// **'Rechtliches'**
+  /// In en, this message translates to:
+  /// **'Legal'**
   String get legalSectionTitle;
 
   /// No description provided for @proSectionTitle.
   ///
-  /// In de, this message translates to:
+  /// In en, this message translates to:
   /// **'Pro'**
   String get proSectionTitle;
 
+  /// Label für den Encoding-Modus-Toggle (CRF vs. Bitrate)
+  ///
+  /// In en, this message translates to:
+  /// **'Encoding Mode'**
+  String get encodingModeLabel;
+
+  /// Segment für CRF-Modus im Encoding-Toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Quality (CRF)'**
+  String get encodingModeCrf;
+
+  /// Segment für Bitrate-Modus im Encoding-Toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Bitrate'**
+  String get encodingModeBitrate;
+
+  /// Label für die Audiokanal-Auswahl
+  ///
+  /// In en, this message translates to:
+  /// **'Audio channels'**
+  String get audioChannelsLabel;
+
+  /// Inhalt des Audiokanal-Info-Dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'Original → keep source channel layout\nStereo → 2.0 (downmix if needed)\nMono → 1 channel (smallest file)\n5.1 → 6-channel surround (only for surround sources)\n\nDownmixing (e.g. 5.1 → Stereo) is supported. Upmixing is not offered.'**
+  String get audioChannelsInfoContent;
+
+  /// Audiokanal-Option: Quell-Layout beibehalten
+  ///
+  /// In en, this message translates to:
+  /// **'Original'**
+  String get audioChannelOriginal;
+
+  /// Label für das Ziel-Bitrate-Dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Target Bitrate'**
+  String get targetBitrateLabel;
+
+  /// Titel des Ziel-Bitrate-Info-Dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'Target Bitrate'**
+  String get targetBitrateInfoTitle;
+
+  /// Inhalt des Ziel-Bitrate-Info-Dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'500 kbps–2 Mbps  → heavy compression, messaging\n4–8 Mbps → 1080p normal/good quality\n12 Mbps → 1080p high / 4K low quality\n20 Mbps → 4K streaming quality\n\nCustom entry: 500–40000 kbps or e.g. \"8 Mbps\"\n\nUnlike CRF, quality may vary between scenes. Use CRF for better results at the same file size.'**
+  String get targetBitrateInfoContent;
+
   /// Settings-Eintrag, öffnet die Play-Store-Detailseite zum Bewerten
   ///
-  /// In de, this message translates to:
-  /// **'App bewerten'**
+  /// In en, this message translates to:
+  /// **'Rate the App'**
   String get rateAppTitle;
 
   /// Titel des Pro-Hinweis-Dialogs nach mehreren Konvertierungen
   ///
-  /// In de, this message translates to:
-  /// **'Werbefrei nutzen'**
+  /// In en, this message translates to:
+  /// **'Use without ads'**
   String get proHintTitle;
 
   /// Text des Pro-Hinweis-Dialogs
   ///
-  /// In de, this message translates to:
-  /// **'Entferne Werbung dauerhaft mit einem einmaligen Kauf. Vielen Dank für deine Unterstützung.'**
+  /// In en, this message translates to:
+  /// **'With a one-time purchase, you can permanently remove ads from the app.'**
   String get proHintBody;
 
   /// Ablehnen-Button im Pro-Hinweis-Dialog
   ///
-  /// In de, this message translates to:
-  /// **'Später'**
+  /// In en, this message translates to:
+  /// **'Later'**
   String get proHintLater;
 
   /// Fehlermeldung wenn restorePurchases scheitert (BillingClient nicht verbunden)
   ///
-  /// In de, this message translates to:
-  /// **'Käufe konnten nicht wiederhergestellt werden. Der Play Store ist gerade nicht erreichbar – bitte erneut versuchen.'**
+  /// In en, this message translates to:
+  /// **'Could not restore purchases. The Play Store is currently unavailable — please try again.'**
   String get restoreError;
 
   /// Neutraler Hinweis nach restorePurchases, wenn nichts wiederherzustellen ist
   ///
-  /// In de, this message translates to:
-  /// **'Keine früheren Käufe gefunden.'**
+  /// In en, this message translates to:
+  /// **'No previous purchases found.'**
   String get restoreNoPurchases;
 }
 

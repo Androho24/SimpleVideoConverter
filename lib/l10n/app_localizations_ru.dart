@@ -234,15 +234,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get convertButton => 'Конвертировать';
 
   @override
-  String get encodingModeLabel => 'Режим кодирования';
-
-  @override
-  String get encodingModeCrf => 'Качество (CRF)';
-
-  @override
-  String get encodingModeBitrate => 'Битрейт';
-
-  @override
   String get crfLabel => 'Качество видео (CRF)';
 
   @override
@@ -251,16 +242,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → без потерь (очень большой файл)\n18 → визуально практически без потерь\n23 → стандарт (хороший баланс)\n28 → заметное снижение качества\n51 → самое низкое качество\n\nРекомендация: 18–28';
-
-  @override
-  String get targetBitrateLabel => 'Целевой битрейт';
-
-  @override
-  String get targetBitrateInfoTitle => 'Целевой битрейт';
-
-  @override
-  String get targetBitrateInfoContent =>
-      '500 кбит/с–2 Мбит/с  → сильное сжатие, обмен сообщениями\n4–8 Мбит/с → 1080p нормальное/хорошее качество\n12 Мбит/с → 1080p высокое / 4K низкое качество\n20 Мбит/с → качество потокового вещания 4K\n\nПользовательское значение: 500–40000 кбит/с или, например, «8 Мбит/с»\n\nВ отличие от CRF, качество может варьироваться между сценами. Используйте CRF для получения лучших результатов при том же размере файла.';
 
   @override
   String get resolutionLabel => 'Разрешение';
@@ -307,16 +288,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → стандарт для MP4, лучшая совместимость\nMP3 → широко распространен, немного устарел\nOpus → современный и эффективный, подходит для MKV';
-
-  @override
-  String get audioChannelsLabel => 'Аудиоканалы';
-
-  @override
-  String get audioChannelsInfoContent =>
-      'Оригинал → сохранить расположение каналов источника\nСтерео → 2.0 (даунмикс при необходимости)\nМоно → 1 канал (наименьший размер файла)\n5.1 → 6-канальный объемный звук (только для объемных источников)\n\nДаунмиксинг (например, 5.1 → Стерео) поддерживается. Апмиксинг не предлагается.';
-
-  @override
-  String get audioChannelOriginal => 'Исходный';
 
   @override
   String get outputFormatLabel => 'Формат вывода';
@@ -490,6 +461,35 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get encodingModeLabel => 'Режим кодирования';
+
+  @override
+  String get encodingModeCrf => 'Качество (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Битрейт';
+
+  @override
+  String get audioChannelsLabel => 'Аудиоканалы';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Оригинал → сохранить расположение каналов источника\nСтерео → 2.0 (даунмикс при необходимости)\nМоно → 1 канал (наименьший размер файла)\n5.1 → 6-канальный объемный звук (только для объемных источников)\n\nДаунмиксинг (например, 5.1 → Стерео) поддерживается. Апмиксинг не предлагается.';
+
+  @override
+  String get audioChannelOriginal => 'Исходный';
+
+  @override
+  String get targetBitrateLabel => 'Целевой битрейт';
+
+  @override
+  String get targetBitrateInfoTitle => 'Целевой битрейт';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 кбит/с–2 Мбит/с  → сильное сжатие, обмен сообщениями\n4–8 Мбит/с → 1080p нормальное/хорошее качество\n12 Мбит/с → 1080p высокое / 4K низкое качество\n20 Мбит/с → качество потокового вещания 4K\n\nПользовательское значение: 500–40000 кбит/с или, например, «8 Мбит/с»\n\nВ отличие от CRF, качество может варьироваться между сценами. Используйте CRF для получения лучших результатов при том же размере файла.';
 
   @override
   String get rateAppTitle => 'Оценить приложение';

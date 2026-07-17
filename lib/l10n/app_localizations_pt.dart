@@ -234,15 +234,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get convertButton => 'Converter';
 
   @override
-  String get encodingModeLabel => 'Modo de codificação';
-
-  @override
-  String get encodingModeCrf => 'Qualidade (CRF)';
-
-  @override
-  String get encodingModeBitrate => 'Taxa de bits';
-
-  @override
   String get crfLabel => 'Qualidade do vídeo (CRF)';
 
   @override
@@ -251,16 +242,6 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → sem perdas (ficheiro muito grande)\n18 → visualmente quase sem perdas\n23 → Padrão (bom equilíbrio)\n28 → perdas de qualidade visíveis\n51 → qualidade mais baixa\n\nRecomendação: 18–28';
-
-  @override
-  String get targetBitrateLabel => 'Taxa de bits de destino';
-
-  @override
-  String get targetBitrateInfoTitle => 'Taxa de bits de destino';
-
-  @override
-  String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → compressão elevada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40000 kbps ou, por exemplo, «8 Mbps»\n\nAo contrário do CRF, a qualidade pode variar entre cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de ficheiro.';
 
   @override
   String get resolutionLabel => 'Resolução';
@@ -307,16 +288,6 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → padrão para MP4, melhor compatibilidade\nMP3 → amplamente utilizado, um pouco desatualizado\nOpus → moderno e eficiente, bom para MKV';
-
-  @override
-  String get audioChannelsLabel => 'Canais de áudio';
-
-  @override
-  String get audioChannelsInfoContent =>
-      'Original → mantém a disposição dos canais da fonte\nEstéreo → 2.0 (downmix, se necessário)\nMono → 1 canal (ficheiro mais pequeno)\n5.1 → som surround de 6 canais (apenas para fontes surround)\n\nO downmix (por exemplo, 5.1 → Estéreo) é suportado. O upmix não está disponível.';
-
-  @override
-  String get audioChannelOriginal => 'Original';
 
   @override
   String get outputFormatLabel => 'Formato de saída';
@@ -489,6 +460,35 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get encodingModeLabel => 'Modo de codificação';
+
+  @override
+  String get encodingModeCrf => 'Qualidade (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Taxa de bits';
+
+  @override
+  String get audioChannelsLabel => 'Canais de áudio';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Original → mantém a disposição dos canais da fonte\nEstéreo → 2.0 (downmix, se necessário)\nMono → 1 canal (ficheiro mais pequeno)\n5.1 → som surround de 6 canais (apenas para fontes surround)\n\nO downmix (por exemplo, 5.1 → Estéreo) é suportado. O upmix não está disponível.';
+
+  @override
+  String get audioChannelOriginal => 'Original';
+
+  @override
+  String get targetBitrateLabel => 'Taxa de bits de destino';
+
+  @override
+  String get targetBitrateInfoTitle => 'Taxa de bits de destino';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → compressão elevada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40000 kbps ou, por exemplo, «8 Mbps»\n\nAo contrário do CRF, a qualidade pode variar entre cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de ficheiro.';
 
   @override
   String get rateAppTitle => 'Avaliar a aplicação';
@@ -741,15 +741,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get convertButton => 'Converter';
 
   @override
-  String get encodingModeLabel => 'Modo de codificação';
-
-  @override
-  String get encodingModeCrf => 'Qualidade (CRF)';
-
-  @override
-  String get encodingModeBitrate => 'Taxa de bits';
-
-  @override
   String get crfLabel => 'Qualidade do vídeo (CRF)';
 
   @override
@@ -758,16 +749,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get crfInfoContent =>
       '0 → sem perdas (arquivo muito grande)\n18 → visualmente quase sem perdas\n23 → Padrão (bom equilíbrio)\n28 → perdas visíveis de qualidade\n51 → qualidade mais baixa\n\nRecomendação: 18–28';
-
-  @override
-  String get targetBitrateLabel => 'Taxa de bits alvo';
-
-  @override
-  String get targetBitrateInfoTitle => 'Taxa de bits alvo';
-
-  @override
-  String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → compressão pesada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40.000 kbps ou, por exemplo, “8 Mbps”\n\nAo contrário do CRF, a qualidade pode variar entre as cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de arquivo.';
 
   @override
   String get resolutionLabel => 'Resolução';
@@ -814,16 +795,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get audioCodecInfoContent =>
       'AAC → padrão para MP4, melhor compatibilidade\nMP3 → amplamente utilizado, um pouco desatualizado\nOpus → moderno e eficiente, bom para MKV';
-
-  @override
-  String get audioChannelsLabel => 'Canais de áudio';
-
-  @override
-  String get audioChannelsInfoContent =>
-      'Original → mantém a configuração dos canais da fonte\nEstéreo → 2.0 (downmix se necessário)\nMono → 1 canal (arquivo menor)\n5.1 → surround de 6 canais (apenas para fontes surround)\n\nO downmix (por exemplo, 5.1 → Estéreo) é compatível. O upmix não é oferecido.';
-
-  @override
-  String get audioChannelOriginal => 'Original';
 
   @override
   String get outputFormatLabel => 'Formato de saída';
@@ -996,6 +967,35 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get encodingModeLabel => 'Modo de codificação';
+
+  @override
+  String get encodingModeCrf => 'Qualidade (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Taxa de bits';
+
+  @override
+  String get audioChannelsLabel => 'Canais de áudio';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Original → mantém a configuração dos canais da fonte\nEstéreo → 2.0 (downmix se necessário)\nMono → 1 canal (arquivo menor)\n5.1 → surround de 6 canais (apenas para fontes surround)\n\nO downmix (por exemplo, 5.1 → Estéreo) é compatível. O upmix não é oferecido.';
+
+  @override
+  String get audioChannelOriginal => 'Original';
+
+  @override
+  String get targetBitrateLabel => 'Taxa de bits alvo';
+
+  @override
+  String get targetBitrateInfoTitle => 'Taxa de bits alvo';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → compressão pesada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40.000 kbps ou, por exemplo, “8 Mbps”\n\nAo contrário do CRF, a qualidade pode variar entre as cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de arquivo.';
 
   @override
   String get rateAppTitle => 'Avalie o aplicativo';

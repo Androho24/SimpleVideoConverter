@@ -115,6 +115,22 @@ class App extends StatelessWidget {
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        localeListResolutionCallback: (locales, supported) {
+          for (final locale in locales ?? const <Locale>[]) {
+            for (final s in supported) {
+              if (s.languageCode == locale.languageCode &&
+                  s.countryCode == locale.countryCode) {
+                return s;
+              }
+            }
+          }
+          for (final locale in locales ?? const <Locale>[]) {
+            for (final s in supported) {
+              if (s.languageCode == locale.languageCode) return s;
+            }
+          }
+          return const Locale('en');
+        },
         home: const VideoConverterApp(),
       ),
     );

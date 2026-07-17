@@ -236,15 +236,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get convertButton => 'Convertir';
 
   @override
-  String get encodingModeLabel => 'Modo de codificación';
-
-  @override
-  String get encodingModeCrf => 'Calidad (CRF)';
-
-  @override
-  String get encodingModeBitrate => 'Velocidad de bits';
-
-  @override
   String get crfLabel => 'Calidad de vídeo (CRF)';
 
   @override
@@ -253,16 +244,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → sin pérdidas (archivo muy grande)\n18 → prácticamente sin pérdidas visuales\n23 → Estándar (buen equilibrio)\n28 → Pérdida de calidad visible\n51 → Calidad más baja\n\nRecomendación: 18–28';
-
-  @override
-  String get targetBitrateLabel => 'Velocidad de bits de destino';
-
-  @override
-  String get targetBitrateInfoTitle => 'Velocidad de bits de destino';
-
-  @override
-  String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → compresión intensa, mensajería\n4–8 Mbps → 1080p calidad normal/buena\n12 Mbps → 1080p alta / 4K baja calidad\n20 Mbps → calidad de streaming 4K\n\nEntrada personalizada: 500–40 000 kbps o, por ejemplo, «8 Mbps»\n\nA diferencia del CRF, la calidad puede variar entre escenas. Utiliza el CRF para obtener mejores resultados con el mismo tamaño de archivo.';
 
   @override
   String get resolutionLabel => 'Resolución';
@@ -309,16 +290,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → Estándar para MP4, mejor compatibilidad\nMP3 → Muy extendido, algo obsoleto\nOpus → Moderno y eficiente, ideal para MKV';
-
-  @override
-  String get audioChannelsLabel => 'Canales de audio';
-
-  @override
-  String get audioChannelsInfoContent =>
-      'Original → mantener la disposición de canales de la fuente\nEstéreo → 2.0 (mezcla descendente si es necesario)\nMono → 1 canal (archivo más pequeño)\n5.1 → sonido envolvente de 6 canales (solo para fuentes envolventes)\n\nLa mezcla descendente (p. ej., 5.1 → estéreo) es compatible. No se ofrece mezcla ascendente.';
-
-  @override
-  String get audioChannelOriginal => 'Original';
 
   @override
   String get outputFormatLabel => 'Formato de salida';
@@ -492,6 +463,35 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get encodingModeLabel => 'Modo de codificación';
+
+  @override
+  String get encodingModeCrf => 'Calidad (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Velocidad de bits';
+
+  @override
+  String get audioChannelsLabel => 'Canales de audio';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Original → mantener la disposición de canales de la fuente\nEstéreo → 2.0 (mezcla descendente si es necesario)\nMono → 1 canal (archivo más pequeño)\n5.1 → sonido envolvente de 6 canales (solo para fuentes envolventes)\n\nLa mezcla descendente (p. ej., 5.1 → estéreo) es compatible. No se ofrece mezcla ascendente.';
+
+  @override
+  String get audioChannelOriginal => 'Original';
+
+  @override
+  String get targetBitrateLabel => 'Velocidad de bits de destino';
+
+  @override
+  String get targetBitrateInfoTitle => 'Velocidad de bits de destino';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → compresión intensa, mensajería\n4–8 Mbps → 1080p calidad normal/buena\n12 Mbps → 1080p alta / 4K baja calidad\n20 Mbps → calidad de streaming 4K\n\nEntrada personalizada: 500–40 000 kbps o, por ejemplo, «8 Mbps»\n\nA diferencia del CRF, la calidad puede variar entre escenas. Utiliza el CRF para obtener mejores resultados con el mismo tamaño de archivo.';
 
   @override
   String get rateAppTitle => 'Valorar la aplicación';

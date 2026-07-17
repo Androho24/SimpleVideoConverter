@@ -2,472 +2,310 @@
   "@@locale": "de",
 
   "qualityLabel": "Qualität",
-  "@qualityLabel": { "description": "Label für das Qualitäts-Dropdown" },
 
   "quality2160pHigh": "2160p hoch",
-  "@quality2160pHigh": { "description": "Qualitätsstufe 2160p, hohe Qualität (CRF 18)" },
 
   "quality2160pMedium": "2160p mittel",
-  "@quality2160pMedium": { "description": "Qualitätsstufe 2160p, mittlere Qualität (CRF 23)" },
 
   "quality2160pLow": "2160p niedrig",
-  "@quality2160pLow": { "description": "Qualitätsstufe 2160p, niedrige Qualität (CRF 27)" },
 
   "quality2160pVeryLow": "2160p sehr niedrig",
-  "@quality2160pVeryLow": { "description": "Qualitätsstufe 2160p, sehr niedrige Qualität (CRF 32)" },
 
   "quality1440pHigh": "1440p hoch",
-  "@quality1440pHigh": { "description": "Qualitätsstufe 1440p, hohe Qualität (CRF 18)" },
 
   "quality1440pMedium": "1440p mittel",
-  "@quality1440pMedium": { "description": "Qualitätsstufe 1440p, mittlere Qualität (CRF 23)" },
 
   "quality1440pLow": "1440p niedrig",
-  "@quality1440pLow": { "description": "Qualitätsstufe 1440p, niedrige Qualität (CRF 27)" },
 
   "quality1440pVeryLow": "1440p sehr niedrig",
-  "@quality1440pVeryLow": { "description": "Qualitätsstufe 1440p, sehr niedrige Qualität (CRF 32)" },
 
   "quality1080pHigh": "1080p hoch",
-  "@quality1080pHigh": { "description": "Qualitätsstufe 1080p, hohe Qualität (CRF 18)" },
 
   "quality1080pMedium": "1080p mittel",
-  "@quality1080pMedium": { "description": "Qualitätsstufe 1080p, mittlere Qualität (CRF 23)" },
 
   "quality1080pLow": "1080p niedrig",
-  "@quality1080pLow": { "description": "Qualitätsstufe 1080p, niedrige Qualität (CRF 27)" },
 
   "quality1080pVeryLow": "1080p sehr niedrig",
-  "@quality1080pVeryLow": { "description": "Qualitätsstufe 1080p, sehr niedrige Qualität (CRF 32)" },
 
   "quality720pHigh": "720p hoch",
-  "@quality720pHigh": { "description": "Qualitätsstufe 720p, hohe Qualität (CRF 18)" },
 
   "quality720pMedium": "720p mittel",
-  "@quality720pMedium": { "description": "Qualitätsstufe 720p, mittlere Qualität (CRF 23)" },
 
   "quality720pLow": "720p niedrig",
-  "@quality720pLow": { "description": "Qualitätsstufe 720p, niedrige Qualität (CRF 27)" },
 
   "quality720pVeryLow": "720p sehr niedrig",
-  "@quality720pVeryLow": { "description": "Qualitätsstufe 720p, sehr niedrige Qualität (CRF 32)" },
 
   "quality480pHigh": "480p hoch",
-  "@quality480pHigh": { "description": "Qualitätsstufe 480p, hohe Qualität (CRF 18)" },
 
   "quality480pMedium": "480p mittel",
-  "@quality480pMedium": { "description": "Qualitätsstufe 480p, mittlere Qualität (CRF 23)" },
 
   "quality480pLow": "480p niedrig",
-  "@quality480pLow": { "description": "Qualitätsstufe 480p, niedrige Qualität (CRF 27)" },
 
   "quality480pVeryLow": "480p sehr niedrig",
-  "@quality480pVeryLow": { "description": "Qualitätsstufe 480p, sehr niedrige Qualität (CRF 32)" },
 
   "quality360pHigh": "360p hoch",
-  "@quality360pHigh": { "description": "Qualitätsstufe 360p, hohe Qualität (CRF 18)" },
 
   "quality360pMedium": "360p mittel",
-  "@quality360pMedium": { "description": "Qualitätsstufe 360p, mittlere Qualität (CRF 23)" },
 
   "quality360pLow": "360p niedrig",
-  "@quality360pLow": { "description": "Qualitätsstufe 360p, niedrige Qualität (CRF 27)" },
 
   "quality360pVeryLow": "360p sehr niedrig",
-  "@quality360pVeryLow": { "description": "Qualitätsstufe 360p, sehr niedrige Qualität (CRF 32)" },
 
   "mute": "Stummschalten",
-  "@mute": { "description": "Entfernt Audio vom Video" },
 
   "ok": "OK",
-  "@ok": { "description": "Bestätigungsknopf in Dialogen" },
 
   "selectVideo": "Video auswählen",
-  "@selectVideo": { "description": "Button zum Öffnen der Videogalerie" },
 
   "videoLoading": "Video wird geladen…",
-  "@videoLoading": { "description": "Ladezustand beim Öffnen des Videos" },
 
   "modeNormal": "Normal",
-  "@modeNormal": { "description": "Normal-Modus Segment" },
 
   "modeExpert": "Expert",
-  "@modeExpert": { "description": "Expert-Modus Segment" },
 
   "invalidVideoFile": "Bitte eine gültige Videodatei auswählen.",
-  "@invalidVideoFile": { "description": "Fehlermeldung ungültige Datei" },
 
   "fileLoadError": "Die Datei konnte nicht geladen werden. Bitte eine Videodatei auswählen.",
-  "@fileLoadError": { "description": "Fehlermeldung Datei laden" },
 
   "previewNotAvailable": "Vorschau nicht verfügbar. Das Video kann trotzdem konvertiert werden.",
-  "@previewNotAvailable": { "description": "Hinweis wenn Vorschau nicht möglich (z.B. Auflösung zu hoch)" },
 
   "previewNotAvailableLabel": "Vorschau nicht verfügbar\n(Auflösung zu hoch für dieses Gerät)",
-  "@previewNotAvailableLabel": { "description": "Platzhaltertext im UI wenn keine Vorschau angezeigt werden kann" },
 
   "noVideoLoaded": "Bitte zuerst ein Video laden.",
-  "@noVideoLoaded": { "description": "Hinweis wenn kein Video geladen" },
 
   "cancelConversionTitle": "Konvertierung abbrechen?",
-  "@cancelConversionTitle": { "description": "Dialog-Titel Konvertierung abbrechen" },
 
   "cancelConversionContent": "Die bisherige Verarbeitung geht verloren.",
-  "@cancelConversionContent": { "description": "Dialog-Inhalt Konvertierung abbrechen" },
 
   "continueConversion": "Weiter",
-  "@continueConversion": { "description": "Button Konvertierung fortsetzen" },
 
   "cancel": "Abbrechen",
-  "@cancel": { "description": "Allgemeiner Abbrechen-Button" },
 
   "discardVideoTitle": "Video verwerfen?",
-  "@discardVideoTitle": { "description": "Dialog-Titel Video verwerfen" },
 
   "discardVideoContent": "Das konvertierte Video wird gelöscht und nicht gespeichert.",
-  "@discardVideoContent": { "description": "Dialog-Inhalt Video verwerfen" },
 
   "keep": "Behalten",
-  "@keep": { "description": "Button Video behalten" },
 
   "discard": "Verwerfen",
-  "@discard": { "description": "Button Video verwerfen" },
 
   "save": "Speichern",
-  "@save": { "description": "Button Video speichern" },
 
   "saveVideoDialogTitle": "Video speichern",
-  "@saveVideoDialogTitle": { "description": "Titel des nativen Speichern-Dialogs" },
 
   "savedSuccess": "Gespeichert!",
-  "@savedSuccess": { "description": "Snackbar Erfolgsmeldung nach dem Speichern" },
 
   "open": "Öffnen",
-  "@open": { "description": "Snackbar-Action gespeichertes Video öffnen" },
 
   "openGallery": "Galerie öffnen",
-  "@openGallery": { "description": "Button öffnet die System-Galerie-App nach erfolgreichem Speichern" },
 
   "openVideo": "Video öffnen",
-  "@openVideo": { "description": "Button öffnet das gespeicherte Video im System-Player (mit Album-Context via MediaStore-URI)" },
 
   "autoSaveTitle": "Videos automatisch in der Galerie speichern",
-  "@autoSaveTitle": { "description": "Settings-Switch: Auto-Save für Video-Output" },
 
   "autoSaveSubtitle": "Videos werden nach der Konvertierung automatisch gespeichert.",
-  "@autoSaveSubtitle": { "description": "Erklärungstext zum Auto-Save-Switch" },
 
   "saveError": "Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.",
-  "@saveError": { "description": "Snackbar Fehler beim Speichern" },
+
   "saveErrorOutOfMemory": "Nicht genug Arbeitsspeicher zum Speichern. Versuche es mit einem kürzeren Clip oder niedrigerer Qualität.",
-  "@saveErrorOutOfMemory": { "description": "Snackbar Fehler beim Speichern – zu wenig RAM (Audio readAsBytes OOM)" },
 
   "conversionDone": "Fertig!",
-  "@conversionDone": { "description": "Statustext nach abgeschlossener Konvertierung" },
 
   "conversionProgress": "Konvertierung: {percent}%",
-  "@conversionProgress": {
-    "description": "Fortschrittstext während der Konvertierung",
-    "placeholders": {
-      "percent": { "type": "String" }
-    }
-  },
 
   "conversionFailed": "Konvertierung fehlgeschlagen: {error}",
-  "@conversionFailed": {
-    "description": "Fehlermeldung wenn Konvertierung fehlschlägt",
-    "placeholders": {
-      "error": { "type": "String" }
-    }
-  },
 
   "settingsTitle": "Einstellungen",
-  "@settingsTitle": { "description": "Titel der Einstellungsseite und Tooltip" },
 
   "licensesTitle": "Lizenzen",
-  "@licensesTitle": { "description": "Lizenzen ListTile Titel" },
 
   "licensesSubtitle": "Open-Source-Lizenzen dieser App",
-  "@licensesSubtitle": { "description": "Lizenzen ListTile Untertitel" },
 
   "gplLicenseTitle": "GPL-3.0 Lizenztext",
-  "@gplLicenseTitle": { "description": "GPL-Lizenztext ListTile Titel" },
 
   "sourceCodeTitle": "Quellcode (GitHub)",
-  "@sourceCodeTitle": { "description": "Quellcode ListTile Titel" },
 
   "privacyPolicyTitle": "Datenschutzerklärung",
-  "@privacyPolicyTitle": { "description": "Datenschutz ListTile Titel" },
 
   "adConsentTitle": "Datenschutz-Einstellungen",
-  "@adConsentTitle": { "description": "Ad Consent Settings ListTile Titel" },
 
   "imprintTitle": "Impressum",
-  "@imprintTitle": { "description": "Impressum ListTile Titel" },
 
   "linkOpenError": "Link konnte nicht geöffnet werden.",
-  "@linkOpenError": { "description": "Snackbar wenn Link nicht geöffnet werden kann" },
 
   "muteTooltip": "Stummschalten erklärt",
-  "@muteTooltip": { "description": "Tooltip am Info-Button für Stummschalten" },
 
   "muteInfoContent": "Entfernt den Ton vollständig aus dem konvertierten Video.\n\nNützlich z.B. um Hintergrundgeräusche zu entfernen oder die Dateigröße zu reduzieren.",
-  "@muteInfoContent": { "description": "Inhalt des Stummschalten-Info-Dialogs" },
 
   "estimatedSize": "Geschätzte Größe: {size} MB",
-  "@estimatedSize": {
-    "description": "Geschätzte Dateigröße unter dem Konvertieren-Button",
-    "placeholders": {
-      "size": { "type": "String" }
-    }
-  },
 
   "convertButton": "Konvertieren",
-  "@convertButton": { "description": "Haupt-Konvertieren-Button" },
 
   "encodingModeLabel": "Encoding-Modus",
-  "@encodingModeLabel": { "description": "Label für den Encoding-Modus-Toggle (CRF vs. Bitrate)" },
 
   "encodingModeCrf": "Qualität (CRF)",
-  "@encodingModeCrf": { "description": "Segment für CRF-Modus im Encoding-Toggle" },
 
   "encodingModeBitrate": "Bitrate",
-  "@encodingModeBitrate": { "description": "Segment für Bitrate-Modus im Encoding-Toggle" },
 
   "crfLabel": "Videoqualität (CRF)",
-  "@crfLabel": { "description": "Label für den CRF-Dropdown" },
 
   "crfInfoTitle": "CRF — Videoqualität",
-  "@crfInfoTitle": { "description": "Titel des CRF-Info-Dialogs" },
 
   "crfInfoContent": "0 → verlustfrei (sehr große Datei)\n18 → visuell nahezu verlustfrei\n23 → Standard (gute Balance)\n28 → sichtbare Qualitätseinbußen\n51 → niedrigste Qualität\n\nEmpfehlung: 18–28",
-  "@crfInfoContent": { "description": "Inhalt des CRF-Info-Dialogs" },
 
   "targetBitrateLabel": "Ziel-Bitrate",
-  "@targetBitrateLabel": { "description": "Label für das Ziel-Bitrate-Dropdown" },
 
   "targetBitrateInfoTitle": "Ziel-Bitrate",
-  "@targetBitrateInfoTitle": { "description": "Titel des Ziel-Bitrate-Info-Dialogs" },
 
   "targetBitrateInfoContent": "500 kbps–2 Mbps  → stark komprimiert, Messaging\n4–8 Mbps → 1080p normal/gut\n12 Mbps → 1080p hoch / 4K niedrig\n20 Mbps → 4K Streaming-Niveau\n\nManuelle Eingabe: 500–40000 kbps oder z. B. \"8 Mbps\"\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.",
-  "@targetBitrateInfoContent": { "description": "Inhalt des Ziel-Bitrate-Info-Dialogs" },
 
   "resolutionLabel": "Auflösung",
-  "@resolutionLabel": { "description": "Label für die Breite/Höhe-Felder" },
 
   "resolutionInfoTitle": "Gängige Auflösungen",
-  "@resolutionInfoTitle": { "description": "Titel des Auflösungs-Info-Dialogs" },
 
   "resolutionInfoContent": "3840 × 2160 — 4K UHD\n2560 × 1440 — 2K QHD\n1920 × 1080 — Full HD\n1280 ×  720 — HD\n 854 ×  480 — 480p\n 640 ×  360 — 360p\n 426 ×  240 — 240p\n\nTipp: Ein Feld leer lassen = das andere wird proportional berechnet.",
-  "@resolutionInfoContent": { "description": "Inhalt des Auflösungs-Info-Dialogs" },
 
   "widthLabel": "Breite",
-  "@widthLabel": { "description": "Label für das Breite-Textfeld" },
 
   "heightLabel": "Höhe",
-  "@heightLabel": { "description": "Label für das Höhe-Textfeld" },
 
   "emptyEqualsOriginal": "Leer = Original",
-  "@emptyEqualsOriginal": { "description": "Hint-Text in den Breite/Höhe-Feldern" },
 
   "fpsLabel": "FPS",
-  "@fpsLabel": { "description": "Label für die FPS-Auswahl" },
 
   "fpsInfoTitle": "Frames pro Sekunde",
-  "@fpsInfoTitle": { "description": "Titel des FPS-Info-Dialogs" },
 
   "fpsInfoContent": "Orig  → FPS des Quellvideos beibehalten\n24    → Kino-Standard\n25    → PAL/TV-Standard (Europa)\n30    → NTSC/TV, Social Media\n60    → Flüssig, Gaming, Sport",
-  "@fpsInfoContent": { "description": "Inhalt des FPS-Info-Dialogs" },
 
   "audioBitrateLabel": "Audio-Bitrate",
-  "@audioBitrateLabel": { "description": "Label für das Audio-Bitrate-Dropdown" },
 
   "silent": "Stumm",
-  "@silent": { "description": "Audio-Bitrate-Eintrag für kein Audio" },
 
   "audioBitrateInfoContent": "Stumm    → kein Audio\n64 kbps  → Sprache, Podcasts\n96 kbps  → gute Sprachqualität\n128 kbps → Standard-Musik\n192 kbps → hohe Audioqualität\n320 kbps → maximale MP3-Qualität",
-  "@audioBitrateInfoContent": { "description": "Inhalt des Audio-Bitrate-Info-Dialogs" },
 
   "audioCodecLabel": "Audio-Codec",
-  "@audioCodecLabel": { "description": "Label für die Audio-Codec-Auswahl" },
 
   "audioCodecInfoContent": "AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV\nAC3  → Dolby Digital, nur bei Surround-Quellen (≥ 3 Kanäle) verfügbar",
-  "@audioCodecInfoContent": { "description": "Inhalt des Audio-Codec-Info-Dialogs" },
 
   "audioChannelsLabel": "Audiokanäle",
-  "@audioChannelsLabel": { "description": "Label für die Audiokanal-Auswahl" },
 
   "audioChannelsInfoContent": "Original → Kanal-Layout der Quelle beibehalten\nStereo → 2.0 (Downmix falls nötig)\nMono → 1 Kanal (kleinste Datei)\n5.1 → 6-Kanal Surround (nur bei Surround-Quellen)\n\nDownmixing (z. B. 5.1 → Stereo) wird unterstützt. Upmixing wird nicht angeboten.",
-  "@audioChannelsInfoContent": { "description": "Inhalt des Audiokanal-Info-Dialogs" },
 
   "audioChannelOriginal": "Original",
-  "@audioChannelOriginal": { "description": "Audiokanal-Option: Quell-Layout beibehalten" },
 
   "outputFormatLabel": "Output-Format",
-  "@outputFormatLabel": { "description": "Label für die Output-Format-Auswahl" },
 
   "outputFormatInfoContent": "MP4 → universell, beste Kompatibilität\nMKV → flexibel, viele Codecs, weniger kompatibel\nMOV → Apple/QuickTime-Format\nAVI → veraltet, breite Kompatibilität\nTS  → MPEG Transport Stream, TV/Streaming",
-  "@outputFormatInfoContent": { "description": "Inhalt des Output-Format-Info-Dialogs" },
 
   "orig": "Orig",
-  "@orig": { "description": "FPS-Option: Original-Framerate des Quellvideos" },
 
   "resolutionExplainTitle": "Was bedeuten die Auflösungen?",
-  "@resolutionExplainTitle": { "description": "Titel des Auflösungs-Erklärungs-Dialogs in QualitySelector" },
 
   "resolutionExplainContent": "360p  (640×360)   → sehr kleine Datei,\nz.B. für WhatsApp\n\n480p  (854×480)   → Standard Definition (SD)\n\n720p  (1280×720)  → HD, gut für mobile Geräte\n\n1080p (1920×1080) → Full HD, Standard für\n                          YouTube & TV\n\nHoch/Mittel/Niedrig beschreibt die Qualität bei gleicher Auflösung — höher = größere Datei.",
-  "@resolutionExplainContent": { "description": "Inhalt des Auflösungs-Erklärungs-Dialogs" },
 
   "resolutionTooltip": "Auflösungen erklärt",
-  "@resolutionTooltip": { "description": "Tooltip am Info-Button neben dem Qualitäts-Dropdown" },
 
   "trimArea": "Trim-Bereich",
-  "@trimArea": { "description": "Label über dem Trim-Slider" },
 
   "trimStartLabel": "Anfang: {time}",
-  "@trimStartLabel": {
-    "description": "Startzeit des Trim-Bereichs",
-    "placeholders": {
-      "time": { "type": "String" }
-    }
-  },
 
   "trimEndLabel": "Ende: {time}",
-  "@trimEndLabel": {
-    "description": "Endzeit des Trim-Bereichs",
-    "placeholders": {
-      "time": { "type": "String" }
-    }
-  },
 
   "adLoading": "Werbung wird geladen…",
-  "@adLoading": { "description": "Platzhaltertext während das Native Ad lädt" },
 
   "convertedPrefix": "konvertiert_",
-  "@convertedPrefix": { "description": "Prefix für den vorausgefüllten Dateinamen im Speichern-Dialog" },
 
   "removeAdsTitle": "Werbung entfernen",
-  "@removeAdsTitle": { "description": "Titel des IAP-Eintrags im Settings-Screen" },
 
   "removeAdsSubtitle": "Einmaliger Kauf – {price}",
-  "@removeAdsSubtitle": {
-    "description": "Untertitel mit dynamischem Preis aus dem Play Store",
-    "placeholders": {
-      "price": { "type": "String" }
-    }
-  },
 
   "removeAdsActiveTitle": "Werbefrei ✓",
-  "@removeAdsActiveTitle": { "description": "Titel wenn IAP bereits gekauft wurde" },
 
   "removeAdsActiveSubtitle": "Danke für deine Unterstützung!",
-  "@removeAdsActiveSubtitle": { "description": "Untertitel wenn IAP bereits gekauft wurde" },
 
   "restorePurchasesTitle": "Kauf wiederherstellen",
-  "@restorePurchasesTitle": { "description": "Button zum Wiederherstellen eines früheren IAP-Kaufs" },
 
   "purchaseButton": "Kaufen",
-  "@purchaseButton": { "description": "Kauf-Button im Settings-Screen" },
 
   "purchaseError": "Kauf fehlgeschlagen. Bitte erneut versuchen.",
-  "@purchaseError": { "description": "Fehlermeldung bei gescheitertem IAP" },
 
   "purchaseSuccess": "Danke! Werbung wurde deaktiviert.",
-  "@purchaseSuccess": { "description": "Erfolgsmeldung nach IAP-Kauf" },
 
   "appName": "Video Konverter",
 
   "audioOnly": "Nur Audio",
-  "@audioOnly": { "description": "Switch-Label für Audio-Only-Modus" },
 
   "audioOnlyTooltip": "Nur Audio erklärt",
-  "@audioOnlyTooltip": { "description": "Tooltip am Info-Button für Nur-Audio" },
 
   "audioOnlyInfoContent": "Extrahiert nur die Audiospur aus dem Video – kein Bild.\n\nNormal-Modus: MP3 mit 192 kbps.\nExpert-Modus: Codec und Bitrate aus den Audio-Einstellungen.\n\nNützlich um z.B. Musik oder Podcasts aus Videos zu speichern.",
-  "@audioOnlyInfoContent": { "description": "Inhalt des Nur-Audio-Info-Dialogs" },
 
   "aspectLocked": "Seitenverhältnis gesperrt",
-  "@aspectLocked": { "description": "Tooltip des Seitenverhältnis-Lock-Buttons (gesperrt)" },
 
   "aspectUnlocked": "Seitenverhältnis frei",
-  "@aspectUnlocked": { "description": "Tooltip des Seitenverhältnis-Lock-Buttons (entsperrt)" },
 
   "cpuWarningTitle": "Große Datei",
-  "@cpuWarningTitle": { "description": "Titel des CPU-Warnhinweis-Dialogs bei großen Eingabedateien" },
 
   "cpuWarningContent": "Dieses Video ist länger als 5 Minuten. Auf älteren Geräten kann die Konvertierung zu hoher Prozessorauslastung führen – das ist normal.\n\nDu kannst das Handy einfach daneben legen, die App läuft im Hintergrund weiter.",
-  "@cpuWarningContent": { "description": "Inhalt des CPU-Warnhinweis-Dialogs" },
 
   "cpuWarningCheckbox": "Nicht mehr anzeigen",
-  "@cpuWarningCheckbox": { "description": "Checkbox-Label im CPU-Warnhinweis-Dialog" },
 
   "storageWarningTitle": "Nicht genug Speicherplatz",
-  "@storageWarningTitle": { "description": "Titel des Speicherplatz-Warndialogs vor der Konvertierung" },
 
   "storageWarningContent": "Dein Gerät hat nur noch {available} MB frei. Für die Konvertierung werden ca. {required} MB benötigt. Bitte gib zuerst Speicher frei.",
-  "@storageWarningContent": {
-    "description": "Inhalt des Speicherplatz-Warndialogs vor der Konvertierung",
-    "placeholders": {
-      "available": { "type": "String" },
-      "required": { "type": "String" }
-    }
-  },
 
   "feedbackTitle": "Feedback & Support",
-  "@feedbackTitle": { "description": "Titel des Feedback-Eintrags in den Einstellungen und des Screens" },
 
   "feedbackSubtitle": "Bugs, Verbesserungen oder Feedback senden",
-  "@feedbackSubtitle": { "description": "Untertitel des Feedback-Eintrags in den Einstellungen" },
 
   "feedbackCategoryLabel": "Kategorie",
-  "@feedbackCategoryLabel": { "description": "Label über dem Kategorie-Dropdown im Feedback-Screen" },
 
   "feedbackCategoryBug": "Bug melden",
-  "@feedbackCategoryBug": { "description": "Dropdown-Option: Bug-Bericht" },
 
   "feedbackCategoryFeature": "Verbesserungsvorschlag",
-  "@feedbackCategoryFeature": { "description": "Dropdown-Option: Feature-Wunsch" },
 
   "feedbackCategoryFeedback": "Allgemeines Feedback",
-  "@feedbackCategoryFeedback": { "description": "Dropdown-Option: allgemeines Feedback" },
 
   "feedbackMessageHint": "Beschreibe dein Anliegen…",
-  "@feedbackMessageHint": { "description": "Placeholder-Text im Nachrichtenfeld des Feedback-Screens" },
 
   "feedbackSendButton": "Senden",
-  "@feedbackSendButton": { "description": "Beschriftung des Senden-Buttons im Feedback-Screen" },
 
   "notificationPermissionTitle": "Hintergrundkonvertierung",
+
   "notificationPermissionContent": "Erlaube Benachrichtigungen, damit die Konvertierung weiterlaufen kann während du andere Apps nutzt. Ohne diese Berechtigung muss die App geöffnet bleiben.",
+
   "notificationPermissionNotNow": "Nicht jetzt",
+
   "notificationPermissionAllow": "Erlauben",
+
   "notificationPermissionDenied": "Aktiviere Benachrichtigungen in den Einstellungen für die Hintergrundkonvertierung.",
+
   "notificationPermissionOpenSettings": "Einstellungen",
 
   "backButton": "Zurück",
+
   "appSettingsTitle": "App-Einstellungen",
+
   "appSettingsSubtitle": "Autospeichern & Datenschutz",
+
   "openSourceTitle": "Open Source",
+
   "openSourceSubtitle": "Lizenzen & Quellcode",
+
   "openSourceLicensesTitle": "Open Source Lizenzen",
+
   "legalSectionTitle": "Rechtliches",
+
   "proSectionTitle": "Pro",
 
-    "rateAppTitle": "App bewerten",
-    "@rateAppTitle": { "description": "Settings-Eintrag, öffnet die Play-Store-Detailseite zum Bewerten" },
+  "rateAppTitle": "App bewerten",
 
-    "proHintTitle": "Werbefrei nutzen",
-    "@proHintTitle": { "description": "Titel des Pro-Hinweis-Dialogs nach mehreren Konvertierungen" },
+  "proHintTitle": "Werbefrei nutzen",
 
-    "proHintBody": "Entferne Werbung dauerhaft mit einem einmaligen Kauf. Vielen Dank für deine Unterstützung.",
-    "@proHintBody": { "description": "Text des Pro-Hinweis-Dialogs" },
+  "proHintBody": "Entferne Werbung dauerhaft mit einem einmaligen Kauf. Vielen Dank für deine Unterstützung.",
 
-    "proHintLater": "Später",
-    "@proHintLater": { "description": "Ablehnen-Button im Pro-Hinweis-Dialog" },
+  "proHintLater": "Später",
 
   "restoreError": "Käufe konnten nicht wiederhergestellt werden. Der Play Store ist gerade nicht erreichbar – bitte erneut versuchen.",
-  "@restoreError": { "description": "Fehlermeldung wenn restorePurchases scheitert (BillingClient nicht verbunden)" },
-  "restoreNoPurchases": "Keine früheren Käufe gefunden.",
-  "@restoreNoPurchases": { "description": "Neutraler Hinweis nach restorePurchases, wenn nichts wiederherzustellen ist" }
 
+  "restoreNoPurchases": "Keine früheren Käufe gefunden."
 }

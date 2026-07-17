@@ -231,15 +231,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get convertButton => 'Převést';
 
   @override
-  String get encodingModeLabel => 'Režim kódování';
-
-  @override
-  String get encodingModeCrf => 'Kvalita (CRF)';
-
-  @override
-  String get encodingModeBitrate => 'Datový tok';
-
-  @override
   String get crfLabel => 'Kvalita videa (CRF)';
 
   @override
@@ -248,16 +239,6 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → bezztrátové (velmi velký soubor)\n18 → vizuálně téměř bezztrátové\n23 → standardní (dobrá rovnováha)\n28 → viditelné ztráty kvality\n51 → nejnižší kvalita\n\nDoporučení: 18–28';
-
-  @override
-  String get targetBitrateLabel => 'Cílová přenosová rychlost';
-
-  @override
-  String get targetBitrateInfoTitle => 'Cílová přenosová rychlost';
-
-  @override
-  String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → silná komprese, zasílání zpráv\n4–8 Mbps → 1080p normální/dobrá kvalita\n12 Mbps → 1080p vysoká / 4K nízká kvalita\n20 Mbps → kvalita streamování 4K\n\nVlastní zadání: 500–40000 kbps nebo např. „8 Mbps“\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF.';
 
   @override
   String get resolutionLabel => 'Rozlišení';
@@ -304,16 +285,6 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → standard pro MP4, nejlepší kompatibilita\nMP3 → široce rozšířený, mírně zastaralý\nOpus → moderní a efektivní, vhodný pro MKV';
-
-  @override
-  String get audioChannelsLabel => 'Zvukové kanály';
-
-  @override
-  String get audioChannelsInfoContent =>
-      'Originální → zachovat rozložení zdrojových kanálů\nStereo → 2.0 (v případě potřeby downmix)\nMono → 1 kanál (nejmenší soubor)\n5.1 → 6kanálový prostorový zvuk (pouze pro prostorové zdroje)\n\nDownmix (např. 5.1 → Stereo) je podporován. Upmix není k dispozici.';
-
-  @override
-  String get audioChannelOriginal => 'Původní';
 
   @override
   String get outputFormatLabel => 'Výstupní formát';
@@ -486,6 +457,35 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get encodingModeLabel => 'Režim kódování';
+
+  @override
+  String get encodingModeCrf => 'Kvalita (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Datový tok';
+
+  @override
+  String get audioChannelsLabel => 'Zvukové kanály';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Originální → zachovat rozložení zdrojových kanálů\nStereo → 2.0 (v případě potřeby downmix)\nMono → 1 kanál (nejmenší soubor)\n5.1 → 6kanálový prostorový zvuk (pouze pro prostorové zdroje)\n\nDownmix (např. 5.1 → Stereo) je podporován. Upmix není k dispozici.';
+
+  @override
+  String get audioChannelOriginal => 'Původní';
+
+  @override
+  String get targetBitrateLabel => 'Cílová přenosová rychlost';
+
+  @override
+  String get targetBitrateInfoTitle => 'Cílová přenosová rychlost';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → silná komprese, zasílání zpráv\n4–8 Mbps → 1080p normální/dobrá kvalita\n12 Mbps → 1080p vysoká / 4K nízká kvalita\n20 Mbps → kvalita streamování 4K\n\nVlastní zadání: 500–40000 kbps nebo např. „8 Mbps“\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF.';
 
   @override
   String get rateAppTitle => 'Ohodnotit aplikaci';

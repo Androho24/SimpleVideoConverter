@@ -234,15 +234,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get convertButton => 'Konversi';
 
   @override
-  String get encodingModeLabel => 'Mode Pengkodean';
-
-  @override
-  String get encodingModeCrf => 'Kualitas (CRF)';
-
-  @override
-  String get encodingModeBitrate => 'Laju bit';
-
-  @override
   String get crfLabel => 'Kualitas Video (CRF)';
 
   @override
@@ -251,16 +242,6 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get crfInfoContent =>
       '0 → tanpa kehilangan kualitas (file sangat besar)\n18 → hampir tanpa kehilangan kualitas secara visual\n23 → Standar (keseimbangan yang baik)\n28 → penurunan kualitas yang terlihat\n51 → kualitas terendah\n\nRekomendasi: 18–28';
-
-  @override
-  String get targetBitrateLabel => 'Bitrate Tujuan';
-
-  @override
-  String get targetBitrateInfoTitle => 'Bitrate Tujuan';
-
-  @override
-  String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → kompresi tinggi, pesan\n4–8 Mbps → 1080p kualitas normal/baik\n12 Mbps → 1080p kualitas tinggi / 4K kualitas rendah\n20 Mbps → kualitas streaming 4K\n\nEntri kustom: 500–40000 kbps atau misalnya \"8 Mbps\"\n\nTidak seperti CRF, kualitas dapat bervariasi antar adegan. Gunakan CRF untuk hasil yang lebih baik pada ukuran file yang sama.';
 
   @override
   String get resolutionLabel => 'Resolusi';
@@ -307,16 +288,6 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get audioCodecInfoContent =>
       'AAC → Standar untuk MP4, kompatibilitas terbaik\nMP3 → sangat umum, agak ketinggalan zaman\nOpus → modern & efisien, cocok untuk MKV';
-
-  @override
-  String get audioChannelsLabel => 'Saluran audio';
-
-  @override
-  String get audioChannelsInfoContent =>
-      'Asli → pertahankan tata letak saluran sumber\nStereo → 2.0 (downmix jika diperlukan)\nMono → 1 saluran (file terkecil)\n5.1 → surround 6 saluran (hanya untuk sumber surround)\n\nDownmixing (mis. 5.1 → Stereo) didukung. Upmixing tidak ditawarkan.';
-
-  @override
-  String get audioChannelOriginal => 'Asli';
 
   @override
   String get outputFormatLabel => 'Format Keluaran';
@@ -487,6 +458,35 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get proSectionTitle => 'Pro';
+
+  @override
+  String get encodingModeLabel => 'Mode Pengkodean';
+
+  @override
+  String get encodingModeCrf => 'Kualitas (CRF)';
+
+  @override
+  String get encodingModeBitrate => 'Laju bit';
+
+  @override
+  String get audioChannelsLabel => 'Saluran audio';
+
+  @override
+  String get audioChannelsInfoContent =>
+      'Asli → pertahankan tata letak saluran sumber\nStereo → 2.0 (downmix jika diperlukan)\nMono → 1 saluran (file terkecil)\n5.1 → surround 6 saluran (hanya untuk sumber surround)\n\nDownmixing (mis. 5.1 → Stereo) didukung. Upmixing tidak ditawarkan.';
+
+  @override
+  String get audioChannelOriginal => 'Asli';
+
+  @override
+  String get targetBitrateLabel => 'Bitrate Tujuan';
+
+  @override
+  String get targetBitrateInfoTitle => 'Bitrate Tujuan';
+
+  @override
+  String get targetBitrateInfoContent =>
+      '500 kbps–2 Mbps  → kompresi tinggi, pesan\n4–8 Mbps → 1080p kualitas normal/baik\n12 Mbps → 1080p kualitas tinggi / 4K kualitas rendah\n20 Mbps → kualitas streaming 4K\n\nEntri kustom: 500–40000 kbps atau misalnya \"8 Mbps\"\n\nTidak seperti CRF, kualitas dapat bervariasi antar adegan. Gunakan CRF untuk hasil yang lebih baik pada ukuran file yang sama.';
 
   @override
   String get rateAppTitle => 'Beri Peringkat Aplikasi';
