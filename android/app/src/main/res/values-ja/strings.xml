@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">動画コンバーター</string>
+    <string name="notification_converting">変換中…</string>
+    <string name="notification_done_title">変換が完了しました</string>
+    <string name="notification_done_tap">タップして保存または破棄</string>
+    <string name="notification_channel_progress">変換の進行状況</string>
+    <string name="notification_channel_done">変換完了</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Відеоконвертер</string>
+    <string name="notification_converting">Конвертація…</string>
+    <string name="notification_done_title">Конвертацію завершено</string>
+    <string name="notification_done_tap">Торкніться, щоб зберегти або відкинути</string>
+    <string name="notification_channel_progress">Хід конвертації</string>
+    <string name="notification_channel_done">Конвертацію завершено</string>
+</resources>

@@ -5,5 +5,5 @@
     <string name="notification_done_title">Konvertierung abgeschlossen</string>
     <string name="notification_done_tap">Tippen Sie hier, um zu speichern oder zu verwerfen</string>
     <string name="notification_channel_progress">Konvertierungsfortschritt</string>
-    <string name="notification_channel_done">Wird konvertiert…</string>
+    <string name="notification_channel_done">Konvertierung fertig</string>
 </resources>
