@@ -26,9 +26,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   String _subjectFor(String category, AppLocalizations l) {
     return switch (category) {
-      'bug'      => '[Bug] Video Converter',
-      'feature'  => '[Feature Request] Video Converter',
-      _          => '[Feedback] Video Converter',
+      'bug' => '[Bug] Video Converter',
+      'feature' => '[Feature Request] Video Converter',
+      _ => '[Feedback] Video Converter',
     };
   }
 
@@ -39,13 +39,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     final l = AppLocalizations.of(context)!;
     final subject = Uri.encodeComponent(_subjectFor(_category, l));
     final body = Uri.encodeComponent(text);
-    final uri = Uri.parse('mailto:info@androho.com?subject=$subject&body=$body');
+    final uri = Uri.parse(
+      'mailto:info@androho.com?subject=$subject&body=$body',
+    );
 
     if (!await launchUrl(uri)) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l.linkOpenError)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l.linkOpenError)));
       }
     }
   }
@@ -74,12 +76,22 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               decoration: InputDecoration(
                 labelText: l.feedbackCategoryLabel,
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               items: [
-                DropdownMenuItem(value: 'bug',      child: Text(l.feedbackCategoryBug)),
-                DropdownMenuItem(value: 'feature',  child: Text(l.feedbackCategoryFeature)),
-                DropdownMenuItem(value: 'feedback', child: Text(l.feedbackCategoryFeedback)),
+                DropdownMenuItem(
+                  value: 'bug',
+                  child: Text(l.feedbackCategoryBug),
+                ),
+                DropdownMenuItem(
+                  value: 'feature',
+                  child: Text(l.feedbackCategoryFeature),
+                ),
+                DropdownMenuItem(
+                  value: 'feedback',
+                  child: Text(l.feedbackCategoryFeedback),
+                ),
               ],
               onChanged: (v) => setState(() => _category = v ?? 'bug'),
             ),
@@ -92,7 +104,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               decoration: InputDecoration(
                 hintText: l.feedbackMessageHint,
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 alignLabelWithHint: true,
               ),
             ),

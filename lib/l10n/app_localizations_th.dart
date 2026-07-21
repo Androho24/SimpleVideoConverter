@@ -167,6 +167,19 @@ class AppLocalizationsTh extends AppLocalizations {
   String get autoSaveSubtitle => 'ววิดีโอจะถูกบันทึกโดยอัตโนมัติหลังจากการแปลง';
 
   @override
+  String get videoCodecTitle => 'โคเดกวิดีโอ';
+
+  @override
+  String get videoCodecSubtitle => 'โคเดกวิดีโอสำหรับการแปลงในโหมดปกติ';
+
+  @override
+  String get videoCodecInfoTitle => 'H.264 หรือ H.265/HEVC?';
+
+  @override
+  String get videoCodecInfoContent =>
+      'H.264 รองรับการใช้งานได้กว้างที่สุดและโดยทั่วไปแปลงได้เร็วกว่า\n\nH.265/HEVC สามารถสร้างไฟล์ที่เล็กลงโดยมีคุณภาพภาพใกล้เคียงกัน แต่ใช้เวลาแปลงนานกว่า อุปกรณ์หรือแอปรุ่นเก่าอาจไม่สามารถเล่นผลลัพธ์ได้\n\nตัวเข้ารหัสทั้งสองรวมอยู่ในแอปและไม่ขึ้นอยู่กับโคเดกที่ติดตั้งในอุปกรณ์';
+
+  @override
   String get saveError =>
       'เกิดข้อผิดพลาดในการบันทึก อาจมีพื้นที่จัดเก็บไม่เพียงพอ';
 
@@ -282,15 +295,36 @@ class AppLocalizationsTh extends AppLocalizations {
   String get audioCodecLabel => 'โคเดกเสียง';
 
   @override
+  String get expertVideoCodecInfoContent =>
+      'H.264 → รองรับได้ดีที่สุดและมักแปลงได้เร็วกว่า\nH.265 → ไฟล์เล็กลงที่คุณภาพใกล้เคียงกัน แต่ช้ากว่า\nVP9 → โคเดกแบบเปิดที่มีประสิทธิภาพสำหรับ WebM และ MKV การเข้ารหัสด้วยซอฟต์แวร์ช้ากว่า\nXvid → โคเดก MPEG-4 รุ่นเก่าสำหรับ AVI และเครื่องเล่นรุ่นเก่า\n\nรูปแบบเอาต์พุตที่ใช้ได้ขึ้นอยู่กับโคเดกวิดีโอและเสียงที่เลือก';
+
+  @override
+  String get xvidLegacyLabel => 'Xvid (รุ่นเก่า)';
+
+  @override
   String get audioCodecInfoContent =>
-      'AAC → มาตรฐานสำหรับ MP4, รองรับได้ดีที่สุด\nMP3 → ใช้กันอย่างแพร่หลาย, ค่อนข้างเก่า\nOpus → ทันสมัยและมีประสิทธิภาพ, เหมาะสำหรับ MKV';
+      'AAC → มาตรฐานสำหรับ MP4, รองรับได้ดีที่สุด\nMP3 → โคเดกรุ่นเก่าที่ใช้กันแพร่หลาย\nOpus → ทันสมัยและมีประสิทธิภาพ เหมาะสำหรับ WebM และ MKV\nAC3 → Dolby Digital สำหรับแหล่งเสียงรอบทิศทางเท่านั้น (≥ 3 ช่อง)\nVorbis → โคเดกแบบเปิดสำหรับ WebM และ MKV\n\nรูปแบบเอาต์พุตที่ไม่เข้ากันจะถูกปิดใช้งานโดยอัตโนมัติ';
 
   @override
   String get outputFormatLabel => 'รูปแบบเอาต์พุต';
 
   @override
   String get outputFormatInfoContent =>
-      'MP4 → ใช้งานได้ทั่วไป, รองรับได้ดีที่สุด\nMKV → ยืดหยุ่น, รองรับโคเดกหลากหลาย, แต่เข้ากันได้น้อยกว่า\nMOV → รูปแบบของ Apple/QuickTime\nAVI → รูปแบบเก่า, รองรับได้กว้าง\nTS → MPEG transport stream, ใช้กับทีวี/สตรีมมิง';
+      'MP4 → ใช้งานได้ทั่วไป รองรับได้ดีที่สุด\nMKV → คอนเทนเนอร์ยืดหยุ่นสำหรับโคเดกทั้งหมดที่มี\nMOV → เวิร์กโฟลว์ Apple/QuickTime\nAVI → รูปแบบรุ่นเก่าที่ใช้ Xvid\nMPEG-TS → ทรานสปอร์ตสตรีมสำหรับทีวีและสตรีมมิง\nWebM → รูปแบบเว็บสมัยใหม่ที่ใช้ VP9 กับ Opus หรือ Vorbis\n\nรูปแบบที่ไม่เข้ากันจะแสดงแบบจาง เมื่อเลือก โคเดกวิดีโอเริ่มต้นและโคเดกเสียงที่เข้ากันได้จะถูกตั้งค่าอัตโนมัติหากจำเป็น';
+
+  @override
+  String compatibleFormatsHint(
+    String videoCodec,
+    String audioCodec,
+    String formats,
+  ) {
+    return '$videoCodec + $audioCodec รองรับโดย: $formats';
+  }
+
+  @override
+  String outputFormatAdjusted(String format) {
+    return 'เปลี่ยนรูปแบบเอาต์พุตเป็น $format แล้ว';
+  }
 
   @override
   String get orig => 'ต้นฉบับ';

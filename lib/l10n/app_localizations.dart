@@ -439,6 +439,30 @@ abstract class AppLocalizations {
   /// **'Videos are saved automatically after conversion.'**
   String get autoSaveSubtitle;
 
+  /// Titel der Video-Codec-Auswahl in den App-Einstellungen
+  ///
+  /// In en, this message translates to:
+  /// **'Video codec'**
+  String get videoCodecTitle;
+
+  /// Untertitel der Video-Codec-Auswahl
+  ///
+  /// In en, this message translates to:
+  /// **'Video codec for conversions in normal mode'**
+  String get videoCodecSubtitle;
+
+  /// Titel des Info-Dialogs zur Video-Codec-Auswahl
+  ///
+  /// In en, this message translates to:
+  /// **'H.264 or H.265/HEVC?'**
+  String get videoCodecInfoTitle;
+
+  /// Erklärung der Unterschiede zwischen H.264 und H.265/HEVC
+  ///
+  /// In en, this message translates to:
+  /// **'H.264 offers the best compatibility and usually converts faster.\n\nH.265/HEVC can produce smaller files at comparable visual quality, but conversion takes longer. Older devices or apps may not be able to play the result.\n\nBoth encoders are included in the app and do not depend on codecs installed on the device.'**
+  String get videoCodecInfoContent;
+
   /// Snackbar Fehler beim Speichern
   ///
   /// In en, this message translates to:
@@ -643,10 +667,22 @@ abstract class AppLocalizations {
   /// **'Audio codec'**
   String get audioCodecLabel;
 
+  /// Erklärung der Video-Codecs im Expertenmodus
+  ///
+  /// In en, this message translates to:
+  /// **'H.264 → best compatibility and usually faster\nH.265 → smaller files at comparable quality, slower\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.'**
+  String get expertVideoCodecInfoContent;
+
+  /// Label des Xvid-Codecs im Expertenmodus
+  ///
+  /// In en, this message translates to:
+  /// **'Xvid (Legacy)'**
+  String get xvidLegacyLabel;
+
   /// Inhalt des Audio-Codec-Info-Dialogs
   ///
   /// In en, this message translates to:
-  /// **'AAC  → standard for MP4, best compatibility\nMP3  → widely used, slightly outdated\nOpus → modern & efficient, great for MKV\nAC3  → Dolby Digital, shown only for surround sources (≥ 3 channels)'**
+  /// **'AAC → standard for MP4, best compatibility\nMP3 → widely used legacy codec\nOpus → modern and efficient, ideal for WebM and MKV\nAC3 → Dolby Digital, shown only for surround sources (≥ 3 channels)\nVorbis → open codec for WebM and MKV\n\nIncompatible output formats are disabled automatically.'**
   String get audioCodecInfoContent;
 
   /// Label für die Output-Format-Auswahl
@@ -658,8 +694,24 @@ abstract class AppLocalizations {
   /// Inhalt des Output-Format-Info-Dialogs
   ///
   /// In en, this message translates to:
-  /// **'MP4 → universal, best compatibility\nMKV → flexible, many codecs, less compatible\nMOV → Apple/QuickTime format\nAVI → outdated, broad compatibility\nTS  → MPEG transport stream, TV/streaming'**
+  /// **'MP4 → universal, best compatibility\nMKV → flexible container for all offered codecs\nMOV → Apple/QuickTime workflows\nAVI → legacy format using Xvid\nMPEG-TS → TV and streaming transport stream\nWebM → modern web format using VP9 with Opus or Vorbis\n\nIncompatible formats appear dimmed. Selecting one automatically applies its default video codec and, if needed, a compatible audio codec.'**
   String get outputFormatInfoContent;
+
+  /// Hinweis auf kompatible Container
+  ///
+  /// In en, this message translates to:
+  /// **'{videoCodec} + {audioCodec} is supported by: {formats}'**
+  String compatibleFormatsHint(
+    String videoCodec,
+    String audioCodec,
+    String formats,
+  );
+
+  /// Snackbar nach automatischem Containerwechsel
+  ///
+  /// In en, this message translates to:
+  /// **'Output format changed to {format}.'**
+  String outputFormatAdjusted(String format);
 
   /// FPS-Option: Original-Framerate des Quellvideos
   ///

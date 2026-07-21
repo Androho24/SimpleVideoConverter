@@ -35,10 +35,7 @@ class ConvertSection extends StatelessWidget {
         title: Text(l.mute),
         content: Text(l.muteInfoContent),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.ok),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l.ok)),
         ],
       ),
     );
@@ -52,10 +49,7 @@ class ConvertSection extends StatelessWidget {
         title: Text(l.audioOnly),
         content: Text(l.audioOnlyInfoContent),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.ok),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l.ok)),
         ],
       ),
     );
@@ -73,9 +67,11 @@ class ConvertSection extends StatelessWidget {
               Text(l.mute),
               const SizedBox(width: 2),
               IconButton(
-                icon: Icon(Icons.info_outline,
-                    size: 16,
-                    color: Theme.of(context).colorScheme.outline),
+                icon: Icon(
+                  Icons.info_outline,
+                  size: 16,
+                  color: Theme.of(context).colorScheme.outline,
+                ),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
                 tooltip: l.muteTooltip,
@@ -95,9 +91,11 @@ class ConvertSection extends StatelessWidget {
             Text(l.audioOnly),
             const SizedBox(width: 2),
             IconButton(
-              icon: Icon(Icons.info_outline,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.outline),
+              icon: Icon(
+                Icons.info_outline,
+                size: 16,
+                color: Theme.of(context).colorScheme.outline,
+              ),
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               tooltip: l.audioOnlyTooltip,
@@ -110,7 +108,7 @@ class ConvertSection extends StatelessWidget {
             ),
           ],
         ),
-        if (estimatedSizeMb != null && !isAudioOnly)
+        if (estimatedSizeMb != null)
           Text(
             l.estimatedSize(estimatedSizeMb!.toStringAsFixed(1)),
             style: Theme.of(context).textTheme.bodyMedium,

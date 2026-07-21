@@ -12,7 +12,9 @@ class OpenSourceScreen extends StatelessWidget {
   const OpenSourceScreen({super.key});
 
   static final _gplUrl = Uri.parse('https://www.gnu.org/licenses/gpl-3.0.html');
-  static final _githubUrl = Uri.parse('https://github.com/Androho24/SimpleVideoConverter');
+  static final _githubUrl = Uri.parse(
+    'https://github.com/Androho24/SimpleVideoConverter',
+  );
 
   Future<void> _openUrl(BuildContext context, Uri url) async {
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
@@ -45,8 +47,10 @@ class OpenSourceScreen extends StatelessWidget {
             title: Text(l.openSourceLicensesTitle),
             subtitle: Text(l.licensesSubtitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const LicenseListScreen())),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const LicenseListScreen()),
+            ),
           ),
           const Divider(),
           ListTile(

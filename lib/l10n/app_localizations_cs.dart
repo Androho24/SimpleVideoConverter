@@ -169,6 +169,19 @@ class AppLocalizationsCs extends AppLocalizations {
   String get autoSaveSubtitle => 'Videa se po převodu ukládají automaticky.';
 
   @override
+  String get videoCodecTitle => 'Video kodek';
+
+  @override
+  String get videoCodecSubtitle => 'Video kodek pro převody v normálním režimu';
+
+  @override
+  String get videoCodecInfoTitle => 'H.264 nebo H.265/HEVC?';
+
+  @override
+  String get videoCodecInfoContent =>
+      'H.264 nabízí nejlepší kompatibilitu a převod je obvykle rychlejší.\n\nH.265/HEVC může při srovnatelné kvalitě obrazu vytvářet menší soubory, převod však trvá déle. Starší zařízení nebo aplikace nemusí výsledné video přehrát.\n\nOba enkodéry jsou součástí aplikace a nezávisí na kodecích nainstalovaných v zařízení.';
+
+  @override
   String get saveError => 'Chyba při ukládání. Možná nemáte dostatek místa.';
 
   @override
@@ -283,15 +296,36 @@ class AppLocalizationsCs extends AppLocalizations {
   String get audioCodecLabel => 'Audio kodek';
 
   @override
+  String get expertVideoCodecInfoContent =>
+      'H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.';
+
+  @override
+  String get xvidLegacyLabel => 'Xvid (starší)';
+
+  @override
   String get audioCodecInfoContent =>
-      'AAC → standard pro MP4, nejlepší kompatibilita\nMP3 → široce rozšířený, mírně zastaralý\nOpus → moderní a efektivní, vhodný pro MKV';
+      'AAC → standard pro MP4, nejlepší kompatibilita\nMP3 → široce používaný starší kodek\nOpus → moderní a efektivní, ideální pro WebM a MKV\nAC3 → Dolby Digital, pouze pro zdroje s prostorovým zvukem (≥ 3 kanály)\nVorbis → otevřený kodek pro WebM a MKV\n\nNekompatibilní výstupní formáty se automaticky deaktivují.';
 
   @override
   String get outputFormatLabel => 'Výstupní formát';
 
   @override
   String get outputFormatInfoContent =>
-      'MP4 → univerzální, nejlepší kompatibilita\nMKV → flexibilní, mnoho kodeků, méně kompatibilní\nMOV → formát Apple/QuickTime\nAVI → zastaralý, široká kompatibilita\nTS → MPEG Transport Stream, TV/streamování';
+      'MP4 → univerzální, nejlepší kompatibilita\nMKV → flexibilní kontejner pro všechny nabízené kodeky\nMOV → pracovní postupy Apple/QuickTime\nAVI → starší formát s Xvid\nMPEG-TS → transportní proud pro TV a streamování\nWebM → moderní webový formát s VP9 a Opus nebo Vorbis\n\nNekompatibilní formáty jsou zobrazeny ztlumeně. Při výběru se automaticky nastaví výchozí video kodek a v případě potřeby kompatibilní audio kodek.';
+
+  @override
+  String compatibleFormatsHint(
+    String videoCodec,
+    String audioCodec,
+    String formats,
+  ) {
+    return 'Kombinaci $videoCodec + $audioCodec podporují: $formats';
+  }
+
+  @override
+  String outputFormatAdjusted(String format) {
+    return 'Výstupní formát byl změněn na $format.';
+  }
 
   @override
   String get orig => 'Orig';

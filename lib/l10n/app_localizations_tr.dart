@@ -172,6 +172,20 @@ class AppLocalizationsTr extends AppLocalizations {
       'Videolar dönüştürüldükten sonra otomatik olarak kaydedilir.';
 
   @override
+  String get videoCodecTitle => 'Video codec bileşeni';
+
+  @override
+  String get videoCodecSubtitle =>
+      'Normal moddaki dönüştürmeler için video kodeği';
+
+  @override
+  String get videoCodecInfoTitle => 'H.264 mü, H.265/HEVC mi?';
+
+  @override
+  String get videoCodecInfoContent =>
+      'H.264 en iyi uyumluluğu sunar ve genellikle daha hızlı dönüştürülür.\n\nH.265/HEVC, benzer görüntü kalitesinde daha küçük dosyalar oluşturabilir ancak dönüştürme daha uzun sürer. Eski cihazlar veya uygulamalar sonucu oynatamayabilir.\n\nHer iki kodlayıcı da uygulamaya dahildir ve cihazda yüklü codec bileşenlerine bağlı değildir.';
+
+  @override
   String get saveError =>
       'Kaydetme hatası. Yeterli depolama alanı olmayabilir.';
 
@@ -287,15 +301,36 @@ class AppLocalizationsTr extends AppLocalizations {
   String get audioCodecLabel => 'Ses Kodek';
 
   @override
+  String get expertVideoCodecInfoContent =>
+      'H.264 → en iyi uyumluluk ve genellikle daha hızlı dönüşüm\nH.265 → benzer kalitede daha küçük dosyalar, daha yavaş\nVP9 → WebM ve MKV için verimli açık kodek, yazılımsal kodlama daha yavaş\nXvid → AVI ve eski oynatıcılar için eski MPEG-4 kodeği\n\nKullanılabilir çıkış formatları seçilen video ve ses kodeklerine bağlıdır.';
+
+  @override
+  String get xvidLegacyLabel => 'Xvid (eski)';
+
+  @override
   String get audioCodecInfoContent =>
-      'AAC → MP4 için standart, en iyi uyumluluk\nMP3 → yaygın olarak kullanılır, biraz eski\nOpus → modern ve verimli, MKV için iyi';
+      'AAC → MP4 için standart, en iyi uyumluluk\nMP3 → yaygın kullanılan eski kodek\nOpus → modern ve verimli, WebM ve MKV için ideal\nAC3 → Dolby Digital, yalnızca surround kaynaklar için (≥ 3 kanal)\nVorbis → WebM ve MKV için açık kodek\n\nUyumsuz çıkış formatları otomatik olarak devre dışı bırakılır.';
 
   @override
   String get outputFormatLabel => 'Çıkış Formatı';
 
   @override
   String get outputFormatInfoContent =>
-      'MP4 → evrensel, en iyi uyumluluk\nMKV → esnek, çok sayıda kodek, daha az uyumlu\nMOV → Apple/QuickTime formatı\nAVI → modası geçmiş, geniş uyumluluk\nTS → MPEG Aktarım Akışı, TV/Akış';
+      'MP4 → evrensel, en iyi uyumluluk\nMKV → sunulan tüm kodekler için esnek kapsayıcı\nMOV → Apple/QuickTime iş akışları\nAVI → Xvid kullanan eski format\nMPEG-TS → TV ve akış için aktarım akışı\nWebM → VP9 ile Opus veya Vorbis kullanan modern web formatı\n\nUyumsuz formatlar soluk gösterilir. Seçildiğinde varsayılan video kodeği ve gerekirse uyumlu bir ses kodeği otomatik olarak ayarlanır.';
+
+  @override
+  String compatibleFormatsHint(
+    String videoCodec,
+    String audioCodec,
+    String formats,
+  ) {
+    return '$videoCodec + $audioCodec şunlar tarafından desteklenir: $formats';
+  }
+
+  @override
+  String outputFormatAdjusted(String format) {
+    return 'Çıkış formatı $format olarak değiştirildi.';
+  }
 
   @override
   String get orig => 'Orig';

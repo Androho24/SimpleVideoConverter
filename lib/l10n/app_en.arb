@@ -157,6 +157,18 @@
   "autoSaveSubtitle": "Videos are saved automatically after conversion.",
   "@autoSaveSubtitle": {"description": "Erklärungstext zum Auto-Save-Switch"},
 
+  "videoCodecTitle": "Video codec",
+  "@videoCodecTitle": {"description": "Titel der Video-Codec-Auswahl in den App-Einstellungen"},
+
+  "videoCodecSubtitle": "Video codec for conversions in normal mode",
+  "@videoCodecSubtitle": {"description": "Untertitel der Video-Codec-Auswahl"},
+
+  "videoCodecInfoTitle": "H.264 or H.265/HEVC?",
+  "@videoCodecInfoTitle": {"description": "Titel des Info-Dialogs zur Video-Codec-Auswahl"},
+
+  "videoCodecInfoContent": "H.264 offers the best compatibility and usually converts faster.\n\nH.265/HEVC can produce smaller files at comparable visual quality, but conversion takes longer. Older devices or apps may not be able to play the result.\n\nBoth encoders are included in the app and do not depend on codecs installed on the device.",
+  "@videoCodecInfoContent": {"description": "Erklärung der Unterschiede zwischen H.264 und H.265/HEVC"},
+
   "saveError": "Error saving. There may not be enough storage space.",
   "@saveError": {"description": "Snackbar Fehler beim Speichern"},
 
@@ -259,14 +271,26 @@
   "audioCodecLabel": "Audio codec",
   "@audioCodecLabel": {"description": "Label für die Audio-Codec-Auswahl"},
 
-  "audioCodecInfoContent": "AAC  → standard for MP4, best compatibility\nMP3  → widely used, slightly outdated\nOpus → modern & efficient, great for MKV\nAC3  → Dolby Digital, shown only for surround sources (≥ 3 channels)",
+  "expertVideoCodecInfoContent": "H.264 → best compatibility and usually faster\nH.265 → smaller files at comparable quality, slower\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.",
+  "@expertVideoCodecInfoContent": {"description": "Erklärung der Video-Codecs im Expertenmodus"},
+
+  "xvidLegacyLabel": "Xvid (Legacy)",
+  "@xvidLegacyLabel": {"description": "Label des Xvid-Codecs im Expertenmodus"},
+
+  "audioCodecInfoContent": "AAC → standard for MP4, best compatibility\nMP3 → widely used legacy codec\nOpus → modern and efficient, ideal for WebM and MKV\nAC3 → Dolby Digital, shown only for surround sources (≥ 3 channels)\nVorbis → open codec for WebM and MKV\n\nIncompatible output formats are disabled automatically.",
   "@audioCodecInfoContent": {"description": "Inhalt des Audio-Codec-Info-Dialogs"},
 
   "outputFormatLabel": "Output format",
   "@outputFormatLabel": {"description": "Label für die Output-Format-Auswahl"},
 
-  "outputFormatInfoContent": "MP4 → universal, best compatibility\nMKV → flexible, many codecs, less compatible\nMOV → Apple/QuickTime format\nAVI → outdated, broad compatibility\nTS  → MPEG transport stream, TV/streaming",
+  "outputFormatInfoContent": "MP4 → universal, best compatibility\nMKV → flexible container for all offered codecs\nMOV → Apple/QuickTime workflows\nAVI → legacy format using Xvid\nMPEG-TS → TV and streaming transport stream\nWebM → modern web format using VP9 with Opus or Vorbis\n\nIncompatible formats appear dimmed. Selecting one automatically applies its default video codec and, if needed, a compatible audio codec.",
   "@outputFormatInfoContent": {"description": "Inhalt des Output-Format-Info-Dialogs"},
+
+  "compatibleFormatsHint": "{videoCodec} + {audioCodec} is supported by: {formats}",
+  "@compatibleFormatsHint": {"description": "Hinweis auf kompatible Container", "placeholders": {"videoCodec": {"type": "String"}, "audioCodec": {"type": "String"}, "formats": {"type": "String"}}},
+
+  "outputFormatAdjusted": "Output format changed to {format}.",
+  "@outputFormatAdjusted": {"description": "Snackbar nach automatischem Containerwechsel", "placeholders": {"format": {"type": "String"}}},
 
   "orig": "Orig",
   "@orig": {"description": "FPS-Option: Original-Framerate des Quellvideos"},

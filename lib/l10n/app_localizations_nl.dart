@@ -171,6 +171,20 @@ class AppLocalizationsNl extends AppLocalizations {
       'Video\'s worden na conversie automatisch opgeslagen.';
 
   @override
+  String get videoCodecTitle => 'Videocodec';
+
+  @override
+  String get videoCodecSubtitle =>
+      'Videocodec voor conversies in de normale modus';
+
+  @override
+  String get videoCodecInfoTitle => 'H.264 of H.265/HEVC?';
+
+  @override
+  String get videoCodecInfoContent =>
+      'H.264 biedt de beste compatibiliteit en converteert meestal sneller.\n\nH.265/HEVC kan bij een vergelijkbare beeldkwaliteit kleinere bestanden maken, maar de conversie duurt langer. Oudere apparaten of apps kunnen het resultaat mogelijk niet afspelen.\n\nBeide encoders zijn in de app opgenomen en zijn niet afhankelijk van codecs die op het apparaat zijn geïnstalleerd.';
+
+  @override
   String get saveError =>
       'Fout bij opslaan. Mogelijk onvoldoende opslagruimte.';
 
@@ -286,15 +300,36 @@ class AppLocalizationsNl extends AppLocalizations {
   String get audioCodecLabel => 'Audiocodec';
 
   @override
+  String get expertVideoCodecInfoContent =>
+      'H.264 → beste compatibiliteit en meestal sneller\nH.265 → kleinere bestanden bij vergelijkbare kwaliteit, langzamer\nVP9 → efficiënte open codec voor WebM en MKV, tragere software-encoding\nXvid → oudere MPEG-4-codec voor AVI en oude spelers\n\nDe beschikbare uitvoerformaten hangen af van de gekozen video- en audiocodecs.';
+
+  @override
+  String get xvidLegacyLabel => 'Xvid (legacy)';
+
+  @override
   String get audioCodecInfoContent =>
-      'AAC → Standaard voor MP4, beste compatibiliteit\nMP3 → wijdverspreid, enigszins verouderd\nOpus → modern & efficiënt, goed voor MKV';
+      'AAC → standaard voor MP4, beste compatibiliteit\nMP3 → veelgebruikte legacy-codec\nOpus → modern en efficiënt, ideaal voor WebM en MKV\nAC3 → Dolby Digital, alleen voor surroundbronnen (≥ 3 kanalen)\nVorbis → open codec voor WebM en MKV\n\nNiet-compatibele uitvoerformaten worden automatisch uitgeschakeld.';
 
   @override
   String get outputFormatLabel => 'Uitvoerformaat';
 
   @override
   String get outputFormatInfoContent =>
-      'MP4 → universeel, beste compatibiliteit\nMKV → flexibel, veel codecs, minder compatibel\nMOV → Apple/QuickTime-formaat\nAVI → verouderd, brede compatibiliteit\nTS → MPEG Transport Stream, tv/streaming';
+      'MP4 → universeel, beste compatibiliteit\nMKV → flexibele container voor alle aangeboden codecs\nMOV → Apple/QuickTime-workflows\nAVI → legacy-formaat met Xvid\nMPEG-TS → transportstream voor tv en streaming\nWebM → modern webformaat met VP9 en Opus of Vorbis\n\nNiet-compatibele formaten worden gedimd weergegeven. Bij selectie worden automatisch de standaardvideocodec en, indien nodig, een compatibele audiocodec ingesteld.';
+
+  @override
+  String compatibleFormatsHint(
+    String videoCodec,
+    String audioCodec,
+    String formats,
+  ) {
+    return '$videoCodec + $audioCodec wordt ondersteund door: $formats';
+  }
+
+  @override
+  String outputFormatAdjusted(String format) {
+    return 'Het uitvoerformaat is gewijzigd in $format.';
+  }
 
   @override
   String get orig => 'Orig';

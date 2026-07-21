@@ -105,6 +105,14 @@
 
   "autoSaveSubtitle": "Videos werden nach der Konvertierung automatisch gespeichert.",
 
+  "videoCodecTitle": "Video-Codec",
+
+  "videoCodecSubtitle": "Video-Codec für Konvertierungen im normalen Modus",
+
+  "videoCodecInfoTitle": "H.264 oder H.265/HEVC?",
+
+  "videoCodecInfoContent": "H.264 bietet die beste Kompatibilität und wird meist schneller konvertiert.\n\nH.265/HEVC kann bei vergleichbarer Bildqualität kleinere Dateien erzeugen, benötigt aber länger. Ältere Geräte oder Apps können das Ergebnis möglicherweise nicht abspielen.\n\nBeide Encoder sind in der App enthalten und unabhängig von den auf dem Gerät installierten Codecs.",
+
   "saveError": "Fehler beim Speichern. Möglicherweise nicht genug Speicherplatz.",
 
   "saveErrorOutOfMemory": "Nicht genug Arbeitsspeicher zum Speichern. Versuche es mit einem kürzeren Clip oder niedrigerer Qualität.",
@@ -185,7 +193,11 @@
 
   "audioCodecLabel": "Audio-Codec",
 
-  "audioCodecInfoContent": "AAC  → Standard für MP4, beste Kompatibilität\nMP3  → weit verbreitet, leicht veraltet\nOpus → modern & effizient, gut für MKV\nAC3  → Dolby Digital, nur bei Surround-Quellen (≥ 3 Kanäle) verfügbar",
+  "expertVideoCodecInfoContent": "H.264 → beste Kompatibilität und meist schneller\nH.265 → kleinere Dateien bei vergleichbarer Qualität, langsamer\nVP9 → effizienter offener Codec für WebM und MKV, langsames Software-Encoding\nXvid → älterer MPEG-4-Codec für AVI und Legacy-Player\n\nDie verfügbaren Output-Formate richten sich nach dem gewählten Video- und Audio-Codec.",
+
+  "xvidLegacyLabel": "Xvid (Legacy)",
+
+  "audioCodecInfoContent": "AAC → Standard für MP4, beste Kompatibilität\nMP3 → weit verbreiteter Legacy-Codec\nOpus → modern und effizient, ideal für WebM und MKV\nAC3 → Dolby Digital, nur bei Surround-Quellen (≥ 3 Kanäle) verfügbar\nVorbis → offener Codec für WebM und MKV\n\nNicht kompatible Output-Formate werden automatisch deaktiviert.",
 
   "audioChannelsLabel": "Audiokanäle",
 
@@ -195,7 +207,11 @@
 
   "outputFormatLabel": "Output-Format",
 
-  "outputFormatInfoContent": "MP4 → universell, beste Kompatibilität\nMKV → flexibel, viele Codecs, weniger kompatibel\nMOV → Apple/QuickTime-Format\nAVI → veraltet, breite Kompatibilität\nTS  → MPEG Transport Stream, TV/Streaming",
+  "outputFormatInfoContent": "MP4 → universell, beste Kompatibilität\nMKV → flexibler Container für alle angebotenen Codecs\nMOV → Apple-/QuickTime-Workflows\nAVI → Legacy-Format mit Xvid\nMPEG-TS → Transportstrom für TV und Streaming\nWebM → modernes Webformat mit VP9 und Opus oder Vorbis\n\nNicht kompatible Formate werden gedimmt dargestellt. Bei der Auswahl werden der Standard-Video-Codec und, falls nötig, ein passender Audio-Codec automatisch eingestellt.",
+
+  "compatibleFormatsHint": "{videoCodec} + {audioCodec} wird unterstützt von: {formats}",
+
+  "outputFormatAdjusted": "Output-Format wurde auf {format} geändert.",
 
   "orig": "Orig",
 

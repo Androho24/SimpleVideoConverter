@@ -10,9 +10,10 @@
 # explizite Pakete für jedes verwendete Plugin.
 -keep class ** implements io.flutter.embedding.engine.plugins.FlutterPlugin { *; }
 
-# Flutter / Google Mobile Ads / UMP / Billing / Play-Services
+# Flutter / Google Mobile Ads Next-Gen / UMP / Billing
 -keep class io.flutter.** { *; }
--keep class com.google.android.gms.ads.** { *; }
+-keep class io.flutter.plugins.googlemobileads.** { *; }
+-keep class com.google.android.libraries.ads.mobile.sdk.** { *; }
 -keep class com.google.android.ump.** { *; }
 -keep class com.android.billingclient.** { *; }
 
@@ -22,9 +23,9 @@
 -keep class com.baseflow.permissionhandler.** { *; }             # permission_handler
 -keep class com.mr.flutter.plugin.filepicker.** { *; }           # file_picker
 -keep class com.piccmaq.disk_space_plus.** { *; }                # disk_space_plus
--keep class dev.fluttercommunity.plus.** { *; }                  # share_plus, package_info_plus
+-keep class dev.fluttercommunity.plus.** { *; }                  # package_info_plus
 -keep class dev.britannio.in_app_review.** { *; }                # in_app_review
--keep class io.flutter.plugins.** { *; }                         # firebase_*, image_picker, video_player, url_launcher, path_provider, shared_preferences, in_app_purchase, googlemobileads, webview
+-keep class io.flutter.plugins.** { *; }                         # firebase_*, image_picker, video_player, url_launcher, path_provider, shared_preferences, in_app_purchase
 
 # Reflection-Attribute für Plugins, die @Keep / generische Typen / Annotations nutzen.
 -keepattributes Signature,InnerClasses,EnclosingMethod,*Annotation*,SourceFile,LineNumberTable

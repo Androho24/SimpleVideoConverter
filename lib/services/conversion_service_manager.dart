@@ -11,8 +11,9 @@ import 'package:flutter/services.dart';
 /// "Fertig"-Notification. Alle Methoden sind no-ops wenn der Service nicht
 /// läuft oder die Plattform kein Android ist.
 class ConversionServiceManager {
-  static const _channel =
-      MethodChannel('com.androho.simplevideoconverter/conversion_service');
+  static const _channel = MethodChannel(
+    'com.androho.simplevideoconverter/conversion_service',
+  );
 
   static bool _running = false;
   static DateTime? _lastProgressSent;
@@ -69,7 +70,9 @@ class ConversionServiceManager {
     _running = false;
     _lastProgressSent = null;
     try {
-      await _channel.invokeMethod<void>('showCompletion', {'fileName': fileName});
+      await _channel.invokeMethod<void>('showCompletion', {
+        'fileName': fileName,
+      });
     } catch (_) {}
   }
 }

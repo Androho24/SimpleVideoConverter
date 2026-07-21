@@ -6,17 +6,17 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/converter_screen.dart';
+import 'services/ads_service.dart';
 import 'services/purchase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  AdsService.configure();
   SystemChrome.setSystemUIOverlayStyle(_systemUiOverlayStyle);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await MobileAds.instance.initialize();
   await PurchaseService.initialize();
 
   // Alle Flutter-Fehler an Crashlytics weiterleiten
@@ -27,10 +27,14 @@ void main() async {
     // - MissingPluginException aus dem ffmpeg_kit-Channel: tritt auf, wenn ein
     //   nativer FFmpeg-Komplettierungs-Callback nach Engine-Detach feuert.
     //   Die App selbst läuft weiter; ein "Fatal Crash" wäre irreführend.
-    final isTransientPluginError = error is MissingPluginException ||
+    final isTransientPluginError =
+        error is MissingPluginException ||
         (error is PlatformException && error.code == 'channel-error');
-    FirebaseCrashlytics.instance
-        .recordError(error, stack, fatal: !isTransientPluginError);
+    FirebaseCrashlytics.instance.recordError(
+      error,
+      stack,
+      fatal: !isTransientPluginError,
+    );
     return true;
   };
 

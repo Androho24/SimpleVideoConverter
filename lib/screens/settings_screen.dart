@@ -27,8 +27,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   StreamSubscription<bool>? _proSub;
   StreamSubscription<String>? _errorSub;
 
-  static final _privacyDe = Uri.parse('https://www.androho.com/datenschutz/video-converter/');
-  static final _privacyEn = Uri.parse('https://www.androho.com/privacy-policy/video-converter/');
+  static final _privacyDe = Uri.parse(
+    'https://www.androho.com/datenschutz/video-converter/',
+  );
+  static final _privacyEn = Uri.parse(
+    'https://www.androho.com/privacy-policy/video-converter/',
+  );
   static final _impressumDe = Uri.parse('https://www.androho.com/impressum/');
   static final _impressumEn = Uri.parse('https://www.androho.com/imprint/');
 
@@ -136,9 +140,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
           widget.onNavigate?.call(index);
         },
         destinations: [
-          NavigationDestination(icon: const Icon(Icons.tune), label: l.modeNormal),
-          NavigationDestination(icon: const Icon(Icons.settings_applications), label: l.modeExpert),
-          NavigationDestination(icon: const Icon(Icons.settings_outlined), label: l.settingsTitle),
+          NavigationDestination(
+            icon: const Icon(Icons.tune),
+            label: l.modeNormal,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.settings_applications),
+            label: l.modeExpert,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.settings_outlined),
+            label: l.settingsTitle,
+          ),
         ],
       ),
       body: ListView(
@@ -148,8 +161,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text(l.feedbackTitle),
             subtitle: Text(l.feedbackSubtitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const FeedbackScreen())),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const FeedbackScreen()),
+            ),
           ),
           const Divider(),
           ListTile(
@@ -164,8 +179,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text(l.appSettingsTitle),
             subtitle: Text(l.appSettingsSubtitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const AppSettingsScreen())),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AppSettingsScreen()),
+            ),
           ),
           _sectionHeader(l.legalSectionTitle),
           ListTile(
@@ -187,15 +204,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text(l.openSourceTitle),
             subtitle: Text(l.openSourceSubtitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const OpenSourceScreen())),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const OpenSourceScreen()),
+            ),
           ),
 
           _sectionHeader(l.proSectionTitle),
           if (_isPro)
             ListTile(
-              leading: Icon(Icons.check_circle_outline,
-                  color: Theme.of(context).colorScheme.primary),
+              leading: Icon(
+                Icons.check_circle_outline,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               title: Text(l.removeAdsActiveTitle),
               subtitle: Text(l.removeAdsActiveSubtitle),
             )

@@ -5,11 +5,11 @@ import android.app.Application
 import android.content.Context
 
 /**
- * Interface für Consent- und MobileAds-Initialisierung.
+ * Interface für den nativen UMP-Consent-Flow.
  *
  * Hinweis: Die frühere App-Open-Ad (App-Start-Ad) wurde entfernt. Der Manager
- * verwaltet nur noch den UMP-Consent-Flow, die MobileAds-Initialisierung und das
- * Privacy-Options-Formular — beides wird für die Flutter-Native-Ads benötigt.
+ * verwaltet nur noch den UMP-Consent-Flow und das Privacy-Options-Formular.
+ * Die Next-Gen-SDK-Initialisierung erfolgt anschließend in Flutter.
  */
 interface AppOpenAdManager {
 
@@ -17,20 +17,14 @@ interface AppOpenAdManager {
     fun initialize(application: Application)
 
     /**
-     * Führt den UMP-Consent-Flow durch und initialisiert danach MobileAds.
+     * Führt den UMP-Consent-Flow durch und meldet, ob Anzeigen erlaubt sind.
      * Bei Pro-Nutzern wird der Consent-Flow übersprungen.
      */
-    fun requestConsentAndInitialize(activity: Activity, onReady: () -> Unit)
-
-    /**
-     * Initialisiert MobileAds nach abgeschlossenem Consent.
-     * Idempotent: Bei bereits erfolgter Initialisierung sofortiger Callback.
-     */
-    fun initializeMobileAds(canShowAds: Boolean, onInitialized: () -> Unit)
+    fun requestConsent(activity: Activity, onReady: (canRequestAds: Boolean) -> Unit)
 
     /** Gibt zurück ob der User seinen Datenschutz-Consent anpassen kann (EU/CCPA). */
     fun isPrivacyOptionsRequired(context: Context): Boolean
 
     /** Zeigt das UMP Privacy Options Formular (für Settings-Screen). */
-    fun showPrivacyOptionsForm(activity: Activity, onDone: () -> Unit)
+    fun showPrivacyOptionsForm(activity: Activity, onDone: (canRequestAds: Boolean) -> Unit)
 }

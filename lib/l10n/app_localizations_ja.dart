@@ -165,6 +165,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get autoSaveSubtitle => '動画は変換後に自動的に保存されます。';
 
   @override
+  String get videoCodecTitle => '動画コーデック';
+
+  @override
+  String get videoCodecSubtitle => '通常モードの動画変換に使用するコーデック';
+
+  @override
+  String get videoCodecInfoTitle => 'H.264 と H.265/HEVC の違い';
+
+  @override
+  String get videoCodecInfoContent =>
+      'H.264 は互換性が最も高く、通常はより速く変換できます。\n\nH.265/HEVC は同等の画質でファイルを小さくできますが、変換に時間がかかります。古い端末やアプリでは変換後の動画を再生できない場合があります。\n\nどちらのエンコーダーもアプリに含まれているため、端末にインストールされているコーデックには依存しません。';
+
+  @override
   String get saveError => '保存中にエラーが発生しました。空き容量が不足している可能性があります。';
 
   @override
@@ -279,15 +292,36 @@ class AppLocalizationsJa extends AppLocalizations {
   String get audioCodecLabel => 'オーディオコーデック';
 
   @override
+  String get expertVideoCodecInfoContent =>
+      'H.264 → 互換性が最も高く、通常は高速\nH.265 → 同等品質でファイルが小さいが低速\nVP9 → WebMとMKV向けの高効率なオープンコーデック。ソフトウェアエンコードは低速\nXvid → AVIや古いプレーヤー向けの旧式MPEG-4コーデック\n\n利用できる出力形式は、選択した映像・音声コーデックに応じて変わります。';
+
+  @override
+  String get xvidLegacyLabel => 'Xvid（レガシー）';
+
+  @override
   String get audioCodecInfoContent =>
-      'AAC  → MP4の標準規格、互換性が最も高い \n MP3  → 広く普及しているが、やや時代遅れ \n Opus → 最新かつ高効率、MKVに最適 \n AC3  → ドルビーデジタル、サラウンド音源（3チャンネル以上）でのみ利用可能';
+      'AAC → MP4の標準、最高の互換性\nMP3 → 広く使われる旧式コーデック\nOpus → 最新で高効率、WebMとMKVに最適\nAC3 → Dolby Digital、サラウンド音源（3チャンネル以上）のみ\nVorbis → WebMとMKV向けのオープンコーデック\n\n互換性のない出力形式は自動的に無効になります。';
 
   @override
   String get outputFormatLabel => '出力形式';
 
   @override
   String get outputFormatInfoContent =>
-      'MP4 → 汎用性が高く、互換性が最も優れている \n MKV → 柔軟性が高く、多くのコーデックに対応しているが、互換性は比較的低い \n MOV → Apple/QuickTime形式 \n AVI → 旧式だが、幅広い互換性がある \n TS  → MPEGトランスポートストリーム、テレビ/ストリーミング用';
+      'MP4 → 汎用、最高の互換性\nMKV → 提供する全コーデックに対応する柔軟なコンテナ\nMOV → Apple/QuickTimeワークフロー\nAVI → Xvidを使うレガシー形式\nMPEG-TS → テレビ・配信用トランスポートストリーム\nWebM → VP9とOpusまたはVorbisを使う最新Web形式\n\n互換性のない形式は薄く表示されます。選択すると、既定の映像コーデックと、必要に応じて対応する音声コーデックが自動的に設定されます。';
+
+  @override
+  String compatibleFormatsHint(
+    String videoCodec,
+    String audioCodec,
+    String formats,
+  ) {
+    return '$videoCodec + $audioCodec の対応形式: $formats';
+  }
+
+  @override
+  String outputFormatAdjusted(String format) {
+    return '出力形式を$formatに変更しました。';
+  }
 
   @override
   String get orig => 'オリジナル';

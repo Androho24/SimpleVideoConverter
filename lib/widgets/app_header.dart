@@ -12,9 +12,9 @@ class AppHeader extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
     return Text(
       l.appName,
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        fontWeight: FontWeight.bold,
-      ),
+      style: Theme.of(
+        context,
+      ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
     );
   }
 }

@@ -170,6 +170,20 @@ class AppLocalizationsHi extends AppLocalizations {
       'परिवर्तन के बाद वीडियो स्वचालित रूप से सहेजे जाते हैं।';
 
   @override
+  String get videoCodecTitle => 'वीडियो कोडेक';
+
+  @override
+  String get videoCodecSubtitle =>
+      'सामान्य मोड में कन्वर्ज़न के लिए वीडियो कोडेक';
+
+  @override
+  String get videoCodecInfoTitle => 'H.264 या H.265/HEVC?';
+
+  @override
+  String get videoCodecInfoContent =>
+      'H.264 सबसे अच्छी संगतता देता है और आम तौर पर तेज़ी से कन्वर्ट होता है।\n\nH.265/HEVC समान चित्र गुणवत्ता पर छोटी फ़ाइलें बना सकता है, लेकिन कन्वर्ज़न में अधिक समय लगता है। पुराने डिवाइस या ऐप परिणाम को चलाने में सक्षम नहीं हो सकते।\n\nदोनों एनकोडर ऐप में शामिल हैं और डिवाइस पर इंस्टॉल किए गए कोडेक पर निर्भर नहीं हैं।';
+
+  @override
   String get saveError =>
       'सहेजने में त्रुटि। संभवतः पर्याप्त भंडारण स्थान नहीं है।';
 
@@ -285,15 +299,36 @@ class AppLocalizationsHi extends AppLocalizations {
   String get audioCodecLabel => 'ऑडियो कोडेक';
 
   @override
+  String get expertVideoCodecInfoContent =>
+      'H.264 → सर्वोत्तम संगतता और आम तौर पर तेज़ कन्वर्ज़न\nH.265 → समान गुणवत्ता पर छोटी फ़ाइलें, लेकिन धीमा\nVP9 → WebM और MKV के लिए कुशल ओपन कोडेक, सॉफ़्टवेयर एन्कोडिंग धीमी\nXvid → AVI और पुराने प्लेयर के लिए पुराना MPEG-4 कोडेक\n\nउपलब्ध आउटपुट प्रारूप चुने गए वीडियो और ऑडियो कोडेक पर निर्भर करते हैं।';
+
+  @override
+  String get xvidLegacyLabel => 'Xvid (पुराना)';
+
+  @override
   String get audioCodecInfoContent =>
-      'AAC → MP4 के लिए मानक, सर्वोत्तम संगतता\nMP3 → व्यापक रूप से उपयोग किया जाता है, थोड़ा पुराना\nOpus → आधुनिक और कुशल, MKV के लिए अच्छा';
+      'AAC → MP4 के लिए मानक, सर्वोत्तम संगतता\nMP3 → व्यापक रूप से उपयोग किया जाने वाला पुराना कोडेक\nOpus → आधुनिक और कुशल, WebM और MKV के लिए आदर्श\nAC3 → Dolby Digital, केवल सराउंड स्रोतों के लिए (≥ 3 चैनल)\nVorbis → WebM और MKV के लिए ओपन कोडेक\n\nअसंगत आउटपुट प्रारूप अपने आप निष्क्रिय हो जाते हैं।';
 
   @override
   String get outputFormatLabel => 'आउटपुट प्रारूप';
 
   @override
   String get outputFormatInfoContent =>
-      'MP4 → सार्वभौमिक, सर्वोत्तम संगतता\nMKV → लचीला, कई कोडेक, कम संगत\nMOV → Apple/QuickTime प्रारूप\nAVI → पुराना, व्यापक संगतता\nTS → MPEG ट्रांसपोर्ट स्ट्रीम, टीवी/स्ट्रीमिंग';
+      'MP4 → सार्वभौमिक, सर्वोत्तम संगतता\nMKV → सभी उपलब्ध कोडेक के लिए लचीला कंटेनर\nMOV → Apple/QuickTime वर्कफ़्लो\nAVI → Xvid वाला पुराना प्रारूप\nMPEG-TS → टीवी और स्ट्रीमिंग ट्रांसपोर्ट स्ट्रीम\nWebM → VP9 और Opus या Vorbis वाला आधुनिक वेब प्रारूप\n\nअसंगत प्रारूप हल्के दिखाई देते हैं। किसी को चुनने पर उसका डिफ़ॉल्ट वीडियो कोडेक और, यदि ज़रूरी हो, एक संगत ऑडियो कोडेक स्वचालित रूप से सेट हो जाता है।';
+
+  @override
+  String compatibleFormatsHint(
+    String videoCodec,
+    String audioCodec,
+    String formats,
+  ) {
+    return '$videoCodec + $audioCodec इनके द्वारा समर्थित है: $formats';
+  }
+
+  @override
+  String outputFormatAdjusted(String format) {
+    return 'आउटपुट प्रारूप $format में बदल दिया गया।';
+  }
 
   @override
   String get orig => 'मूल';

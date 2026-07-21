@@ -2,7 +2,6 @@ package com.androho.simplevideoconverter
 
 import android.app.Application
 import android.util.Log
-import android.view.LayoutInflater
 import com.androho.simplevideoconverter.ads.AppOpenAdManager
 import com.androho.simplevideoconverter.ads.AppOpenAdManagerImpl
 import com.androho.simplevideoconverter.ads.ConsentModeHelper
@@ -10,7 +9,6 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 import io.flutter.plugins.GeneratedPluginRegistrant
-import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
 
 class SimpleVideoConverterApplication : Application() {
 
@@ -48,25 +46,6 @@ class SimpleVideoConverterApplication : Application() {
 
         val engine = FlutterEngine(this)
         GeneratedPluginRegistrant.registerWith(engine)
-
-        // NativeAdFactory an die Engine-Lebensdauer binden, NICHT an den
-        // Activity-Lifecycle. Die Engine ist prozess-weit gecacht und Dart läuft
-        // weiter, während keine Activity attached ist (App im Hintergrund). Würde
-        // die Factory beim Activity-Detach abgemeldet, crasht ein Ad-Load aus dem
-        // NativeAdPreloader mit "No NativeAdFactory with id: nativeAd". Hier
-        // einmalig registriert, lebt sie so lange wie die Engine.
-        // GeneratedPluginRegistrant schluckt Konstruktor-Fehler des GMA-Plugins
-        // still (z. B. wenn Play Services fehlen) → try/catch gegen die dann
-        // geworfene IllegalStateException.
-        try {
-            GoogleMobileAdsPlugin.registerNativeAdFactory(
-                engine,
-                "nativeAd",
-                NativeAdFactoryImpl(LayoutInflater.from(this))
-            )
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to register NativeAdFactory", e)
-        }
 
         engine.dartExecutor.executeDartEntrypoint(
             DartExecutor.DartEntrypoint.createDefault()

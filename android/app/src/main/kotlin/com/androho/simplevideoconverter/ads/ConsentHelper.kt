@@ -8,11 +8,11 @@ import com.google.android.ump.UserMessagingPlatform
 /**
  * Verwaltet den GDPR/CCPA-Einwilligungsfluss via Google UMP SDK.
  *
- * Muss vor MobileAds.initialize() aufgerufen werden (Google-Anforderung).
+ * Muss vor der Next-Gen-SDK-Initialisierung aufgerufen werden.
  * Wird von der MainActivity gestartet, da ein Activity-Kontext benötigt wird.
  *
- * Fehler-Strategie: Bei jedem Fehler wird onDone(canShowAds=true) aufgerufen,
- * damit der Ad-Flow nicht blockiert wird.
+ * Bei einem Update-Fehler wird ausschließlich der zuletzt gecachte UMP-Status
+ * verwendet; ohne gültigen Status werden keine Ads angefragt.
  */
 object ConsentHelper {
 
@@ -68,9 +68,9 @@ object ConsentHelper {
                 }
             },
             { requestConsentError ->
-                // onConsentInfoUpdateFailure - fortfahren damit Ad-Flow nicht blockiert wird
+                // Nur mit einem bereits gültigen, gecachten Consent fortfahren.
                 Log.w(TAG, "ConsentInfoUpdate fehlgeschlagen: ${requestConsentError.errorCode} - ${requestConsentError.message}")
-                onDone(true)
+                onDone(consentInformation.canRequestAds())
             }
         )
     }

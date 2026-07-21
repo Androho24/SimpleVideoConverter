@@ -3,8 +3,13 @@
 
 class VideoMetadata {
   final int durationMs;
+
+  /// Sichtbare Breite nach Rotation, auf quadratische Pixel normiert.
   final int width;
+
+  /// Sichtbare Höhe nach Rotation, auf quadratische Pixel normiert.
   final int height;
+
   final int audioChannels; // 0 = unbekannt, ≥3 = Surround
 
   const VideoMetadata({

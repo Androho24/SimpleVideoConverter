@@ -57,9 +57,10 @@ class ConversionScreen extends StatefulWidget {
   State<ConversionScreen> createState() => _ConversionScreenState();
 }
 
-class _ConversionScreenState extends State<ConversionScreen> with WidgetsBindingObserver {
+class _ConversionScreenState extends State<ConversionScreen>
+    with WidgetsBindingObserver {
   double _progress = 0.0;
-  double _speed = 0.0;    // Encoding-Geschwindigkeit (z.B. 1.8 = 1.8× Echtzeit)
+  double _speed = 0.0; // Encoding-Geschwindigkeit (z.B. 1.8 = 1.8× Echtzeit)
   int _outputSizeBytes = 0;
   bool _isDone = false;
   bool _isCancelled = false;
@@ -95,14 +96,16 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
     await PreferencesService.incrementNotificationDeniedHintCount();
     if (!mounted) return;
     final l = AppLocalizations.of(context)!;
-    final controller = ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(l.notificationPermissionDenied),
-      duration: const Duration(seconds: 3),
-      action: SnackBarAction(
-        label: l.notificationPermissionOpenSettings,
-        onPressed: openAppSettings,
+    final controller = ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(l.notificationPermissionDenied),
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: l.notificationPermissionOpenSettings,
+          onPressed: openAppSettings,
+        ),
       ),
-    ));
+    );
     Future.delayed(const Duration(seconds: 3), controller.close);
   }
 
@@ -155,7 +158,9 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
       if (_outputSizeBytes < 1024 * 1024) {
         parts.add('${(_outputSizeBytes / 1024).toStringAsFixed(0)} KB');
       } else {
-        parts.add('${(_outputSizeBytes / (1024 * 1024)).toStringAsFixed(1)} MB');
+        parts.add(
+          '${(_outputSizeBytes / (1024 * 1024)).toStringAsFixed(1)} MB',
+        );
       }
     }
 
@@ -178,10 +183,12 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
           _outputSizeBytes = stats.getSize();
         });
       }
-      unawaited(ConversionServiceManager.updateProgress(
-        (p * 100).round(),
-        _buildStatsLine(),
-      ));
+      unawaited(
+        ConversionServiceManager.updateProgress(
+          (p * 100).round(),
+          _buildStatsLine(),
+        ),
+      );
     });
 
     FFmpegKit.executeAsync(widget.command, (session) async {
@@ -224,11 +231,13 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
         // (GPS-Standort, Aufnahmezeit, Gerätemodell). Die on-device-SnackBar unten
         // zeigt weiterhin den Roh-Log (eigene Daten des Nutzers, kein Datenschutz-
         // Thema).
-        unawaited(FirebaseCrashlytics.instance.recordError(
-          Exception('FFmpeg conversion failed'),
-          null,
-          reason: _sanitizeFfmpegLog(log),
-        ));
+        unawaited(
+          FirebaseCrashlytics.instance.recordError(
+            Exception('FFmpeg conversion failed'),
+            null,
+            reason: _sanitizeFfmpegLog(log),
+          ),
+        );
         if (mounted) {
           final l = AppLocalizations.of(context)!;
           final shortLog = log.substring(0, min(300, log.length));
@@ -321,10 +330,7 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(l.saveError),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text(l.saveError), backgroundColor: Colors.red),
         );
       }
     }
@@ -342,14 +348,16 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
         bytes = await File(_currentOutputPath).readAsBytes();
       } on OutOfMemoryError {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(l.saveErrorOutOfMemory),
-            backgroundColor: Colors.red,
-          ));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l.saveErrorOutOfMemory),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
         return;
       }
-      final savedPath = await FilePicker.platform.saveFile(
+      final savedPath = await FilePicker.saveFile(
         bytes: bytes,
         fileName: widget.defaultFileName,
         type: FileType.audio,
@@ -378,10 +386,7 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(l.saveError),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text(l.saveError), backgroundColor: Colors.red),
         );
       }
     }
@@ -410,26 +415,30 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
             children: [
               // Native Ad — kompakter als zuvor (flex 1 statt 2), damit
               // die zwei Open-Buttons nach dem Speichern Platz haben.
-              const Expanded(
-                flex: 1,
-                child: NativeAdWidget(),
-              ),
+              const Expanded(flex: 1, child: NativeAdWidget()),
 
               // Fortschritt
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 32,
+                ),
                 child: Column(
                   children: [
-                    Builder(builder: (context) {
-                      final l = AppLocalizations.of(context)!;
-                      return Text(
-                        _isDone
-                            ? l.conversionDone
-                            : l.conversionProgress((_progress * 100).toStringAsFixed(0)),
-                        style: Theme.of(context).textTheme.titleMedium,
-                        textAlign: TextAlign.center,
-                      );
-                    }),
+                    Builder(
+                      builder: (context) {
+                        final l = AppLocalizations.of(context)!;
+                        return Text(
+                          _isDone
+                              ? l.conversionDone
+                              : l.conversionProgress(
+                                  (_progress * 100).toStringAsFixed(0),
+                                ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          textAlign: TextAlign.center,
+                        );
+                      },
+                    ),
                     const SizedBox(height: 12),
                     LinearProgressIndicator(value: _progress),
                     // Stats-Zeile: nur bei Videos > 30s und sobald Speed-Daten vorliegen
@@ -450,7 +459,8 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
               // Buttons
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                child: Builder(builder: (context) {
+                child: Builder(
+                  builder: (context) {
                     final l = AppLocalizations.of(context)!;
                     if (_isSaved) {
                       return Row(
@@ -465,7 +475,9 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
                                 } catch (_) {}
                               },
                               style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
                               ),
                             ),
                           ),
@@ -479,17 +491,30 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
                                 // System-Galerie zeigt das Video mit Album-Context
                                 // (Back-Press landet im "Video Converter"-Album).
                                 // Fallback: Cache-Datei direkt im Player öffnen.
-                                final fileName = _currentOutputPath.split('/').last;
-                                final ok = await GalleryService.viewSavedVideo(fileName);
+                                final fileName = _currentOutputPath
+                                    .split('/')
+                                    .last;
+                                final ok = await GalleryService.viewSavedVideo(
+                                  fileName,
+                                );
                                 if (ok) return;
                                 try {
-                                  await OpenFilex.open(_currentOutputPath, type: 'video/*');
+                                  await OpenFilex.open(
+                                    _currentOutputPath,
+                                    type: 'video/*',
+                                  );
                                 } catch (_) {}
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context).colorScheme.primary,
-                                foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.primary,
+                                foregroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimary,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
                               ),
                             ),
                           ),
@@ -512,9 +537,15 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
                               label: Text(l.save),
                               onPressed: _onSavePressed,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context).colorScheme.primary,
-                                foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.primary,
+                                foregroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimary,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
                               ),
                             ),
                           ),
@@ -525,12 +556,15 @@ class _ConversionScreenState extends State<ConversionScreen> with WidgetsBinding
                       onPressed: _onCancelPressed,
                       style: OutlinedButton.styleFrom(
                         foregroundColor: Theme.of(context).colorScheme.error,
-                        side: BorderSide(color: Theme.of(context).colorScheme.error),
+                        side: BorderSide(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
                       child: Text(l.cancel),
                     );
-                  }),
+                  },
+                ),
               ),
             ],
           ),

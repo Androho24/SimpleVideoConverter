@@ -17,7 +17,7 @@ A Flutter app for Android that converts and trims videos using FFmpegKit with so
 - **Encoding**: [ffmpeg_kit_flutter_new](https://pub.dev/packages/ffmpeg_kit_flutter_new) — libx264 software encoder
 - **Video Preview**: video_player
 - **File Picker**: file_picker
-- **Sharing**: share_plus
+- **Saving**: gal and file_picker
 
 ## License
 
@@ -51,9 +51,14 @@ This app uses FFmpegKit which includes x264 (GPL). As a result, this app is also
    # Edit android/key.properties with your signing credentials
    ```
 
-4. Run:
+4. Run with the Android GMA Next-Gen SDK enabled:
    ```bash
-   flutter run
+   flutter run --dart-define=USE_NEXT_GEN_SDK=true
+   ```
+
+   Use the same declaration for builds, for example:
+   ```bash
+   flutter build apk --debug --dart-define=USE_NEXT_GEN_SDK=true
    ```
 
 ## Note on Secrets

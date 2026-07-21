@@ -18,7 +18,8 @@ class ReviewService {
   /// Int-Überlauf aus.
   static Future<void> recordSuccessfulConversion() async {
     final reviewDone = await PreferencesService.getReviewPrompted();
-    final proDone = await PreferencesService.getProHintShown() ||
+    final proDone =
+        await PreferencesService.getProHintShown() ||
         await PreferencesService.getIsPro();
     if (reviewDone && proDone) return;
 

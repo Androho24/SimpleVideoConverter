@@ -4,16 +4,21 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
+  static const videoCodecH264 = 'h264';
+  static const videoCodecH265 = 'h265';
+
   static const _keyExpertMode = 'expertMode';
   static const _keyIsPro = 'isPro';
   static const _keyCpuWarningDismissed = 'cpuWarningDismissed';
   static const _keyConversionCount = 'conversionCount';
   static const _keyReviewPrompted = 'reviewPrompted';
   static const _keyProHintShown = 'proHintShown';
-  static const _keyNotificationRationaleDismissed = 'notificationRationaleDismissed';
+  static const _keyNotificationRationaleDismissed =
+      'notificationRationaleDismissed';
   static const _keyNotificationDeniedHintCount = 'notificationDeniedHintCount';
   static const _keyLastQualityIndex = 'lastQualityIndex';
   static const _keyAutoSaveVideos = 'autoSaveVideos';
+  static const _keyVideoCodec = 'videoCodec';
 
   static Future<bool> getAutoSaveVideos() async {
     final prefs = await SharedPreferences.getInstance();
@@ -23,6 +28,20 @@ class PreferencesService {
   static Future<void> setAutoSaveVideos(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_keyAutoSaveVideos, value);
+  }
+
+  static Future<String> getVideoCodec() async {
+    final prefs = await SharedPreferences.getInstance();
+    final codec = prefs.getString(_keyVideoCodec);
+    return codec == videoCodecH265 ? videoCodecH265 : videoCodecH264;
+  }
+
+  static Future<void> setVideoCodec(String value) async {
+    if (value != videoCodecH264 && value != videoCodecH265) {
+      throw ArgumentError.value(value, 'value', 'Unsupported video codec');
+    }
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_keyVideoCodec, value);
   }
 
   static Future<bool> getExpertMode() async {
@@ -62,8 +81,10 @@ class PreferencesService {
 
   static Future<void> incrementNotificationDeniedHintCount() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_keyNotificationDeniedHintCount,
-        (prefs.getInt(_keyNotificationDeniedHintCount) ?? 0) + 1);
+    await prefs.setInt(
+      _keyNotificationDeniedHintCount,
+      (prefs.getInt(_keyNotificationDeniedHintCount) ?? 0) + 1,
+    );
   }
 
   static Future<bool> getCpuWarningDismissed() async {

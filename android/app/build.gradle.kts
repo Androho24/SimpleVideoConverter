@@ -1,5 +1,12 @@
 import java.util.Properties
 
+configurations.configureEach {
+    // Next-Gen enthält die für Mediation benötigten GMS-Klassen bereits selbst.
+    // Die Legacy-Module der Adapter würden sonst Duplicate-Class-Fehler erzeugen.
+    exclude(group = "com.google.android.gms", module = "play-services-ads")
+    exclude(group = "com.google.android.gms", module = "play-services-ads-lite")
+}
+
 plugins {
     id("com.android.application")
     // START: FlutterFire Configuration
@@ -39,12 +46,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
@@ -85,7 +92,15 @@ flutter {
 }
 
 dependencies {
-    implementation("com.google.android.ump:user-messaging-platform:3.1.0")
+    implementation("com.google.android.ump:user-messaging-platform:4.0.0")
+
+    // Die aktuellen Adapter sind von Google gegen Next-Gen 1.2.1 getestet.
+    // Dies hebt die transitive 1.1.1-Version des Flutter-Plugins gezielt an.
+    implementation("com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:1.2.1")
+
+    // Offiziell dokumentierte Next-Gen-kompatible Bidding-Adapter.
+    implementation("com.google.ads.mediation:facebook:6.21.0.4")
+    implementation("com.google.ads.mediation:pangle:8.1.0.5.0")
 
     // Native Firebase-Artefakte für den Zugriff aus Kotlin (ConsentModeHelper).
     // Die FlutterFire-Plugins deklarieren diese nur als 'implementation' und stellen

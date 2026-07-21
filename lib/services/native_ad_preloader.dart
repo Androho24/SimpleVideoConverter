@@ -3,9 +3,11 @@
 
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'ad_config.dart';
+import 'ads_service.dart';
 import 'preferences_service.dart';
 
 /// Lädt eine NativeAd vor (z. B. beim Tap auf "Konvertieren") und übergibt sie
@@ -27,17 +29,20 @@ class NativeAdPreloader {
     final completer = Completer<NativeAd?>();
     _completer = completer;
 
-    final ad = NativeAd(
+    if (!await AdsService.waitUntilReady()) {
+      if (!completer.isCompleted) completer.complete(null);
+      return;
+    }
+
+    late final NativeAd ad;
+    ad = NativeAd(
       adUnitId: AdConfig.nativeAdUnitId,
-      factoryId: 'nativeAd',
       listener: NativeAdListener(
         onAdLoaded: (loadedAd) {
-          if (!completer.isCompleted) {
-            completer.complete(loadedAd as NativeAd);
-          }
+          if (!completer.isCompleted) completer.complete(loadedAd as NativeAd);
         },
         onAdFailedToLoad: (failedAd, _) {
-          failedAd.dispose();
+          unawaited(failedAd.dispose());
           if (!completer.isCompleted) completer.complete(null);
         },
       ),
@@ -45,8 +50,17 @@ class NativeAdPreloader {
       nativeAdOptions: NativeAdOptions(
         videoOptions: VideoOptions(startMuted: true),
       ),
+      nativeTemplateStyle: NativeTemplateStyle(
+        templateType: TemplateType.medium,
+        mainBackgroundColor: Colors.white,
+      ),
     );
-    ad.load();
+    try {
+      await ad.load();
+    } catch (_) {
+      await ad.dispose();
+      if (!completer.isCompleted) completer.complete(null);
+    }
   }
 
   /// Übergibt den Preload an den Aufrufer. Der Aufrufer übernimmt damit das

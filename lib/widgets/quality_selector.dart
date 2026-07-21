@@ -36,14 +36,14 @@ class QualitySelector extends StatelessWidget {
   final int selectedIndex;
   final bool isConverting;
   final ValueChanged<int> onChanged;
-  final int? videoMaxDimension;
+  final int? videoShortSide;
 
   const QualitySelector({
     super.key,
     required this.selectedIndex,
     required this.isConverting,
     required this.onChanged,
-    this.videoMaxDimension,
+    this.videoShortSide,
   });
 
   void _showResolutionInfo(BuildContext context) {
@@ -54,10 +54,7 @@ class QualitySelector extends StatelessWidget {
         title: Text(l.resolutionExplainTitle),
         content: Text(l.resolutionExplainContent),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.ok),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l.ok)),
         ],
       ),
     );
@@ -73,13 +70,17 @@ class QualitySelector extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(l.qualityLabel,
-                style: Theme.of(context).textTheme.labelMedium),
+            Text(
+              l.qualityLabel,
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
             const SizedBox(width: 2),
             IconButton(
-              icon: Icon(Icons.info_outline,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.outline),
+              icon: Icon(
+                Icons.info_outline,
+                size: 16,
+                color: Theme.of(context).colorScheme.outline,
+              ),
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               tooltip: l.resolutionTooltip,
@@ -94,23 +95,20 @@ class QualitySelector extends StatelessWidget {
           menuHeight: 300,
           enabled: !isConverting,
           inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
           ),
           menuStyle: MenuStyle(
             shape: WidgetStatePropertyAll(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
           ),
           initialSelection: selectedIndex,
           label: Text(l.qualityLabel),
           dropdownMenuEntries: [
             for (int i = 0; i < qualityOptions.length; i++)
-              if (videoMaxDimension == null ||
-                  qualityOptions[i].maxDimension <= videoMaxDimension!)
+              if (videoShortSide == null ||
+                  qualityOptions[i].shortSide <= videoShortSide! ||
+                  qualityOptions[i].shortSide == qualityOptions.last.shortSide)
                 DropdownMenuEntry<int>(value: i, label: labels[i]),
           ],
           onSelected: (val) {

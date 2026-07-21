@@ -10,7 +10,9 @@ import 'package:flutter/services.dart';
 /// Standard-Galerie-App startet, oft auf dem "Photos"-Tab) zeigt das die
 /// Datei direkt mit Album-Context — unabhängig vom OEM-Galerie-UI.
 class GalleryService {
-  static const _channel = MethodChannel('com.androho.simplevideoconverter/gallery');
+  static const _channel = MethodChannel(
+    'com.androho.simplevideoconverter/gallery',
+  );
 
   /// Öffnet das gespeicherte Video mit dem angegebenen Dateinamen
   /// (DISPLAY_NAME aus MediaStore).
@@ -20,8 +22,9 @@ class GalleryService {
   /// Aufrufer kann bei `false` auf `Gal.open()` als Fallback ausweichen.
   static Future<bool> viewSavedVideo(String displayName) async {
     try {
-      final ok = await _channel
-          .invokeMethod<bool>('viewSavedVideo', {'displayName': displayName});
+      final ok = await _channel.invokeMethod<bool>('viewSavedVideo', {
+        'displayName': displayName,
+      });
       return ok ?? false;
     } catch (_) {
       return false;

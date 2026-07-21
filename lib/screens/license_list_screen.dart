@@ -26,9 +26,7 @@ class LicenseListScreen extends StatelessWidget {
       // Theme-Override versteckt den AppBar der LicensePage (toolbarHeight: 0)
       body: Theme(
         data: Theme.of(context).copyWith(
-          appBarTheme: Theme.of(context).appBarTheme.copyWith(
-            toolbarHeight: 0,
-          ),
+          appBarTheme: Theme.of(context).appBarTheme.copyWith(toolbarHeight: 0),
         ),
         child: LicensePage(
           applicationName: l.appName,

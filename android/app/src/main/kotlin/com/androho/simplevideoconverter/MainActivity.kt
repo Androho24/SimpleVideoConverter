@@ -12,26 +12,21 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.google.android.gms.ads.nativead.MediaView
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdView
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
 
 class MainActivity : FlutterActivity() {
 
     private val ADS_CHANNEL = "com.androho.simplevideoconverter/ads"
     private val SERVICE_CHANNEL = "com.androho.simplevideoconverter/conversion_service"
     private val GALLERY_CHANNEL = "com.androho.simplevideoconverter/gallery"
+    private var adsChannel: MethodChannel? = null
+    private var pendingConsentResult: Boolean? = null
 
     override fun provideFlutterEngine(context: Context): FlutterEngine? =
         (application as SimpleVideoConverterApplication).getMainFlutterEngine()
@@ -44,14 +39,19 @@ class MainActivity : FlutterActivity() {
         super.onCreate(savedInstanceState)
         applySystemBarStyle()
 
-        // UMP-Consent-Flow + MobileAds-Init anstoßen (vorher in der SplashActivity).
-        // Wird für die Flutter-Native-Ads benötigt; das Consent-Formular erscheint
-        // ggf. als Dialog über dieser Activity. Bei Pro-Nutzern übersprungen.
-        (application as? SimpleVideoConverterApplication)
+        // UMP-Consent-Flow anstoßen. Nach Abschluss initialisiert Flutter das
+        // AdMob Next-Gen SDK samt Bidding-Adaptern.
+        val adManager = (application as? SimpleVideoConverterApplication)
             ?.getAppOpenAdManager()
-            ?.requestConsentAndInitialize(this) {
-                Log.d("MainActivity", "Consent + MobileAds-Init abgeschlossen")
+        if (adManager == null) {
+            Log.w("MainActivity", "Consent-Manager nicht verfügbar; Ads bleiben deaktiviert")
+            notifyDartAboutConsent(false)
+        } else {
+            adManager.requestConsent(this) { canRequestAds ->
+                Log.d("MainActivity", "Consent abgeschlossen: canRequestAds=$canRequestAds")
+                notifyDartAboutConsent(canRequestAds)
             }
+        }
     }
 
     override fun onResume() {
@@ -60,24 +60,33 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        // Die NativeAdFactory wird bewusst NICHT hier registriert, sondern
-        // engine-scoped in SimpleVideoConverterApplication.getMainFlutterEngine().
-        // Grund: Die Engine ist prozess-weit gecacht und läuft weiter, während
-        // keine Activity attached ist. Eine Activity-gebundene Registrierung würde
-        // beim Detach abgemeldet und ein Ad-Load aus dem NativeAdPreloader crasht
-        // dann mit "No NativeAdFactory with id: nativeAd".
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ADS_CHANNEL)
-            .setMethodCallHandler { call, result ->
-                val adManager = (application as? SimpleVideoConverterApplication)?.getAppOpenAdManager()
+        adsChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ADS_CHANNEL).also {
+            channel ->
+            channel.setMethodCallHandler { call, result ->
+                val adManager = (application as? SimpleVideoConverterApplication)
+                    ?.getAppOpenAdManager()
                 when (call.method) {
-                    "isPrivacyOptionsRequired" ->
-                        result.success(adManager?.isPrivacyOptionsRequired(this) ?: false)
-                    "showPrivacyOptionsForm" ->
-                        adManager?.showPrivacyOptionsForm(this) { result.success(null) }
-                            ?: result.success(null)
+                    "isPrivacyOptionsRequired" -> result.success(
+                        adManager?.isPrivacyOptionsRequired(this) ?: false
+                    )
+                    "showPrivacyOptionsForm" -> {
+                        if (adManager == null) {
+                            result.success(null)
+                        } else {
+                            adManager.showPrivacyOptionsForm(this) { canRequestAds ->
+                                notifyDartAboutConsent(canRequestAds)
+                                result.success(null)
+                            }
+                        }
+                    }
                     else -> result.notImplemented()
                 }
             }
+        }
+        pendingConsentResult?.let { canRequestAds ->
+            pendingConsentResult = null
+            notifyDartAboutConsent(canRequestAds)
+        }
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, SERVICE_CHANNEL)
             .setMethodCallHandler { call, result ->
@@ -203,9 +212,6 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
-        // Die NativeAdFactory wird bewusst NICHT abgemeldet — ihre Lebensdauer ist
-        // an die prozess-weit gecachte Engine gebunden (Registrierung in
-        // SimpleVideoConverterApplication), nicht an diese Activity.
         // Engine wird bewusst NICHT zerstört — sie bleibt für die Prozess-Lebensdauer
         // im Application-Scope gecacht. Das verhindert einen "FlutterJNI is not attached
         // to native"-Crash, der entsteht wenn engine.destroy() läuft während noch
@@ -213,6 +219,15 @@ class MainActivity : FlutterActivity() {
         // gegenüber dem Crash-Risiko zu vernachlässigen; bei Prozess-Ende räumt
         // Android sowieso auf.
         super.cleanUpFlutterEngine(flutterEngine)
+    }
+
+    private fun notifyDartAboutConsent(canRequestAds: Boolean) {
+        val channel = adsChannel
+        if (channel == null) {
+            pendingConsentResult = canRequestAds
+            return
+        }
+        channel.invokeMethod("consentReady", canRequestAds)
     }
 
     private fun applySystemBarStyle() {
@@ -230,34 +245,5 @@ class MainActivity : FlutterActivity() {
             flags = flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
         window.decorView.systemUiVisibility = flags
-    }
-}
-
-class NativeAdFactoryImpl(
-    private val layoutInflater: LayoutInflater
-) : GoogleMobileAdsPlugin.NativeAdFactory {
-
-    override fun createNativeAd(
-        nativeAd: NativeAd,
-        customOptions: MutableMap<String, Any>?
-    ): NativeAdView {
-        val adView = layoutInflater.inflate(R.layout.native_ad, null) as NativeAdView
-
-        adView.mediaView        = adView.findViewById<MediaView>(R.id.ad_media)
-        adView.headlineView     = adView.findViewById<TextView>(R.id.ad_headline)
-        adView.advertiserView   = adView.findViewById<TextView>(R.id.ad_advertiser)
-        adView.callToActionView = adView.findViewById<Button>(R.id.ad_call_to_action)
-
-        (adView.headlineView     as TextView).text = nativeAd.headline
-        (adView.callToActionView as Button).text   = nativeAd.callToAction
-        adView.mediaView?.mediaContent             = nativeAd.mediaContent
-
-        val advertiser = nativeAd.advertiser
-        (adView.advertiserView as TextView).text = advertiser ?: ""
-        adView.advertiserView?.visibility =
-            if (advertiser != null) View.VISIBLE else View.INVISIBLE
-
-        adView.setNativeAd(nativeAd)
-        return adView
     }
 }

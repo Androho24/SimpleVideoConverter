@@ -171,6 +171,20 @@ class AppLocalizationsUk extends AppLocalizations {
       'Після конвертації відео автоматично зберігаються.';
 
   @override
+  String get videoCodecTitle => 'Відеокодек';
+
+  @override
+  String get videoCodecSubtitle =>
+      'Відеокодек для конвертації у звичайному режимі';
+
+  @override
+  String get videoCodecInfoTitle => 'H.264 чи H.265/HEVC?';
+
+  @override
+  String get videoCodecInfoContent =>
+      'H.264 забезпечує найкращу сумісність і зазвичай швидше конвертування.\n\nH.265/HEVC може створювати менші файли за порівнянної якості зображення, але конвертування триває довше. Старіші пристрої або застосунки можуть не відтворити результат.\n\nОбидва кодери включені в застосунок і не залежать від кодеків, установлених на пристрої.';
+
+  @override
   String get saveError =>
       'Помилка під час збереження. Можливо, недостатньо місця на диску.';
 
@@ -286,15 +300,36 @@ class AppLocalizationsUk extends AppLocalizations {
   String get audioCodecLabel => 'Аудіокодек';
 
   @override
+  String get expertVideoCodecInfoContent =>
+      'H.264 → найкраща сумісність і зазвичай швидше перетворення\nH.265 → менші файли за порівнянної якості, повільніше\nVP9 → ефективний відкритий кодек для WebM і MKV, повільніше програмне кодування\nXvid → застарілий кодек MPEG-4 для AVI і старих програвачів\n\nДоступні формати виводу залежать від вибраних відео- й аудіокодеків.';
+
+  @override
+  String get xvidLegacyLabel => 'Xvid (застарілий)';
+
+  @override
   String get audioCodecInfoContent =>
-      'AAC  → Стандарт для MP4, найкраща сумісність \n MP3  → широко поширений, дещо застарілий \n Opus → сучасний та ефективний, добре підходить для MKV \n AC3  → Dolby Digital, доступний лише для джерел з об’ємним звуком (≥ 3 канали)';
+      'AAC → стандарт для MP4, найкраща сумісність\nMP3 → поширений застарілий кодек\nOpus → сучасний та ефективний, ідеальний для WebM і MKV\nAC3 → Dolby Digital, лише для джерел з об’ємним звуком (≥ 3 канали)\nVorbis → відкритий кодек для WebM і MKV\n\nНесумісні формати виводу автоматично вимикаються.';
 
   @override
   String get outputFormatLabel => 'Формат виводу';
 
   @override
   String get outputFormatInfoContent =>
-      'MP4 → універсальний, найкраща сумісність \n MKV → гнучкий, багато кодеків, менша сумісність \n MOV → формат Apple/QuickTime \n AVI → застарілий, широка сумісність \n TS  → транспортний потік MPEG, телебачення/стрімінг';
+      'MP4 → універсальний, найкраща сумісність\nMKV → гнучкий контейнер для всіх запропонованих кодеків\nMOV → робочі процеси Apple/QuickTime\nAVI → застарілий формат із Xvid\nMPEG-TS → транспортний потік для ТБ і стрімінгу\nWebM → сучасний вебформат із VP9 та Opus або Vorbis\n\nНесумісні формати відображаються притлушеними. Після вибору автоматично встановлюється відеокодек за замовчуванням і, за потреби, сумісний аудіокодек.';
+
+  @override
+  String compatibleFormatsHint(
+    String videoCodec,
+    String audioCodec,
+    String formats,
+  ) {
+    return '$videoCodec + $audioCodec підтримують: $formats';
+  }
+
+  @override
+  String outputFormatAdjusted(String format) {
+    return 'Формат виводу змінено на $format.';
+  }
 
   @override
   String get orig => 'Оригінал';

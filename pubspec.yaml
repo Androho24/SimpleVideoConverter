@@ -1,44 +1,41 @@
 name: simple_video_converter
-description: "Simple Video Converter mit FFmpegKit (libx264)"
+description: "Simple Video Converter mit FFmpegKit (libx264/libx265)"
 publish_to: 'none'
 
-version: 1.1.2+26
+version: 2.0.0+27
 
 environment:
-  sdk: ^3.10.0   # angehoben für google_mobile_ads 8.x (verlangt Dart >= 3.10.0)
+  sdk: ^3.10.0
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  ffmpeg_kit_flutter_new: ^4.1.0    # Community-Fork: libx264 via Maven Central (com.antonkarpenko)
-  file_picker: ^10.1.2               # Speichern-Dialog
-  image_picker: ^1.1.2               # Video-Auswahl (nativer Media-Picker mit Thumbnails)
-  video_player: ^2.10.0             # Video-Preview
-  path_provider: ^2.1.5              # Cache-Verzeichnis für Output-Datei
-  share_plus: ^10.1.2                # Output-Datei teilen/speichern
+  ffmpeg_kit_flutter_new: ^4.5.1    # Community-Fork: FFmpeg 8 mit libx264/libx265
+  file_picker: ^11.0.2               # Speichern-Dialog
+  image_picker: ^1.2.3               # Video-Auswahl (nativer Media-Picker mit Thumbnails)
+  video_player: ^2.13.0             # Video-Preview
+  path_provider: ^2.1.6              # Cache-Verzeichnis für Output-Datei
   open_filex: ^4.7.0                 # Gespeicherte Datei im Systemvideoplayer öffnen
-  permission_handler: ^11.3.1        # Runtime-Permissions (Notifications)
+  permission_handler: ^12.0.3        # Runtime-Permissions (Notifications)
   intl: ^0.20.2                      # Dart i18n (wird von flutter_localizations benötigt)
-  shared_preferences: ^2.3.4         # Persistente Einstellungen (analog zu Android SharedPreferences)
+  shared_preferences: ^2.5.5         # Persistente Einstellungen (analog zu Android SharedPreferences)
   url_launcher: ^6.3.1               # URLs im Browser öffnen (GPL-Link, GitHub-Link)
-  firebase_core: ^4.7.0              # Firebase Grundpaket (Pflicht für alle Firebase-Dienste)
+  firebase_core: ^4.12.1              # Firebase Grundpaket (Pflicht für alle Firebase-Dienste)
   firebase_analytics: ^12.3.0       # Google Analytics für Firebase
   firebase_crashlytics: ^5.2.0      # Crash-Reporting
-  google_mobile_ads: ^8.0.0          # AdMob Native Ads (8.x nötig für Mediation-Adapter unten)
-  gma_mediation_pangle: ^3.6.0       # AdMob-Mediation: Pangle (Bidding) – Maven-Repo in android/build.gradle.kts
-  gma_mediation_meta: ^1.5.2         # AdMob-Mediation: Meta Audience Network (Bidding)
+  google_mobile_ads: ^9.0.0         # Offizielles Flutter-Plugin; Android nutzt per Dart-Define das Next-Gen SDK
   in_app_purchase: 3.3.0             # Einmaliger Kauf „Werbung entfernen" – 3.3.0 nutzt Billing 8.0.0 (in_app_purchase_android 0.5.0), erfüllt Play-Pflicht ≥ 7.0.0
-  in_app_review: ^2.0.9              # Google Play In-App-Review-Dialog
-  gal: ^1.3.1                        # Video in Galerie speichern ohne RAM-Laden
+  in_app_review: ^2.0.12             # Google Play In-App-Review-Dialog
+  gal: ^2.3.2                        # Video in Galerie speichern ohne RAM-Laden
   disk_space_plus: ^0.2.6          # Freier interner Speicherplatz in MB
-  package_info_plus: ^4.2.0        # App-Version aus pubspec zur Laufzeit lesen
+  package_info_plus: ^9.0.1        # Neueste stabile Version, die mit file_picker 11 auflösbar ist
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.1   # Icon-Generierung
 
 flutter:

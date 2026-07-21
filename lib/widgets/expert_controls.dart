@@ -6,18 +6,10 @@ import 'package:flutter/services.dart';
 import '../l10n/app_localizations.dart';
 import '../models/expert_settings.dart';
 import '../models/video_metadata.dart';
+import '../services/media_format_compatibility.dart';
 
 /// Maximale Auflösung pro Seite (4K).
 const _maxDimension = 3840;
-
-/// Welche Audio-Codecs in welchem Container funktionieren.
-const _containerCodecs = <String, List<String>>{
-  'mp4': ['aac', 'ac3'],
-  'mkv': ['aac', 'mp3', 'opus', 'ac3'],
-  'mov': ['aac', 'ac3'],
-  'avi': ['mp3'],
-  'ts':  ['aac', 'opus', 'ac3'],
-};
 
 /// Verfügbare Ziel-Bitraten (kbps) für den Bitrate-Modus (als Schnellauswahl).
 const _targetBitrateOptions = [500, 1000, 2000, 4000, 6000, 8000, 12000, 20000];
@@ -67,17 +59,16 @@ class _ExpertControlsState extends State<ExpertControls> {
     _targetBitrateController = TextEditingController(
       text: _targetBitrateLabel(widget.settings.targetBitrateKbps),
     );
-    _targetBitrateFocus = FocusNode()
-      ..addListener(_onTargetBitrateFocusChange);
+    _targetBitrateFocus = FocusNode()..addListener(_onTargetBitrateFocusChange);
     // ExpertSettings im Parent synchronisieren, falls Metadaten verwendet wurden
-    if (widget.settings.width == 0 && widget.settings.height == 0 &&
+    if (widget.settings.width == 0 &&
+        widget.settings.height == 0 &&
         widget.metadata != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          widget.onChanged(widget.settings.copyWith(
-            width: initWidth,
-            height: initHeight,
-          ));
+          widget.onChanged(
+            widget.settings.copyWith(width: initWidth, height: initHeight),
+          );
         }
       });
     }
@@ -86,10 +77,12 @@ class _ExpertControlsState extends State<ExpertControls> {
   @override
   void didUpdateWidget(ExpertControls oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.settings.targetBitrateKbps != oldWidget.settings.targetBitrateKbps &&
+    if (widget.settings.targetBitrateKbps !=
+            oldWidget.settings.targetBitrateKbps &&
         !_targetBitrateFocus.hasFocus) {
-      _targetBitrateController.text =
-          _targetBitrateLabel(widget.settings.targetBitrateKbps);
+      _targetBitrateController.text = _targetBitrateLabel(
+        widget.settings.targetBitrateKbps,
+      );
     }
     if (widget.metadata != oldWidget.metadata && widget.metadata != null) {
       _widthController.text = widget.metadata!.width.toString();
@@ -112,6 +105,7 @@ class _ExpertControlsState extends State<ExpertControls> {
             (updated.audioChannels == 2 && srcCh == 1)) {
           updated = updated.copyWith(audioChannels: 0);
         }
+        updated = _withCompatibleContainer(updated);
         widget.onChanged(updated);
       });
     }
@@ -135,7 +129,9 @@ class _ExpertControlsState extends State<ExpertControls> {
     if (newWidth > _maxDimension) {
       newWidth = _maxDimension;
       _widthController.text = _maxDimension.toString();
-      _widthController.selection = TextSelection.collapsed(offset: _widthController.text.length);
+      _widthController.selection = TextSelection.collapsed(
+        offset: _widthController.text.length,
+      );
     }
     final s = widget.settings;
     final meta = widget.metadata;
@@ -155,7 +151,9 @@ class _ExpertControlsState extends State<ExpertControls> {
     if (newHeight > _maxDimension) {
       newHeight = _maxDimension;
       _heightController.text = _maxDimension.toString();
-      _heightController.selection = TextSelection.collapsed(offset: _heightController.text.length);
+      _heightController.selection = TextSelection.collapsed(
+        offset: _heightController.text.length,
+      );
     }
     final s = widget.settings;
     final meta = widget.metadata;
@@ -179,10 +177,16 @@ class _ExpertControlsState extends State<ExpertControls> {
       if (currentWidth > 0 || currentHeight > 0) {
         if (meta.width >= meta.height) {
           // Querformat: Breite dominant → Höhe neu berechnen
-          _onWidthChanged(currentWidth > 0 ? currentWidth.toString() : meta.width.toString());
+          _onWidthChanged(
+            currentWidth > 0 ? currentWidth.toString() : meta.width.toString(),
+          );
         } else {
           // Hochformat: Höhe dominant → Breite neu berechnen
-          _onHeightChanged(currentHeight > 0 ? currentHeight.toString() : meta.height.toString());
+          _onHeightChanged(
+            currentHeight > 0
+                ? currentHeight.toString()
+                : meta.height.toString(),
+          );
         }
       }
     }
@@ -194,11 +198,10 @@ class _ExpertControlsState extends State<ExpertControls> {
     return SizedBox(
       width: 40,
       child: IconButton(
-        icon: Icon(
-          _aspectLocked ? Icons.link : Icons.link_off,
-          size: 20,
-        ),
-        onPressed: (meta != null && !widget.isConverting) ? _toggleAspectLock : null,
+        icon: Icon(_aspectLocked ? Icons.link : Icons.link_off, size: 20),
+        onPressed: (meta != null && !widget.isConverting)
+            ? _toggleAspectLock
+            : null,
         tooltip: _aspectLocked ? l.aspectLocked : l.aspectUnlocked,
         padding: EdgeInsets.zero,
       ),
@@ -210,7 +213,10 @@ class _ExpertControlsState extends State<ExpertControls> {
   // ---------------------------------------------------------------------------
 
   /// Gibt die sinnvollen Bitrate-Einträge für den gewählten Codec zurück.
-  List<DropdownMenuEntry<int>> _bitrateEntries(String codec, AppLocalizations l) {
+  List<DropdownMenuEntry<int>> _bitrateEntries(
+    String codec,
+    AppLocalizations l,
+  ) {
     if (codec == 'ac3') {
       return [
         DropdownMenuEntry(value: 0, label: l.silent),
@@ -226,23 +232,136 @@ class _ExpertControlsState extends State<ExpertControls> {
     ];
   }
 
-  List<ButtonSegment<int>> _channelSegments(ExpertSettings s, AppLocalizations l) {
+  List<ButtonSegment<int>> _channelSegments(
+    ExpertSettings s,
+    AppLocalizations l,
+  ) {
     final srcCh = widget.metadata?.audioChannels ?? 0;
     return [
       ButtonSegment(value: 0, label: Text(l.audioChannelOriginal)),
       if (srcCh >= 6 && s.audioCodec != 'mp3')
         const ButtonSegment(value: 6, label: Text('5.1')),
-      if (srcCh != 1)
-        const ButtonSegment(value: 2, label: Text('Stereo')),
+      if (srcCh != 1) const ButtonSegment(value: 2, label: Text('Stereo')),
       const ButtonSegment(value: 1, label: Text('Mono')),
     ];
+  }
+
+  ExpertSettings _withCompatibleContainer(ExpertSettings settings) {
+    final container = MediaFormatCompatibility.preferredContainer(
+      videoCodec: settings.videoCodec,
+      audioCodec: settings.audioCodec,
+      currentContainer: settings.container,
+    );
+    return settings.copyWith(container: container);
+  }
+
+  void _emitCodecChange(ExpertSettings updated) {
+    final compatible = _withCompatibleContainer(updated);
+    widget.onChanged(compatible);
+    if (!updated.audioOnly &&
+        compatible.container != widget.settings.container) {
+      final l = AppLocalizations.of(context)!;
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            content: Text(
+              l.outputFormatAdjusted(
+                MediaFormatCompatibility.labelFor(compatible.container),
+              ),
+            ),
+          ),
+        );
+    }
+  }
+
+  String _videoCodecLabel(AppLocalizations l, String codec) => switch (codec) {
+    MediaFormatCompatibility.videoCodecH264 => 'H.264',
+    MediaFormatCompatibility.videoCodecH265 => 'H.265',
+    MediaFormatCompatibility.videoCodecVp9 => 'VP9',
+    MediaFormatCompatibility.videoCodecXvid => l.xvidLegacyLabel,
+    _ => codec.toUpperCase(),
+  };
+
+  String _audioCodecLabel(String codec) => switch (codec) {
+    MediaFormatCompatibility.audioCodecAac => 'AAC',
+    MediaFormatCompatibility.audioCodecMp3 => 'MP3',
+    MediaFormatCompatibility.audioCodecOpus => 'Opus',
+    MediaFormatCompatibility.audioCodecAc3 => 'AC3',
+    MediaFormatCompatibility.audioCodecVorbis => 'Vorbis',
+    _ => codec.toUpperCase(),
+  };
+
+  Widget _choiceChip({
+    required Key key,
+    required String label,
+    required bool selected,
+    required bool enabled,
+    required VoidCallback onSelected,
+    bool muted = false,
+  }) => ChoiceChip(
+    key: key,
+    label: Text(label),
+    selected: selected,
+    onSelected: enabled ? (_) => onSelected() : null,
+    labelStyle: muted
+        ? TextStyle(color: Theme.of(context).disabledColor)
+        : null,
+    backgroundColor: muted
+        ? Theme.of(context).disabledColor.withAlpha(20)
+        : null,
+    side: muted
+        ? BorderSide(color: Theme.of(context).disabledColor.withAlpha(90))
+        : null,
+  );
+
+  void _selectContainer(MediaContainerOption container) {
+    final s = widget.settings;
+    final currentlyCompatible = MediaFormatCompatibility.supports(
+      container: container.id,
+      videoCodec: s.videoCodec,
+      audioCodec: s.audioCodec,
+    );
+    if (currentlyCompatible) {
+      widget.onChanged(s.copyWith(container: container.id));
+      return;
+    }
+
+    final videoCodec = MediaFormatCompatibility.defaultVideoCodecFor(
+      container.id,
+    );
+    final audioCodec = container.audioCodecs.contains(s.audioCodec)
+        ? s.audioCodec
+        : MediaFormatCompatibility.defaultAudioCodecFor(container.id);
+    final audioBitrate = switch (audioCodec) {
+      MediaFormatCompatibility.audioCodecAc3 => 384,
+      MediaFormatCompatibility.audioCodecOpus when s.audioBitrate > 192 => 192,
+      _ => s.audioBitrate.clamp(0, 320),
+    };
+    final audioChannels =
+        audioCodec == MediaFormatCompatibility.audioCodecMp3 &&
+            s.audioChannels == 6
+        ? 0
+        : s.audioChannels;
+
+    widget.onChanged(
+      s.copyWith(
+        container: container.id,
+        videoCodec: videoCodec,
+        audioCodec: audioCodec,
+        audioBitrate: audioBitrate,
+        audioChannels: audioChannels,
+      ),
+    );
   }
 
   /// Gibt einen lesbaren Label für eine Ziel-Bitrate in kbps zurück.
   String _targetBitrateLabel(int kbps) {
     if (kbps < 1000) return '$kbps kbps';
     final mbps = kbps / 1000;
-    return mbps == mbps.truncateToDouble() ? '${mbps.toInt()} Mbps' : '$mbps Mbps';
+    return mbps == mbps.truncateToDouble()
+        ? '${mbps.toInt()} Mbps'
+        : '$mbps Mbps';
   }
 
   /// Parst manuell eingetippte Bitrate — unterstützt "8000", "8000 kbps", "8 Mbps", "0.5 Mbps".
@@ -261,7 +380,10 @@ class _ExpertControlsState extends State<ExpertControls> {
   void _onTargetBitrateFocusChange() {
     if (_targetBitrateFocus.hasFocus) return;
     final parsed = _parseTargetBitrate(_targetBitrateController.text);
-    final clamped = (parsed ?? widget.settings.targetBitrateKbps).clamp(500, 40000);
+    final clamped = (parsed ?? widget.settings.targetBitrateKbps).clamp(
+      500,
+      40000,
+    );
     if (clamped != widget.settings.targetBitrateKbps) {
       widget.onChanged(widget.settings.copyWith(targetBitrateKbps: clamped));
     }
@@ -280,10 +402,7 @@ class _ExpertControlsState extends State<ExpertControls> {
         title: Text(title),
         content: Text(content),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.ok),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l.ok)),
         ],
       ),
     );
@@ -291,8 +410,11 @@ class _ExpertControlsState extends State<ExpertControls> {
 
   Widget _infoButton(BuildContext context, String title, String content) =>
       IconButton(
-        icon: Icon(Icons.info_outline, size: 16,
-            color: Theme.of(context).colorScheme.outline),
+        icon: Icon(
+          Icons.info_outline,
+          size: 16,
+          color: Theme.of(context).colorScheme.outline,
+        ),
         padding: EdgeInsets.zero,
         constraints: const BoxConstraints(),
         tooltip: title,
@@ -313,7 +435,6 @@ class _ExpertControlsState extends State<ExpertControls> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-
         // ── CRF / Bitrate-Toggle, Auflösung, FPS — nur im Video-Modus ──────
         if (!s.audioOnly) ...[
           // ── Encoding-Modus-Toggle ────────────────────────────────────────
@@ -322,8 +443,11 @@ class _ExpertControlsState extends State<ExpertControls> {
           SegmentedButton<String>(
             showSelectedIcon: false,
             segments: [
-              ButtonSegment(value: 'crf',     label: Text(l.encodingModeCrf)),
-              ButtonSegment(value: 'bitrate', label: Text(l.encodingModeBitrate)),
+              ButtonSegment(value: 'crf', label: Text(l.encodingModeCrf)),
+              ButtonSegment(
+                value: 'bitrate',
+                label: Text(l.encodingModeBitrate),
+              ),
             ],
             selected: {s.bitrateMode},
             onSelectionChanged: widget.isConverting
@@ -334,134 +458,159 @@ class _ExpertControlsState extends State<ExpertControls> {
 
           // ── CRF-Dropdown (nur bei CRF-Modus) ────────────────────────────
           if (s.bitrateMode == 'crf') ...[
-            Row(children: [
-              Expanded(
-                child: DropdownMenu<int>(
-                  key: ValueKey(s.crf),
-                  expandedInsets: EdgeInsets.zero,
-                  enabled: !widget.isConverting,
-                  menuHeight: 400,
-                  initialSelection: s.crf,
-                  label: Text(l.crfLabel),
-                  inputDecorationTheme: InputDecorationTheme(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                  ),
-                  menuStyle: MenuStyle(
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownMenu<int>(
+                    key: ValueKey(s.crf),
+                    expandedInsets: EdgeInsets.zero,
+                    enabled: !widget.isConverting,
+                    menuHeight: 400,
+                    initialSelection: s.crf,
+                    label: Text(l.crfLabel),
+                    inputDecorationTheme: InputDecorationTheme(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
+                    menuStyle: MenuStyle(
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    dropdownMenuEntries: [
+                      for (int i = 1; i <= 51; i++)
+                        DropdownMenuEntry(value: i, label: '$i'),
+                    ],
+                    onSelected: (v) {
+                      if (v != null) widget.onChanged(s.copyWith(crf: v));
+                    },
                   ),
-                  dropdownMenuEntries: [
-                    for (int i = 1; i <= 51; i++)
-                      DropdownMenuEntry(value: i, label: '$i'),
-                  ],
-                  onSelected: (v) {
-                    if (v != null) widget.onChanged(s.copyWith(crf: v));
-                  },
                 ),
-              ),
-              const SizedBox(width: 4),
-              _infoButton(context, l.crfInfoTitle, l.crfInfoContent),
-            ]),
+                const SizedBox(width: 4),
+                _infoButton(context, l.crfInfoTitle, l.crfInfoContent),
+              ],
+            ),
             const SizedBox(height: 12),
           ],
 
           // ── Ziel-Bitrate-Dropdown (nur bei Bitrate-Modus) ───────────────
           if (s.bitrateMode == 'bitrate') ...[
-            Row(children: [
-              Expanded(
-                child: DropdownMenu<int>(
-                  expandedInsets: EdgeInsets.zero,
-                  enabled: !widget.isConverting,
-                  controller: _targetBitrateController,
-                  focusNode: _targetBitrateFocus,
-                  label: Text(l.targetBitrateLabel),
-                  inputDecorationTheme: InputDecorationTheme(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                  ),
-                  menuStyle: MenuStyle(
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownMenu<int>(
+                    expandedInsets: EdgeInsets.zero,
+                    enabled: !widget.isConverting,
+                    controller: _targetBitrateController,
+                    focusNode: _targetBitrateFocus,
+                    label: Text(l.targetBitrateLabel),
+                    inputDecorationTheme: InputDecorationTheme(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
+                    menuStyle: MenuStyle(
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    dropdownMenuEntries: [
+                      for (final kbps in _targetBitrateOptions)
+                        DropdownMenuEntry(
+                          value: kbps,
+                          label: _targetBitrateLabel(kbps),
+                        ),
+                    ],
+                    onSelected: (v) {
+                      if (v != null) {
+                        widget.onChanged(s.copyWith(targetBitrateKbps: v));
+                      }
+                    },
                   ),
-                  dropdownMenuEntries: [
-                    for (final kbps in _targetBitrateOptions)
-                      DropdownMenuEntry(
-                          value: kbps, label: _targetBitrateLabel(kbps)),
-                  ],
-                  onSelected: (v) {
-                    if (v != null) {
-                      widget.onChanged(s.copyWith(targetBitrateKbps: v));
-                    }
-                  },
                 ),
-              ),
-              const SizedBox(width: 4),
-              _infoButton(
-                  context, l.targetBitrateInfoTitle, l.targetBitrateInfoContent),
-            ]),
+                const SizedBox(width: 4),
+                _infoButton(
+                  context,
+                  l.targetBitrateInfoTitle,
+                  l.targetBitrateInfoContent,
+                ),
+              ],
+            ),
             const SizedBox(height: 12),
           ],
 
           // ── Auflösung ───────────────────────────────────────────────────────
-          Row(children: [
-            Text(l.resolutionLabel, style: labelStyle),
-            const SizedBox(width: 2),
-            _infoButton(context, l.resolutionInfoTitle, l.resolutionInfoContent),
-          ]),
+          Row(
+            children: [
+              Text(l.resolutionLabel, style: labelStyle),
+              const SizedBox(width: 2),
+              _infoButton(
+                context,
+                l.resolutionInfoTitle,
+                l.resolutionInfoContent,
+              ),
+            ],
+          ),
           const SizedBox(height: 4),
-          Row(children: [
-            Expanded(
-              child: TextField(
-                enabled: !widget.isConverting,
-                controller: _widthController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  labelText: l.widthLabel,
-                  hintText: l.emptyEqualsOriginal,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  suffixText: 'px',
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  enabled: !widget.isConverting,
+                  controller: _widthController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: InputDecoration(
+                    labelText: l.widthLabel,
+                    hintText: l.emptyEqualsOriginal,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    suffixText: 'px',
+                  ),
+                  onChanged: _onWidthChanged,
                 ),
-                onChanged: _onWidthChanged,
               ),
-            ),
-            _buildLockButton(l),
-            Expanded(
-              child: TextField(
-                enabled: !widget.isConverting,
-                controller: _heightController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  labelText: l.heightLabel,
-                  hintText: l.emptyEqualsOriginal,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  suffixText: 'px',
+              _buildLockButton(l),
+              Expanded(
+                child: TextField(
+                  enabled: !widget.isConverting,
+                  controller: _heightController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: InputDecoration(
+                    labelText: l.heightLabel,
+                    hintText: l.emptyEqualsOriginal,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    suffixText: 'px',
+                  ),
+                  onChanged: _onHeightChanged,
                 ),
-                onChanged: _onHeightChanged,
               ),
-            ),
-          ]),
+            ],
+          ),
           const SizedBox(height: 12),
 
           // ── FPS ─────────────────────────────────────────────────────────────
-          Row(children: [
-            Text(l.fpsLabel, style: labelStyle),
-            const SizedBox(width: 2),
-            _infoButton(context, l.fpsInfoTitle, l.fpsInfoContent),
-          ]),
+          Row(
+            children: [
+              Text(l.fpsLabel, style: labelStyle),
+              const SizedBox(width: 2),
+              _infoButton(context, l.fpsInfoTitle, l.fpsInfoContent),
+            ],
+          ),
           const SizedBox(height: 4),
           SegmentedButton<int>(
             showSelectedIcon: false,
             segments: [
-              ButtonSegment(value: 0,  label: Text(l.orig)),
+              ButtonSegment(value: 0, label: Text(l.orig)),
               ButtonSegment(value: 24, label: Text('24')),
               ButtonSegment(value: 25, label: Text('25')),
               ButtonSegment(value: 30, label: Text('30')),
@@ -476,93 +625,110 @@ class _ExpertControlsState extends State<ExpertControls> {
         ],
 
         // ── Audio-Codec ───────────────────────────────────────────────────────
-        Row(children: [
-          Text(l.audioCodecLabel, style: labelStyle),
-          const SizedBox(width: 2),
-          _infoButton(context, l.audioCodecLabel, l.audioCodecInfoContent),
-        ]),
-        const SizedBox(height: 4),
-        SegmentedButton<String>(
-          showSelectedIcon: false,
-          segments: [
-            const ButtonSegment(value: 'aac',  label: Text('AAC')),
-            const ButtonSegment(value: 'mp3',  label: Text('MP3')),
-            const ButtonSegment(value: 'opus', label: Text('Opus')),
-            if ((widget.metadata?.audioChannels ?? 0) >= 3)
-              const ButtonSegment(value: 'ac3', label: Text('AC3')),
+        Row(
+          children: [
+            Text(l.audioCodecLabel, style: labelStyle),
+            const SizedBox(width: 2),
+            _infoButton(context, l.audioCodecLabel, l.audioCodecInfoContent),
           ],
-          selected: {s.audioCodec},
-          onSelectionChanged: (widget.isConverting || s.audioBitrate == 0)
-              ? null
-              : (sel) {
-                  final newCodec = sel.first;
-                  // Container anpassen falls inkompatibel
-                  final compatible = _containerCodecs.entries
-                      .where((e) => e.value.contains(newCodec))
-                      .map((e) => e.key)
-                      .toList();
-                  final newContainer = compatible.contains(s.container)
-                      ? s.container
-                      : compatible.first;
-                  // Bitrate anpassen: AC3 → 384k, Opus → max 192, sonst max 320
+        ),
+        const SizedBox(height: 4),
+        Wrap(
+          spacing: 8,
+          runSpacing: 4,
+          children: [
+            for (final codec in [
+              MediaFormatCompatibility.audioCodecAac,
+              MediaFormatCompatibility.audioCodecMp3,
+              MediaFormatCompatibility.audioCodecOpus,
+              if ((widget.metadata?.audioChannels ?? 0) >= 3)
+                MediaFormatCompatibility.audioCodecAc3,
+              MediaFormatCompatibility.audioCodecVorbis,
+            ])
+              _choiceChip(
+                key: ValueKey('expert_audio_codec_$codec'),
+                label: _audioCodecLabel(codec),
+                selected: s.audioCodec == codec,
+                enabled: !widget.isConverting && s.audioBitrate != 0,
+                onSelected: () {
                   final int newBitrate;
-                  if (newCodec == 'ac3') {
+                  if (codec == MediaFormatCompatibility.audioCodecAc3) {
                     newBitrate = 384;
-                  } else if (newCodec == 'opus') {
-                    newBitrate = s.audioBitrate > 192 ? 192 : s.audioBitrate;
+                  } else if (codec == MediaFormatCompatibility.audioCodecOpus &&
+                      s.audioBitrate > 192) {
+                    newBitrate = 192;
                   } else {
-                    newBitrate = s.audioBitrate > 320 ? 320 : s.audioBitrate;
+                    newBitrate = s.audioBitrate.clamp(0, 320);
                   }
-                  // MP3 unterstützt max. Stereo → 5.1-Auswahl zurücksetzen
-                  final int newChannels =
-                      (newCodec == 'mp3' && s.audioChannels == 6) ? 0 : s.audioChannels;
-                  widget.onChanged(s.copyWith(
-                    audioCodec: newCodec,
-                    container: newContainer,
-                    audioBitrate: newBitrate,
-                    audioChannels: newChannels,
-                  ));
+                  final newChannels =
+                      codec == MediaFormatCompatibility.audioCodecMp3 &&
+                          s.audioChannels == 6
+                      ? 0
+                      : s.audioChannels;
+                  _emitCodecChange(
+                    s.copyWith(
+                      audioCodec: codec,
+                      audioBitrate: newBitrate,
+                      audioChannels: newChannels,
+                    ),
+                  );
                 },
+              ),
+          ],
         ),
         const SizedBox(height: 12),
 
         // ── Audio-Bitrate ─────────────────────────────────────────────────────
-        Row(children: [
-          Expanded(
-            child: DropdownMenu<int>(
-              key: ValueKey('${s.audioBitrate}_${s.audioCodec}'),
-              expandedInsets: EdgeInsets.zero,
-              enabled: !widget.isConverting,
-              initialSelection: s.audioBitrate,
-              label: Text(l.audioBitrateLabel),
-              inputDecorationTheme: InputDecorationTheme(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20)),
-              ),
-              menuStyle: MenuStyle(
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+        Row(
+          children: [
+            Expanded(
+              child: DropdownMenu<int>(
+                key: ValueKey('${s.audioBitrate}_${s.audioCodec}'),
+                expandedInsets: EdgeInsets.zero,
+                enabled: !widget.isConverting,
+                initialSelection: s.audioBitrate,
+                label: Text(l.audioBitrateLabel),
+                inputDecorationTheme: InputDecorationTheme(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
+                menuStyle: MenuStyle(
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                dropdownMenuEntries: _bitrateEntries(s.audioCodec, l),
+                onSelected: (v) {
+                  if (v != null) widget.onChanged(s.copyWith(audioBitrate: v));
+                },
               ),
-              dropdownMenuEntries: _bitrateEntries(s.audioCodec, l),
-              onSelected: (v) {
-                if (v != null) widget.onChanged(s.copyWith(audioBitrate: v));
-              },
             ),
-          ),
-          const SizedBox(width: 4),
-          _infoButton(context, l.audioBitrateLabel, l.audioBitrateInfoContent),
-        ]),
+            const SizedBox(width: 4),
+            _infoButton(
+              context,
+              l.audioBitrateLabel,
+              l.audioBitrateInfoContent,
+            ),
+          ],
+        ),
         const SizedBox(height: 12),
 
         // ── Audiokanäle ───────────────────────────────────────────────────────
         if (s.audioBitrate != 0) ...[
-          Row(children: [
-            Text(l.audioChannelsLabel, style: labelStyle),
-            const SizedBox(width: 2),
-            _infoButton(context, l.audioChannelsLabel, l.audioChannelsInfoContent),
-          ]),
+          Row(
+            children: [
+              Text(l.audioChannelsLabel, style: labelStyle),
+              const SizedBox(width: 2),
+              _infoButton(
+                context,
+                l.audioChannelsLabel,
+                l.audioChannelsInfoContent,
+              ),
+            ],
+          ),
           const SizedBox(height: 4),
           SegmentedButton<int>(
             showSelectedIcon: false,
@@ -570,41 +736,102 @@ class _ExpertControlsState extends State<ExpertControls> {
             selected: {s.audioChannels},
             onSelectionChanged: widget.isConverting
                 ? null
-                : (sel) => widget.onChanged(s.copyWith(audioChannels: sel.first)),
+                : (sel) =>
+                      widget.onChanged(s.copyWith(audioChannels: sel.first)),
           ),
           const SizedBox(height: 12),
         ],
 
         // ── Output-Format — nur im Video-Modus ───────────────────────────────
         if (!s.audioOnly) ...[
-          Row(children: [
-            Text(l.outputFormatLabel, style: labelStyle),
-            const SizedBox(width: 2),
-            _infoButton(context, l.outputFormatLabel, l.outputFormatInfoContent),
-          ]),
-          const SizedBox(height: 4),
-          SegmentedButton<String>(
-            showSelectedIcon: false,
-            segments: const [
-              ButtonSegment(value: 'mp4', label: Text('MP4')),
-              ButtonSegment(value: 'mkv', label: Text('MKV')),
-              ButtonSegment(value: 'mov', label: Text('MOV')),
-              ButtonSegment(value: 'avi', label: Text('AVI')),
-              ButtonSegment(value: 'ts',  label: Text('TS')),
+          Row(
+            children: [
+              Text(l.videoCodecTitle, style: labelStyle),
+              const SizedBox(width: 2),
+              _infoButton(
+                context,
+                l.videoCodecTitle,
+                l.expertVideoCodecInfoContent,
+              ),
             ],
-            selected: {s.container},
-            onSelectionChanged: widget.isConverting
-                ? null
-                : (sel) {
-                    final newContainer = sel.first;
-                    // Codec anpassen falls inkompatibel
-                    final compatibleCodecs = _containerCodecs[newContainer]!;
-                    final newCodec = compatibleCodecs.contains(s.audioCodec)
-                        ? s.audioCodec
-                        : compatibleCodecs.first;
-                    widget.onChanged(
-                        s.copyWith(container: newContainer, audioCodec: newCodec));
+          ),
+          const SizedBox(height: 4),
+          Wrap(
+            spacing: 8,
+            runSpacing: 4,
+            children: [
+              for (final codec in const [
+                MediaFormatCompatibility.videoCodecH264,
+                MediaFormatCompatibility.videoCodecH265,
+                MediaFormatCompatibility.videoCodecVp9,
+                MediaFormatCompatibility.videoCodecXvid,
+              ])
+                _choiceChip(
+                  key: ValueKey('expert_video_codec_$codec'),
+                  label: _videoCodecLabel(l, codec),
+                  selected: s.videoCodec == codec,
+                  enabled: !widget.isConverting,
+                  onSelected: () =>
+                      _emitCodecChange(s.copyWith(videoCodec: codec)),
+                ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
+          Row(
+            children: [
+              Text(l.outputFormatLabel, style: labelStyle),
+              const SizedBox(width: 2),
+              _infoButton(
+                context,
+                l.outputFormatLabel,
+                l.outputFormatInfoContent,
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Wrap(
+            spacing: 8,
+            runSpacing: 4,
+            children: [
+              for (final container in MediaFormatCompatibility.containers)
+                Builder(
+                  builder: (context) {
+                    final compatible = MediaFormatCompatibility.supports(
+                      container: container.id,
+                      videoCodec: s.videoCodec,
+                      audioCodec: s.audioCodec,
+                    );
+                    return _choiceChip(
+                      key: ValueKey('expert_container_${container.id}'),
+                      label: container.label,
+                      selected: s.container == container.id,
+                      enabled: !widget.isConverting,
+                      muted: !compatible,
+                      onSelected: () => _selectContainer(container),
+                    );
                   },
+                ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Builder(
+            builder: (context) {
+              final compatible = MediaFormatCompatibility.compatibleContainers(
+                videoCodec: s.videoCodec,
+                audioCodec: s.audioCodec,
+              ).map((option) => option.label).join(', ');
+              return Text(
+                l.compatibleFormatsHint(
+                  _videoCodecLabel(l, s.videoCodec),
+                  _audioCodecLabel(s.audioCodec),
+                  compatible,
+                ),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              );
+            },
           ),
         ],
       ],

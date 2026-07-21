@@ -13,6 +13,7 @@ class PurchaseService {
   static Stream<bool> get isProStream => _isProController.stream;
 
   static final _errorController = StreamController<String>.broadcast();
+
   /// Feuert eine Fehlermeldung bei fehlgeschlagenem Kauf.
   static Stream<String> get errorStream => _errorController.stream;
 
@@ -46,12 +47,16 @@ class PurchaseService {
       final available = await InAppPurchase.instance.isAvailable();
       if (!available) return;
 
-      final response = await InAppPurchase.instance.queryProductDetails({_productId});
+      final response = await InAppPurchase.instance.queryProductDetails({
+        _productId,
+      });
       if (response.productDetails.isNotEmpty) {
         _productDetails = response.productDetails.first;
       }
     } catch (e) {
-      debugPrint('PurchaseService: Produktdetails konnten nicht geladen werden: $e');
+      debugPrint(
+        'PurchaseService: Produktdetails konnten nicht geladen werden: $e',
+      );
     }
   }
 
@@ -126,7 +131,9 @@ class PurchaseService {
     if (wasPro && !_restoredProductIds.contains(_productId)) {
       await PreferencesService.setIsPro(false);
       _isProController.add(false);
-      debugPrint('PurchaseService: Kauf nicht mehr aktiv – Pro-Status aufgehoben');
+      debugPrint(
+        'PurchaseService: Kauf nicht mehr aktiv – Pro-Status aufgehoben',
+      );
     }
   }
 

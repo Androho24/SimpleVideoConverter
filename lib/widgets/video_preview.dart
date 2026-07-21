@@ -53,7 +53,8 @@ class _VideoPreviewState extends State<VideoPreview> {
               onPressed: () {
                 final totalMs = controller.value.duration.inMilliseconds;
                 final minMs = (widget.trimStart * totalMs).toInt();
-                final pos = controller.value.position - const Duration(seconds: 10);
+                final pos =
+                    controller.value.position - const Duration(seconds: 10);
                 final clamped = pos.inMilliseconds < minMs
                     ? Duration(milliseconds: minMs)
                     : pos;
@@ -65,7 +66,9 @@ class _VideoPreviewState extends State<VideoPreview> {
                 controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
               ),
               onPressed: () {
-                controller.value.isPlaying ? controller.pause() : controller.play();
+                controller.value.isPlaying
+                    ? controller.pause()
+                    : controller.play();
               },
             ),
             IconButton(
@@ -73,7 +76,8 @@ class _VideoPreviewState extends State<VideoPreview> {
               onPressed: () {
                 final totalMs = controller.value.duration.inMilliseconds;
                 final maxMs = (widget.trimEnd * totalMs).toInt();
-                final pos = controller.value.position + const Duration(seconds: 10);
+                final pos =
+                    controller.value.position + const Duration(seconds: 10);
                 final clamped = pos.inMilliseconds > maxMs
                     ? Duration(milliseconds: maxMs)
                     : pos;

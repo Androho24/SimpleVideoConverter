@@ -19,10 +19,13 @@ import '../models/quality_option.dart';
 import '../models/video_metadata.dart';
 import '../screens/conversion_screen.dart';
 import '../screens/settings_screen.dart';
+import '../services/ffmpeg_codec_options.dart';
 import '../services/native_ad_preloader.dart';
+import '../services/output_size_estimator.dart';
 import '../services/preferences_service.dart';
 import '../services/pro_prompt_service.dart';
 import '../services/review_service.dart';
+import '../services/video_scale_service.dart';
 import '../widgets/app_header.dart';
 import '../widgets/convert_section.dart';
 import '../widgets/expert_controls.dart';
@@ -53,6 +56,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   bool _isExpertMode = false;
   int _selectedNavIndex = 0;
   bool _cpuWarningDismissed = false;
+  String _videoCodec = PreferencesService.videoCodecH264;
   ExpertSettings _expertSettings = const ExpertSettings();
   VideoPlayerController? _playerController;
   Timer? _seekDebounce;
@@ -90,8 +94,11 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       final cacheRoot = await getTemporaryDirectory();
       final entries = cacheRoot.listSync();
       for (final entry in entries) {
-        if (entry is Directory && entry.path != '${cacheRoot.path}/conversions') {
-          try { await entry.delete(recursive: true); } catch (_) {}
+        if (entry is Directory &&
+            entry.path != '${cacheRoot.path}/conversions') {
+          try {
+            await entry.delete(recursive: true);
+          } catch (_) {}
         }
       }
     } catch (_) {}
@@ -101,13 +108,25 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final expert = await PreferencesService.getExpertMode();
     final dismissed = await PreferencesService.getCpuWarningDismissed();
     final quality = await PreferencesService.getLastQualityIndex();
+    final videoCodec = await PreferencesService.getVideoCodec();
     if (mounted) {
       setState(() {
         _isExpertMode = expert;
         _selectedNavIndex = expert ? 1 : 0;
         _cpuWarningDismissed = dismissed;
         _selectedQualityIndex = quality;
+        _videoCodec = videoCodec;
+        _expertSettings = _expertSettings.copyWith(videoCodec: videoCodec);
       });
+    }
+  }
+
+  Future<void> _refreshVideoCodec() async {
+    final videoCodec = await PreferencesService.getVideoCodec();
+    if (!mounted) return;
+    if (_videoCodec != videoCodec) {
+      setState(() => _videoCodec = videoCodec);
+      _updateEstimatedSize();
     }
   }
 
@@ -121,7 +140,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     if (status.isPermanentlyDenied) return;
 
     // Rationale-Dialog nur einmal zeigen
-    final alreadyShown = await PreferencesService.getNotificationRationaleDismissed();
+    final alreadyShown =
+        await PreferencesService.getNotificationRationaleDismissed();
     if (alreadyShown) {
       await Permission.notification.request();
       return;
@@ -172,10 +192,12 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       // Video-URI nicht in einen lesbaren Pfad aufgelöst werden kann.
       if (mounted) {
         setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context)!.invalidVideoFile),
-          backgroundColor: Colors.red,
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.invalidVideoFile),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
       return;
     }
@@ -191,10 +213,12 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     if (meta.durationMs == 0 || meta.width == 0 || meta.height == 0) {
       if (mounted) {
         setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context)!.invalidVideoFile),
-          backgroundColor: Colors.red,
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.invalidVideoFile),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
       return;
     }
@@ -221,10 +245,19 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
     if (!mounted) return;
 
-    final videoMaxDim = meta.width > meta.height ? meta.width : meta.height;
+    final videoShortSide = VideoScaleService.sourceShortSide(
+      meta.width,
+      meta.height,
+    );
+    final selectableShortSide = max(
+      videoShortSide,
+      qualityOptions.last.shortSide,
+    );
     int adjustedQualityIndex = _selectedQualityIndex;
-    if (qualityOptions[_selectedQualityIndex].maxDimension > videoMaxDim) {
-      final firstValid = qualityOptions.indexWhere((q) => q.maxDimension <= videoMaxDim);
+    if (qualityOptions[_selectedQualityIndex].shortSide > selectableShortSide) {
+      final firstValid = qualityOptions.indexWhere(
+        (q) => q.shortSide <= selectableShortSide,
+      );
       if (firstValid != -1) adjustedQualityIndex = firstValid;
     }
     if (adjustedQualityIndex != _selectedQualityIndex) {
@@ -246,10 +279,12 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     await _maybeShowCpuWarning(_metadata!.durationMs);
 
     if (previewFailed && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.previewNotAvailable),
-        backgroundColor: Colors.orange,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.previewNotAvailable),
+          backgroundColor: Colors.orange,
+        ),
+      );
     }
   }
 
@@ -280,7 +315,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                 children: [
                   Checkbox(
                     value: dontShowAgain,
-                    onChanged: (v) => setDialogState(() => dontShowAgain = v ?? false),
+                    onChanged: (v) =>
+                        setDialogState(() => dontShowAgain = v ?? false),
                   ),
                   Expanded(child: Text(l.cpuWarningCheckbox)),
                 ],
@@ -340,11 +376,27 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final durationSec = double.tryParse(info?.getDuration() ?? '0') ?? 0.0;
     final rawWidth = videoStream?.getWidth();
     final rawHeight = videoStream?.getHeight();
+    final encodedWidth = rawWidth is int
+        ? rawWidth
+        : int.tryParse(rawWidth?.toString() ?? '0') ?? 0;
+    final encodedHeight = rawHeight is int
+        ? rawHeight
+        : int.tryParse(rawHeight?.toString() ?? '0') ?? 0;
+    final videoProperties = videoStream?.getAllProperties();
+    final rotationDegrees = VideoScaleService.probeRotationDegrees(
+      videoProperties,
+    );
+    final (displayWidth, displayHeight) = VideoScaleService.displayDimensions(
+      encodedWidth: encodedWidth,
+      encodedHeight: encodedHeight,
+      rotationDegrees: rotationDegrees,
+      displayAspectRatio: videoStream?.getDisplayAspectRatio(),
+    );
 
     return VideoMetadata(
       durationMs: (durationSec * 1000).toInt(),
-      width: rawWidth is int ? rawWidth : int.tryParse(rawWidth?.toString() ?? '0') ?? 0,
-      height: rawHeight is int ? rawHeight : int.tryParse(rawHeight?.toString() ?? '0') ?? 0,
+      width: displayWidth,
+      height: displayHeight,
       audioChannels: audioChannels,
     );
   }
@@ -355,86 +407,38 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   void _updateEstimatedSize() {
     if (_metadata == null) return;
-    final durationSec = (_trimEnd - _trimStart) * _metadata!.durationMs / 1000.0;
+    final durationSec =
+        (_trimEnd - _trimStart) * _metadata!.durationMs / 1000.0;
 
     if (_isExpertMode) {
-      final expert = _expertSettings;
-
-      if (expert.audioOnly) {
-        final bytes = (expert.audioBitrate * 1000 / 8) * durationSec;
-        setState(() => _estimatedSizeMb = bytes / (1024 * 1024));
-        return;
-      }
-
-      final int videoBps;
-      if (expert.bitrateMode == 'bitrate') {
-        videoBps = expert.targetBitrateKbps * 1000;
-      } else {
-        // CRF-Heuristik: skaliert nach Auflösung und CRF relativ zu 1080p CRF 23 → 4 Mbps
-        int outW, outH;
-        if (expert.width != 0 && expert.height != 0) {
-          outW = expert.width;
-          outH = expert.height;
-        } else if (expert.width != 0) {
-          outW = expert.width;
-          outH = ((outW * _metadata!.height / _metadata!.width).round() ~/ 2) * 2;
-        } else if (expert.height != 0) {
-          outH = expert.height;
-          outW = ((outH * _metadata!.width / _metadata!.height).round() ~/ 2) * 2;
-        } else {
-          outW = (_metadata!.width ~/ 2) * 2;
-          outH = (_metadata!.height ~/ 2) * 2;
-        }
-        const referencePixels = 1920.0 * 1080.0;
-        const referenceBitrateBps = 4000000.0; // 1080p CRF 23
-        final resolutionFactor = (outW * outH) / referencePixels;
-        final crfFactor = pow(2.0, (23 - expert.crf) / 6.0);
-        videoBps = (referenceBitrateBps * resolutionFactor * crfFactor).round();
-      }
-
-      final audioBps = expert.audioBitrate * 1000;
-      final bytes = ((videoBps + audioBps) / 8) * durationSec;
-      setState(() => _estimatedSizeMb = bytes / (1024 * 1024));
+      setState(
+        () => _estimatedSizeMb = OutputSizeEstimator.estimateExpertMegabytes(
+          durationSeconds: durationSec,
+          metadata: _metadata!,
+          settings: _expertSettings,
+        ),
+      );
       return;
     }
 
     // Normal-Modus
     if (_isAudioOnly) {
-      setState(() => _estimatedSizeMb = 0.0);
+      setState(
+        () => _estimatedSizeMb =
+            OutputSizeEstimator.estimateNormalAudioOnlyMegabytes(durationSec),
+      );
       return;
     }
     final quality = qualityOptions[_selectedQualityIndex];
-    final audioBitrate = _isMuted ? 0 : 128000;
-    final estimatedBytes = ((quality.estimatedBitrateBps + audioBitrate) / 8) * durationSec;
-    setState(() => _estimatedSizeMb = estimatedBytes / (1024 * 1024));
-  }
-
-  /// Berechnet Ausgabe-Dimensionen. Rundet auf gerade Zahlen (Pflicht für libx264).
-  (int, int) _calculateOutputDimensions(QualityOption quality) =>
-      _calcDimensions(quality.maxDimension);
-
-  (int, int) _calcDimensions(int maxDimension) {
-    final w = _metadata!.width;
-    final h = _metadata!.height;
-
-    if (maxDimension == 0) {
-      return ((w ~/ 2) * 2, (h ~/ 2) * 2);
-    }
-
-    final sourceMaxDim = w > h ? w : h;
-    final targetMaxDim =
-        maxDimension > sourceMaxDim ? sourceMaxDim : maxDimension;
-
-    int targetW, targetH;
-    if (w > h) {
-      targetW = targetMaxDim;
-      targetH = (targetMaxDim.toDouble() / w * h).toInt();
-    } else {
-      targetH = targetMaxDim;
-      targetW = (targetMaxDim.toDouble() / h * w).toInt();
-    }
-
-    return ((targetW ~/ 2) * 2, (targetH ~/ 2) * 2);
+    setState(
+      () => _estimatedSizeMb = OutputSizeEstimator.estimateNormalMegabytes(
+        durationSeconds: durationSec,
+        metadata: _metadata!,
+        quality: quality,
+        videoCodec: _videoCodec,
+        muted: _isMuted,
+      ),
+    );
   }
 
   // -------------------------------------------------------------------------
@@ -444,7 +448,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   /// Prüft ob genug freier Speicher für die geschätzte Output-Datei vorhanden ist.
   /// Gibt false zurück und zeigt einen Dialog, wenn der Speicher nicht reicht.
   Future<bool> _checkStorage() async {
-    if (_estimatedSizeMb <= 0) return true; // Audio-Only: kein Check nötig
+    if (_estimatedSizeMb <= 0) return true;
     final freeSpaceMb = await DiskSpacePlus().getFreeDiskSpace;
     if (freeSpaceMb == null) return true; // Nicht ermittelbar: nicht blockieren
     final requiredMb = _estimatedSizeMb * 1.5;
@@ -456,10 +460,12 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l.storageWarningTitle),
-        content: Text(l.storageWarningContent(
-          freeSpaceMb.toStringAsFixed(0),
-          requiredMb.toStringAsFixed(0),
-        )),
+        content: Text(
+          l.storageWarningContent(
+            freeSpaceMb.toStringAsFixed(0),
+            requiredMb.toStringAsFixed(0),
+          ),
+        ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l.ok)),
         ],
@@ -491,6 +497,10 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final convertedPrefix = AppLocalizations.of(context)!.convertedPrefix;
 
     final cacheDir = await ConversionScreen.getCacheDir();
+    final selectedVideoCodec = await PreferencesService.getVideoCodec();
+    final videoEncoder = selectedVideoCodec == PreferencesService.videoCodecH265
+        ? 'libx265'
+        : 'libx264';
     final startSec = _trimStart * _metadata!.durationMs / 1000.0;
     final endSec = _trimEnd * _metadata!.durationMs / 1000.0;
     final totalDurationMs = _metadata!.durationMs.toDouble();
@@ -502,18 +512,17 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final String command;
     final String outputPath;
 
-    // FFmpeg-Encoder-Namen: 'mp3' → 'libmp3lame', 'opus' → 'libopus'
-    const ffmpegCodec = {'mp3': 'libmp3lame', 'opus': 'libopus', 'ac3': 'ac3'};
-
     if (_isExpertMode) {
       final expert = _expertSettings;
       if (expert.audioOnly) {
         // ── Expert: nur Audio extrahieren ─────────────────────────────────
-        const audioExt = {'aac': 'm4a', 'mp3': 'mp3', 'opus': 'opus', 'ac3': 'ac3'};
-        final ext = audioExt[expert.audioCodec] ?? 'mp3';
-        outputPath = '${cacheDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.$ext';
-        final encoderName = ffmpegCodec[expert.audioCodec] ?? expert.audioCodec;
-        final channelOptAudio = expert.audioChannels > 0 ? '-ac ${expert.audioChannels}' : '';
+        final ext = FfmpegCodecOptions.audioOnlyExtension(expert.audioCodec);
+        outputPath =
+            '${cacheDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.$ext';
+        final encoderName = FfmpegCodecOptions.audioEncoder(expert.audioCodec);
+        final channelOptAudio = expert.audioChannels > 0
+            ? '-ac ${expert.audioChannels}'
+            : '';
         command =
             '-i $inputArg -ss $startSec -to $endSec '
             '-vn -c:a $encoderName -b:a ${expert.audioBitrate}k $channelOptAudio -y "$outputPath"';
@@ -536,18 +545,31 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
           vfFilter = '';
         }
         final fpsOpt = expert.fps != 0 ? '-r ${expert.fps}' : '';
-        final encoderName = ffmpegCodec[expert.audioCodec] ?? expert.audioCodec;
-        final channelOpt = expert.audioChannels > 0 ? '-ac ${expert.audioChannels}' : '';
+        final encoderName = FfmpegCodecOptions.audioEncoder(expert.audioCodec);
+        final channelOpt = expert.audioChannels > 0
+            ? '-ac ${expert.audioChannels}'
+            : '';
         final audioOpt = expert.audioBitrate == 0
             ? '-an'
             : '-c:a $encoderName -b:a ${expert.audioBitrate}k $channelOpt';
-        final videoCodec = expert.container == 'avi' ? 'mpeg4' : 'libx264';
-        final qualityOpt = expert.bitrateMode == 'bitrate'
-            ? '-b:v ${expert.targetBitrateKbps}k'
-            : '-crf ${expert.crf}';
+        final videoCodec = FfmpegCodecOptions.videoEncoder(expert.videoCodec);
+        final codecTagOpt = FfmpegCodecOptions.codecTagArguments(
+          expert.videoCodec,
+          expert.container,
+        );
+        final qualityOpt = FfmpegCodecOptions.videoQualityArguments(
+          codec: expert.videoCodec,
+          bitrateMode: expert.bitrateMode,
+          crf: expert.crf,
+          targetBitrateKbps: expert.targetBitrateKbps,
+        );
+        final encoderOpt = FfmpegCodecOptions.videoEncoderArguments(
+          expert.videoCodec,
+        );
         command =
             '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-            '-c:v $videoCodec -pix_fmt yuv420p $qualityOpt $fpsOpt $audioOpt -y "$outputPath"';
+            '-c:v $videoCodec $codecTagOpt $encoderOpt -pix_fmt yuv420p '
+            '$qualityOpt $fpsOpt $audioOpt -y "$outputPath"';
       }
     } else if (_isAudioOnly) {
       // ── Normal: nur Audio extrahieren (MP3 192k) ────────────────────────
@@ -561,12 +583,15 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       final quality = qualityOptions[_selectedQualityIndex];
       outputPath =
           '${cacheDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.mp4';
-      final (targetW, targetH) = _calculateOutputDimensions(quality);
-      final vfFilter = quality.maxDimension != 0 ? '-vf scale=$targetW:$targetH' : '';
+      final vfFilter = VideoScaleService.standardFilter(quality.shortSide);
       final audioOpt = _isMuted ? '-an' : '-c:a aac -b:a 128k';
+      final videoCrf = videoEncoder == 'libx265'
+          ? (quality.crf + 5).clamp(0, 51)
+          : quality.crf;
+      final codecTagOpt = videoEncoder == 'libx265' ? '-tag:v hvc1' : '';
       command =
           '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-          '-c:v libx264 -pix_fmt yuv420p -crf ${quality.crf} -r 60 $audioOpt -y "$outputPath"';
+          '-c:v $videoEncoder $codecTagOpt -pix_fmt yuv420p -crf $videoCrf -r 60 $audioOpt -y "$outputPath"';
     }
 
     final originalName = _videoPath!.split('/').last;
@@ -618,196 +643,246 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         }
       },
       child: Scaffold(
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedNavIndex,
-        onDestinationSelected: (index) {
-          if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => SettingsScreen(
-                  onNavigate: (i) {
-                    setState(() {
-                      _selectedNavIndex = i;
-                      _isExpertMode = i == 1;
-                    });
-                    PreferencesService.setExpertMode(i == 1);
-                  },
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: _selectedNavIndex,
+          onDestinationSelected: (index) async {
+            if (index == 2) {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => SettingsScreen(
+                    onNavigate: (i) {
+                      setState(() {
+                        _selectedNavIndex = i;
+                        _isExpertMode = i == 1;
+                      });
+                      PreferencesService.setExpertMode(i == 1);
+                      _updateEstimatedSize();
+                    },
+                  ),
                 ),
-              ),
-            );
-          } else {
-            final isExpert = index == 1;
-            setState(() {
-              _selectedNavIndex = index;
-              _isExpertMode = isExpert;
-            });
-            PreferencesService.setExpertMode(isExpert);
-          }
-        },
-        destinations: [
-          NavigationDestination(icon: const Icon(Icons.tune), label: l.modeNormal),
-          NavigationDestination(icon: const Icon(Icons.settings_applications), label: l.modeExpert),
-          NavigationDestination(icon: const Icon(Icons.settings_outlined), label: l.settingsTitle),
-        ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const AppHeader(),
-              const SizedBox(height: 12),
+              );
+              await _refreshVideoCodec();
+            } else {
+              final isExpert = index == 1;
+              setState(() {
+                _selectedNavIndex = index;
+                _isExpertMode = isExpert;
+              });
+              PreferencesService.setExpertMode(isExpert);
+              _updateEstimatedSize();
+            }
+          },
+          destinations: [
+            NavigationDestination(
+              icon: const Icon(Icons.tune),
+              label: l.modeNormal,
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.settings_applications),
+              label: l.modeExpert,
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.settings_outlined),
+              label: l.settingsTitle,
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const AppHeader(),
+                const SizedBox(height: 12),
 
-              ElevatedButton.icon(
-                icon: _isLoading
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                      )
-                    : const Icon(Icons.video_library),
-                label: Text(_isLoading ? AppLocalizations.of(context)!.videoLoading : AppLocalizations.of(context)!.selectVideo),
-                onPressed: _isLoading ? null : _pickVideo,
-              ),
-
-              const SizedBox(height: 16),
-              if (!hasVideo)
-                // Platzhalter – gleiche Größe wie der Videoplayer, kein Layout-Sprung beim Laden
-                Card(
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: _isLoading ? null : _pickVideo,
-                    child: AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.movie_outlined, size: 64,
-                              color: Theme.of(context).colorScheme.outlineVariant),
-                          const SizedBox(height: 8),
-                          Text(
-                            AppLocalizations.of(context)!.selectVideo,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Theme.of(context).colorScheme.outlineVariant),
+                ElevatedButton.icon(
+                  icon: _isLoading
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
                           ),
-                        ],
+                        )
+                      : const Icon(Icons.video_library),
+                  label: Text(
+                    _isLoading
+                        ? AppLocalizations.of(context)!.videoLoading
+                        : AppLocalizations.of(context)!.selectVideo,
+                  ),
+                  onPressed: _isLoading ? null : _pickVideo,
+                ),
+
+                const SizedBox(height: 16),
+                if (!hasVideo)
+                  // Platzhalter – gleiche Größe wie der Videoplayer, kein Layout-Sprung beim Laden
+                  Card(
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: _isLoading ? null : _pickVideo,
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.movie_outlined,
+                              size: 64,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.outlineVariant,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              AppLocalizations.of(context)!.selectVideo,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.outlineVariant,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                )
-              else ...[
-                if (_playerController != null)
-                  VideoPreview(
-                    controller: _playerController!,
+                  )
+                else ...[
+                  if (_playerController != null)
+                    VideoPreview(
+                      controller: _playerController!,
+                      trimStart: _trimStart,
+                      trimEnd: _trimEnd,
+                    )
+                  else
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          children: [
+                            const Icon(
+                              Icons.videocam_off,
+                              size: 48,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              AppLocalizations.of(
+                                context,
+                              )!.previewNotAvailableLabel,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: 8),
+                  TrimSlider(
                     trimStart: _trimStart,
                     trimEnd: _trimEnd,
-                  )
-                else
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        children: [
-                          const Icon(Icons.videocam_off, size: 48, color: Colors.grey),
-                          const SizedBox(height: 8),
-                          Text(
-                            AppLocalizations.of(context)!.previewNotAvailableLabel,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
-                          ),
-                        ],
+                    isConverting: false,
+                    metadata: _metadata!,
+                    onChanged: (values) {
+                      final seekFraction = values.start != _trimStart
+                          ? values.start
+                          : values.end;
+                      setState(() {
+                        _trimStart = values.start;
+                        _trimEnd = values.end;
+                      });
+                      _seekDebounce?.cancel();
+                      _seekDebounce = Timer(
+                        const Duration(milliseconds: 120),
+                        () {
+                          _playerController?.seekTo(
+                            Duration(
+                              milliseconds:
+                                  (seekFraction * _metadata!.durationMs)
+                                      .toInt(),
+                            ),
+                          );
+                        },
+                      );
+                      _updateEstimatedSize();
+                    },
+                  ),
+                ],
+
+                const SizedBox(height: 16),
+
+                if (_isExpertMode) ...[
+                  ExpertControls(
+                    settings: _expertSettings,
+                    isConverting: false,
+                    metadata: _metadata,
+                    onChanged: (s) {
+                      setState(() => _expertSettings = s);
+                      _updateEstimatedSize();
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  ConvertSection(
+                    isMuted: _expertSettings.audioBitrate == 0,
+                    showMute: false,
+                    isAudioOnly: _expertSettings.audioOnly,
+                    audioOnlySwitchEnabled: _expertSettings.audioBitrate != 0,
+                    estimatedSizeMb: _estimatedSizeMb,
+                    onMuteChanged: (val) => setState(
+                      () => _expertSettings = _expertSettings.copyWith(
+                        audioBitrate: val ? 0 : 128,
                       ),
                     ),
+                    onAudioOnlyChanged: (val) {
+                      setState(
+                        () => _expertSettings = _expertSettings.copyWith(
+                          audioOnly: val,
+                        ),
+                      );
+                      _updateEstimatedSize();
+                    },
+                    onConvert: _convertVideo,
                   ),
-                const SizedBox(height: 8),
-                TrimSlider(
-                  trimStart: _trimStart,
-                  trimEnd: _trimEnd,
-                  isConverting: false,
-                  metadata: _metadata!,
-                  onChanged: (values) {
-                    final seekFraction = values.start != _trimStart
-                        ? values.start
-                        : values.end;
-                    setState(() {
-                      _trimStart = values.start;
-                      _trimEnd = values.end;
-                    });
-                    _seekDebounce?.cancel();
-                    _seekDebounce = Timer(const Duration(milliseconds: 120), () {
-                      _playerController?.seekTo(Duration(
-                        milliseconds: (seekFraction * _metadata!.durationMs).toInt(),
-                      ));
-                    });
-                    _updateEstimatedSize();
-                  },
-                ),
+                ] else ...[
+                  QualitySelector(
+                    selectedIndex: _selectedQualityIndex,
+                    isConverting: false,
+                    videoShortSide: _metadata != null
+                        ? VideoScaleService.sourceShortSide(
+                            _metadata!.width,
+                            _metadata!.height,
+                          )
+                        : null,
+                    onChanged: (val) {
+                      setState(() => _selectedQualityIndex = val);
+                      PreferencesService.setLastQualityIndex(val);
+                      _updateEstimatedSize();
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  ConvertSection(
+                    isMuted: _isMuted,
+                    isAudioOnly: _isAudioOnly,
+                    estimatedSizeMb: _estimatedSizeMb,
+                    onMuteChanged: (val) {
+                      setState(() => _isMuted = val);
+                      _updateEstimatedSize();
+                    },
+                    onAudioOnlyChanged: (val) {
+                      setState(() => _isAudioOnly = val);
+                      _updateEstimatedSize();
+                    },
+                    onConvert: _convertVideo,
+                  ),
+                ],
               ],
-
-              const SizedBox(height: 16),
-
-              if (_isExpertMode) ...[
-                ExpertControls(
-                  settings: _expertSettings,
-                  isConverting: false,
-                  metadata: _metadata,
-                  onChanged: (s) {
-                    setState(() => _expertSettings = s);
-                    _updateEstimatedSize();
-                  },
-                ),
-                const SizedBox(height: 8),
-                ConvertSection(
-                  isMuted: _expertSettings.audioBitrate == 0,
-                  showMute: false,
-                  isAudioOnly: _expertSettings.audioOnly,
-                  audioOnlySwitchEnabled: _expertSettings.audioBitrate != 0,
-                  estimatedSizeMb: _estimatedSizeMb,
-                  onMuteChanged: (val) => setState(() =>
-                    _expertSettings = _expertSettings.copyWith(
-                      audioBitrate: val ? 0 : 128,
-                    )),
-                  onAudioOnlyChanged: (val) => setState(() =>
-                    _expertSettings = _expertSettings.copyWith(audioOnly: val)),
-                  onConvert: _convertVideo,
-                ),
-              ] else ...[
-                QualitySelector(
-                  selectedIndex: _selectedQualityIndex,
-                  isConverting: false,
-                  videoMaxDimension: _metadata != null
-                      ? (_metadata!.width > _metadata!.height
-                          ? _metadata!.width
-                          : _metadata!.height)
-                      : null,
-                  onChanged: (val) {
-                    setState(() => _selectedQualityIndex = val);
-                    PreferencesService.setLastQualityIndex(val);
-                    _updateEstimatedSize();
-                  },
-                ),
-                const SizedBox(height: 8),
-                ConvertSection(
-                  isMuted: _isMuted,
-                  isAudioOnly: _isAudioOnly,
-                  estimatedSizeMb: _estimatedSizeMb,
-                  onMuteChanged: (val) {
-                    setState(() => _isMuted = val);
-                    _updateEstimatedSize();
-                  },
-                  onAudioOnlyChanged: (val) {
-                    setState(() => _isAudioOnly = val);
-                    _updateEstimatedSize();
-                  },
-                  onConvert: _convertVideo,
-                ),
-              ],
-            ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }

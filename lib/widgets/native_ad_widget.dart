@@ -1,10 +1,13 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../l10n/app_localizations.dart';
 import '../services/ad_config.dart';
+import '../services/ads_service.dart';
 import '../services/native_ad_preloader.dart';
 import '../services/preferences_service.dart';
 
@@ -40,7 +43,7 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
     if (preloadFuture != null) {
       final preloadedAd = await preloadFuture;
       if (!mounted) {
-        preloadedAd?.dispose();
+        if (preloadedAd != null) unawaited(preloadedAd.dispose());
         return;
       }
       if (preloadedAd != null) {
@@ -52,46 +55,75 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
       }
       // Preload ist fehlgeschlagen → eigenen Load anstoßen.
     }
-    _loadAd();
+    await _loadAd();
   }
 
   @override
   void dispose() {
-    _nativeAd?.dispose();
+    final ad = _nativeAd;
+    if (ad != null) unawaited(ad.dispose());
     super.dispose();
   }
 
-  void _loadAd() {
-    _nativeAd = NativeAd(
+  Future<void> _loadAd() async {
+    if (!await AdsService.waitUntilReady()) {
+      if (mounted) setState(() => _adState = _AdState.failed);
+      return;
+    }
+
+    late final NativeAd ad;
+    ad = NativeAd(
       adUnitId: AdConfig.nativeAdUnitId,
-      factoryId: 'nativeAd',
       listener: NativeAdListener(
-        onAdLoaded: (_) {
-          if (!mounted) return;
-          setState(() => _adState = _AdState.loaded);
+        onAdLoaded: (loadedAd) {
+          if (!mounted) {
+            unawaited(loadedAd.dispose());
+            return;
+          }
+          setState(() {
+            _nativeAd = loadedAd as NativeAd;
+            _adState = _AdState.loaded;
+          });
         },
-        onAdFailedToLoad: (failedAd, error) {
-          failedAd.dispose();
-          _nativeAd = null;
+        onAdFailedToLoad: (failedAd, _) {
+          unawaited(failedAd.dispose());
           if (!mounted) return;
-          setState(() => _adState = _AdState.failed);
+          setState(() {
+            _nativeAd = null;
+            _adState = _AdState.failed;
+          });
         },
       ),
       request: const AdRequest(),
       nativeAdOptions: NativeAdOptions(
         videoOptions: VideoOptions(startMuted: true),
       ),
+      nativeTemplateStyle: NativeTemplateStyle(
+        templateType: TemplateType.medium,
+        mainBackgroundColor: Colors.white,
+      ),
     );
-    _nativeAd!.load();
+    _nativeAd = ad;
+    try {
+      await ad.load();
+    } catch (_) {
+      await ad.dispose();
+      if (mounted) {
+        setState(() {
+          _nativeAd = null;
+          _adState = _AdState.failed;
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     if (_isPro) return const SizedBox.shrink();
     return switch (_adState) {
-      _AdState.loaded  => AdWidget(ad: _nativeAd!),
+      _AdState.loaded => AdWidget(ad: _nativeAd!),
       _AdState.loading => _buildPlaceholder(context),
-      _AdState.failed  => _buildPlaceholder(context),
+      _AdState.failed => _buildPlaceholder(context),
     };
   }
 
@@ -103,13 +135,15 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.ad_units, size: 48,
-                color: Theme.of(context).colorScheme.outline),
+            Icon(
+              Icons.ad_units,
+              size: 48,
+              color: Theme.of(context).colorScheme.outline,
+            ),
             const SizedBox(height: 8),
             Text(
               _adState == _AdState.loading ? l.adLoading : '',
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.outline),
+              style: TextStyle(color: Theme.of(context).colorScheme.outline),
             ),
           ],
         ),
