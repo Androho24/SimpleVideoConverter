@@ -488,5 +488,8 @@
   "@restoreError": {"description": "Fehlermeldung wenn restorePurchases scheitert (BillingClient nicht verbunden)"},
 
   "restoreNoPurchases": "No previous purchases found.",
-  "@restoreNoPurchases": {"description": "Neutraler Hinweis nach restorePurchases, wenn nichts wiederherzustellen ist"}
+  "@restoreNoPurchases": {"description": "Neutraler Hinweis nach restorePurchases, wenn nichts wiederherzustellen ist"},
+
+  "hdrCodecSwitched": "HDR video detected — using H.265 for this video so the colors are preserved.",
+  "@hdrCodecSwitched": {"description": "SnackBar wenn eine HDR-Quelle den Codec fuer dieses Video auf H.265 umstellt"}
 }

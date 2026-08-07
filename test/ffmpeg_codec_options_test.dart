@@ -94,4 +94,39 @@ void main() {
     expect(FfmpegCodecOptions.codecTagArguments('av1', 'webm'), isEmpty);
     expect(FfmpegCodecOptions.codecTagArguments('av1', 'mkv'), isEmpty);
   });
+
+  group('HDR', () {
+    test('only 10-bit-capable codecs can carry HDR through', () {
+      expect(FfmpegCodecOptions.supportsHdr('h265'), isTrue);
+      expect(FfmpegCodecOptions.supportsHdr('av1'), isTrue);
+      expect(FfmpegCodecOptions.supportsHdr('h264'), isFalse);
+      expect(FfmpegCodecOptions.supportsHdr('vp9'), isFalse);
+      expect(FfmpegCodecOptions.supportsHdr('xvid'), isFalse);
+    });
+
+    test('tags the output with the source transfer at 10 bit', () {
+      final hlg = FfmpegCodecOptions.hdrArguments('arib-std-b67');
+
+      expect(hlg, contains('-pix_fmt yuv420p10le'));
+      expect(hlg, contains('-color_trc arib-std-b67'));
+      expect(hlg, contains('-color_primaries bt2020'));
+      expect(hlg, contains('-colorspace bt2020nc'));
+      expect(
+        FfmpegCodecOptions.hdrArguments('smpte2084'),
+        contains('-color_trc smpte2084'),
+      );
+    });
+
+    test('drops the fixed BT.709 tags of AV1 when HDR is kept', () {
+      final sdr = FfmpegCodecOptions.videoEncoderArguments('av1');
+      final hdr = FfmpegCodecOptions.videoEncoderArguments('av1', hdr: true);
+
+      expect(sdr, contains('-color_primaries bt709'));
+      expect(hdr, isNot(contains('bt709')));
+      // Die Tempo-Optionen müssen erhalten bleiben.
+      expect(hdr, contains('-usage realtime'));
+      expect(hdr, contains('-cpu-used 8'));
+      expect(hdr, contains('-lag-in-frames 0'));
+    });
+  });
 }

@@ -262,11 +262,25 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     setState(() => _playerController = null);
     await oldController?.dispose();
 
+    // platformView (SurfaceView) statt des Default-textureView: Screen
+    // Recordings laufen mit 60 fps, und der Texture-Pfad schickt jeden Frame
+    // durch Flutters Raster-Pipeline. Das schafft der Compositor bei 1080p60
+    // nicht — ExoPlayer verwirft dann Frames, während die Audiouhr weiterläuft
+    // (Bild wie 10 fps, Ton über eine Sekunde voraus). Die SurfaceView gibt
+    // die Frames direkt an die Display-Pipeline, wie es andere Player tun.
+    // Nur Android: auf iOS ist der Texture-Pfad unauffällig.
+    final viewType = Platform.isAndroid
+        ? VideoViewType.platformView
+        : VideoViewType.textureView;
+
     final VideoPlayerController controller;
     if (path.startsWith('content://')) {
-      controller = VideoPlayerController.contentUri(Uri.parse(path));
+      controller = VideoPlayerController.contentUri(
+        Uri.parse(path),
+        viewType: viewType,
+      );
     } else {
-      controller = VideoPlayerController.file(File(path));
+      controller = VideoPlayerController.file(File(path), viewType: viewType);
     }
 
     bool previewFailed = false;
@@ -321,6 +335,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         ),
       );
     }
+
+    await _maybeShowHdrCodecHint(meta);
   }
 
   // -------------------------------------------------------------------------
@@ -433,6 +449,41 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       width: displayWidth,
       height: displayHeight,
       audioChannels: audioChannels,
+      hdrTransfer: VideoScaleService.hdrTransfer(
+        videoProperties?['color_transfer'],
+      ),
+    );
+  }
+
+  // -------------------------------------------------------------------------
+  // HDR
+  // -------------------------------------------------------------------------
+
+  /// Der Codec, mit dem im Normal-Modus tatsächlich encodiert wird: bei einer
+  /// HDR-Quelle weicht H.264 auf H.265 aus, sonst bliebe nur Tonemapping nach
+  /// SDR. Nur für den laufenden Auftrag — die Einstellung wird nicht verändert.
+  String _hdrCodecFor(String preferredCodec) {
+    if (!_metadata!.isHdr) return preferredCodec;
+    if (FfmpegCodecOptions.supportsHdr(preferredCodec)) return preferredCodec;
+    return PreferencesService.videoCodecH265;
+  }
+
+  /// Bleibt die Quelle bei diesem Codec in HDR, statt getonemappt zu werden?
+  bool _keepsHdr(String codec) =>
+      _metadata!.isHdr && FfmpegCodecOptions.supportsHdr(codec);
+
+  /// Weist auf den automatischen Codec-Wechsel hin, sobald ein HDR-Video
+  /// geladen wird und die Einstellung ihn nicht halten könnte.
+  Future<void> _maybeShowHdrCodecHint(VideoMetadata meta) async {
+    if (!meta.isHdr || _isExpertMode) return;
+    final preferred = await PreferencesService.getVideoCodec();
+    if (FfmpegCodecOptions.supportsHdr(preferred)) return;
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.hdrCodecSwitched),
+        duration: const Duration(seconds: 5),
+      ),
     );
   }
 
@@ -532,7 +583,13 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final convertedPrefix = AppLocalizations.of(context)!.convertedPrefix;
 
     final cacheDir = await ConversionScreen.getCacheDir();
-    final selectedVideoCodec = await PreferencesService.getVideoCodec();
+    // Im Normal-Modus weicht eine HDR-Quelle auf H.265 aus, damit die Farben
+    // erhalten bleiben statt nach SDR getonemappt zu werden. Gilt nur für
+    // dieses Video — die gespeicherte Codec-Einstellung bleibt unangetastet.
+    // Im Expertenmodus zählt die ausdrückliche Wahl des Nutzers.
+    final selectedVideoCodec = _hdrCodecFor(
+      await PreferencesService.getVideoCodec(),
+    );
     final videoEncoder = FfmpegCodecOptions.videoEncoder(selectedVideoCodec);
     final startSec = _trimStart * _metadata!.durationMs / 1000.0;
     final endSec = _trimEnd * _metadata!.durationMs / 1000.0;
@@ -567,16 +624,24 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         //        -2:H = Höhe fix, Breite proportional
         //        W:H  = beide fix
         //        leer = kein Skalieren
-        final String vfFilter;
+        final String scaleGraph;
         if (expert.width != 0 && expert.height != 0) {
-          vfFilter = '-vf scale=${expert.width}:${expert.height}';
+          scaleGraph = 'scale=${expert.width}:${expert.height}';
         } else if (expert.width != 0) {
-          vfFilter = '-vf scale=${expert.width}:-2';
+          scaleGraph = 'scale=${expert.width}:-2';
         } else if (expert.height != 0) {
-          vfFilter = '-vf scale=-2:${expert.height}';
+          scaleGraph = 'scale=-2:${expert.height}';
         } else {
-          vfFilter = '';
+          scaleGraph = '';
         }
+        final keepsHdr = _keepsHdr(expert.videoCodec);
+        final vfFilter = VideoScaleService.filterArgument(
+          scaleGraph,
+          hdrTransfer: keepsHdr ? null : _metadata!.hdrTransfer,
+        );
+        final pixelFormatOpt = keepsHdr
+            ? FfmpegCodecOptions.hdrArguments(_metadata!.hdrTransfer!)
+            : '-pix_fmt yuv420p';
         final fpsOpt = expert.fps != 0 ? '-r ${expert.fps}' : '';
         final encoderName = FfmpegCodecOptions.audioEncoder(expert.audioCodec);
         final channelOpt = expert.audioChannels > 0
@@ -598,10 +663,11 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         );
         final encoderOpt = FfmpegCodecOptions.videoEncoderArguments(
           expert.videoCodec,
+          hdr: keepsHdr,
         );
         command =
             '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-            '-c:v $videoCodec $codecTagOpt $encoderOpt -pix_fmt yuv420p '
+            '-c:v $videoCodec $codecTagOpt $encoderOpt $pixelFormatOpt '
             '$qualityOpt $fpsOpt $audioOpt -y "$outputPath"';
       }
     } else if (_isAudioOnly) {
@@ -616,7 +682,14 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       final quality = qualityOptions[_selectedQualityIndex];
       outputPath =
           '${cacheDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.mp4';
-      final vfFilter = VideoScaleService.standardFilter(quality.shortSide);
+      final keepsHdr = _keepsHdr(selectedVideoCodec);
+      final vfFilter = VideoScaleService.standardFilter(
+        quality.shortSide,
+        hdrTransfer: keepsHdr ? null : _metadata!.hdrTransfer,
+      );
+      final pixelFormatOpt = keepsHdr
+          ? FfmpegCodecOptions.hdrArguments(_metadata!.hdrTransfer!)
+          : '-pix_fmt yuv420p';
       final audioOpt = _isMuted ? '-an' : '-c:a aac -b:a 128k';
       // Die CRF-Werte der Qualitätsstufen sind auf x264 geeicht. H.265 braucht
       // rund 5 Stufen mehr für dasselbe Bild, AV1 arbeitet auf einer anderen
@@ -642,11 +715,15 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       );
       final encoderOpt = FfmpegCodecOptions.videoEncoderArguments(
         selectedVideoCodec,
+        hdr: keepsHdr,
       );
+      // Bewusst kein -r: die Bildrate der Quelle bleibt erhalten. Ein fester
+      // Wert würde bei 30-fps-Material jeden Frame verdoppeln — mehr Rechenzeit
+      // und größere Dateien ohne sichtbaren Gewinn.
       command =
           '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-          '-c:v $videoEncoder $codecTagOpt $encoderOpt -pix_fmt yuv420p '
-          '$qualityOpt -r 60 $audioOpt -y "$outputPath"';
+          '-c:v $videoEncoder $codecTagOpt $encoderOpt $pixelFormatOpt '
+          '$qualityOpt $audioOpt -y "$outputPath"';
     }
 
     final originalName = _videoPath!.split('/').last;

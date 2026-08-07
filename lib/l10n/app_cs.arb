@@ -189,8 +189,7 @@
    "proHintBody": "Jednorázovým nákupem trvale odstraníš reklamy z aplikace.",
    "proHintLater": "Později",
    "restoreError": "Přestavby nákupů se nepodařilo provést. Obchod Play není momentálně k dispozici – zkuste to prosím znovu.",
-   "restoreNoPurchases": "Nebyly nalezeny žádné předchozí nákupy."
+   "restoreNoPurchases": "Nebyly nalezeny žádné předchozí nákupy.",
 
-
-
+  "hdrCodecSwitched": "Rozpoznáno HDR video — pro toto video se použije H.265, aby se zachovaly barvy."
 }

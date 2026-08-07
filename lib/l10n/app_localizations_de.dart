@@ -565,4 +565,8 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get restoreNoPurchases => 'Keine früheren Käufe gefunden.';
+
+  @override
+  String get hdrCodecSwitched =>
+      'HDR-Video erkannt — für dieses Video wird H.265 verwendet, damit die Farben erhalten bleiben.';
 }

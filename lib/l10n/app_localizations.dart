@@ -1138,6 +1138,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No previous purchases found.'**
   String get restoreNoPurchases;
+
+  /// SnackBar wenn eine HDR-Quelle den Codec fuer dieses Video auf H.265 umstellt
+  ///
+  /// In en, this message translates to:
+  /// **'HDR video detected — using H.265 for this video so the colors are preserved.'**
+  String get hdrCodecSwitched;
 }
 
 class _AppLocalizationsDelegate

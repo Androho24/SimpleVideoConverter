@@ -188,6 +188,7 @@
     "proHintBody": "Met een eenmalige aankoop verwijder je advertenties voorgoed uit de app.",
     "proHintLater": "Later",
     "restoreError": "Aankopen konden niet worden hersteld. De Play Store is momenteel niet beschikbaar. Probeer het later nog eens.",
-    "restoreNoPurchases": "Er zijn geen eerdere aankopen gevonden."
+    "restoreNoPurchases": "Er zijn geen eerdere aankopen gevonden.",
 
+  "hdrCodecSwitched": "HDR-video gedetecteerd — voor deze video wordt H.265 gebruikt zodat de kleuren behouden blijven."
 }

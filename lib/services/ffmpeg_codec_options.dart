@@ -31,6 +31,23 @@ class FfmpegCodecOptions {
     _ => 'm4a',
   };
 
+  /// Kann [codec] eine HDR-Quelle als HDR ausgeben?
+  ///
+  /// HDR braucht 10 Bit. H.264 kann das zwar als High 10, aber Androids
+  /// HDR-Pipeline und die meisten Player werten AVC-HDR nicht aus — das
+  /// Ergebnis sähe auf fremden Geräten falsch aus. Bleibt HEVC (Main 10) und
+  /// AV1; beide übernehmen die Farbtags direkt aus den `-color_*`-Optionen,
+  /// encoder-spezifische Parameter braucht es nicht.
+  static bool supportsHdr(String codec) =>
+      codec == MediaFormatCompatibility.videoCodecH265 ||
+      codec == MediaFormatCompatibility.videoCodecAv1;
+
+  /// Pixelformat und Farbtags, die eine HDR-Quelle unverändert erhalten.
+  /// [transfer] ist `arib-std-b67` (HLG) oder `smpte2084` (PQ).
+  static String hdrArguments(String transfer) =>
+      '-pix_fmt yuv420p10le '
+      '-color_primaries bt2020 -color_trc $transfer -colorspace bt2020nc';
+
   static String videoQualityArguments({
     required String codec,
     required String bitrateMode,
@@ -50,7 +67,12 @@ class FfmpegCodecOptions {
     return '-crf ${crf.clamp(0, 51)}';
   }
 
-  static String videoEncoderArguments(String codec) => switch (codec) {
+  /// [hdr] unterdrückt die fest verdrahteten BT.709-Tags, damit sie die
+  /// BT.2020-Tags aus [hdrArguments] nicht überschreiben.
+  static String videoEncoderArguments(
+    String codec, {
+    bool hdr = false,
+  }) => switch (codec) {
     MediaFormatCompatibility.videoCodecVp9 =>
       '-deadline good -cpu-used 4 '
           '-colorspace bt709 -color_primaries bt709 -color_trc bt709',
@@ -79,8 +101,8 @@ class FfmpegCodecOptions {
     //     Zwischenwerte ab: "Set lag in frames to 0 (low delay) or >=
     //     (max-gf-interval + 2)".
     MediaFormatCompatibility.videoCodecAv1 =>
-      '-usage realtime -cpu-used 8 -row-mt 1 -lag-in-frames 0 -g 240 '
-          '-colorspace bt709 -color_primaries bt709 -color_trc bt709',
+      '-usage realtime -cpu-used 8 -row-mt 1 -lag-in-frames 0 -g 240'
+          '${hdr ? '' : ' -colorspace bt709 -color_primaries bt709 -color_trc bt709'}',
     _ => '',
   };
 

@@ -12,10 +12,17 @@ class VideoMetadata {
 
   final int audioChannels; // 0 = unbekannt, ≥3 = Surround
 
+  /// Transferfunktion einer HDR-Quelle (`arib-std-b67` = HLG, `smpte2084` = PQ),
+  /// sonst null. Braucht Tonemapping, sonst wird die Ausgabe flau.
+  final String? hdrTransfer;
+
+  bool get isHdr => hdrTransfer != null;
+
   const VideoMetadata({
     required this.durationMs,
     required this.width,
     required this.height,
     this.audioChannels = 0,
+    this.hdrTransfer,
   });
 }

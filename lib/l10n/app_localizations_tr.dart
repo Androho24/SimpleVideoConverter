@@ -568,4 +568,8 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get restoreNoPurchases => 'Daha önceki satın alımlar bulunamadı.';
+
+  @override
+  String get hdrCodecSwitched =>
+      'HDR video algılandı — renklerin korunması için bu videoda H.265 kullanılacak.';
 }

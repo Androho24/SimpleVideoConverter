@@ -559,4 +559,8 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get restoreNoPurchases => 'ไม่พบการซื้อครั้งก่อน';
+
+  @override
+  String get hdrCodecSwitched =>
+      'ตรวจพบวิดีโอ HDR — จะใช้ H.265 กับวิดีโอนี้เพื่อคงสีไว้';
 }

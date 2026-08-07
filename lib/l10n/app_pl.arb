@@ -188,6 +188,7 @@
     "proHintBody": "Jednorazowy zakup pozwoli na trwałe usunięcie reklam z aplikacji.",
     "proHintLater": "Później",
     "restoreError": "Nie udało się przywrócić zakupów. Sklep Play jest obecnie niedostępny — spróbuj ponownie.",
-    "restoreNoPurchases": "Nie znaleziono wcześniejszych zakupów."
+    "restoreNoPurchases": "Nie znaleziono wcześniejszych zakupów.",
 
+  "hdrCodecSwitched": "Wykryto wideo HDR — dla tego wideo zostanie użyty H.265, aby zachować kolory."
 }

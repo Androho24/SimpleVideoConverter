@@ -104,15 +104,56 @@ class VideoScaleService {
   /// FFmpeg derive an even long side without stretching. `min` prevents
   /// upscaling, and the explicit truncation also keeps a smaller odd source
   /// dimension compatible with yuv420p encoders.
-  static String standardFilter(int targetShortSide) {
-    if (targetShortSide <= 0) return '';
+  static String standardFilter(int targetShortSide, {String? hdrTransfer}) {
+    final graph = targetShortSide <= 0 ? '' : standardGraph(targetShortSide);
+    return filterArgument(graph, hdrTransfer: hdrTransfer);
+  }
 
+  /// Nur der Scale-Graph aus [standardFilter], ohne `-vf`-Präfix.
+  static String standardGraph(int targetShortSide) {
     final evenPortraitWidth = 'trunc(min($targetShortSide,iw)/2)*2';
     final evenLandscapeHeight = 'trunc(min($targetShortSide,ih)/2)*2';
-    final graph =
-        "scale=w='if(gte(dar,1),-2,$evenPortraitWidth)'"
+    return "scale=w='if(gte(dar,1),-2,$evenPortraitWidth)'"
         ":h='if(gte(dar,1),$evenLandscapeHeight,-2)'"
         ':reset_sar=1';
-    return '-vf "$graph"';
+  }
+
+  /// Die Transferfunktion einer HDR-Quelle, sonst null. `arib-std-b67` ist HLG
+  /// (so nimmt die Pixel-Kamera auf), `smpte2084` ist PQ/HDR10.
+  static String? hdrTransfer(dynamic colorTransfer) {
+    final value = colorTransfer?.toString().toLowerCase();
+    return (value == 'arib-std-b67' || value == 'smpte2084') ? value : null;
+  }
+
+  static bool isHdrTransfer(dynamic colorTransfer) =>
+      hdrTransfer(colorTransfer) != null;
+
+  /// HDR (BT.2020, HLG/PQ) → SDR (BT.709).
+  ///
+  /// Ohne diese Kette interpretiert der Encoder die HDR-Werte als wären sie
+  /// BT.709 — das Bild wird flau und entsättigt. Tonemapping braucht lineares
+  /// Licht, deshalb der Umweg über `zscale=t=linear` und Float-Pixel; `hable`
+  /// hält Lichter und Mitten am ausgewogensten, `desat=0` verhindert das
+  /// Ausbleichen heller Flächen. Kostet rund 20 % Encoding-Geschwindigkeit.
+  ///
+  /// Die Eingangsseite wird mit `tin`/`min`/`pin`/`rin` explizit gesetzt, statt
+  /// zimg herleiten zu lassen: der Android-Build quittiert die Herleitung mit
+  /// "generic error in an external library". HDR-Quellen sind praktisch immer
+  /// BT.2020 mit begrenztem Wertebereich. Das Ergebnis ist bitgleich zur
+  /// hergeleiteten Variante (lokal gegen FFmpeg 8 geprüft).
+  static String hdrToSdrGraph(String transfer) =>
+      'zscale=tin=$transfer:min=bt2020nc:pin=bt2020:rin=tv:t=linear:npl=100,'
+      'format=gbrpf32le,zscale=p=bt709,'
+      'tonemap=tonemap=hable:desat=0,'
+      'zscale=t=bt709:m=bt709:p=bt709:r=tv,format=yuv420p';
+
+  /// Setzt das komplette `-vf`-Argument aus [graph] und optionalem Tonemapping
+  /// zusammen. Leer, wenn beides entfällt.
+  static String filterArgument(String graph, {String? hdrTransfer}) {
+    final parts = [
+      if (graph.isNotEmpty) graph,
+      if (hdrTransfer != null) hdrToSdrGraph(hdrTransfer),
+    ];
+    return parts.isEmpty ? '' : '-vf "${parts.join(',')}"';
   }
 }

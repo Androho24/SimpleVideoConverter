@@ -188,6 +188,7 @@
     "proHintBody": "Dengan pembelian satu kali, Anda dapat menghapus iklan secara permanen dari aplikasi.",
     "proHintLater": "Nanti",
     "restoreError": "Tidak dapat memulihkan pembelian. Play Store saat ini sedang tidak tersedia — silakan coba lagi.",
-    "restoreNoPurchases": "Tidak ditemukan pembelian sebelumnya."
+    "restoreNoPurchases": "Tidak ditemukan pembelian sebelumnya.",
 
+  "hdrCodecSwitched": "Video HDR terdeteksi — H.265 digunakan untuk video ini agar warnanya tetap terjaga."
 }

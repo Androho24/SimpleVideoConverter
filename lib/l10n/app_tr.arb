@@ -188,6 +188,7 @@
     "proHintBody": "Tek seferlik bir satın alma ile uygulamadaki reklamları kalıcı olarak kaldırabilirsin.",
     "proHintLater": "Daha sonra",
     "restoreError": "Satın alınanlar geri yüklenemedi. Play Store şu anda kullanılamıyor — lütfen daha sonra tekrar deneyin.",
-    "restoreNoPurchases": "Daha önceki satın alımlar bulunamadı."
+    "restoreNoPurchases": "Daha önceki satın alımlar bulunamadı.",
 
+  "hdrCodecSwitched": "HDR video algılandı — renklerin korunması için bu videoda H.265 kullanılacak."
 }

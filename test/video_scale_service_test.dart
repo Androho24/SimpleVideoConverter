@@ -161,4 +161,71 @@ void main() {
       expect(VideoScaleService.standardFilter(0), isEmpty);
     });
   });
+
+  group('HDR-Tonemapping', () {
+    test('detects HLG and PQ, but not SDR transfers', () {
+      expect(VideoScaleService.hdrTransfer('arib-std-b67'), 'arib-std-b67');
+      expect(VideoScaleService.hdrTransfer('smpte2084'), 'smpte2084');
+      expect(VideoScaleService.hdrTransfer('ARIB-STD-B67'), 'arib-std-b67');
+      expect(VideoScaleService.hdrTransfer('bt709'), isNull);
+      expect(VideoScaleService.hdrTransfer('unknown'), isNull);
+      expect(VideoScaleService.hdrTransfer(null), isNull);
+      expect(VideoScaleService.isHdrTransfer('smpte2084'), isTrue);
+      expect(VideoScaleService.isHdrTransfer('bt709'), isFalse);
+    });
+
+    test('appends the tonemap chain behind the scale graph', () {
+      final filter = VideoScaleService.standardFilter(
+        720,
+        hdrTransfer: 'arib-std-b67',
+      );
+
+      expect(filter.indexOf('scale=w='), lessThan(filter.indexOf('zscale=')));
+      expect(filter, contains('tonemap=tonemap=hable'));
+      expect(filter, contains('format=yuv420p'));
+    });
+
+    test('declares the source transfer instead of letting zimg infer it', () {
+      expect(
+        VideoScaleService.hdrToSdrGraph('arib-std-b67'),
+        contains('zscale=tin=arib-std-b67:min=bt2020nc:pin=bt2020:rin=tv'),
+      );
+      expect(
+        VideoScaleService.hdrToSdrGraph('smpte2084'),
+        contains('tin=smpte2084'),
+      );
+    });
+
+    test('tonemaps alone when the source keeps its original size', () {
+      final filter = VideoScaleService.standardFilter(
+        0,
+        hdrTransfer: 'smpte2084',
+      );
+
+      expect(filter, isNot(contains('scale=w=')));
+      expect(filter, contains('tonemap=tonemap=hable'));
+    });
+
+    test('stays untouched for SDR sources', () {
+      expect(VideoScaleService.standardFilter(720), isNot(contains('tonemap')));
+      expect(VideoScaleService.filterArgument(''), isEmpty);
+    });
+
+    test('survives FFmpegKit command parsing as one filter argument', () {
+      final arguments = FFmpegKitConfig.parseArguments(
+        '-i input.mp4 '
+        '${VideoScaleService.standardFilter(720, hdrTransfer: 'arib-std-b67')} '
+        'output.mp4',
+      );
+      final filterOption = arguments.indexOf('-vf');
+
+      expect(filterOption, greaterThanOrEqualTo(0));
+      expect(
+        arguments[filterOption + 1],
+        '${VideoScaleService.standardGraph(720)},'
+        '${VideoScaleService.hdrToSdrGraph('arib-std-b67')}',
+      );
+      expect(arguments[filterOption + 2], 'output.mp4');
+    });
+  });
 }

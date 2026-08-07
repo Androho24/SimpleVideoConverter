@@ -567,6 +567,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get restoreNoPurchases => 'Não foram encontradas compras anteriores.';
+
+  @override
+  String get hdrCodecSwitched =>
+      'Vídeo HDR detetado — será usado H.265 neste vídeo para preservar as cores.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1132,4 +1136,8 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get restoreNoPurchases => 'Não foram encontradas compras anteriores.';
+
+  @override
+  String get hdrCodecSwitched =>
+      'Vídeo HDR detectado — o H.265 será usado neste vídeo para preservar as cores.';
 }

@@ -570,4 +570,8 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get restoreNoPurchases => 'No se han encontrado compras anteriores.';
+
+  @override
+  String get hdrCodecSwitched =>
+      'Vídeo HDR detectado: se usará H.265 para este vídeo para conservar los colores.';
 }

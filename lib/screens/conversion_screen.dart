@@ -174,10 +174,17 @@ class _ConversionScreenState extends State<ConversionScreen>
     unawaited(ConversionServiceManager.startService(widget.defaultFileName));
 
     FFmpegKitConfig.enableStatisticsCallback((stats) {
-      final p = (stats.getTime() / widget.totalDurationMs).clamp(0.0, 1.0);
+      // FFmpeg meldet zwischendurch "time=N/A" (bei Dateien mit Tonspur
+      // deutlich häufiger). Daraus wird nativ ein ungültiger Zeitwert, der
+      // ungeprüft auf 0 clampen und den Balken zurückspringen lassen würde.
+      // Solche Meldungen liefern trotzdem gültige Speed-/Größenwerte.
+      final timeMs = stats.getTime();
+      final p = (timeMs > 0 && widget.totalDurationMs > 0)
+          ? (timeMs / widget.totalDurationMs).clamp(0.0, 1.0)
+          : _progress;
       if (mounted) {
         setState(() {
-          _progress = p;
+          _progress = p > _progress ? p : _progress;
           _speed = stats.getSpeed();
           _outputSizeBytes = stats.getSize();
         });
@@ -460,10 +467,9 @@ class _ConversionScreenState extends State<ConversionScreen>
                     ),
                     const SizedBox(height: 12),
                     LinearProgressIndicator(value: _progress),
-                    // Stats-Zeile: nur bei Videos > 30s und sobald Speed-Daten vorliegen
-                    if (!_isDone &&
-                        widget.totalDurationMs > 30000 &&
-                        _speed > 0) ...[
+                    // Stats-Zeile: sobald Speed-Daten vorliegen. Die Restzeit
+                    // blendet sich in _buildStatsLine unter 5s selbst aus.
+                    if (!_isDone && _speed > 0) ...[
                       const SizedBox(height: 8),
                       Text(
                         _buildStatsLine(),

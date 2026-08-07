@@ -186,6 +186,7 @@
     "proHintBody": "Com uma compra única, você remove os anúncios do aplicativo para sempre.",
     "proHintLater": "Mais tarde",
     "restoreError": "Não foi possível restaurar as compras. A Play Store está indisponível no momento — tente novamente.",
-    "restoreNoPurchases": "Não foram encontradas compras anteriores."
+    "restoreNoPurchases": "Não foram encontradas compras anteriores.",
 
+  "hdrCodecSwitched": "Vídeo HDR detectado — o H.265 será usado neste vídeo para preservar as cores."
 }
