@@ -160,13 +160,13 @@
   "crfInfoTitle": "CRF — Videoqualität",
 
   "crfInfoContent": "0 → verlustfrei (sehr große Datei)\n18 → visuell nahezu verlustfrei\n23 → Standard (gute Balance)\n28 → sichtbare Qualitätseinbußen\n51 → niedrigste Qualität\n\nEmpfehlung: 18–28",
-  "crfInfoContentWideScale": "0 → verlustfrei (sehr große Datei)\n25 → visuell nahezu verlustfrei\n30 → Standard (gute Balance)\n38 → sichtbare Qualitätseinbußen\n63 → niedrigste Qualität\n\nEmpfehlung: 25–38\n\nVP9 und AV1 nutzen eine 0–63-Skala: Die gleiche Zahl bedeutet eine andere Qualität als bei H.264/H.265.",
+  "crfInfoContentWideScale": "0 → verlustfrei (sehr große Datei)\n25 → visuell nahezu verlustfrei\n30 → Standard (gute Balance)\n38 → sichtbare Qualitätseinbußen\n63 → niedrigste Qualität\n\nEmpfehlung: 25–38\n\nVP9 und AV1 nutzen eine 0–63-Skala: Derselbe Wert entspricht einer anderen Qualität als bei H.264/H.265.",
 
   "targetBitrateLabel": "Ziel-Bitrate",
 
   "targetBitrateInfoTitle": "Ziel-Bitrate",
 
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → stark komprimiert, Messaging\n4–8 Mbps → 1080p normal/gut\n12 Mbps → 1080p hoch / 4K niedrig\n20 Mbps → 4K Streaming-Niveau\n\nManuelle Eingabe: 500–40000 kbps oder z. B. \"8 Mbps\"\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps → starke Kompression, für Messenger\n4–8 Mbps → normale/gute Qualität bei 1080p\n12 Mbps → hohe Qualität bei 1080p / niedrige Qualität bei 4K\n20 Mbps → 4K-Streaming-Qualität\n\nEigener Wert: über das Stiftsymbol (500–100000 kbps)\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.",
   "targetBitrateWideScaleHint": "VP9 und AV1 erreichen dieselbe Qualität mit etwa der Hälfte dieser Bitraten.",
 
   "resolutionLabel": "Auflösung",
@@ -195,13 +195,13 @@
 
   "audioCodecLabel": "Audio-Codec",
 
-  "expertVideoCodecInfoContent": "H.264 → beste Kompatibilität und meist schneller\nH.265 → kleinere Dateien bei vergleichbarer Qualität, langsamer\nVP9 → effizienter offener Codec für WebM und MKV, langsames Software-Encoding\nAV1 → beste Kompression, reines Software-Encoding, experimentell\nXvid → älterer MPEG-4-Codec für AVI und Legacy-Player\n\nDie verfügbaren Output-Formate richten sich nach dem gewählten Video- und Audio-Codec.",
+  "expertVideoCodecInfoContent": "H.264 → beste Kompatibilität und meist schnellere Kodierung\nH.265 → kleinere Dateien bei vergleichbarer Qualität, langsamere Kodierung\nVP9 → effizienter offener Codec für WebM und MKV, langsamere Softwarekodierung\nAV1 → beste Kompression, ausschließlich Softwarekodierung, experimentell\nXvid → älterer MPEG-4-Codec für AVI und ältere Wiedergabegeräte\n\nDie verfügbaren Ausgabeformate richten sich nach dem gewählten Video- und Audio-Codec.",
 
   "xvidLegacyLabel": "Xvid (Legacy)",
-  "av1SlowHint": "AV1 wird rein in Software kodiert und ist deutlich langsamer als H.264/H.265.",
+  "av1SlowHint": "AV1 wird ausschließlich per Software kodiert und ist deutlich langsamer als H.264/H.265.",
   "av1HighResHint": "Oberhalb von 720p lohnt es sich, vorher herunterzuskalieren.",
   "av1ExperimentalTitle": "AV1 (experimentell)",
-  "av1ExperimentalSubtitle": "Ergänzt AV1 in der Codec-Auswahl im normalen Modus und im Expertenmodus. Moderner Codec mit starker Kompression, noch nicht vollständig erprobt.",
+  "av1ExperimentalSubtitle": "Fügt AV1 zur Codec-Auswahl im Normal- und Expertenmodus hinzu. Moderner, hocheffizienter Codec, der noch nicht vollständig erprobt ist.",
 
   "audioCodecInfoContent": "AAC → Standard für MP4, beste Kompatibilität\nMP3 → weit verbreiteter Legacy-Codec\nOpus → modern und effizient, ideal für WebM und MKV\nAC3 → Dolby Digital, nur bei Surround-Quellen (≥ 3 Kanäle) verfügbar\nVorbis → offener Codec für WebM und MKV\n\nNicht kompatible Output-Formate werden automatisch deaktiviert.",
 
@@ -331,5 +331,19 @@
 
   "restoreNoPurchases": "Keine früheren Käufe gefunden.",
 
-  "hdrCodecSwitched": "HDR-Video erkannt — für dieses Video wird H.265 verwendet, damit die Farben erhalten bleiben."
+  "hdrCodecSwitched": "HDR-Video erkannt — für dieses Video wird H.265 verwendet, damit die Farben erhalten bleiben.",
+
+  "themeTitle": "Darstellung",
+
+  "themeSubtitle": "Systemeinstellung oder helles/dunkles Design",
+
+  "themeSystem": "System",
+
+  "themeLight": "Hell",
+
+  "themeDark": "Dunkel",
+
+  "targetBitrateEditTooltip": "Bitrate eingeben",
+
+  "targetBitrateRangeHint": "Erlaubter Bereich: {range}"
 }

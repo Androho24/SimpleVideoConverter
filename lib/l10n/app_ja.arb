@@ -83,7 +83,7 @@
   "crfInfoContentWideScale": "0 → ロスレス（非常に大きなファイル）\n25 → 視覚的にはほぼロスレス\n30 → 標準（バランスが良い）\n38 → 画質の低下が目立つ\n63 → 最低品質\n\n推奨：25～38\n\nVP9とAV1は0～63のスケールを使用します。同じ数値でもH.264/H.265とは品質が異なります。",
   "targetBitrateLabel": "目標ビットレート",
   "targetBitrateInfoTitle": "目標ビットレート",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → 高度に圧縮、メッセージング\n4–8 Mbps → 1080p 標準/良好\n12 Mbps → 1080p 高画質 / 4K 低画質\n20 Mbps → 4K ストリーミングレベル\n\n手動入力：500～40000 kbps、または「8 Mbps」など\n\nCRFとは異なり、画質はシーンによって変動する可能性があります。同じファイルサイズでより良い結果を得るには、CRFを使用してください。",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps → 高圧縮、メッセージ送信向け\n4–8 Mbps → 1080pで標準～良好な画質\n12 Mbps → 1080pで高画質 / 4Kで低画質\n20 Mbps → 4Kストリーミング品質\n\n任意の値：鉛筆アイコンから（500〜100000 kbps）\n\nCRFとは異なり、画質はシーンによって変動する可能性があります。同じファイルサイズでより良い結果を得るには、CRFを使用してください。",
   "targetBitrateWideScaleHint": "VP9とAV1は、これらの約半分のビットレートで同等の画質になります。",
   "resolutionLabel": "解像度",
   "resolutionInfoTitle": "一般的な解像度",
@@ -100,10 +100,10 @@
   "audioCodecLabel": "オーディオコーデック",
   "expertVideoCodecInfoContent": "H.264 → 互換性が最も高く、通常は高速\nH.265 → 同等品質でファイルが小さいが低速\nVP9 → WebMとMKV向けの高効率なオープンコーデック。ソフトウェアエンコードは低速\nAV1 → 圧縮率は最高、ソフトウェアエンコードのみ、実験的\nXvid → AVIや古いプレーヤー向けの旧式MPEG-4コーデック\n\n利用できる出力形式は、選択した映像・音声コーデックに応じて変わります。",
   "xvidLegacyLabel": "Xvid（レガシー）",
-  "av1SlowHint": "AV1 はソフトウェアのみでエンコードされ、H.264/H.265 より大幅に低速です。",
-  "av1HighResHint": "720p を超える場合は、先に解像度を下げることをおすすめします。",
+  "av1SlowHint": "AV1はソフトウェアのみでエンコードされ、H.264/H.265より大幅に低速です。",
+  "av1HighResHint": "720pを超える場合は、先に解像度を下げることをおすすめします。",
   "av1ExperimentalTitle": "AV1（実験的）",
-  "av1ExperimentalSubtitle": "通常モードとエキスパートモードのコーデック選択に AV1 を追加します。圧縮率の高い新しいコーデックですが、検証はまだ十分ではありません。",
+  "av1ExperimentalSubtitle": "通常モードとエキスパートモードのコーデック選択にAV1を追加します。圧縮効率の高い最新コーデックですが、検証はまだ十分ではありません。",
   "audioCodecInfoContent": "AAC → MP4の標準、最高の互換性\nMP3 → 広く使われる旧式コーデック\nOpus → 最新で高効率、WebMとMKVに最適\nAC3 → Dolby Digital、サラウンド音源（3チャンネル以上）のみ\nVorbis → WebMとMKV向けのオープンコーデック\n\n互換性のない出力形式は自動的に無効になります。",
   "audioChannelsLabel": "オーディオチャンネル",
   "audioChannelsInfoContent": "オリジナル → ソースのチャンネル構成を維持 \n ステレオ → 2.0（必要に応じてダウンミックス）\n モノラル → 1チャンネル (最小ファイルサイズ)\n 5.1 → 6チャンネルサラウンド (サラウンド音源の場合のみ)\n \n ダウンミックス (例: 5.1 → ステレオ) はサポートされています。アップミックスは提供されていません。",
@@ -169,5 +169,19 @@
   "restoreError": "購入履歴を復元できませんでした。現在、Playストアに接続できません。しばらくしてからもう一度お試しください。",
   "restoreNoPurchases": "過去の購入履歴は見つかりませんでした。",
 
-  "hdrCodecSwitched": "HDR動画を検出しました — 色を保持するため、この動画にはH.265を使用します。"
+  "hdrCodecSwitched": "HDR動画を検出しました。色を維持するため、この動画ではH.265を使用します。",
+
+  "themeTitle": "外観",
+
+  "themeSubtitle": "システム設定、ライト、ダークから選択",
+
+  "themeSystem": "システム",
+
+  "themeLight": "ライト",
+
+  "themeDark": "ダーク",
+
+  "targetBitrateEditTooltip": "ビットレートを入力",
+
+  "targetBitrateRangeHint": "入力可能な範囲：{range}"
 }

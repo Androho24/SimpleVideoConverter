@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import '../theme/app_theme.dart';
 
 class ConvertSection extends StatelessWidget {
   final bool isMuted;
@@ -119,8 +120,10 @@ class ConvertSection extends StatelessWidget {
           label: Text(l.convertButton),
           onPressed: onConvert,
           style: ElevatedButton.styleFrom(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            // Bewusst themeunabhängig: der Konvertieren-Button sieht hell wie
+            // dunkel gleich aus (siehe AppTheme.actionButtonBackground).
+            backgroundColor: AppTheme.actionButtonBackground,
+            foregroundColor: AppTheme.actionButtonForeground,
             padding: const EdgeInsets.symmetric(vertical: 14),
           ),
         ),

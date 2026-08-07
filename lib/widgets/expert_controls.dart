@@ -9,6 +9,7 @@ import '../models/video_metadata.dart';
 import '../services/media_format_compatibility.dart';
 import '../services/output_size_estimator.dart';
 import '../services/video_quality_scale.dart';
+import 'target_bitrate_dialog.dart';
 
 /// Maximale Auflösung pro Seite (4K).
 const _maxDimension = 3840;
@@ -43,7 +44,6 @@ class _ExpertControlsState extends State<ExpertControls> {
   late final TextEditingController _widthController;
   late final TextEditingController _heightController;
   late final TextEditingController _targetBitrateController;
-  late final FocusNode _targetBitrateFocus;
   bool _aspectLocked = true;
 
   @override
@@ -66,7 +66,6 @@ class _ExpertControlsState extends State<ExpertControls> {
     _targetBitrateController = TextEditingController(
       text: _targetBitrateLabel(widget.settings.targetBitrateKbps),
     );
-    _targetBitrateFocus = FocusNode()..addListener(_onTargetBitrateFocusChange);
     // ExpertSettings im Parent synchronisieren, falls Metadaten verwendet wurden
     if (widget.settings.width == 0 &&
         widget.settings.height == 0 &&
@@ -85,8 +84,7 @@ class _ExpertControlsState extends State<ExpertControls> {
   void didUpdateWidget(ExpertControls oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.settings.targetBitrateKbps !=
-            oldWidget.settings.targetBitrateKbps &&
-        !_targetBitrateFocus.hasFocus) {
+        oldWidget.settings.targetBitrateKbps) {
       _targetBitrateController.text = _targetBitrateLabel(
         widget.settings.targetBitrateKbps,
       );
@@ -123,7 +121,6 @@ class _ExpertControlsState extends State<ExpertControls> {
     _widthController.dispose();
     _heightController.dispose();
     _targetBitrateController.dispose();
-    _targetBitrateFocus.dispose();
     super.dispose();
   }
 
@@ -408,30 +405,18 @@ class _ExpertControlsState extends State<ExpertControls> {
         : '$mbps Mbps';
   }
 
-  /// Parst manuell eingetippte Bitrate — unterstützt "8000", "8000 kbps", "8 Mbps", "0.5 Mbps".
-  int? _parseTargetBitrate(String text) {
-    final t = text.trim().toLowerCase().replaceAll(',', '.');
-    final mMatch = RegExp(r'^(\d+(?:\.\d+)?)\s*mbps?$').firstMatch(t);
-    if (mMatch != null) {
-      final val = double.tryParse(mMatch.group(1)!);
-      if (val != null) return (val * 1000).round();
-    }
-    final kMatch = RegExp(r'^(\d+)\s*(?:kbps?)?$').firstMatch(t);
-    if (kMatch != null) return int.tryParse(kMatch.group(1)!);
-    return null;
-  }
-
-  void _onTargetBitrateFocusChange() {
-    if (_targetBitrateFocus.hasFocus) return;
-    final parsed = _parseTargetBitrate(_targetBitrateController.text);
-    final clamped = (parsed ?? widget.settings.targetBitrateKbps).clamp(
-      500,
-      40000,
+  /// Öffnet den Eingabedialog für einen eigenen Bitraten-Wert. Der bestätigte
+  /// Wert landet im Dropdown, auch wenn er keiner der Vorgaben entspricht.
+  Future<void> _editTargetBitrate(ExpertSettings settings) async {
+    final kbps = await showTargetBitrateDialog(
+      context,
+      currentKbps: settings.targetBitrateKbps,
     );
-    if (clamped != widget.settings.targetBitrateKbps) {
-      widget.onChanged(widget.settings.copyWith(targetBitrateKbps: clamped));
+    if (kbps == null || !mounted) return;
+    _targetBitrateController.text = _targetBitrateLabel(kbps);
+    if (kbps != settings.targetBitrateKbps) {
+      widget.onChanged(settings.copyWith(targetBitrateKbps: kbps));
     }
-    _targetBitrateController.text = _targetBitrateLabel(clamped);
   }
 
   // ---------------------------------------------------------------------------
@@ -554,10 +539,13 @@ class _ExpertControlsState extends State<ExpertControls> {
               children: [
                 Expanded(
                   child: DropdownMenu<int>(
+                    key: const ValueKey('expert_target_bitrate_menu'),
                     expandedInsets: EdgeInsets.zero,
                     enabled: !widget.isConverting,
                     controller: _targetBitrateController,
-                    focusNode: _targetBitrateFocus,
+                    // Kein Tippen im Feld: eigene Werte laufen über den
+                    // Stift-Button daneben. Das Feld ist reine Auswahl.
+                    requestFocusOnTap: false,
                     label: Text(l.targetBitrateLabel),
                     inputDecorationTheme: InputDecorationTheme(
                       border: OutlineInputBorder(
@@ -584,6 +572,21 @@ class _ExpertControlsState extends State<ExpertControls> {
                       }
                     },
                   ),
+                ),
+                const SizedBox(width: 4),
+                IconButton(
+                  key: const ValueKey('expert_target_bitrate_edit'),
+                  icon: Icon(
+                    Icons.edit_outlined,
+                    size: 20,
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  tooltip: l.targetBitrateEditTooltip,
+                  onPressed: widget.isConverting
+                      ? null
+                      : () => _editTargetBitrate(s),
                 ),
                 const SizedBox(width: 4),
                 _infoButton(

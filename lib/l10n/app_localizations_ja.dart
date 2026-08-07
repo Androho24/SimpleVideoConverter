@@ -303,17 +303,17 @@ class AppLocalizationsJa extends AppLocalizations {
   String get xvidLegacyLabel => 'Xvid（レガシー）';
 
   @override
-  String get av1SlowHint => 'AV1 はソフトウェアのみでエンコードされ、H.264/H.265 より大幅に低速です。';
+  String get av1SlowHint => 'AV1はソフトウェアのみでエンコードされ、H.264/H.265より大幅に低速です。';
 
   @override
-  String get av1HighResHint => '720p を超える場合は、先に解像度を下げることをおすすめします。';
+  String get av1HighResHint => '720pを超える場合は、先に解像度を下げることをおすすめします。';
 
   @override
   String get av1ExperimentalTitle => 'AV1（実験的）';
 
   @override
   String get av1ExperimentalSubtitle =>
-      '通常モードとエキスパートモードのコーデック選択に AV1 を追加します。圧縮率の高い新しいコーデックですが、検証はまだ十分ではありません。';
+      '通常モードとエキスパートモードのコーデック選択にAV1を追加します。圧縮効率の高い最新コーデックですが、検証はまだ十分ではありません。';
 
   @override
   String get audioCodecInfoContent =>
@@ -529,7 +529,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → 高度に圧縮、メッセージング\n4–8 Mbps → 1080p 標準/良好\n12 Mbps → 1080p 高画質 / 4K 低画質\n20 Mbps → 4K ストリーミングレベル\n\n手動入力：500～40000 kbps、または「8 Mbps」など\n\nCRFとは異なり、画質はシーンによって変動する可能性があります。同じファイルサイズでより良い結果を得るには、CRFを使用してください。';
+      '500 kbps–2 Mbps → 高圧縮、メッセージ送信向け\n4–8 Mbps → 1080pで標準～良好な画質\n12 Mbps → 1080pで高画質 / 4Kで低画質\n20 Mbps → 4Kストリーミング品質\n\n任意の値：鉛筆アイコンから（500〜100000 kbps）\n\nCRFとは異なり、画質はシーンによって変動する可能性があります。同じファイルサイズでより良い結果を得るには、CRFを使用してください。';
 
   @override
   String get targetBitrateWideScaleHint =>
@@ -555,5 +555,28 @@ class AppLocalizationsJa extends AppLocalizations {
   String get restoreNoPurchases => '過去の購入履歴は見つかりませんでした。';
 
   @override
-  String get hdrCodecSwitched => 'HDR動画を検出しました — 色を保持するため、この動画にはH.265を使用します。';
+  String get hdrCodecSwitched => 'HDR動画を検出しました。色を維持するため、この動画ではH.265を使用します。';
+
+  @override
+  String get themeTitle => '外観';
+
+  @override
+  String get themeSubtitle => 'システム設定、ライト、ダークから選択';
+
+  @override
+  String get themeSystem => 'システム';
+
+  @override
+  String get themeLight => 'ライト';
+
+  @override
+  String get themeDark => 'ダーク';
+
+  @override
+  String get targetBitrateEditTooltip => 'ビットレートを入力';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return '入力可能な範囲：$range';
+  }
 }

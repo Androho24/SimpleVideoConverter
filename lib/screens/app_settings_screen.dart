@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../l10n/app_localizations.dart';
 import '../services/preferences_service.dart';
+import '../services/theme_controller.dart';
 import '../widgets/back_bottom_bar.dart';
 
 class AppSettingsScreen extends StatefulWidget {
@@ -67,14 +68,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
-        ),
-      ),
+      appBar: AppBar(toolbarHeight: 0),
       bottomNavigationBar: const BackBottomBar(),
       body: ListView(
         children: [
@@ -145,6 +139,41 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
               });
               PreferencesService.setAv1Experimental(v);
             },
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.brightness_6_outlined),
+            title: Text(l.themeTitle),
+            subtitle: Text(l.themeSubtitle),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(72, 0, 16, 16),
+            child: SizedBox(
+              width: double.infinity,
+              child: ValueListenableBuilder<ThemeMode>(
+                valueListenable: ThemeController.mode,
+                builder: (context, mode, _) => SegmentedButton<ThemeMode>(
+                  showSelectedIcon: false,
+                  segments: [
+                    ButtonSegment(
+                      value: ThemeMode.system,
+                      label: Text(l.themeSystem),
+                    ),
+                    ButtonSegment(
+                      value: ThemeMode.light,
+                      label: Text(l.themeLight),
+                    ),
+                    ButtonSegment(
+                      value: ThemeMode.dark,
+                      label: Text(l.themeDark),
+                    ),
+                  ],
+                  selected: {mode},
+                  onSelectionChanged: (selection) =>
+                      ThemeController.set(selection.first),
+                ),
+              ),
+            ),
           ),
           if (_isPrivacyOptionsRequired) ...[
             const Divider(),

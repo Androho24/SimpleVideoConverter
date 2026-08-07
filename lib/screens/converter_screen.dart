@@ -491,6 +491,20 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   // Hilfsmethoden
   // -------------------------------------------------------------------------
 
+  /// Wechselt den Modus-Tab. Die Größenschätzung muss dabei immer mitlaufen:
+  /// Normal- und Expertenmodus haben eigene Einstellungen und damit eine eigene
+  /// Ausgabegröße. Deshalb liegt der Wechsel an einer Stelle statt an jedem
+  /// Aufrufer — sonst fehlt die Neuberechnung irgendwo wieder.
+  void _selectNavIndex(int index) {
+    final isExpert = index == 1;
+    setState(() {
+      _selectedNavIndex = index;
+      _isExpertMode = isExpert;
+    });
+    PreferencesService.setExpertMode(isExpert);
+    _updateEstimatedSize();
+  }
+
   void _updateEstimatedSize() {
     if (_metadata == null) return;
     final durationSec =
@@ -572,7 +586,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
     // Native-Ad parallel zum FFmpeg-Setup vorladen, damit sie auf dem
     // Conversion-Screen ohne Ladephase erscheint. Pro-User: skippt intern.
-    NativeAdPreloader.preload();
+    NativeAdPreloader.preload(Theme.of(context).brightness);
 
     if (!await _checkStorage()) {
       if (mounted) setState(() => _isConverting = false);
@@ -766,13 +780,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     return PopScope(
       canPop: _selectedNavIndex == 0,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) {
-          setState(() {
-            _selectedNavIndex = 0;
-            _isExpertMode = false;
-          });
-          PreferencesService.setExpertMode(false);
-        }
+        if (!didPop) _selectNavIndex(0);
       },
       child: Scaffold(
         bottomNavigationBar: NavigationBar(
@@ -782,27 +790,12 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => SettingsScreen(
-                    onNavigate: (i) {
-                      setState(() {
-                        _selectedNavIndex = i;
-                        _isExpertMode = i == 1;
-                      });
-                      PreferencesService.setExpertMode(i == 1);
-                      _updateEstimatedSize();
-                    },
-                  ),
+                  builder: (_) => SettingsScreen(onNavigate: _selectNavIndex),
                 ),
               );
               await _refreshCodecPreferences();
             } else {
-              final isExpert = index == 1;
-              setState(() {
-                _selectedNavIndex = index;
-                _isExpertMode = isExpert;
-              });
-              PreferencesService.setExpertMode(isExpert);
-              _updateEstimatedSize();
+              _selectNavIndex(index);
             }
           },
           destinations: [
@@ -831,12 +824,12 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
                 ElevatedButton.icon(
                   icon: _isLoading
-                      ? const SizedBox(
+                      ? SizedBox(
                           width: 18,
                           height: 18,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         )
                       : const Icon(Icons.video_library),
@@ -895,10 +888,10 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                         padding: const EdgeInsets.all(24),
                         child: Column(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.videocam_off,
                               size: 48,
-                              color: Colors.grey,
+                              color: Theme.of(context).colorScheme.outline,
                             ),
                             const SizedBox(height: 8),
                             Text(
@@ -907,7 +900,11 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                               )!.previewNotAvailableLabel,
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.grey),
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.outline,
+                                  ),
                             ),
                           ],
                         ),
@@ -965,11 +962,14 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                     isAudioOnly: _expertSettings.audioOnly,
                     audioOnlySwitchEnabled: _expertSettings.audioBitrate != 0,
                     estimatedSizeMb: _estimatedSizeMb,
-                    onMuteChanged: (val) => setState(
-                      () => _expertSettings = _expertSettings.copyWith(
-                        audioBitrate: val ? 0 : 128,
-                      ),
-                    ),
+                    onMuteChanged: (val) {
+                      setState(
+                        () => _expertSettings = _expertSettings.copyWith(
+                          audioBitrate: val ? 0 : 128,
+                        ),
+                      );
+                      _updateEstimatedSize();
+                    },
                     onAudioOnlyChanged: (val) {
                       setState(
                         () => _expertSettings = _expertSettings.copyWith(

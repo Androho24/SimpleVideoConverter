@@ -9,6 +9,7 @@ import '../l10n/app_localizations.dart';
 import '../services/ad_config.dart';
 import '../services/ads_service.dart';
 import '../services/native_ad_preloader.dart';
+import '../services/native_ad_style.dart';
 import '../services/preferences_service.dart';
 
 enum _AdState { loading, loaded, failed }
@@ -70,6 +71,8 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
       if (mounted) setState(() => _adState = _AdState.failed);
       return;
     }
+    if (!mounted) return;
+    final brightness = Theme.of(context).brightness;
 
     late final NativeAd ad;
     ad = NativeAd(
@@ -98,10 +101,7 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
       nativeAdOptions: NativeAdOptions(
         videoOptions: VideoOptions(startMuted: true),
       ),
-      nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.medium,
-        mainBackgroundColor: Colors.white,
-      ),
+      nativeTemplateStyle: nativeAdTemplateStyle(brightness),
     );
     _nativeAd = ad;
     try {

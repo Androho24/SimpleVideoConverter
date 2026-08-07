@@ -85,7 +85,7 @@
   
 "crfInfoTitle": "CRF — Videokwaliteit",
   "crfInfoContent": "0 → verliesvrij (zeer groot bestand)\n18 → visueel vrijwel verliesvrij\n23 → Standaard (goede balans)\n28 → zichtbare kwaliteitsverlies\n51 → laagste kwaliteit\n\nAanbeveling: 18–28",
-  "crfInfoContentWideScale": "0 → verliesvrij (zeer groot bestand)\n25 → visueel vrijwel verliesvrij\n30 → Standaard (goede balans)\n38 → zichtbare kwaliteitsverlies\n63 → laagste kwaliteit\n\nAanbeveling: 25–38\n\nVP9 en AV1 gebruiken een schaal van 0–63: hetzelfde getal betekent een andere kwaliteit dan bij H.264/H.265.",
+  "crfInfoContentWideScale": "0 → verliesvrij (zeer groot bestand)\n25 → visueel vrijwel verliesvrij\n30 → standaard (goede balans)\n38 → zichtbaar kwaliteitsverlies\n63 → laagste kwaliteit\n\nAanbeveling: 25–38\n\nVP9 en AV1 gebruiken een schaal van 0–63: dezelfde waarde komt overeen met een andere kwaliteit dan bij H.264/H.265.",
   
 "resolutionLabel": "Resolutie",
   "resolutionInfoTitle": "Gangbare resoluties",
@@ -103,12 +103,12 @@
   "audioBitrateInfoContent": "Stil → geen audio\n64 kbps → spraak, podcasts\n96 kbps → goede spraakkwaliteit\n128 kbps → standaardmuziek\n192 kbps → hoge audiokwaliteit\n320 kbps → maximale MP3-kwaliteit",
   
 "audioCodecLabel": "Audiocodec",
-  "expertVideoCodecInfoContent": "H.264 → beste compatibiliteit en meestal sneller\nH.265 → kleinere bestanden bij vergelijkbare kwaliteit, langzamer\nVP9 → efficiënte open codec voor WebM en MKV, tragere software-encoding\nAV1 → beste compressie, alleen software-encoding, experimenteel\nXvid → oudere MPEG-4-codec voor AVI en oude spelers\n\nDe beschikbare uitvoerformaten hangen af van de gekozen video- en audiocodecs.",
+  "expertVideoCodecInfoContent": "H.264 → beste compatibiliteit en meestal snellere codering\nH.265 → kleinere bestanden bij vergelijkbare kwaliteit, langzamere codering\nVP9 → efficiënte open codec voor WebM en MKV, tragere softwarecodering\nAV1 → beste compressie, alleen softwarecodering, experimenteel\nXvid → oudere MPEG-4-codec voor AVI en oudere spelers\n\nDe beschikbare uitvoerformaten hangen af van de gekozen video- en audiocodecs.",
   "xvidLegacyLabel": "Xvid (legacy)",
   "av1SlowHint": "AV1 wordt alleen in software gecodeerd en is veel trager dan H.264/H.265.",
   "av1HighResHint": "Boven 720p kun je beter eerst verkleinen.",
   "av1ExperimentalTitle": "AV1 (experimenteel)",
-  "av1ExperimentalSubtitle": "Voegt AV1 toe aan de codeckeuze in de normale modus en de expertmodus. Moderne codec met sterke compressie, nog niet volledig getest.",
+  "av1ExperimentalSubtitle": "Voegt AV1 toe aan de codeckeuze in de normale modus en de expertmodus. Moderne, zeer efficiënte codec die nog niet volledig is getest.",
   "audioCodecInfoContent": "AAC → standaard voor MP4, beste compatibiliteit\nMP3 → veelgebruikte legacy-codec\nOpus → modern en efficiënt, ideaal voor WebM en MKV\nAC3 → Dolby Digital, alleen voor surroundbronnen (≥ 3 kanalen)\nVorbis → open codec voor WebM en MKV\n\nNiet-compatibele uitvoerformaten worden automatisch uitgeschakeld.",
   "outputFormatLabel": "Uitvoerformaat",
   "outputFormatInfoContent": "MP4 → universeel, beste compatibiliteit\nMKV → flexibele container voor alle aangeboden codecs\nMOV → Apple/QuickTime-workflows\nAVI → legacy-formaat met Xvid\nMPEG-TS → transportstream voor tv en streaming\nWebM → modern webformaat met VP9 en Opus of Vorbis\n\nNiet-compatibele formaten worden gedimd weergegeven. Bij selectie worden automatisch de standaardvideocodec en, indien nodig, een compatibele audiocodec ingesteld.",
@@ -180,8 +180,8 @@
 
   "targetBitrateLabel": "Doelbitsnelheid",
   "targetBitrateInfoTitle": "Doelbitsnelheid",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → zware compressie, berichten\n4–8 Mbps → 1080p normale/goede kwaliteit\n12 Mbps → 1080p hoge / 4K lage kwaliteit\n20 Mbps → 4K-streamingkwaliteit\n\nAangepaste invoer: 500–40000 kbps of bijv. \"8 Mbps\"\n\nIn tegenstelling tot CRF kan de kwaliteit per scène variëren. Gebruik CRF voor betere resultaten bij dezelfde bestandsgrootte.",
-  "targetBitrateWideScaleHint": "VP9 en AV1 halen dezelfde kwaliteit met ongeveer de helft van deze bitrates.",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps → zware compressie, voor berichtenapps\n4–8 Mbps → normale/goede kwaliteit bij 1080p\n12 Mbps → hoge kwaliteit bij 1080p / lage kwaliteit bij 4K\n20 Mbps → 4K-streamingkwaliteit\n\nEigen waarde: via het potloodpictogram (500–100000 kbps)\n\nIn tegenstelling tot CRF kan de kwaliteit per scène variëren. Gebruik CRF voor betere resultaten bij dezelfde bestandsgrootte.",
+  "targetBitrateWideScaleHint": "VP9 en AV1 halen dezelfde kwaliteit met ongeveer de helft van deze bitsnelheden.",
 
     "rateAppTitle": "De app beoordelen",
     "proHintTitle": "Zonder advertenties gebruiken",
@@ -190,5 +190,19 @@
     "restoreError": "Aankopen konden niet worden hersteld. De Play Store is momenteel niet beschikbaar. Probeer het later nog eens.",
     "restoreNoPurchases": "Er zijn geen eerdere aankopen gevonden.",
 
-  "hdrCodecSwitched": "HDR-video gedetecteerd — voor deze video wordt H.265 gebruikt zodat de kleuren behouden blijven."
+  "hdrCodecSwitched": "HDR-video gedetecteerd — voor deze video wordt H.265 gebruikt zodat de kleuren behouden blijven.",
+
+  "themeTitle": "Weergave",
+
+  "themeSubtitle": "Systeeminstelling of een licht/donker thema",
+
+  "themeSystem": "Systeem",
+
+  "themeLight": "Licht",
+
+  "themeDark": "Donker",
+
+  "targetBitrateEditTooltip": "Bitsnelheid invoeren",
+
+  "targetBitrateRangeHint": "Toegestaan bereik: {range}"
 }

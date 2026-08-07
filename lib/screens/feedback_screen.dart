@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
 import '../widgets/back_bottom_bar.dart';
@@ -57,14 +56,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
-        ),
-      ),
+      appBar: AppBar(toolbarHeight: 0),
       bottomNavigationBar: const BackBottomBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

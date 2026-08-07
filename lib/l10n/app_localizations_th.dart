@@ -317,7 +317,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get av1ExperimentalSubtitle =>
-      'เพิ่ม AV1 ในตัวเลือกตัวแปลงสัญญาณทั้งโหมดปกติและโหมดผู้เชี่ยวชาญ เป็นตัวแปลงสัญญาณสมัยใหม่ที่บีบอัดได้ดี แต่ยังทดสอบไม่ครบถ้วน';
+      'เพิ่ม AV1 ในตัวเลือกโคเดกทั้งโหมดปกติและโหมดผู้เชี่ยวชาญ เป็นโคเดกสมัยใหม่ที่บีบอัดได้อย่างมีประสิทธิภาพ แต่ยังทดสอบไม่ครบถ้วน';
 
   @override
   String get audioCodecInfoContent =>
@@ -534,7 +534,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → การบีบอัดสูง, การส่งข้อความ\n4–8 Mbps → 1080p คุณภาพปกติ/ดี\n12 Mbps → 1080p คุณภาพสูง / 4K คุณภาพต่ำ\n20 Mbps → คุณภาพสตรีมมิ่ง 4K\n\nค่ากำหนดเอง: 500–40000 kbps หรือ เช่น \"8 Mbps\"\n\nไม่เหมือนกับ CRF คุณภาพอาจแตกต่างกันระหว่างฉาก ใช้ CRF เพื่อผลลัพธ์ที่ดีกว่าที่ขนาดไฟล์เท่ากัน';
+      '500 kbps–2 Mbps → การบีบอัดสูง เหมาะสำหรับแอปส่งข้อความ\n4–8 Mbps → คุณภาพปกติ/ดีที่ 1080p\n12 Mbps → คุณภาพสูงที่ 1080p / คุณภาพต่ำที่ 4K\n20 Mbps → คุณภาพสตรีมมิ่ง 4K\n\nค่ากำหนดเอง: ผ่านไอคอนดินสอ (500–100000 kbps)\n\nไม่เหมือนกับ CRF คุณภาพอาจแตกต่างกันระหว่างฉาก ใช้ CRF เพื่อผลลัพธ์ที่ดีกว่าที่ขนาดไฟล์เท่ากัน';
 
   @override
   String get targetBitrateWideScaleHint =>
@@ -558,9 +558,32 @@ class AppLocalizationsTh extends AppLocalizations {
       'ไม่สามารถกู้คืนการซื้อได้ ขณะนี้ Play Store ไม่สามารถใช้งานได้ — กรุณาลองใหม่อีกครั้ง';
 
   @override
-  String get restoreNoPurchases => 'ไม่พบการซื้อครั้งก่อน';
+  String get restoreNoPurchases => 'ไม่พบการซื้อก่อนหน้านี้';
 
   @override
   String get hdrCodecSwitched =>
       'ตรวจพบวิดีโอ HDR — จะใช้ H.265 กับวิดีโอนี้เพื่อคงสีไว้';
+
+  @override
+  String get themeTitle => 'ลักษณะที่ปรากฏ';
+
+  @override
+  String get themeSubtitle => 'ใช้ตามระบบ หรือเลือกธีมสว่าง/มืด';
+
+  @override
+  String get themeSystem => 'ระบบ';
+
+  @override
+  String get themeLight => 'สว่าง';
+
+  @override
+  String get themeDark => 'มืด';
+
+  @override
+  String get targetBitrateEditTooltip => 'ป้อนบิตเรต';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'ช่วงที่อนุญาต: $range';
+  }
 }

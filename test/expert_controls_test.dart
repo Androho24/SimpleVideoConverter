@@ -148,6 +148,51 @@ void main() {
     expect(find.textContaining('Recommended: 25–38'), findsOneWidget);
     expect(find.textContaining('0–63 scale'), findsOneWidget);
   });
+
+  testWidgets('the pencil writes a custom bitrate into the dropdown', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const _ExpertControlsHost());
+    await tester.pumpAndSettle();
+
+    final bitrateMode = find.text('Bitrate');
+    await tester.ensureVisible(bitrateMode);
+    await tester.tap(bitrateMode);
+    await tester.pumpAndSettle();
+
+    // Vorgabe 5000 kbps aus ExpertSettings.
+    expect(find.widgetWithText(TextField, '5 Mbps'), findsOneWidget);
+
+    final edit = find.byKey(const ValueKey('expert_target_bitrate_edit'));
+    await tester.ensureVisible(edit);
+    await tester.tap(edit);
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byKey(const ValueKey('target_bitrate_field')),
+      '3.5',
+    );
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    // Ein Wert, den das Dropdown gar nicht anbietet, muss trotzdem ankommen.
+    expect(find.widgetWithText(TextField, '3.5 Mbps'), findsOneWidget);
+  });
+
+  testWidgets('the bitrate field itself is not typeable', (tester) async {
+    await tester.pumpWidget(const _ExpertControlsHost());
+    await tester.pumpAndSettle();
+
+    final bitrateMode = find.text('Bitrate');
+    await tester.ensureVisible(bitrateMode);
+    await tester.tap(bitrateMode);
+    await tester.pumpAndSettle();
+
+    final menu = tester.widget<DropdownMenu<int>>(
+      find.byKey(const ValueKey('expert_target_bitrate_menu')),
+    );
+    expect(menu.requestFocusOnTap, isFalse);
+  });
 }
 
 class _ExpertControlsHost extends StatefulWidget {

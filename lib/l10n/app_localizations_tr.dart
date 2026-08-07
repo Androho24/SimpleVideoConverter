@@ -306,7 +306,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → en iyi uyumluluk ve genellikle daha hızlı dönüşüm\nH.265 → benzer kalitede daha küçük dosyalar, daha yavaş\nVP9 → WebM ve MKV için verimli açık kodek, yazılımsal kodlama daha yavaş\nAV1 → en iyi sıkıştırma, yalnızca yazılımsal kodlama, deneysel\nXvid → AVI ve eski oynatıcılar için eski MPEG-4 kodeği\n\nKullanılabilir çıkış formatları seçilen video ve ses kodeklerine bağlıdır.';
+      'H.264 → en iyi uyumluluk ve genellikle daha hızlı kodlama\nH.265 → benzer kalitede daha küçük dosyalar, daha yavaş kodlama\nVP9 → WebM ve MKV için verimli açık kodek, yazılımsal kodlama daha yavaş\nAV1 → en iyi sıkıştırma, yalnızca yazılımsal kodlama, deneysel\nXvid → AVI ve eski oynatıcılar için eski MPEG-4 kodeği\n\nKullanılabilir çıkış formatları seçilen video ve ses kodeklerine bağlıdır.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (eski)';
@@ -324,7 +324,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get av1ExperimentalSubtitle =>
-      'Normal modda ve uzman modunda kodek seçimine AV1\'i ekler. Güçlü sıkıştırma sunan yeni bir kodek, henüz tümüyle denenmedi.';
+      'Normal ve uzman modlarındaki kodek seçimine AV1\'i ekler. Yüksek verimli modern bir kodek, henüz tamamen test edilmedi.';
 
   @override
   String get audioCodecInfoContent =>
@@ -543,7 +543,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → yoğun sıkıştırma, mesajlaşma\n4–8 Mbps → 1080p normal/iyi kalite\n12 Mbps → 1080p yüksek / 4K düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel giriş: 500–40000 kbps veya ör. \"8 Mbps\"\n\nCRF\'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF\'yi kullanın.';
+      '500 kbps–2 Mbps → yoğun sıkıştırma, mesajlaşma uygulamaları\n4–8 Mbps → 1080p\'de normal/iyi kalite\n12 Mbps → 1080p\'de yüksek / 4K\'da düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel değer: kalem simgesiyle (500–100000 kbps)\n\nCRF\'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF\'yi kullanın.';
 
   @override
   String get targetBitrateWideScaleHint =>
@@ -567,9 +567,32 @@ class AppLocalizationsTr extends AppLocalizations {
       'Satın alınanlar geri yüklenemedi. Play Store şu anda kullanılamıyor — lütfen daha sonra tekrar deneyin.';
 
   @override
-  String get restoreNoPurchases => 'Daha önceki satın alımlar bulunamadı.';
+  String get restoreNoPurchases => 'Önceki satın alımlar bulunamadı.';
 
   @override
   String get hdrCodecSwitched =>
       'HDR video algılandı — renklerin korunması için bu videoda H.265 kullanılacak.';
+
+  @override
+  String get themeTitle => 'Görünüm';
+
+  @override
+  String get themeSubtitle => 'Sistemi kullan veya açık/koyu tema seç';
+
+  @override
+  String get themeSystem => 'Sistem';
+
+  @override
+  String get themeLight => 'Açık';
+
+  @override
+  String get themeDark => 'Koyu';
+
+  @override
+  String get targetBitrateEditTooltip => 'Bit hızını gir';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'İzin verilen aralık: $range';
+  }
 }

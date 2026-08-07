@@ -301,7 +301,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nAV1 → nejlepší komprese, softwarové kódování, experimentální\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.';
+      'H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nAV1 → nejlepší komprese, pouze softwarové kódování, experimentální\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (starší)';
@@ -537,7 +537,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → silná komprese, zasílání zpráv\n4–8 Mbps → 1080p normální/dobrá kvalita\n12 Mbps → 1080p vysoká / 4K nízká kvalita\n20 Mbps → kvalita streamování 4K\n\nVlastní zadání: 500–40000 kbps nebo např. „8 Mbps“\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF.';
+      '500 kbps–2 Mbps → silná komprese, pro posílání zpráv\n4–8 Mbps → normální/dobrá kvalita v 1080p\n12 Mbps → vysoká kvalita v 1080p / nízká ve 4K\n20 Mbps → kvalita streamování ve 4K\n\nVlastní hodnota: přes ikonu tužky (500–100000 kbps)\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF.';
 
   @override
   String get targetBitrateWideScaleHint =>
@@ -566,4 +566,27 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get hdrCodecSwitched =>
       'Rozpoznáno HDR video — pro toto video se použije H.265, aby se zachovaly barvy.';
+
+  @override
+  String get themeTitle => 'Vzhled';
+
+  @override
+  String get themeSubtitle => 'Podle systému nebo světlý/tmavý motiv';
+
+  @override
+  String get themeSystem => 'Systém';
+
+  @override
+  String get themeLight => 'Světlý';
+
+  @override
+  String get themeDark => 'Tmavý';
+
+  @override
+  String get targetBitrateEditTooltip => 'Zadat datový tok';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'Povolený rozsah: $range';
+  }
 }

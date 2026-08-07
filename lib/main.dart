@@ -11,11 +11,19 @@ import 'l10n/app_localizations.dart';
 import 'screens/converter_screen.dart';
 import 'services/ads_service.dart';
 import 'services/purchase_service.dart';
+import 'services/system_bars_service.dart';
+import 'services/theme_controller.dart';
+import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AdsService.configure();
-  SystemChrome.setSystemUIOverlayStyle(_systemUiOverlayStyle);
+  // Theme vor dem ersten Frame laden, sonst blitzt das helle Theme kurz auf.
+  await ThemeController.load();
+  SystemChrome.setSystemUIOverlayStyle(
+    AppTheme.overlayStyleFor(ThemeController.resolvedBrightness),
+  );
+  SystemBarsService.start();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await PurchaseService.initialize();
 
@@ -98,32 +106,25 @@ void main() async {
   runApp(const App());
 }
 
-const _systemUiOverlayStyle = SystemUiOverlayStyle(
-  statusBarColor: Colors.white,
-  statusBarIconBrightness: Brightness.dark,
-  statusBarBrightness: Brightness.light,
-  systemNavigationBarColor: Colors.white,
-  systemNavigationBarIconBrightness: Brightness.dark,
-);
-
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _systemUiOverlayStyle,
-      child: MaterialApp(
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeController.mode,
+      builder: (context, themeMode, _) => MaterialApp(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            systemOverlayStyle: _systemUiOverlayStyle,
-          ),
-          useMaterial3: true,
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: themeMode,
+        // Status- und Navigationsleiste folgen dem tatsächlich aufgelösten
+        // Theme — im Builder ist es bereits bekannt, außerhalb von MaterialApp
+        // wäre es das nicht.
+        builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
+          value: AppTheme.overlayStyleFor(Theme.of(context).brightness),
+          child: child ?? const SizedBox.shrink(),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

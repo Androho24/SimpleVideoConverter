@@ -321,7 +321,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get av1ExperimentalSubtitle =>
-      'सामान्य और विशेषज्ञ मोड, दोनों में AV1 को कोडेक विकल्पों में जोड़ता है। मज़बूत कंप्रेशन वाला आधुनिक कोडेक, अभी पूरी तरह परखा नहीं गया है।';
+      'सामान्य और विशेषज्ञ मोड, दोनों में AV1 को कोडेक विकल्पों में जोड़ता है। उच्च संपीड़न क्षमता वाला आधुनिक कोडेक, जिसे अभी पूरी तरह परखा नहीं गया है।';
 
   @override
   String get audioCodecInfoContent =>
@@ -539,11 +539,11 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → भारी संपीड़न, मैसेजिंग\n4–8 Mbps → 1080p सामान्य/अच्छी गुणवत्ता\n12 Mbps → 1080p उच्च / 4K कम गुणवत्ता\n20 Mbps → 4K स्ट्रीमिंग गुणवत्ता\n\nकस्टम इनपुट: 500–40000 kbps या उदाहरण के लिए \"8 Mbps\"\n\nCRF के विपरीत, गुणवत्ता दृश्यों के बीच भिन्न हो सकती है। समान फ़ाइल आकार पर बेहतर परिणामों के लिए CRF का उपयोग करें।';
+      '500 kbps–2 Mbps → बहुत अधिक संपीड़न, मैसेजिंग के लिए\n4–8 Mbps → 1080p सामान्य/अच्छी गुणवत्ता\n12 Mbps → 1080p उच्च / 4K कम गुणवत्ता\n20 Mbps → 4K स्ट्रीमिंग गुणवत्ता\n\nकस्टम मान: पेंसिल आइकन से (500–100000 kbps)\n\nCRF के विपरीत, गुणवत्ता दृश्यों के बीच भिन्न हो सकती है। समान फ़ाइल आकार पर बेहतर परिणामों के लिए CRF का उपयोग करें।';
 
   @override
   String get targetBitrateWideScaleHint =>
-      'VP9 और AV1 इन बिटरेट की लगभग आधी दर पर वही गुणवत्ता देते हैं।';
+      'VP9 और AV1 इनसे लगभग आधे बिटरेट पर समान गुणवत्ता देते हैं।';
 
   @override
   String get rateAppTitle => 'ऐप को रेट करें';
@@ -567,5 +567,28 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get hdrCodecSwitched =>
-      'HDR वीडियो मिला — रंग बनाए रखने के लिए इस वीडियो के लिए H.265 उपयोग किया जाएगा।';
+      'HDR वीडियो मिला — रंग सुरक्षित रखने के लिए इस वीडियो में H.265 का उपयोग किया जाएगा।';
+
+  @override
+  String get themeTitle => 'दिखावट';
+
+  @override
+  String get themeSubtitle => 'सिस्टम के अनुसार, हल्की या गहरी थीम';
+
+  @override
+  String get themeSystem => 'सिस्टम';
+
+  @override
+  String get themeLight => 'हल्की';
+
+  @override
+  String get themeDark => 'गहरी';
+
+  @override
+  String get targetBitrateEditTooltip => 'बिटरेट दर्ज करें';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'मान्य सीमा: $range';
+  }
 }

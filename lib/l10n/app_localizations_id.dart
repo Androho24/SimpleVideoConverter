@@ -323,7 +323,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get av1ExperimentalSubtitle =>
-      'Menambahkan AV1 ke pilihan kodek di mode normal dan mode ahli. Kodek modern dengan kompresi kuat, belum sepenuhnya teruji.';
+      'Menambahkan AV1 ke pilihan kodek di mode normal dan mode ahli. Kodek modern dengan kompresi yang sangat efisien, belum sepenuhnya teruji.';
 
   @override
   String get audioCodecInfoContent =>
@@ -540,7 +540,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → kompresi tinggi, pesan\n4–8 Mbps → 1080p kualitas normal/baik\n12 Mbps → 1080p kualitas tinggi / 4K kualitas rendah\n20 Mbps → kualitas streaming 4K\n\nEntri kustom: 500–40000 kbps atau misalnya \"8 Mbps\"\n\nTidak seperti CRF, kualitas dapat bervariasi antar adegan. Gunakan CRF untuk hasil yang lebih baik pada ukuran file yang sama.';
+      '500 kbps–2 Mbps → kompresi tinggi, untuk aplikasi pesan\n4–8 Mbps → kualitas normal/baik pada 1080p\n12 Mbps → kualitas tinggi pada 1080p / rendah pada 4K\n20 Mbps → kualitas streaming 4K\n\nNilai kustom: lewat ikon pensil (500–100000 kbps)\n\nTidak seperti CRF, kualitas dapat bervariasi antar adegan. Gunakan CRF untuk hasil yang lebih baik pada ukuran file yang sama.';
 
   @override
   String get targetBitrateWideScaleHint =>
@@ -569,4 +569,27 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get hdrCodecSwitched =>
       'Video HDR terdeteksi — H.265 digunakan untuk video ini agar warnanya tetap terjaga.';
+
+  @override
+  String get themeTitle => 'Tampilan';
+
+  @override
+  String get themeSubtitle => 'Ikuti sistem atau pilih tema terang/gelap';
+
+  @override
+  String get themeSystem => 'Sistem';
+
+  @override
+  String get themeLight => 'Terang';
+
+  @override
+  String get themeDark => 'Gelap';
+
+  @override
+  String get targetBitrateEditTooltip => 'Masukkan bitrate';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'Rentang yang diizinkan: $range';
+  }
 }

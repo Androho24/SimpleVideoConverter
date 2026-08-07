@@ -8,6 +8,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'ad_config.dart';
 import 'ads_service.dart';
+import 'native_ad_style.dart';
 import 'preferences_service.dart';
 
 /// Lädt eine NativeAd vor (z. B. beim Tap auf "Konvertieren") und übergibt sie
@@ -27,7 +28,10 @@ class NativeAdPreloader {
 
   /// Startet einen Preload, falls noch keiner läuft oder bereitliegt.
   /// Fire-and-forget — der Aufrufer muss nicht warten.
-  static Future<void> preload() async {
+  ///
+  /// [brightness] ist das Theme zum Zeitpunkt des Preloads; der Style ist im
+  /// geladenen Ad fest verdrahtet und lässt sich später nicht mehr ändern.
+  static Future<void> preload(Brightness brightness) async {
     if (_completer != null) return;
     if (await PreferencesService.getIsPro()) return;
 
@@ -55,10 +59,7 @@ class NativeAdPreloader {
       nativeAdOptions: NativeAdOptions(
         videoOptions: VideoOptions(startMuted: true),
       ),
-      nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.medium,
-        mainBackgroundColor: Colors.white,
-      ),
+      nativeTemplateStyle: nativeAdTemplateStyle(brightness),
     );
     try {
       await ad.load();

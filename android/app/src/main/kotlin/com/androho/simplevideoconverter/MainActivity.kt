@@ -6,6 +6,7 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -25,8 +26,11 @@ class MainActivity : FlutterActivity() {
     private val ADS_CHANNEL = "com.androho.simplevideoconverter/ads"
     private val SERVICE_CHANNEL = "com.androho.simplevideoconverter/conversion_service"
     private val GALLERY_CHANNEL = "com.androho.simplevideoconverter/gallery"
+    private val SYSTEM_BARS_CHANNEL = "com.androho.simplevideoconverter/system_bars"
     private var adsChannel: MethodChannel? = null
     private var pendingConsentResult: Boolean? = null
+    private var systemBarsColor: Int? = null
+    private var systemBarsDark: Boolean? = null
 
     override fun provideFlutterEngine(context: Context): FlutterEngine? =
         (application as SimpleVideoConverterApplication).getMainFlutterEngine()
@@ -155,6 +159,25 @@ class MainActivity : FlutterActivity() {
                     else -> result.notImplemented()
                 }
             }
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, SYSTEM_BARS_CHANNEL)
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "setSystemBars" -> {
+                        val color = call.argument<Number>("color")?.toInt()
+                        val isDark = call.argument<Boolean>("isDark")
+                        if (color == null || isDark == null) {
+                            result.error("invalid_args", "color und isDark erforderlich", null)
+                        } else {
+                            systemBarsColor = color
+                            systemBarsDark = isDark
+                            applySystemBarStyle()
+                            result.success(null)
+                        }
+                    }
+                    else -> result.notImplemented()
+                }
+            }
     }
 
     /**
@@ -230,20 +253,39 @@ class MainActivity : FlutterActivity() {
         channel.invokeMethod("consentReady", canRequestAds)
     }
 
+    /**
+     * Setzt Farbe und Icon-Helligkeit der Systemleisten. Die Werte meldet Dart über
+     * [SYSTEM_BARS_CHANNEL], sobald das Theme aufgelöst ist — sie stammen aus `AppTheme`,
+     * damit Leisten und App-Hintergrund zusammenpassen.
+     *
+     * Das erneute Setzen in onResume bleibt nötig: Consent-Form und Ad-Activities fassen
+     * die Leisten an, und Flutter setzt seinen eigenen Overlay-Style nur dann neu, wenn er
+     * sich geändert hat.
+     */
     private fun applySystemBarStyle() {
-        window.statusBarColor = Color.WHITE
+        // Bevor Dart gemeldet hat, ist der Nachtmodus des Systems die beste
+        // Näherung — sonst blitzt beim Start die falsche Farbe auf.
+        val isDark = systemBarsDark ?: isSystemInDarkMode()
+        val barColor = systemBarsColor ?: if (isDark) Color.BLACK else Color.WHITE
+
+        window.statusBarColor = barColor
         val insetsController = WindowInsetsControllerCompat(window, window.decorView)
-        insetsController.isAppearanceLightStatusBars = true
+        insetsController.isAppearanceLightStatusBars = !isDark
 
         var flags = window.decorView.systemUiVisibility
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        }
+        flags = setFlag(flags, View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR, !isDark)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.navigationBarColor = Color.WHITE
-            insetsController.isAppearanceLightNavigationBars = true
-            flags = flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            window.navigationBarColor = barColor
+            insetsController.isAppearanceLightNavigationBars = !isDark
+            flags = setFlag(flags, View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR, !isDark)
         }
         window.decorView.systemUiVisibility = flags
     }
+
+    private fun setFlag(flags: Int, flag: Int, enabled: Boolean): Int =
+        if (enabled) flags or flag else flags and flag.inv()
+
+    private fun isSystemInDarkMode(): Boolean =
+        (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+            Configuration.UI_MODE_NIGHT_YES
 }

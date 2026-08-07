@@ -1,6 +1,7 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
@@ -23,6 +24,61 @@ class PreferencesService {
   static const _keyAutoSaveVideos = 'autoSaveVideos';
   static const _keyVideoCodec = 'videoCodec';
   static const _keyAv1Experimental = 'av1Experimental';
+  static const _keyThemeMode = 'themeMode';
+  static const _keyLastVersionCode = 'lastVersionCode';
+
+  /// Gewähltes Theme, oder `null`, wenn noch nie eines festgelegt wurde.
+  /// Den Startwert bestimmt in dem Fall der [ThemeController].
+  static Future<ThemeMode?> getThemeMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return switch (prefs.getString(_keyThemeMode)) {
+      'light' => ThemeMode.light,
+      'dark' => ThemeMode.dark,
+      'system' => ThemeMode.system,
+      _ => null,
+    };
+  }
+
+  static Future<void> setThemeMode(ThemeMode value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_keyThemeMode, value.name);
+  }
+
+  /// Build-Nummer des letzten Starts, oder `null` bei einer Neuinstallation
+  /// bzw. einem Update aus einer Version, die den Wert noch nicht geschrieben
+  /// hat (alles vor 2.1.0+28).
+  static Future<int?> getLastVersionCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_keyLastVersionCode);
+  }
+
+  static Future<void> setLastVersionCode(int value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_keyLastVersionCode, value);
+  }
+
+  /// Ob Einstellungen existieren, die nur eine frühere Version geschrieben
+  /// haben kann. Erkennt zusätzlich zum Update auf demselben Gerät auch den
+  /// Fall "neues Gerät, Einstellungen aus dem Android-Backup wiederhergestellt"
+  /// — dort sieht die Installation sonst wie eine Neuinstallation aus.
+  static Future<bool> hasLegacyPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    const legacyKeys = [
+      _keyExpertMode,
+      _keyIsPro,
+      _keyConversionCount,
+      _keyProHintShown,
+      _keyCpuWarningDismissed,
+      _keyLastQualityIndex,
+      _keyAutoSaveVideos,
+      _keyVideoCodec,
+      _keyAv1Experimental,
+      _keyNotificationRationaleDismissed,
+      _keyNotificationDeniedHintCount,
+      _keyReviewPrompted,
+    ];
+    return legacyKeys.any(prefs.containsKey);
+  }
 
   static Future<bool> getAutoSaveVideos() async {
     final prefs = await SharedPreferences.getInstance();

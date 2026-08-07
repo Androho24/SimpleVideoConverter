@@ -261,7 +261,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get crfInfoContentWideScale =>
-      '0 → sin pérdidas (archivo muy grande)\n25 → prácticamente sin pérdidas visuales\n30 → Estándar (buen equilibrio)\n38 → Pérdida de calidad visible\n63 → Calidad más baja\n\nRecomendación: 25–38\n\nVP9 y AV1 usan una escala de 0–63: el mismo número significa una calidad distinta que con H.264/H.265.';
+      '0 → sin pérdidas (archivo muy grande)\n25 → prácticamente sin pérdidas visuales\n30 → estándar (buen equilibrio)\n38 → pérdida de calidad visible\n63 → calidad más baja\n\nRecomendación: 25–38\n\nVP9 y AV1 usan una escala de 0–63: el mismo valor corresponde a una calidad distinta que con H.264/H.265.';
 
   @override
   String get resolutionLabel => 'Resolución';
@@ -307,7 +307,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → máxima compatibilidad y conversión normalmente más rápida\nH.265 → archivos más pequeños con calidad comparable, más lento\nVP9 → códec abierto y eficiente para WebM y MKV, codificación por software más lenta\nAV1 → la mejor compresión, codificación solo por software, experimental\nXvid → códec MPEG-4 heredado para AVI y reproductores antiguos\n\nLos formatos de salida disponibles dependen de los códecs de vídeo y audio elegidos.';
+      'H.264 → máxima compatibilidad y codificación normalmente más rápida\nH.265 → archivos más pequeños con calidad comparable, codificación más lenta\nVP9 → códec abierto y eficiente para WebM y MKV, codificación por software más lenta\nAV1 → la mejor compresión, codificación solo por software, experimental\nXvid → códec MPEG-4 heredado para AVI y reproductores antiguos\n\nLos formatos de salida disponibles dependen de los códecs de vídeo y audio elegidos.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (heredado)';
@@ -325,7 +325,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get av1ExperimentalSubtitle =>
-      'Añade AV1 a la selección de códecs en el modo normal y en el modo experto. Códec moderno con gran compresión, aún no está probado del todo.';
+      'Añade AV1 a la selección de códecs en los modos normal y experto. Un códec moderno y muy eficiente que aún no se ha probado por completo.';
 
   @override
   String get audioCodecInfoContent =>
@@ -545,11 +545,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → compresión intensa, mensajería\n4–8 Mbps → 1080p calidad normal/buena\n12 Mbps → 1080p alta / 4K baja calidad\n20 Mbps → calidad de streaming 4K\n\nEntrada personalizada: 500–40 000 kbps o, por ejemplo, «8 Mbps»\n\nA diferencia del CRF, la calidad puede variar entre escenas. Utiliza el CRF para obtener mejores resultados con el mismo tamaño de archivo.';
+      '500 kbps–2 Mbps → compresión intensa, apps de mensajería\n4–8 Mbps → calidad normal/buena en 1080p\n12 Mbps → calidad alta en 1080p / baja en 4K\n20 Mbps → calidad de streaming en 4K\n\nValor personalizado: usa el icono del lápiz (500–100000 kbps)\n\nA diferencia del CRF, la calidad puede variar entre escenas. Utiliza el CRF para obtener mejores resultados con el mismo tamaño de archivo.';
 
   @override
   String get targetBitrateWideScaleHint =>
-      'VP9 y AV1 alcanzan la misma calidad con aproximadamente la mitad de estos bitrates.';
+      'VP9 y AV1 alcanzan la misma calidad con aproximadamente la mitad de estas velocidades de bits.';
 
   @override
   String get rateAppTitle => 'Valorar la aplicación';
@@ -574,4 +574,27 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get hdrCodecSwitched =>
       'Vídeo HDR detectado: se usará H.265 para este vídeo para conservar los colores.';
+
+  @override
+  String get themeTitle => 'Apariencia';
+
+  @override
+  String get themeSubtitle => 'Usar el sistema o elegir un tema claro u oscuro';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Oscuro';
+
+  @override
+  String get targetBitrateEditTooltip => 'Introducir velocidad de bits';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'Intervalo permitido: $range';
+  }
 }

@@ -101,7 +101,7 @@
    "audioBitrateInfoContent": "Ztlumeno → žádný zvuk\n64 kbps → řeč, podcasty\n96 kbps → dobrá kvalita řeči\n128 kbps → standardní hudba\n192 kbps → vysoká kvalita zvuku\n320 kbps → maximální kvalita MP3",
 
  "audioCodecLabel": "Audio kodek",
-   "expertVideoCodecInfoContent": "H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nAV1 → nejlepší komprese, softwarové kódování, experimentální\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.",
+   "expertVideoCodecInfoContent": "H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nAV1 → nejlepší komprese, pouze softwarové kódování, experimentální\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.",
    "xvidLegacyLabel": "Xvid (starší)",
    "av1SlowHint": "AV1 se kóduje pouze softwarově a je výrazně pomalejší než H.264/H.265.",
    "av1HighResHint": "Nad 720p se vyplatí video nejprve zmenšit.",
@@ -181,7 +181,7 @@
 
   "targetBitrateLabel": "Cílová přenosová rychlost",
   "targetBitrateInfoTitle": "Cílová přenosová rychlost",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → silná komprese, zasílání zpráv\n4–8 Mbps → 1080p normální/dobrá kvalita\n12 Mbps → 1080p vysoká / 4K nízká kvalita\n20 Mbps → kvalita streamování 4K\n\nVlastní zadání: 500–40000 kbps nebo např. „8 Mbps“\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF.",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps → silná komprese, pro posílání zpráv\n4–8 Mbps → normální/dobrá kvalita v 1080p\n12 Mbps → vysoká kvalita v 1080p / nízká ve 4K\n20 Mbps → kvalita streamování ve 4K\n\nVlastní hodnota: přes ikonu tužky (500–100000 kbps)\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF.",
   "targetBitrateWideScaleHint": "VP9 a AV1 dosáhnou stejné kvality přibližně při polovině těchto datových toků.",
 
    "rateAppTitle": "Ohodnotit aplikaci",
@@ -191,5 +191,19 @@
    "restoreError": "Přestavby nákupů se nepodařilo provést. Obchod Play není momentálně k dispozici – zkuste to prosím znovu.",
    "restoreNoPurchases": "Nebyly nalezeny žádné předchozí nákupy.",
 
-  "hdrCodecSwitched": "Rozpoznáno HDR video — pro toto video se použije H.265, aby se zachovaly barvy."
+  "hdrCodecSwitched": "Rozpoznáno HDR video — pro toto video se použije H.265, aby se zachovaly barvy.",
+
+  "themeTitle": "Vzhled",
+
+  "themeSubtitle": "Podle systému nebo světlý/tmavý motiv",
+
+  "themeSystem": "Systém",
+
+  "themeLight": "Světlý",
+
+  "themeDark": "Tmavý",
+
+  "targetBitrateEditTooltip": "Zadat datový tok",
+
+  "targetBitrateRangeHint": "Povolený rozsah: {range}"
 }

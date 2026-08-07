@@ -305,7 +305,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → melhor compatibilidade e conversão geralmente mais rápida\nH.265 → ficheiros menores com qualidade comparável, mais lento\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → melhor compressão, codificação apenas por software, experimental\nXvid → codec MPEG-4 legado para AVI e leitores antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
+      'H.264 → melhor compatibilidade e codificação geralmente mais rápida\nH.265 → ficheiros menores com qualidade comparável, codificação mais lenta\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → melhor compressão, codificação apenas por software, experimental\nXvid → codec MPEG-4 legado para AVI e leitores antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (legado)';
@@ -323,7 +323,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get av1ExperimentalSubtitle =>
-      'Acrescenta o AV1 à seleção de codecs no modo normal e no modo avançado. Codec moderno com forte compressão, ainda não totalmente testado.';
+      'Acrescenta o AV1 à seleção de codecs nos modos normal e avançado. Codec moderno e altamente eficiente, ainda não totalmente testado.';
 
   @override
   String get audioCodecInfoContent =>
@@ -542,11 +542,11 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → compressão elevada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40000 kbps ou, por exemplo, «8 Mbps»\n\nAo contrário do CRF, a qualidade pode variar entre cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de ficheiro.';
+      '500 kbps–2 Mbps → compressão elevada, aplicações de mensagens\n4–8 Mbps → qualidade normal/boa a 1080p\n12 Mbps → qualidade alta a 1080p / baixa a 4K\n20 Mbps → qualidade de streaming 4K\n\nValor personalizado: através do ícone do lápis (500–100000 kbps)\n\nAo contrário do CRF, a qualidade pode variar entre cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de ficheiro.';
 
   @override
   String get targetBitrateWideScaleHint =>
-      'O VP9 e o AV1 atingem a mesma qualidade com cerca de metade destes débitos.';
+      'O VP9 e o AV1 atingem a mesma qualidade com cerca de metade destas taxas de bits.';
 
   @override
   String get rateAppTitle => 'Avaliar a aplicação';
@@ -571,6 +571,29 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get hdrCodecSwitched =>
       'Vídeo HDR detetado — será usado H.265 neste vídeo para preservar as cores.';
+
+  @override
+  String get themeTitle => 'Aparência';
+
+  @override
+  String get themeSubtitle => 'Definição do sistema ou tema claro/escuro';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Escuro';
+
+  @override
+  String get targetBitrateEditTooltip => 'Introduzir taxa de bits';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'Intervalo permitido: $range';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -874,7 +897,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → melhor compatibilidade e conversão geralmente mais rápida\nH.265 → arquivos menores com qualidade comparável, mais lento\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → melhor compressão, codificação apenas por software, experimental\nXvid → codec MPEG-4 legado para AVI e players antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
+      'H.264 → melhor compatibilidade e codificação geralmente mais rápida\nH.265 → arquivos menores com qualidade comparável, codificação mais lenta\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → melhor compressão, codificação apenas por software, experimental\nXvid → codec MPEG-4 legado para AVI e players antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (legado)';
@@ -892,7 +915,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get av1ExperimentalSubtitle =>
-      'Adiciona o AV1 à seleção de codecs no modo normal e no modo avançado. Codec moderno com forte compressão, ainda não totalmente testado.';
+      'Adiciona o AV1 à seleção de codecs nos modos normal e avançado. Codec moderno e altamente eficiente, ainda não totalmente testado.';
 
   @override
   String get audioCodecInfoContent =>
@@ -1111,7 +1134,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → compressão pesada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40.000 kbps ou, por exemplo, “8 Mbps”\n\nAo contrário do CRF, a qualidade pode variar entre as cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de arquivo.';
+      '500 kbps–2 Mbps → alta compressão, aplicativos de mensagens\n4–8 Mbps → qualidade normal/boa em 1080p\n12 Mbps → qualidade alta em 1080p / baixa em 4K\n20 Mbps → qualidade de streaming 4K\n\nValor personalizado: pelo ícone de lápis (500–100000 kbps)\n\nAo contrário do CRF, a qualidade pode variar entre as cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de arquivo.';
 
   @override
   String get targetBitrateWideScaleHint =>
@@ -1140,4 +1163,27 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get hdrCodecSwitched =>
       'Vídeo HDR detectado — o H.265 será usado neste vídeo para preservar as cores.';
+
+  @override
+  String get themeTitle => 'Aparência';
+
+  @override
+  String get themeSubtitle => 'Configuração do sistema ou tema claro/escuro';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Escuro';
+
+  @override
+  String get targetBitrateEditTooltip => 'Inserir taxa de bits';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'Intervalo permitido: $range';
+  }
 }

@@ -259,7 +259,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get crfInfoContentWideScale =>
-      '0 → verlustfrei (sehr große Datei)\n25 → visuell nahezu verlustfrei\n30 → Standard (gute Balance)\n38 → sichtbare Qualitätseinbußen\n63 → niedrigste Qualität\n\nEmpfehlung: 25–38\n\nVP9 und AV1 nutzen eine 0–63-Skala: Die gleiche Zahl bedeutet eine andere Qualität als bei H.264/H.265.';
+      '0 → verlustfrei (sehr große Datei)\n25 → visuell nahezu verlustfrei\n30 → Standard (gute Balance)\n38 → sichtbare Qualitätseinbußen\n63 → niedrigste Qualität\n\nEmpfehlung: 25–38\n\nVP9 und AV1 nutzen eine 0–63-Skala: Derselbe Wert entspricht einer anderen Qualität als bei H.264/H.265.';
 
   @override
   String get resolutionLabel => 'Auflösung';
@@ -305,14 +305,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → beste Kompatibilität und meist schneller\nH.265 → kleinere Dateien bei vergleichbarer Qualität, langsamer\nVP9 → effizienter offener Codec für WebM und MKV, langsames Software-Encoding\nAV1 → beste Kompression, reines Software-Encoding, experimentell\nXvid → älterer MPEG-4-Codec für AVI und Legacy-Player\n\nDie verfügbaren Output-Formate richten sich nach dem gewählten Video- und Audio-Codec.';
+      'H.264 → beste Kompatibilität und meist schnellere Kodierung\nH.265 → kleinere Dateien bei vergleichbarer Qualität, langsamere Kodierung\nVP9 → effizienter offener Codec für WebM und MKV, langsamere Softwarekodierung\nAV1 → beste Kompression, ausschließlich Softwarekodierung, experimentell\nXvid → älterer MPEG-4-Codec für AVI und ältere Wiedergabegeräte\n\nDie verfügbaren Ausgabeformate richten sich nach dem gewählten Video- und Audio-Codec.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (Legacy)';
 
   @override
   String get av1SlowHint =>
-      'AV1 wird rein in Software kodiert und ist deutlich langsamer als H.264/H.265.';
+      'AV1 wird ausschließlich per Software kodiert und ist deutlich langsamer als H.264/H.265.';
 
   @override
   String get av1HighResHint =>
@@ -323,7 +323,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get av1ExperimentalSubtitle =>
-      'Ergänzt AV1 in der Codec-Auswahl im normalen Modus und im Expertenmodus. Moderner Codec mit starker Kompression, noch nicht vollständig erprobt.';
+      'Fügt AV1 zur Codec-Auswahl im Normal- und Expertenmodus hinzu. Moderner, hocheffizienter Codec, der noch nicht vollständig erprobt ist.';
 
   @override
   String get audioCodecInfoContent =>
@@ -540,7 +540,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → stark komprimiert, Messaging\n4–8 Mbps → 1080p normal/gut\n12 Mbps → 1080p hoch / 4K niedrig\n20 Mbps → 4K Streaming-Niveau\n\nManuelle Eingabe: 500–40000 kbps oder z. B. \"8 Mbps\"\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.';
+      '500 kbps–2 Mbps → starke Kompression, für Messenger\n4–8 Mbps → normale/gute Qualität bei 1080p\n12 Mbps → hohe Qualität bei 1080p / niedrige Qualität bei 4K\n20 Mbps → 4K-Streaming-Qualität\n\nEigener Wert: über das Stiftsymbol (500–100000 kbps)\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.';
 
   @override
   String get targetBitrateWideScaleHint =>
@@ -569,4 +569,27 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get hdrCodecSwitched =>
       'HDR-Video erkannt — für dieses Video wird H.265 verwendet, damit die Farben erhalten bleiben.';
+
+  @override
+  String get themeTitle => 'Darstellung';
+
+  @override
+  String get themeSubtitle => 'Systemeinstellung oder helles/dunkles Design';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Hell';
+
+  @override
+  String get themeDark => 'Dunkel';
+
+  @override
+  String get targetBitrateEditTooltip => 'Bitrate eingeben';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'Erlaubter Bereich: $range';
+  }
 }

@@ -103,11 +103,11 @@
   "audioBitrateInfoContent": "Cisza → brak dźwięku\n64 kbps → mowa, podcasty\n96 kbps → dobra jakość mowy\n128 kbps → standardowa muzyka\n192 kbps → wysoka jakość dźwięku\n320 kbps → maksymalna jakość MP3",
 
 "audioCodecLabel": "Kodek audio",
-  "expertVideoCodecInfoContent": "H.264 → najlepsza kompatybilność i zwykle szybsza konwersja\nH.265 → mniejsze pliki przy porównywalnej jakości, wolniejszy\nVP9 → wydajny otwarty kodek dla WebM i MKV, wolniejsze kodowanie programowe\nAV1 → najlepsza kompresja, kodowanie wyłącznie programowe, eksperymentalne\nXvid → starszy kodek MPEG-4 dla AVI i starszych odtwarzaczy\n\nDostępne formaty wyjściowe zależą od wybranych kodeków obrazu i dźwięku.",
+  "expertVideoCodecInfoContent": "H.264 → najlepsza kompatybilność i zwykle szybsze kodowanie\nH.265 → mniejsze pliki przy porównywalnej jakości, wolniejsze kodowanie\nVP9 → wydajny otwarty kodek dla WebM i MKV, wolniejsze kodowanie programowe\nAV1 → najlepsza kompresja, kodowanie wyłącznie programowe, eksperymentalny\nXvid → starszy kodek MPEG-4 dla AVI i starszych odtwarzaczy\n\nDostępne formaty wyjściowe zależą od wybranych kodeków obrazu i dźwięku.",
   "xvidLegacyLabel": "Xvid (starszy)",
   "av1SlowHint": "AV1 jest kodowany wyłącznie programowo i jest znacznie wolniejszy niż H.264/H.265.",
   "av1HighResHint": "Powyżej 720p warto najpierw zmniejszyć rozdzielczość.",
-  "av1ExperimentalTitle": "AV1 (eksperymentalne)",
+  "av1ExperimentalTitle": "AV1 (eksperymentalny)",
   "av1ExperimentalSubtitle": "Dodaje AV1 do wyboru kodeków w trybie normalnym i eksperckim. Nowoczesny kodek o mocnej kompresji, jeszcze nie w pełni sprawdzony.",
   "audioCodecInfoContent": "AAC → standard dla MP4, najlepsza kompatybilność\nMP3 → powszechnie używany starszy kodek\nOpus → nowoczesny i wydajny, idealny dla WebM i MKV\nAC3 → Dolby Digital, tylko dla źródeł surround (≥ 3 kanały)\nVorbis → otwarty kodek dla WebM i MKV\n\nNiezgodne formaty wyjściowe są automatycznie wyłączane.",
   "outputFormatLabel": "Format wyjściowy",
@@ -180,7 +180,7 @@
 
   "targetBitrateLabel": "Docelowa przepływność",
   "targetBitrateInfoTitle": "Docelowa przepływność",
-  "targetBitrateInfoContent": "500 kb/s–2 Mb/s  → silna kompresja, komunikacja\n4–8 Mb/s → 1080p normalna/dobra jakość\n12 Mb/s → 1080p wysoka / 4K niska jakość\n20 Mb/s → jakość strumieniowania 4K\n\nWpis niestandardowy: 500–40000 kbps lub np. „8 Mbps”\n\nW przeciwieństwie do CRF, jakość może się różnić w zależności od sceny. Użyj CRF, aby uzyskać lepsze wyniki przy tym samym rozmiarze pliku.",
+  "targetBitrateInfoContent": "500 kb/s–2 Mb/s → silna kompresja, komunikatory\n4–8 Mb/s → normalna/dobra jakość w 1080p\n12 Mb/s → wysoka jakość w 1080p / niska w 4K\n20 Mb/s → jakość strumieniowania 4K\n\nWłasna wartość: przez ikonę ołówka (500–100000 kb/s)\n\nW przeciwieństwie do CRF, jakość może się różnić w zależności od sceny. Użyj CRF, aby uzyskać lepsze wyniki przy tym samym rozmiarze pliku.",
   "targetBitrateWideScaleHint": "VP9 i AV1 osiągają tę samą jakość przy około połowie tych przepływności.",
 
     "rateAppTitle": "Oceń aplikację",
@@ -190,5 +190,19 @@
     "restoreError": "Nie udało się przywrócić zakupów. Sklep Play jest obecnie niedostępny — spróbuj ponownie.",
     "restoreNoPurchases": "Nie znaleziono wcześniejszych zakupów.",
 
-  "hdrCodecSwitched": "Wykryto wideo HDR — dla tego wideo zostanie użyty H.265, aby zachować kolory."
+  "hdrCodecSwitched": "Wykryto wideo HDR — dla tego wideo zostanie użyty H.265, aby zachować kolory.",
+
+  "themeTitle": "Wygląd",
+
+  "themeSubtitle": "Ustawienie systemowe albo motyw jasny/ciemny",
+
+  "themeSystem": "System",
+
+  "themeLight": "Jasny",
+
+  "themeDark": "Ciemny",
+
+  "targetBitrateEditTooltip": "Wprowadź przepływność",
+
+  "targetBitrateRangeHint": "Dozwolony zakres: {range}"
 }

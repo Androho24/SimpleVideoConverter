@@ -257,7 +257,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get crfInfoContentWideScale =>
-      '0 → lossless (very large file)\n25 → visually nearly lossless\n30 → standard (good balance)\n38 → visible quality loss\n63 → lowest quality\n\nRecommended: 25–38\n\nVP9 and AV1 use a 0–63 scale: the same number means a different quality than with H.264/H.265.';
+      '0 → lossless (very large file)\n25 → visually nearly lossless\n30 → standard (good balance)\n38 → visible quality loss\n63 → lowest quality\n\nRecommended: 25–38\n\nVP9 and AV1 use a 0–63 scale: the same value corresponds to a different quality than with H.264/H.265.';
 
   @override
   String get resolutionLabel => 'Resolution';
@@ -303,24 +303,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → best compatibility and usually faster\nH.265 → smaller files at comparable quality, slower\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → best compression, software-only encoding, experimental\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.';
+      'H.264 → best compatibility and usually faster encoding\nH.265 → smaller files at comparable quality, slower encoding\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → best compression, software-only encoding, experimental\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (Legacy)';
 
   @override
   String get av1SlowHint =>
-      'AV1 is encoded in software only and is much slower than H.264/H.265.';
+      'AV1 uses software encoding only and is much slower than H.264/H.265.';
 
   @override
-  String get av1HighResHint => 'Above 720p it is worth scaling down first.';
+  String get av1HighResHint =>
+      'For resolutions above 720p, consider scaling down first.';
 
   @override
   String get av1ExperimentalTitle => 'AV1 (experimental)';
 
   @override
   String get av1ExperimentalSubtitle =>
-      'Adds AV1 to the codec selection in normal and expert mode. Modern codec with strong compression, not yet fully tested.';
+      'Adds AV1 to the codec selection in normal and expert modes. A modern, highly efficient codec that has not yet been fully tested.';
 
   @override
   String get audioCodecInfoContent =>
@@ -537,11 +538,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → heavy compression, messaging\n4–8 Mbps → 1080p normal/good quality\n12 Mbps → 1080p high / 4K low quality\n20 Mbps → 4K streaming quality\n\nCustom entry: 500–40000 kbps or e.g. \"8 Mbps\"\n\nUnlike CRF, quality may vary between scenes. Use CRF for better results at the same file size.';
+      '500 kbps–2 Mbps → heavy compression, messaging apps\n4–8 Mbps → standard/good quality at 1080p\n12 Mbps → high quality at 1080p / low quality at 4K\n20 Mbps → 4K streaming quality\n\nCustom value: use the pencil icon (500–100000 kbps)\n\nUnlike CRF, quality may vary by scene. Use CRF for better results at the same file size.';
 
   @override
   String get targetBitrateWideScaleHint =>
-      'VP9 and AV1 reach the same quality at roughly half these bitrates.';
+      'VP9 and AV1 reach the same quality at roughly half of these bitrates.';
 
   @override
   String get rateAppTitle => 'Rate the App';
@@ -566,4 +567,28 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get hdrCodecSwitched =>
       'HDR video detected — using H.265 for this video so the colors are preserved.';
+
+  @override
+  String get themeTitle => 'Appearance';
+
+  @override
+  String get themeSubtitle =>
+      'Follow the system or choose a light or dark theme';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get targetBitrateEditTooltip => 'Enter bitrate';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'Allowed range: $range';
+  }
 }

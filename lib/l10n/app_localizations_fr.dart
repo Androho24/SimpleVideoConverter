@@ -307,7 +307,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → meilleure compatibilité et conversion généralement plus rapide\nH.265 → fichiers plus petits à qualité comparable, plus lent\nVP9 → codec ouvert efficace pour WebM et MKV, encodage logiciel plus lent\nAV1 → meilleure compression, encodage uniquement logiciel, expérimental\nXvid → ancien codec MPEG-4 pour AVI et lecteurs anciens\n\nLes formats de sortie disponibles dépendent des codecs vidéo et audio sélectionnés.';
+      'H.264 → meilleure compatibilité et encodage généralement plus rapide\nH.265 → fichiers plus petits à qualité comparable, encodage plus lent\nVP9 → codec ouvert efficace pour WebM et MKV, encodage logiciel plus lent\nAV1 → meilleure compression, encodage uniquement logiciel, expérimental\nXvid → ancien codec MPEG-4 pour AVI et lecteurs anciens\n\nLes formats de sortie disponibles dépendent des codecs vidéo et audio sélectionnés.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (ancien)';
@@ -325,7 +325,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get av1ExperimentalSubtitle =>
-      'Ajoute l\'AV1 à la sélection de codecs en mode normal et en mode expert. Codec moderne à forte compression, pas encore entièrement éprouvé.';
+      'Ajoute l\'AV1 à la sélection de codecs dans les modes normal et expert. Codec moderne et très efficace, pas encore entièrement éprouvé.';
 
   @override
   String get audioCodecInfoContent =>
@@ -544,7 +544,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kbps–2 Mbps  → compression forte, messagerie\n4–8 Mbps → 1080p qualité normale/bonne\n12 Mbps → 1080p haute / 4K basse qualité\n20 Mbps → qualité de streaming 4K\n\nEntrée personnalisée : 500–40 000 kbps ou par exemple « 8 Mbps »\n\nContrairement au CRF, la qualité peut varier d\'une scène à l\'autre. Utilisez le CRF pour obtenir de meilleurs résultats avec une taille de fichier identique.';
+      '500 kbps–2 Mbps → forte compression, pour la messagerie\n4–8 Mbps → qualité normale/bonne en 1080p\n12 Mbps → qualité élevée en 1080p / faible en 4K\n20 Mbps → qualité de streaming en 4K\n\nValeur personnalisée : utilisez l\'icône en forme de crayon (500–100000 kbps)\n\nContrairement au CRF, la qualité peut varier d\'une scène à l\'autre. Utilisez le CRF pour obtenir de meilleurs résultats avec une taille de fichier identique.';
 
   @override
   String get targetBitrateWideScaleHint =>
@@ -573,4 +573,27 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get hdrCodecSwitched =>
       'Vidéo HDR détectée — H.265 sera utilisé pour cette vidéo afin de préserver les couleurs.';
+
+  @override
+  String get themeTitle => 'Apparence';
+
+  @override
+  String get themeSubtitle => 'Réglage système ou thème clair/sombre';
+
+  @override
+  String get themeSystem => 'Système';
+
+  @override
+  String get themeLight => 'Clair';
+
+  @override
+  String get themeDark => 'Sombre';
+
+  @override
+  String get targetBitrateEditTooltip => 'Saisir le débit';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'Plage autorisée : $range';
+  }
 }

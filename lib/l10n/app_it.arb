@@ -103,12 +103,12 @@
   "audioBitrateInfoContent": "Muto → nessun audio\n64 kbps → voce, podcast\n96 kbps → buona qualità vocale\n128 kbps → musica standard\n192 kbps → alta qualità audio\n320 kbps → massima qualità MP3",
   
 "audioCodecLabel": "Codec audio",
-  "expertVideoCodecInfoContent": "H.264 → massima compatibilità e conversione generalmente più rapida\nH.265 → file più piccoli a qualità comparabile, più lento\nVP9 → codec aperto ed efficiente per WebM e MKV, codifica software più lenta\nAV1 → compressione migliore, codifica solo software, sperimentale\nXvid → codec MPEG-4 legacy per AVI e lettori meno recenti\n\nI formati di output disponibili dipendono dai codec video e audio selezionati.",
+  "expertVideoCodecInfoContent": "H.264 → massima compatibilità e codifica generalmente più rapida\nH.265 → file più piccoli a qualità comparabile, codifica più lenta\nVP9 → codec aperto ed efficiente per WebM e MKV, codifica software più lenta\nAV1 → migliore compressione, codifica solo software, sperimentale\nXvid → codec MPEG-4 legacy per AVI e lettori meno recenti\n\nI formati di output disponibili dipendono dai codec video e audio selezionati.",
   "xvidLegacyLabel": "Xvid (legacy)",
   "av1SlowHint": "AV1 viene codificato solo via software ed è molto più lento di H.264/H.265.",
   "av1HighResHint": "Oltre i 720p conviene ridurre prima la risoluzione.",
   "av1ExperimentalTitle": "AV1 (sperimentale)",
-  "av1ExperimentalSubtitle": "Aggiunge AV1 alla selezione dei codec in modalità normale ed esperto. Codec moderno con forte compressione, non ancora del tutto collaudato.",
+  "av1ExperimentalSubtitle": "Aggiunge AV1 alla selezione dei codec nelle modalità normale ed esperta. Codec moderno e molto efficiente, non ancora del tutto collaudato.",
   "audioCodecInfoContent": "AAC → standard per MP4, massima compatibilità\nMP3 → codec legacy molto diffuso\nOpus → moderno ed efficiente, ideale per WebM e MKV\nAC3 → Dolby Digital, solo per sorgenti surround (≥ 3 canali)\nVorbis → codec aperto per WebM e MKV\n\nI formati di output incompatibili vengono disattivati automaticamente.",
   "outputFormatLabel": "Formato di output",
   "outputFormatInfoContent": "MP4 → universale, massima compatibilità\nMKV → contenitore flessibile per tutti i codec disponibili\nMOV → flussi di lavoro Apple/QuickTime\nAVI → formato legacy con Xvid\nMPEG-TS → flusso di trasporto per TV e streaming\nWebM → formato web moderno con VP9 e Opus o Vorbis\n\nI formati incompatibili appaiono attenuati. Se ne selezioni uno, vengono applicati automaticamente il codec video predefinito e, se necessario, un codec audio compatibile.",
@@ -180,7 +180,7 @@
 
   "targetBitrateLabel": "Bitrate di destinazione",
   "targetBitrateInfoTitle": "Bitrate di destinazione",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → compressione pesante, messaggistica\n4–8 Mbps → 1080p qualità normale/buona\n12 Mbps → 1080p alta / 4K bassa qualità\n20 Mbps → qualità streaming 4K\n\nVoce personalizzata: 500–40000 kbps o ad es. \"8 Mbps\"\n\nA differenza del CRF, la qualità può variare da una scena all'altra. Usa il CRF per ottenere risultati migliori a parità di dimensione del file.",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps → compressione elevata, app di messaggistica\n4–8 Mbps → qualità normale/buona a 1080p\n12 Mbps → qualità alta a 1080p / bassa a 4K\n20 Mbps → qualità streaming a 4K\n\nValore personalizzato: tramite l'icona della matita (500–100000 kbps)\n\nA differenza del CRF, la qualità può variare da una scena all'altra. Usa il CRF per ottenere risultati migliori a parità di dimensione del file.",
   "targetBitrateWideScaleHint": "VP9 e AV1 raggiungono la stessa qualità con circa la metà di questi bitrate.",
 
     "rateAppTitle": "Valuta l'app",
@@ -190,5 +190,19 @@
     "restoreError": "Impossibile ripristinare gli acquisti. Il Play Store non è attualmente disponibile: riprova più tardi.",
     "restoreNoPurchases": "Non sono stati trovati acquisti precedenti.",
 
-  "hdrCodecSwitched": "Video HDR rilevato: per questo video verrà usato H.265 per preservare i colori."
+  "hdrCodecSwitched": "Video HDR rilevato: per questo video verrà usato H.265 per preservare i colori.",
+
+  "themeTitle": "Aspetto",
+
+  "themeSubtitle": "Impostazione di sistema o tema chiaro/scuro",
+
+  "themeSystem": "Sistema",
+
+  "themeLight": "Chiaro",
+
+  "themeDark": "Scuro",
+
+  "targetBitrateEditTooltip": "Inserisci il bitrate",
+
+  "targetBitrateRangeHint": "Intervallo consentito: {range}"
 }

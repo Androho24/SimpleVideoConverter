@@ -305,7 +305,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → najlepsza kompatybilność i zwykle szybsza konwersja\nH.265 → mniejsze pliki przy porównywalnej jakości, wolniejszy\nVP9 → wydajny otwarty kodek dla WebM i MKV, wolniejsze kodowanie programowe\nAV1 → najlepsza kompresja, kodowanie wyłącznie programowe, eksperymentalne\nXvid → starszy kodek MPEG-4 dla AVI i starszych odtwarzaczy\n\nDostępne formaty wyjściowe zależą od wybranych kodeków obrazu i dźwięku.';
+      'H.264 → najlepsza kompatybilność i zwykle szybsze kodowanie\nH.265 → mniejsze pliki przy porównywalnej jakości, wolniejsze kodowanie\nVP9 → wydajny otwarty kodek dla WebM i MKV, wolniejsze kodowanie programowe\nAV1 → najlepsza kompresja, kodowanie wyłącznie programowe, eksperymentalny\nXvid → starszy kodek MPEG-4 dla AVI i starszych odtwarzaczy\n\nDostępne formaty wyjściowe zależą od wybranych kodeków obrazu i dźwięku.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (starszy)';
@@ -319,7 +319,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Powyżej 720p warto najpierw zmniejszyć rozdzielczość.';
 
   @override
-  String get av1ExperimentalTitle => 'AV1 (eksperymentalne)';
+  String get av1ExperimentalTitle => 'AV1 (eksperymentalny)';
 
   @override
   String get av1ExperimentalSubtitle =>
@@ -541,7 +541,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get targetBitrateInfoContent =>
-      '500 kb/s–2 Mb/s  → silna kompresja, komunikacja\n4–8 Mb/s → 1080p normalna/dobra jakość\n12 Mb/s → 1080p wysoka / 4K niska jakość\n20 Mb/s → jakość strumieniowania 4K\n\nWpis niestandardowy: 500–40000 kbps lub np. „8 Mbps”\n\nW przeciwieństwie do CRF, jakość może się różnić w zależności od sceny. Użyj CRF, aby uzyskać lepsze wyniki przy tym samym rozmiarze pliku.';
+      '500 kb/s–2 Mb/s → silna kompresja, komunikatory\n4–8 Mb/s → normalna/dobra jakość w 1080p\n12 Mb/s → wysoka jakość w 1080p / niska w 4K\n20 Mb/s → jakość strumieniowania 4K\n\nWłasna wartość: przez ikonę ołówka (500–100000 kb/s)\n\nW przeciwieństwie do CRF, jakość może się różnić w zależności od sceny. Użyj CRF, aby uzyskać lepsze wyniki przy tym samym rozmiarze pliku.';
 
   @override
   String get targetBitrateWideScaleHint =>
@@ -570,4 +570,27 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get hdrCodecSwitched =>
       'Wykryto wideo HDR — dla tego wideo zostanie użyty H.265, aby zachować kolory.';
+
+  @override
+  String get themeTitle => 'Wygląd';
+
+  @override
+  String get themeSubtitle => 'Ustawienie systemowe albo motyw jasny/ciemny';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Jasny';
+
+  @override
+  String get themeDark => 'Ciemny';
+
+  @override
+  String get targetBitrateEditTooltip => 'Wprowadź przepływność';
+
+  @override
+  String targetBitrateRangeHint(String range) {
+    return 'Dozwolony zakres: $range';
+  }
 }

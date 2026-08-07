@@ -103,12 +103,12 @@
   "audioBitrateInfoContent": "Sessiz → ses yok\n64 kbps → konuşma, podcast'ler\n96 kbps → iyi konuşma kalitesi\n128 kbps → standart müzik\n192 kbps → yüksek ses kalitesi\n320 kbps → maksimum MP3 kalitesi",
 
 "audioCodecLabel": "Ses Kodek",
-  "expertVideoCodecInfoContent": "H.264 → en iyi uyumluluk ve genellikle daha hızlı dönüşüm\nH.265 → benzer kalitede daha küçük dosyalar, daha yavaş\nVP9 → WebM ve MKV için verimli açık kodek, yazılımsal kodlama daha yavaş\nAV1 → en iyi sıkıştırma, yalnızca yazılımsal kodlama, deneysel\nXvid → AVI ve eski oynatıcılar için eski MPEG-4 kodeği\n\nKullanılabilir çıkış formatları seçilen video ve ses kodeklerine bağlıdır.",
+  "expertVideoCodecInfoContent": "H.264 → en iyi uyumluluk ve genellikle daha hızlı kodlama\nH.265 → benzer kalitede daha küçük dosyalar, daha yavaş kodlama\nVP9 → WebM ve MKV için verimli açık kodek, yazılımsal kodlama daha yavaş\nAV1 → en iyi sıkıştırma, yalnızca yazılımsal kodlama, deneysel\nXvid → AVI ve eski oynatıcılar için eski MPEG-4 kodeği\n\nKullanılabilir çıkış formatları seçilen video ve ses kodeklerine bağlıdır.",
   "xvidLegacyLabel": "Xvid (eski)",
   "av1SlowHint": "AV1 yalnızca yazılımla kodlanır ve H.264/H.265'ten çok daha yavaştır.",
   "av1HighResHint": "720p üzerinde önce çözünürlüğü düşürmek daha iyidir.",
   "av1ExperimentalTitle": "AV1 (deneysel)",
-  "av1ExperimentalSubtitle": "Normal modda ve uzman modunda kodek seçimine AV1'i ekler. Güçlü sıkıştırma sunan yeni bir kodek, henüz tümüyle denenmedi.",
+  "av1ExperimentalSubtitle": "Normal ve uzman modlarındaki kodek seçimine AV1'i ekler. Yüksek verimli modern bir kodek, henüz tamamen test edilmedi.",
   "audioCodecInfoContent": "AAC → MP4 için standart, en iyi uyumluluk\nMP3 → yaygın kullanılan eski kodek\nOpus → modern ve verimli, WebM ve MKV için ideal\nAC3 → Dolby Digital, yalnızca surround kaynaklar için (≥ 3 kanal)\nVorbis → WebM ve MKV için açık kodek\n\nUyumsuz çıkış formatları otomatik olarak devre dışı bırakılır.",
   "outputFormatLabel": "Çıkış Formatı",
   "outputFormatInfoContent": "MP4 → evrensel, en iyi uyumluluk\nMKV → sunulan tüm kodekler için esnek kapsayıcı\nMOV → Apple/QuickTime iş akışları\nAVI → Xvid kullanan eski format\nMPEG-TS → TV ve akış için aktarım akışı\nWebM → VP9 ile Opus veya Vorbis kullanan modern web formatı\n\nUyumsuz formatlar soluk gösterilir. Seçildiğinde varsayılan video kodeği ve gerekirse uyumlu bir ses kodeği otomatik olarak ayarlanır.",
@@ -180,7 +180,7 @@
 
   "targetBitrateLabel": "Hedef Bit Hızı",
   "targetBitrateInfoTitle": "Hedef Bit Hızı",
-  "targetBitrateInfoContent": "500 kbps–2 Mbps  → yoğun sıkıştırma, mesajlaşma\n4–8 Mbps → 1080p normal/iyi kalite\n12 Mbps → 1080p yüksek / 4K düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel giriş: 500–40000 kbps veya ör. \"8 Mbps\"\n\nCRF'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF'yi kullanın.",
+  "targetBitrateInfoContent": "500 kbps–2 Mbps → yoğun sıkıştırma, mesajlaşma uygulamaları\n4–8 Mbps → 1080p'de normal/iyi kalite\n12 Mbps → 1080p'de yüksek / 4K'da düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel değer: kalem simgesiyle (500–100000 kbps)\n\nCRF'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF'yi kullanın.",
   "targetBitrateWideScaleHint": "VP9 ve AV1 aynı kaliteye bu bit hızlarının yaklaşık yarısıyla ulaşır.",
 
     "rateAppTitle": "Uygulamayı Değerlendir",
@@ -188,7 +188,21 @@
     "proHintBody": "Tek seferlik bir satın alma ile uygulamadaki reklamları kalıcı olarak kaldırabilirsin.",
     "proHintLater": "Daha sonra",
     "restoreError": "Satın alınanlar geri yüklenemedi. Play Store şu anda kullanılamıyor — lütfen daha sonra tekrar deneyin.",
-    "restoreNoPurchases": "Daha önceki satın alımlar bulunamadı.",
+    "restoreNoPurchases": "Önceki satın alımlar bulunamadı.",
 
-  "hdrCodecSwitched": "HDR video algılandı — renklerin korunması için bu videoda H.265 kullanılacak."
+  "hdrCodecSwitched": "HDR video algılandı — renklerin korunması için bu videoda H.265 kullanılacak.",
+
+  "themeTitle": "Görünüm",
+
+  "themeSubtitle": "Sistemi kullan veya açık/koyu tema seç",
+
+  "themeSystem": "Sistem",
+
+  "themeLight": "Açık",
+
+  "themeDark": "Koyu",
+
+  "targetBitrateEditTooltip": "Bit hızını gir",
+
+  "targetBitrateRangeHint": "İzin verilen aralık: {range}"
 }
