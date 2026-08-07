@@ -258,6 +258,10 @@ class AppLocalizationsDe extends AppLocalizations {
       '0 → verlustfrei (sehr große Datei)\n18 → visuell nahezu verlustfrei\n23 → Standard (gute Balance)\n28 → sichtbare Qualitätseinbußen\n51 → niedrigste Qualität\n\nEmpfehlung: 18–28';
 
   @override
+  String get crfInfoContentWideScale =>
+      '0 → verlustfrei (sehr große Datei)\n25 → visuell nahezu verlustfrei\n30 → Standard (gute Balance)\n38 → sichtbare Qualitätseinbußen\n63 → niedrigste Qualität\n\nEmpfehlung: 25–38\n\nVP9 und AV1 nutzen eine 0–63-Skala: Die gleiche Zahl bedeutet eine andere Qualität als bei H.264/H.265.';
+
+  @override
   String get resolutionLabel => 'Auflösung';
 
   @override
@@ -301,10 +305,25 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → beste Kompatibilität und meist schneller\nH.265 → kleinere Dateien bei vergleichbarer Qualität, langsamer\nVP9 → effizienter offener Codec für WebM und MKV, langsames Software-Encoding\nXvid → älterer MPEG-4-Codec für AVI und Legacy-Player\n\nDie verfügbaren Output-Formate richten sich nach dem gewählten Video- und Audio-Codec.';
+      'H.264 → beste Kompatibilität und meist schneller\nH.265 → kleinere Dateien bei vergleichbarer Qualität, langsamer\nVP9 → effizienter offener Codec für WebM und MKV, langsames Software-Encoding\nAV1 → beste Kompression, reines Software-Encoding, experimentell\nXvid → älterer MPEG-4-Codec für AVI und Legacy-Player\n\nDie verfügbaren Output-Formate richten sich nach dem gewählten Video- und Audio-Codec.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (Legacy)';
+
+  @override
+  String get av1SlowHint =>
+      'AV1 wird rein in Software kodiert und ist deutlich langsamer als H.264/H.265.';
+
+  @override
+  String get av1HighResHint =>
+      'Oberhalb von 720p lohnt es sich, vorher herunterzuskalieren.';
+
+  @override
+  String get av1ExperimentalTitle => 'AV1 (experimentell)';
+
+  @override
+  String get av1ExperimentalSubtitle =>
+      'Ergänzt AV1 in der Codec-Auswahl im normalen Modus und im Expertenmodus. Moderner Codec mit starker Kompression, noch nicht vollständig erprobt.';
 
   @override
   String get audioCodecInfoContent =>
@@ -522,6 +541,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get targetBitrateInfoContent =>
       '500 kbps–2 Mbps  → stark komprimiert, Messaging\n4–8 Mbps → 1080p normal/gut\n12 Mbps → 1080p hoch / 4K niedrig\n20 Mbps → 4K Streaming-Niveau\n\nManuelle Eingabe: 500–40000 kbps oder z. B. \"8 Mbps\"\n\nIm Gegensatz zu CRF kann die Qualität je nach Szene variieren. Für bessere Ergebnisse bei gleicher Dateigröße CRF verwenden.';
+
+  @override
+  String get targetBitrateWideScaleHint =>
+      'VP9 und AV1 erreichen dieselbe Qualität mit etwa der Hälfte dieser Bitraten.';
 
   @override
   String get rateAppTitle => 'App bewerten';

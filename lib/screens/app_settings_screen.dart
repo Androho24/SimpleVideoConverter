@@ -17,6 +17,7 @@ class AppSettingsScreen extends StatefulWidget {
 class _AppSettingsScreenState extends State<AppSettingsScreen> {
   bool _autoSaveVideos = false;
   String _videoCodec = PreferencesService.videoCodecH264;
+  bool _av1Experimental = false;
   bool _isPrivacyOptionsRequired = false;
 
   static const _adsChannel = MethodChannel(
@@ -31,6 +32,9 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
     });
     PreferencesService.getVideoCodec().then((v) {
       if (mounted) setState(() => _videoCodec = v);
+    });
+    PreferencesService.getAv1Experimental().then((v) {
+      if (mounted) setState(() => _av1Experimental = v);
     });
     () async {
       try {
@@ -101,15 +105,20 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
               width: double.infinity,
               child: SegmentedButton<String>(
                 showSelectedIcon: false,
-                segments: const [
-                  ButtonSegment(
+                segments: [
+                  const ButtonSegment(
                     value: PreferencesService.videoCodecH264,
                     label: Text('H.264'),
                   ),
                   ButtonSegment(
                     value: PreferencesService.videoCodecH265,
-                    label: Text('H.265 / HEVC'),
+                    label: Text(_av1Experimental ? 'H.265' : 'H.265 / HEVC'),
                   ),
+                  if (_av1Experimental)
+                    const ButtonSegment(
+                      value: PreferencesService.videoCodecAv1,
+                      label: Text('AV1'),
+                    ),
                 ],
                 selected: {_videoCodec},
                 onSelectionChanged: (selection) {
@@ -119,6 +128,23 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                 },
               ),
             ),
+          ),
+          SwitchListTile(
+            secondary: const Icon(Icons.science_outlined),
+            title: Text(l.av1ExperimentalTitle),
+            subtitle: Text(l.av1ExperimentalSubtitle),
+            value: _av1Experimental,
+            onChanged: (v) {
+              setState(() {
+                _av1Experimental = v;
+                // Ausschalten darf keine unmögliche Auswahl hinterlassen.
+                if (!v && _videoCodec == PreferencesService.videoCodecAv1) {
+                  _videoCodec = PreferencesService.videoCodecH264;
+                  PreferencesService.setVideoCodec(_videoCodec);
+                }
+              });
+              PreferencesService.setAv1Experimental(v);
+            },
           ),
           if (_isPrivacyOptionsRequired) ...[
             const Divider(),

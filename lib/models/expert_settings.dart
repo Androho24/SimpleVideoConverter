@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 class ExpertSettings {
-  final int crf; // 0–51 (0=verlustfrei, 23=Standard)
+  // 0–51 bei x264/x265/Xvid (23=Standard), 0–63 bei VP9/AV1.
+  // Umrechnung beim Codec-Wechsel: VideoQualityScale.convertCrf.
+  final int crf;
   final String bitrateMode; // 'crf' oder 'bitrate'
   final int
   targetBitrateKbps; // Ziel-Bitrate in kbps (nur bei bitrateMode='bitrate')

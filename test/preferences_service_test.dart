@@ -36,4 +36,31 @@ void main() {
       );
     });
   });
+
+  group('experimental AV1', () {
+    test('is off by default', () async {
+      SharedPreferences.setMockInitialValues({});
+
+      expect(await PreferencesService.getAv1Experimental(), isFalse);
+    });
+
+    test('AV1 is returned only while the switch is on', () async {
+      SharedPreferences.setMockInitialValues({});
+
+      await PreferencesService.setAv1Experimental(true);
+      await PreferencesService.setVideoCodec(PreferencesService.videoCodecAv1);
+
+      expect(
+        await PreferencesService.getVideoCodec(),
+        PreferencesService.videoCodecAv1,
+      );
+
+      await PreferencesService.setAv1Experimental(false);
+
+      expect(
+        await PreferencesService.getVideoCodec(),
+        PreferencesService.videoCodecH264,
+      );
+    });
+  });
 }

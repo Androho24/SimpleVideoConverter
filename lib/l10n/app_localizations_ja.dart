@@ -250,6 +250,10 @@ class AppLocalizationsJa extends AppLocalizations {
       '0 → ロスレス（非常に大きなファイル）\n18 → 視覚的にはほぼロスレス\n23 → 標準（バランスが良い）\n28 → 画質の低下が目立つ\n51 → 最低品質\n\n推奨：18～28';
 
   @override
+  String get crfInfoContentWideScale =>
+      '0 → ロスレス（非常に大きなファイル）\n25 → 視覚的にはほぼロスレス\n30 → 標準（バランスが良い）\n38 → 画質の低下が目立つ\n63 → 最低品質\n\n推奨：25～38\n\nVP9とAV1は0～63のスケールを使用します。同じ数値でもH.264/H.265とは品質が異なります。';
+
+  @override
   String get resolutionLabel => '解像度';
 
   @override
@@ -293,10 +297,23 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → 互換性が最も高く、通常は高速\nH.265 → 同等品質でファイルが小さいが低速\nVP9 → WebMとMKV向けの高効率なオープンコーデック。ソフトウェアエンコードは低速\nXvid → AVIや古いプレーヤー向けの旧式MPEG-4コーデック\n\n利用できる出力形式は、選択した映像・音声コーデックに応じて変わります。';
+      'H.264 → 互換性が最も高く、通常は高速\nH.265 → 同等品質でファイルが小さいが低速\nVP9 → WebMとMKV向けの高効率なオープンコーデック。ソフトウェアエンコードは低速\nAV1 → 圧縮率は最高、ソフトウェアエンコードのみ、実験的\nXvid → AVIや古いプレーヤー向けの旧式MPEG-4コーデック\n\n利用できる出力形式は、選択した映像・音声コーデックに応じて変わります。';
 
   @override
   String get xvidLegacyLabel => 'Xvid（レガシー）';
+
+  @override
+  String get av1SlowHint => 'AV1 はソフトウェアのみでエンコードされ、H.264/H.265 より大幅に低速です。';
+
+  @override
+  String get av1HighResHint => '720p を超える場合は、先に解像度を下げることをおすすめします。';
+
+  @override
+  String get av1ExperimentalTitle => 'AV1（実験的）';
+
+  @override
+  String get av1ExperimentalSubtitle =>
+      '通常モードとエキスパートモードのコーデック選択に AV1 を追加します。圧縮率の高い新しいコーデックですが、検証はまだ十分ではありません。';
 
   @override
   String get audioCodecInfoContent =>
@@ -513,6 +530,10 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get targetBitrateInfoContent =>
       '500 kbps–2 Mbps  → 高度に圧縮、メッセージング\n4–8 Mbps → 1080p 標準/良好\n12 Mbps → 1080p 高画質 / 4K 低画質\n20 Mbps → 4K ストリーミングレベル\n\n手動入力：500～40000 kbps、または「8 Mbps」など\n\nCRFとは異なり、画質はシーンによって変動する可能性があります。同じファイルサイズでより良い結果を得るには、CRFを使用してください。';
+
+  @override
+  String get targetBitrateWideScaleHint =>
+      'VP9とAV1は、これらの約半分のビットレートで同等の画質になります。';
 
   @override
   String get rateAppTitle => 'アプリを評価する';

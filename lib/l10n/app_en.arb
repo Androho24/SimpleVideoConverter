@@ -232,6 +232,9 @@
   "crfInfoContent": "0 → lossless (very large file)\n18 → visually nearly lossless\n23 → standard (good balance)\n28 → visible quality loss\n51 → lowest quality\n\nRecommended: 18–28",
   "@crfInfoContent": {"description": "Inhalt des CRF-Info-Dialogs"},
 
+  "crfInfoContentWideScale": "0 → lossless (very large file)\n25 → visually nearly lossless\n30 → standard (good balance)\n38 → visible quality loss\n63 → lowest quality\n\nRecommended: 25–38\n\nVP9 and AV1 use a 0–63 scale: the same number means a different quality than with H.264/H.265.",
+  "@crfInfoContentWideScale": {"description": "CRF-Erklärung für die 0–63-Skala von VP9 und AV1"},
+
   "resolutionLabel": "Resolution",
   "@resolutionLabel": {"description": "Label für die Breite/Höhe-Felder"},
 
@@ -271,11 +274,23 @@
   "audioCodecLabel": "Audio codec",
   "@audioCodecLabel": {"description": "Label für die Audio-Codec-Auswahl"},
 
-  "expertVideoCodecInfoContent": "H.264 → best compatibility and usually faster\nH.265 → smaller files at comparable quality, slower\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.",
+  "expertVideoCodecInfoContent": "H.264 → best compatibility and usually faster\nH.265 → smaller files at comparable quality, slower\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → best compression, software-only encoding, experimental\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.",
   "@expertVideoCodecInfoContent": {"description": "Erklärung der Video-Codecs im Expertenmodus"},
 
   "xvidLegacyLabel": "Xvid (Legacy)",
   "@xvidLegacyLabel": {"description": "Label des Xvid-Codecs im Expertenmodus"},
+
+  "av1SlowHint": "AV1 is encoded in software only and is much slower than H.264/H.265.",
+  "@av1SlowHint": {"description": "Warnhinweis zur Encoding-Dauer von AV1"},
+
+  "av1HighResHint": "Above 720p it is worth scaling down first.",
+  "@av1HighResHint": {"description": "Zusatzhinweis für AV1 oberhalb von 1080p"},
+
+  "av1ExperimentalTitle": "AV1 (experimental)",
+  "@av1ExperimentalTitle": {"description": "Titel des experimentellen AV1-Schalters in den App-Einstellungen"},
+
+  "av1ExperimentalSubtitle": "Adds AV1 to the codec selection in normal and expert mode. Modern codec with strong compression, not yet fully tested.",
+  "@av1ExperimentalSubtitle": {"description": "Untertitel des experimentellen AV1-Schalters"},
 
   "audioCodecInfoContent": "AAC → standard for MP4, best compatibility\nMP3 → widely used legacy codec\nOpus → modern and efficient, ideal for WebM and MKV\nAC3 → Dolby Digital, shown only for surround sources (≥ 3 channels)\nVorbis → open codec for WebM and MKV\n\nIncompatible output formats are disabled automatically.",
   "@audioCodecInfoContent": {"description": "Inhalt des Audio-Codec-Info-Dialogs"},
@@ -453,6 +468,9 @@
 
   "targetBitrateInfoContent": "500 kbps–2 Mbps  → heavy compression, messaging\n4–8 Mbps → 1080p normal/good quality\n12 Mbps → 1080p high / 4K low quality\n20 Mbps → 4K streaming quality\n\nCustom entry: 500–40000 kbps or e.g. \"8 Mbps\"\n\nUnlike CRF, quality may vary between scenes. Use CRF for better results at the same file size.",
   "@targetBitrateInfoContent": {"description": "Inhalt des Ziel-Bitrate-Info-Dialogs"},
+
+  "targetBitrateWideScaleHint": "VP9 and AV1 reach the same quality at roughly half these bitrates.",
+  "@targetBitrateWideScaleHint": {"description": "Bitraten-Zusatz für VP9 und AV1"},
 
   "rateAppTitle": "Rate the App",
   "@rateAppTitle": {"description": "Settings-Eintrag, öffnet die Play-Store-Detailseite zum Bewerten"},

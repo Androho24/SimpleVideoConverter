@@ -254,6 +254,10 @@ class AppLocalizationsCs extends AppLocalizations {
       '0 → bezztrátové (velmi velký soubor)\n18 → vizuálně téměř bezztrátové\n23 → standardní (dobrá rovnováha)\n28 → viditelné ztráty kvality\n51 → nejnižší kvalita\n\nDoporučení: 18–28';
 
   @override
+  String get crfInfoContentWideScale =>
+      '0 → bezztrátové (velmi velký soubor)\n25 → vizuálně téměř bezztrátové\n30 → standardní (dobrá rovnováha)\n38 → viditelné ztráty kvality\n63 → nejnižší kvalita\n\nDoporučení: 25–38\n\nVP9 a AV1 používají škálu 0–63: stejné číslo znamená jinou kvalitu než u H.264/H.265.';
+
+  @override
   String get resolutionLabel => 'Rozlišení';
 
   @override
@@ -297,10 +301,24 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.';
+      'H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nAV1 → nejlepší komprese, softwarové kódování, experimentální\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (starší)';
+
+  @override
+  String get av1SlowHint =>
+      'AV1 se kóduje pouze softwarově a je výrazně pomalejší než H.264/H.265.';
+
+  @override
+  String get av1HighResHint => 'Nad 720p se vyplatí video nejprve zmenšit.';
+
+  @override
+  String get av1ExperimentalTitle => 'AV1 (experimentální)';
+
+  @override
+  String get av1ExperimentalSubtitle =>
+      'Přidá AV1 do výběru kodeků v normálním i expertním režimu. Moderní kodek se silnou kompresí, zatím není plně odzkoušený.';
 
   @override
   String get audioCodecInfoContent =>
@@ -520,6 +538,10 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get targetBitrateInfoContent =>
       '500 kbps–2 Mbps  → silná komprese, zasílání zpráv\n4–8 Mbps → 1080p normální/dobrá kvalita\n12 Mbps → 1080p vysoká / 4K nízká kvalita\n20 Mbps → kvalita streamování 4K\n\nVlastní zadání: 500–40000 kbps nebo např. „8 Mbps“\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF.';
+
+  @override
+  String get targetBitrateWideScaleHint =>
+      'VP9 a AV1 dosáhnou stejné kvality přibližně při polovině těchto datových toků.';
 
   @override
   String get rateAppTitle => 'Ohodnotit aplikaci';

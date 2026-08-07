@@ -256,6 +256,10 @@ class AppLocalizationsEn extends AppLocalizations {
       '0 → lossless (very large file)\n18 → visually nearly lossless\n23 → standard (good balance)\n28 → visible quality loss\n51 → lowest quality\n\nRecommended: 18–28';
 
   @override
+  String get crfInfoContentWideScale =>
+      '0 → lossless (very large file)\n25 → visually nearly lossless\n30 → standard (good balance)\n38 → visible quality loss\n63 → lowest quality\n\nRecommended: 25–38\n\nVP9 and AV1 use a 0–63 scale: the same number means a different quality than with H.264/H.265.';
+
+  @override
   String get resolutionLabel => 'Resolution';
 
   @override
@@ -299,10 +303,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → best compatibility and usually faster\nH.265 → smaller files at comparable quality, slower\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.';
+      'H.264 → best compatibility and usually faster\nH.265 → smaller files at comparable quality, slower\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → best compression, software-only encoding, experimental\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (Legacy)';
+
+  @override
+  String get av1SlowHint =>
+      'AV1 is encoded in software only and is much slower than H.264/H.265.';
+
+  @override
+  String get av1HighResHint => 'Above 720p it is worth scaling down first.';
+
+  @override
+  String get av1ExperimentalTitle => 'AV1 (experimental)';
+
+  @override
+  String get av1ExperimentalSubtitle =>
+      'Adds AV1 to the codec selection in normal and expert mode. Modern codec with strong compression, not yet fully tested.';
 
   @override
   String get audioCodecInfoContent =>
@@ -520,6 +538,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get targetBitrateInfoContent =>
       '500 kbps–2 Mbps  → heavy compression, messaging\n4–8 Mbps → 1080p normal/good quality\n12 Mbps → 1080p high / 4K low quality\n20 Mbps → 4K streaming quality\n\nCustom entry: 500–40000 kbps or e.g. \"8 Mbps\"\n\nUnlike CRF, quality may vary between scenes. Use CRF for better results at the same file size.';
+
+  @override
+  String get targetBitrateWideScaleHint =>
+      'VP9 and AV1 reach the same quality at roughly half these bitrates.';
 
   @override
   String get rateAppTitle => 'Rate the App';

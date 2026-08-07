@@ -85,6 +85,7 @@
     
   "crfInfoTitle": "CRF — Calidad de vídeo",
   "crfInfoContent": "0 → sin pérdidas (archivo muy grande)\n18 → prácticamente sin pérdidas visuales\n23 → Estándar (buen equilibrio)\n28 → Pérdida de calidad visible\n51 → Calidad más baja\n\nRecomendación: 18–28",
+  "crfInfoContentWideScale": "0 → sin pérdidas (archivo muy grande)\n25 → prácticamente sin pérdidas visuales\n30 → Estándar (buen equilibrio)\n38 → Pérdida de calidad visible\n63 → Calidad más baja\n\nRecomendación: 25–38\n\nVP9 y AV1 usan una escala de 0–63: el mismo número significa una calidad distinta que con H.264/H.265.",
     
   "resolutionLabel": "Resolución",
   "resolutionInfoTitle": "Resoluciones habituales",
@@ -102,8 +103,12 @@
   "audioBitrateInfoContent": "Silencio → sin audio\n64 kbps → voz, podcasts\n96 kbps → buena calidad de voz\n128 kbps → música estándar\n192 kbps → alta calidad de audio\n320 kbps → máxima calidad MP3",
     
   "audioCodecLabel": "Códec de audio",
-  "expertVideoCodecInfoContent": "H.264 → máxima compatibilidad y conversión normalmente más rápida\nH.265 → archivos más pequeños con calidad comparable, más lento\nVP9 → códec abierto y eficiente para WebM y MKV, codificación por software más lenta\nXvid → códec MPEG-4 heredado para AVI y reproductores antiguos\n\nLos formatos de salida disponibles dependen de los códecs de vídeo y audio elegidos.",
+  "expertVideoCodecInfoContent": "H.264 → máxima compatibilidad y conversión normalmente más rápida\nH.265 → archivos más pequeños con calidad comparable, más lento\nVP9 → códec abierto y eficiente para WebM y MKV, codificación por software más lenta\nAV1 → la mejor compresión, codificación solo por software, experimental\nXvid → códec MPEG-4 heredado para AVI y reproductores antiguos\n\nLos formatos de salida disponibles dependen de los códecs de vídeo y audio elegidos.",
   "xvidLegacyLabel": "Xvid (heredado)",
+  "av1SlowHint": "AV1 se codifica solo por software y es mucho más lento que H.264/H.265.",
+  "av1HighResHint": "Por encima de 720p conviene reducir la resolución primero.",
+  "av1ExperimentalTitle": "AV1 (experimental)",
+  "av1ExperimentalSubtitle": "Añade AV1 a la selección de códecs en el modo normal y en el modo experto. Códec moderno con gran compresión, aún no está probado del todo.",
   "audioCodecInfoContent": "AAC → estándar para MP4, máxima compatibilidad\nMP3 → códec heredado muy extendido\nOpus → moderno y eficiente, ideal para WebM y MKV\nAC3 → Dolby Digital, solo para fuentes envolventes (≥ 3 canales)\nVorbis → códec abierto para WebM y MKV\n\nLos formatos de salida incompatibles se desactivan automáticamente.",
   "outputFormatLabel": "Formato de salida",
   "outputFormatInfoContent": "MP4 → universal, máxima compatibilidad\nMKV → contenedor flexible para todos los códecs ofrecidos\nMOV → flujos de trabajo Apple/QuickTime\nAVI → formato heredado con Xvid\nMPEG-TS → flujo de transporte para TV y streaming\nWebM → formato web moderno con VP9 y Opus o Vorbis\n\nLos formatos incompatibles aparecen atenuados. Al seleccionar uno, se aplican automáticamente su códec de vídeo predeterminado y, si es necesario, un códec de audio compatible.",
@@ -176,6 +181,7 @@
   "targetBitrateLabel": "Velocidad de bits de destino",
   "targetBitrateInfoTitle": "Velocidad de bits de destino",
   "targetBitrateInfoContent": "500 kbps–2 Mbps  → compresión intensa, mensajería\n4–8 Mbps → 1080p calidad normal/buena\n12 Mbps → 1080p alta / 4K baja calidad\n20 Mbps → calidad de streaming 4K\n\nEntrada personalizada: 500–40 000 kbps o, por ejemplo, «8 Mbps»\n\nA diferencia del CRF, la calidad puede variar entre escenas. Utiliza el CRF para obtener mejores resultados con el mismo tamaño de archivo.",
+  "targetBitrateWideScaleHint": "VP9 y AV1 alcanzan la misma calidad con aproximadamente la mitad de estos bitrates.",
 
     "rateAppTitle": "Valorar la aplicación",
     "proHintTitle": "Usar sin anuncios",

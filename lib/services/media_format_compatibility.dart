@@ -21,6 +21,7 @@ class MediaFormatCompatibility {
   static const videoCodecH264 = 'h264';
   static const videoCodecH265 = 'h265';
   static const videoCodecVp9 = 'vp9';
+  static const videoCodecAv1 = 'av1';
   static const videoCodecXvid = 'xvid';
 
   static const audioCodecAac = 'aac';
@@ -33,7 +34,7 @@ class MediaFormatCompatibility {
     MediaContainerOption(
       id: 'mp4',
       label: 'MP4',
-      videoCodecs: {videoCodecH264, videoCodecH265},
+      videoCodecs: {videoCodecH264, videoCodecH265, videoCodecAv1},
       audioCodecs: {audioCodecAac, audioCodecAc3},
     ),
     MediaContainerOption(
@@ -43,6 +44,7 @@ class MediaFormatCompatibility {
         videoCodecH264,
         videoCodecH265,
         videoCodecVp9,
+        videoCodecAv1,
         videoCodecXvid,
       },
       audioCodecs: {
@@ -74,7 +76,7 @@ class MediaFormatCompatibility {
     MediaContainerOption(
       id: 'webm',
       label: 'WebM',
-      videoCodecs: {videoCodecVp9},
+      videoCodecs: {videoCodecVp9, videoCodecAv1},
       audioCodecs: {audioCodecOpus, audioCodecVorbis},
     ),
   ];
@@ -125,6 +127,12 @@ class MediaFormatCompatibility {
       videoCodecVp9
           when audioCodec == audioCodecOpus || audioCodec == audioCodecVorbis =>
         'webm',
+      videoCodecAv1
+          when audioCodec == audioCodecOpus || audioCodec == audioCodecVorbis =>
+        'webm',
+      videoCodecAv1
+          when audioCodec == audioCodecAac || audioCodec == audioCodecAc3 =>
+        'mp4',
       videoCodecXvid
           when audioCodec == audioCodecMp3 || audioCodec == audioCodecAc3 =>
         'avi',

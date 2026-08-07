@@ -7,6 +7,8 @@ import '../l10n/app_localizations.dart';
 import '../models/expert_settings.dart';
 import '../models/video_metadata.dart';
 import '../services/media_format_compatibility.dart';
+import '../services/output_size_estimator.dart';
+import '../services/video_quality_scale.dart';
 
 /// Maximale Auflösung pro Seite (4K).
 const _maxDimension = 3840;
@@ -20,12 +22,17 @@ class ExpertControls extends StatefulWidget {
   final VideoMetadata? metadata;
   final ValueChanged<ExpertSettings> onChanged;
 
+  /// AV1 ist eine experimentelle Option und wird nur angeboten, wenn sie in den
+  /// App-Einstellungen eingeschaltet wurde.
+  final bool av1Enabled;
+
   const ExpertControls({
     super.key,
     required this.settings,
     required this.isConverting,
     required this.onChanged,
     this.metadata,
+    this.av1Enabled = false,
   });
 
   @override
@@ -279,9 +286,46 @@ class _ExpertControlsState extends State<ExpertControls> {
     MediaFormatCompatibility.videoCodecH264 => 'H.264',
     MediaFormatCompatibility.videoCodecH265 => 'H.265',
     MediaFormatCompatibility.videoCodecVp9 => 'VP9',
+    MediaFormatCompatibility.videoCodecAv1 => 'AV1',
     MediaFormatCompatibility.videoCodecXvid => l.xvidLegacyLabel,
     _ => codec.toUpperCase(),
   };
+
+  /// VP9 und AV1 haben eine 0–63-Skala mit anderer Bedeutung als die 0–51 von
+  /// x264/x265/Xvid, deshalb ein eigener Hilfetext.
+  String _crfInfoContent(AppLocalizations l, String codec) =>
+      VideoQualityScale.usesWideScale(codec)
+      ? l.crfInfoContentWideScale
+      : l.crfInfoContent;
+
+  /// Die Bitraten-Richtwerte im Hilfetext sind auf H.264 geeicht.
+  String _targetBitrateInfoContent(AppLocalizations l, String codec) =>
+      VideoQualityScale.usesWideScale(codec)
+      ? '${l.targetBitrateInfoContent}\n\n${l.targetBitrateWideScaleHint}'
+      : l.targetBitrateInfoContent;
+
+  /// Der Hinweis gehört zum Good-Quality-Modus von libaom: dort ist AV1 auf
+  /// Mobilgeräten deutlich langsamer als x264/x265 (Pixel 10: 46 s 1080p ≈
+  /// 28 min), oberhalb von 720p wird zusätzlich zum Herunterskalieren geraten.
+  /// AV1 läuft derzeit mit `-usage realtime` und ist damit schnell genug, dass
+  /// die Warnung nicht mehr stimmt — deshalb ausgeblendet statt entfernt: sie
+  /// wird wieder gebraucht, falls der Good-Quality-Modus zurückkommt.
+  /// Die Strings `av1SlowHint`/`av1HighResHint` bleiben aus demselben Grund in
+  /// allen Locales stehen.
+  static const _showAv1Hint = false;
+
+  String _av1Hint(AppLocalizations l, ExpertSettings settings) {
+    final metadata = widget.metadata;
+    if (metadata == null) return l.av1SlowHint;
+    final (width, height) = OutputSizeEstimator.expertOutputDimensions(
+      metadata,
+      settings,
+    );
+    final shortSide = width < height ? width : height;
+    return shortSide > 720
+        ? '${l.av1SlowHint} ${l.av1HighResHint}'
+        : l.av1SlowHint;
+  }
 
   String _audioCodecLabel(String codec) => switch (codec) {
     MediaFormatCompatibility.audioCodecAac => 'AAC',
@@ -481,7 +525,11 @@ class _ExpertControlsState extends State<ExpertControls> {
                       ),
                     ),
                     dropdownMenuEntries: [
-                      for (int i = 1; i <= 51; i++)
+                      for (
+                        int i = 1;
+                        i <= VideoQualityScale.maxCrf(s.videoCodec);
+                        i++
+                      )
                         DropdownMenuEntry(value: i, label: '$i'),
                     ],
                     onSelected: (v) {
@@ -490,7 +538,11 @@ class _ExpertControlsState extends State<ExpertControls> {
                   ),
                 ),
                 const SizedBox(width: 4),
-                _infoButton(context, l.crfInfoTitle, l.crfInfoContent),
+                _infoButton(
+                  context,
+                  l.crfInfoTitle,
+                  _crfInfoContent(l, s.videoCodec),
+                ),
               ],
             ),
             const SizedBox(height: 12),
@@ -537,7 +589,7 @@ class _ExpertControlsState extends State<ExpertControls> {
                 _infoButton(
                   context,
                   l.targetBitrateInfoTitle,
-                  l.targetBitrateInfoContent,
+                  _targetBitrateInfoContent(l, s.videoCodec),
                 ),
               ],
             ),
@@ -760,10 +812,11 @@ class _ExpertControlsState extends State<ExpertControls> {
             spacing: 8,
             runSpacing: 4,
             children: [
-              for (final codec in const [
+              for (final codec in [
                 MediaFormatCompatibility.videoCodecH264,
                 MediaFormatCompatibility.videoCodecH265,
                 MediaFormatCompatibility.videoCodecVp9,
+                if (widget.av1Enabled) MediaFormatCompatibility.videoCodecAv1,
                 MediaFormatCompatibility.videoCodecXvid,
               ])
                 _choiceChip(
@@ -771,11 +824,29 @@ class _ExpertControlsState extends State<ExpertControls> {
                   label: _videoCodecLabel(l, codec),
                   selected: s.videoCodec == codec,
                   enabled: !widget.isConverting,
-                  onSelected: () =>
-                      _emitCodecChange(s.copyWith(videoCodec: codec)),
+                  onSelected: () => _emitCodecChange(
+                    s.copyWith(
+                      videoCodec: codec,
+                      crf: VideoQualityScale.convertCrf(
+                        s.crf,
+                        fromCodec: s.videoCodec,
+                        toCodec: codec,
+                      ),
+                    ),
+                  ),
                 ),
             ],
           ),
+          if (_showAv1Hint &&
+              s.videoCodec == MediaFormatCompatibility.videoCodecAv1) ...[
+            const SizedBox(height: 6),
+            Text(
+              _av1Hint(l, s),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
+            ),
+          ],
           const SizedBox(height: 12),
 
           Row(

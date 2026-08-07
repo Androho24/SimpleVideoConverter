@@ -258,6 +258,10 @@ class AppLocalizationsPt extends AppLocalizations {
       '0 → sem perdas (ficheiro muito grande)\n18 → visualmente quase sem perdas\n23 → Padrão (bom equilíbrio)\n28 → perdas de qualidade visíveis\n51 → qualidade mais baixa\n\nRecomendação: 18–28';
 
   @override
+  String get crfInfoContentWideScale =>
+      '0 → sem perdas (ficheiro muito grande)\n25 → visualmente quase sem perdas\n30 → Padrão (bom equilíbrio)\n38 → perdas de qualidade visíveis\n63 → qualidade mais baixa\n\nRecomendação: 25–38\n\nO VP9 e o AV1 usam uma escala de 0–63: o mesmo número significa uma qualidade diferente da do H.264/H.265.';
+
+  @override
   String get resolutionLabel => 'Resolução';
 
   @override
@@ -301,10 +305,25 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → melhor compatibilidade e conversão geralmente mais rápida\nH.265 → ficheiros menores com qualidade comparável, mais lento\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nXvid → codec MPEG-4 legado para AVI e leitores antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
+      'H.264 → melhor compatibilidade e conversão geralmente mais rápida\nH.265 → ficheiros menores com qualidade comparável, mais lento\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → melhor compressão, codificação apenas por software, experimental\nXvid → codec MPEG-4 legado para AVI e leitores antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (legado)';
+
+  @override
+  String get av1SlowHint =>
+      'O AV1 é codificado apenas por software e é muito mais lento do que H.264/H.265.';
+
+  @override
+  String get av1HighResHint =>
+      'Acima de 720p compensa reduzir primeiro a resolução.';
+
+  @override
+  String get av1ExperimentalTitle => 'AV1 (experimental)';
+
+  @override
+  String get av1ExperimentalSubtitle =>
+      'Acrescenta o AV1 à seleção de codecs no modo normal e no modo avançado. Codec moderno com forte compressão, ainda não totalmente testado.';
 
   @override
   String get audioCodecInfoContent =>
@@ -524,6 +543,10 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get targetBitrateInfoContent =>
       '500 kbps–2 Mbps  → compressão elevada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40000 kbps ou, por exemplo, «8 Mbps»\n\nAo contrário do CRF, a qualidade pode variar entre cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de ficheiro.';
+
+  @override
+  String get targetBitrateWideScaleHint =>
+      'O VP9 e o AV1 atingem a mesma qualidade com cerca de metade destes débitos.';
 
   @override
   String get rateAppTitle => 'Avaliar a aplicação';
@@ -800,6 +823,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
       '0 → sem perdas (arquivo muito grande)\n18 → visualmente quase sem perdas\n23 → Padrão (bom equilíbrio)\n28 → perdas visíveis de qualidade\n51 → qualidade mais baixa\n\nRecomendação: 18–28';
 
   @override
+  String get crfInfoContentWideScale =>
+      '0 → sem perdas (arquivo muito grande)\n25 → visualmente quase sem perdas\n30 → Padrão (bom equilíbrio)\n38 → perdas visíveis de qualidade\n63 → qualidade mais baixa\n\nRecomendação: 25–38\n\nO VP9 e o AV1 usam uma escala de 0–63: o mesmo número significa uma qualidade diferente da do H.264/H.265.';
+
+  @override
   String get resolutionLabel => 'Resolução';
 
   @override
@@ -843,10 +870,25 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → melhor compatibilidade e conversão geralmente mais rápida\nH.265 → arquivos menores com qualidade comparável, mais lento\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nXvid → codec MPEG-4 legado para AVI e players antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
+      'H.264 → melhor compatibilidade e conversão geralmente mais rápida\nH.265 → arquivos menores com qualidade comparável, mais lento\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → melhor compressão, codificação apenas por software, experimental\nXvid → codec MPEG-4 legado para AVI e players antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (legado)';
+
+  @override
+  String get av1SlowHint =>
+      'O AV1 é codificado apenas por software e é muito mais lento que H.264/H.265.';
+
+  @override
+  String get av1HighResHint =>
+      'Acima de 720p vale a pena reduzir a resolução primeiro.';
+
+  @override
+  String get av1ExperimentalTitle => 'AV1 (experimental)';
+
+  @override
+  String get av1ExperimentalSubtitle =>
+      'Adiciona o AV1 à seleção de codecs no modo normal e no modo avançado. Codec moderno com forte compressão, ainda não totalmente testado.';
 
   @override
   String get audioCodecInfoContent =>
@@ -1066,6 +1108,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get targetBitrateInfoContent =>
       '500 kbps–2 Mbps  → compressão pesada, mensagens\n4–8 Mbps → 1080p qualidade normal/boa\n12 Mbps → 1080p alta / 4K baixa qualidade\n20 Mbps → qualidade de streaming 4K\n\nEntrada personalizada: 500–40.000 kbps ou, por exemplo, “8 Mbps”\n\nAo contrário do CRF, a qualidade pode variar entre as cenas. Use o CRF para obter melhores resultados com o mesmo tamanho de arquivo.';
+
+  @override
+  String get targetBitrateWideScaleHint =>
+      'O VP9 e o AV1 atingem a mesma qualidade com cerca de metade dessas taxas de bits.';
 
   @override
   String get rateAppTitle => 'Avalie o aplicativo';

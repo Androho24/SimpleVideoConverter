@@ -85,6 +85,7 @@
 
   "crfInfoTitle": "CRF — Kualitas Video",
   "crfInfoContent": "0 → tanpa kehilangan kualitas (file sangat besar)\n18 → hampir tanpa kehilangan kualitas secara visual\n23 → Standar (keseimbangan yang baik)\n28 → penurunan kualitas yang terlihat\n51 → kualitas terendah\n\nRekomendasi: 18–28",
+  "crfInfoContentWideScale": "0 → tanpa kehilangan kualitas (file sangat besar)\n25 → hampir tanpa kehilangan kualitas secara visual\n30 → Standar (keseimbangan yang baik)\n38 → penurunan kualitas yang terlihat\n63 → kualitas terendah\n\nRekomendasi: 25–38\n\nVP9 dan AV1 memakai skala 0–63: angka yang sama berarti kualitas berbeda dibandingkan H.264/H.265.",
 
   "resolutionLabel": "Resolusi",
   "resolutionInfoTitle": "Resolusi Umum",
@@ -102,8 +103,12 @@
   "audioBitrateInfoContent": "Diam → tanpa audio\n64 kbps → Suara, Podcast\n96 kbps → kualitas suara yang baik\n128 kbps → Musik standar\n192 kbps → kualitas audio tinggi\n320 kbps → kualitas MP3 maksimal",
 
   "audioCodecLabel": "Codec Audio",
-  "expertVideoCodecInfoContent": "H.264 → kompatibilitas terbaik dan biasanya lebih cepat\nH.265 → file lebih kecil dengan kualitas setara, lebih lambat\nVP9 → codec terbuka yang efisien untuk WebM dan MKV, encoding perangkat lunak lebih lambat\nXvid → codec MPEG-4 lama untuk AVI dan pemutar lama\n\nFormat keluaran yang tersedia mengikuti codec video dan audio yang dipilih.",
+  "expertVideoCodecInfoContent": "H.264 → kompatibilitas terbaik dan biasanya lebih cepat\nH.265 → file lebih kecil dengan kualitas setara, lebih lambat\nVP9 → codec terbuka yang efisien untuk WebM dan MKV, encoding perangkat lunak lebih lambat\nAV1 → kompresi terbaik, hanya encoding perangkat lunak, eksperimental\nXvid → codec MPEG-4 lama untuk AVI dan pemutar lama\n\nFormat keluaran yang tersedia mengikuti codec video dan audio yang dipilih.",
   "xvidLegacyLabel": "Xvid (lama)",
+  "av1SlowHint": "AV1 hanya dikodekan lewat perangkat lunak dan jauh lebih lambat daripada H.264/H.265.",
+  "av1HighResHint": "Di atas 720p sebaiknya perkecil resolusi terlebih dahulu.",
+  "av1ExperimentalTitle": "AV1 (eksperimental)",
+  "av1ExperimentalSubtitle": "Menambahkan AV1 ke pilihan kodek di mode normal dan mode ahli. Kodek modern dengan kompresi kuat, belum sepenuhnya teruji.",
   "audioCodecInfoContent": "AAC → standar untuk MP4, kompatibilitas terbaik\nMP3 → codec lama yang banyak digunakan\nOpus → modern dan efisien, ideal untuk WebM dan MKV\nAC3 → Dolby Digital, hanya untuk sumber surround (≥ 3 kanal)\nVorbis → codec terbuka untuk WebM dan MKV\n\nFormat keluaran yang tidak kompatibel dinonaktifkan secara otomatis.",
   "outputFormatLabel": "Format Keluaran",
   "outputFormatInfoContent": "MP4 → universal, kompatibilitas terbaik\nMKV → kontainer fleksibel untuk semua codec yang tersedia\nMOV → alur kerja Apple/QuickTime\nAVI → format lama dengan Xvid\nMPEG-TS → transport stream untuk TV dan streaming\nWebM → format web modern dengan VP9 dan Opus atau Vorbis\n\nFormat yang tidak kompatibel ditampilkan redup. Memilihnya akan otomatis menerapkan codec video bawaan dan, jika diperlukan, codec audio yang kompatibel.",
@@ -176,6 +181,7 @@
   "targetBitrateLabel": "Bitrate Tujuan",
   "targetBitrateInfoTitle": "Bitrate Tujuan",
   "targetBitrateInfoContent": "500 kbps–2 Mbps  → kompresi tinggi, pesan\n4–8 Mbps → 1080p kualitas normal/baik\n12 Mbps → 1080p kualitas tinggi / 4K kualitas rendah\n20 Mbps → kualitas streaming 4K\n\nEntri kustom: 500–40000 kbps atau misalnya \"8 Mbps\"\n\nTidak seperti CRF, kualitas dapat bervariasi antar adegan. Gunakan CRF untuk hasil yang lebih baik pada ukuran file yang sama.",
+  "targetBitrateWideScaleHint": "VP9 dan AV1 mencapai kualitas yang sama dengan sekitar setengah dari bitrate ini.",
 
     "rateAppTitle": "Beri Peringkat Aplikasi",
     "proHintTitle": "Gunakan tanpa iklan",

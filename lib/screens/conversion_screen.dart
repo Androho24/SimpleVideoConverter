@@ -3,7 +3,6 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -194,6 +193,18 @@ class _ConversionScreenState extends State<ConversionScreen>
     FFmpegKit.executeAsync(widget.command, (session) async {
       FFmpegKitConfig.enableStatisticsCallback(null);
       final rc = await session.getReturnCode();
+
+      // Der Abbruch-Fall läuft vor der mounted-Prüfung: _onCancelPressed
+      // verlässt den Screen sofort, das Aufräumen muss trotzdem passieren,
+      // sobald FFmpeg wirklich stehen bleibt.
+      if (_isCancelled || ReturnCode.isCancel(rc)) {
+        await ConversionServiceManager.stopService();
+        await _deleteOutput();
+        // Fallback, falls der Screen noch steht (z.B. Abbruch durch FFmpeg
+        // selbst statt über den Abbrechen-Button).
+        if (mounted) Navigator.pop(context);
+        return;
+      }
       if (!mounted) return;
 
       if (ReturnCode.isSuccess(rc)) {
@@ -218,10 +229,6 @@ class _ConversionScreenState extends State<ConversionScreen>
           if (!mounted) return;
           await _saveVideoToGallery();
         }
-      } else if (_isCancelled || ReturnCode.isCancel(rc)) {
-        await ConversionServiceManager.stopService();
-        await _deleteOutput();
-        if (mounted) Navigator.pop(context);
       } else {
         await ConversionServiceManager.stopService();
         await _deleteOutput();
@@ -240,7 +247,12 @@ class _ConversionScreenState extends State<ConversionScreen>
         );
         if (mounted) {
           final l = AppLocalizations.of(context)!;
-          final shortLog = log.substring(0, min(300, log.length));
+          // Das Ende des Logs, nicht den Anfang: FFmpeg beginnt immer mit dem
+          // Versions-Banner und der configure-Zeile, die eigentliche
+          // Fehlermeldung steht ganz unten.
+          final shortLog = log.length <= 300
+              ? log
+              : log.substring(log.length - 300);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(l.conversionFailed(shortLog)),
@@ -258,6 +270,7 @@ class _ConversionScreenState extends State<ConversionScreen>
   // ---------------------------------------------------------------------------
 
   Future<void> _onCancelPressed() async {
+    if (_isCancelled) return;
     final l = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
@@ -276,11 +289,17 @@ class _ConversionScreenState extends State<ConversionScreen>
         ],
       ),
     );
-    if (confirmed == true) {
-      _isCancelled = true;
-      await FFmpegKit.cancel();
-      // Navigator.pop kommt vom Completion-Callback
-    }
+    if (confirmed != true || !mounted) return;
+
+    // Nicht auf den Completion-Callback warten: langsame Encoder (libaom-AV1)
+    // rechnen nach dem Cancel-Signal noch am laufenden Frame weiter, der Screen
+    // bliebe so lange stehen. Zurück geht es sofort, das Aufräumen der Datei
+    // erledigt der Completion-Callback, sobald FFmpeg wirklich endet.
+    _isCancelled = true;
+    FFmpegKitConfig.enableStatisticsCallback(null);
+    unawaited(FFmpegKit.cancel());
+    unawaited(ConversionServiceManager.stopService());
+    Navigator.pop(context);
   }
 
   Future<void> _onDiscardPressed() async {

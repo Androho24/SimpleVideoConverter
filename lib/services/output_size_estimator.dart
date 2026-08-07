@@ -17,6 +17,11 @@ class OutputSizeEstimator {
   // Näherung für ähnliche visuelle Qualität, kein garantiertes Größenverhältnis.
   static const _h265EquivalentBitrateFactor = 0.65;
 
+  // AV1 läuft im normalen Modus im Realtime-Usage von libaom. Gemessen (720p,
+  // 3 s) lag die Datei knapp unter der H.265-Variante — daher etwas kleinerer
+  // Faktor, keine Aussage über die Bildqualität.
+  static const _av1EquivalentBitrateFactor = 0.62;
+
   static double estimateNormalMegabytes({
     required double durationSeconds,
     required VideoMetadata metadata,
@@ -37,9 +42,11 @@ class OutputSizeEstimator {
     final nominalPixels = quality.shortSide * quality.shortSide * (16.0 / 9.0);
     final actualPixels = outputWidth * outputHeight;
     final resolutionFactor = actualPixels / nominalPixels;
-    final codecFactor = videoCodec == 'h265'
-        ? _h265EquivalentBitrateFactor
-        : 1.0;
+    final codecFactor = switch (videoCodec) {
+      'h265' => _h265EquivalentBitrateFactor,
+      'av1' => _av1EquivalentBitrateFactor,
+      _ => 1.0,
+    };
     final videoBitrateBps =
         quality.estimatedBitrateBps * resolutionFactor * codecFactor;
     return _megabytesFromBitrates(
@@ -71,7 +78,7 @@ class OutputSizeEstimator {
 
     final effectiveCodec = switch (settings.container) {
       'avi' => 'xvid',
-      'webm' => 'vp9',
+      'webm' when settings.videoCodec != 'av1' => 'vp9',
       _ => settings.videoCodec,
     };
     final videoBitrateBps = settings.bitrateMode == 'bitrate'
@@ -133,6 +140,9 @@ class OutputSizeEstimator {
     } else if (videoCodec == 'vp9') {
       referenceBitrateBps = 2600000;
       referenceCrf = 31;
+    } else if (videoCodec == 'av1') {
+      referenceBitrateBps = 2000000;
+      referenceCrf = 30;
     } else if (videoCodec == 'xvid') {
       referenceBitrateBps = 5000000;
       referenceCrf = 23;

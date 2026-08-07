@@ -27,9 +27,17 @@ void main() async {
     // - MissingPluginException aus dem ffmpeg_kit-Channel: tritt auf, wenn ein
     //   nativer FFmpeg-Komplettierungs-Callback nach Engine-Detach feuert.
     //   Die App selbst läuft weiter; ein "Fatal Crash" wäre irreführend.
+    // - TypeError im AdMessageCodec: google_mobile_ads 9.0.0 deklariert
+    //   AdError.domain/.message als non-nullable String, das Android-Next-Gen-SDK
+    //   liefert dort aber teils null (AdMessageCodec.java schreibt sie ungeprüft
+    //   raus). Trifft nur ohnehin fehlgeschlagene Ad-Loads; die App läuft weiter.
+    //   Greift der Stacktrace-Match nicht (obfuskierter Build), wird der Fehler
+    //   wie bisher als fatal gemeldet — also kein Risiko, echte Bugs zu verlieren.
     final isTransientPluginError =
         error is MissingPluginException ||
-        (error is PlatformException && error.code == 'channel-error');
+        (error is PlatformException && error.code == 'channel-error') ||
+        (error is TypeError &&
+            stack.toString().contains('ad_instance_manager.dart'));
     FirebaseCrashlytics.instance.recordError(
       error,
       stack,

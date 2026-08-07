@@ -85,10 +85,75 @@ void main() {
     expect(chip('expert_audio_codec_opus').selected, isTrue);
     expect(find.textContaining('VP9 + Opus'), findsOneWidget);
   });
+
+  testWidgets('switching to a 0–63 codec shifts the CRF value along', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const _ExpertControlsHost());
+    await tester.pumpAndSettle();
+
+    // Die CRF-Auswahl trägt ihren Wert als ValueKey.
+    expect(find.byKey(const ValueKey(23)), findsOneWidget);
+
+    final av1 = find.byKey(const ValueKey('expert_video_codec_av1'));
+    await tester.ensureVisible(av1);
+    await tester.tap(av1);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey(31)), findsOneWidget);
+
+    final h264 = find.byKey(const ValueKey('expert_video_codec_h264'));
+    await tester.ensureVisible(h264);
+    await tester.tap(h264);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey(23)), findsOneWidget);
+  });
+
+  testWidgets('AV1 chip is hidden unless the experimental option is on', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const _ExpertControlsHost(av1Enabled: false));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('expert_video_codec_av1')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('expert_video_codec_vp9')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('CRF help text follows the codec scale', (tester) async {
+    await tester.pumpWidget(const _ExpertControlsHost());
+    await tester.pumpAndSettle();
+
+    Future<void> openCrfInfo() async {
+      final info = find.byTooltip('CRF — Video quality');
+      await tester.ensureVisible(info);
+      await tester.tap(info);
+      await tester.pumpAndSettle();
+    }
+
+    await openCrfInfo();
+    expect(find.textContaining('Recommended: 18–28'), findsOneWidget);
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    final av1 = find.byKey(const ValueKey('expert_video_codec_av1'));
+    await tester.ensureVisible(av1);
+    await tester.tap(av1);
+    await tester.pumpAndSettle();
+
+    await openCrfInfo();
+    expect(find.textContaining('Recommended: 25–38'), findsOneWidget);
+    expect(find.textContaining('0–63 scale'), findsOneWidget);
+  });
 }
 
 class _ExpertControlsHost extends StatefulWidget {
-  const _ExpertControlsHost();
+  final bool av1Enabled;
+
+  const _ExpertControlsHost({this.av1Enabled = true});
 
   @override
   State<_ExpertControlsHost> createState() => _ExpertControlsHostState();
@@ -119,6 +184,7 @@ class _ExpertControlsHostState extends State<_ExpertControlsHost> {
             audioChannels: 6,
           ),
           isConverting: false,
+          av1Enabled: widget.av1Enabled,
           onChanged: (value) => setState(() => settings = value),
         ),
       ),

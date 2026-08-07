@@ -26,6 +26,12 @@ void main() {
       expect(ids('xvid', 'ac3'), {'mkv', 'avi'});
     });
 
+    test('offers MP4, MKV and WebM for AV1 depending on the audio codec', () {
+      expect(ids('av1', 'aac'), {'mp4', 'mkv'});
+      expect(ids('av1', 'opus'), {'mkv', 'webm'});
+      expect(ids('av1', 'mp3'), {'mkv'});
+    });
+
     test('keeps MKV as the safe intersection for mixed codecs', () {
       expect(ids('h265', 'opus'), {'mkv'});
       expect(ids('xvid', 'vorbis'), {'mkv'});
@@ -60,6 +66,33 @@ void main() {
           currentContainer: 'mp4',
         ),
         'avi',
+      );
+    });
+
+    test('keeps AV1 in MP4 or WebM depending on the audio codec', () {
+      expect(
+        MediaFormatCompatibility.preferredContainer(
+          videoCodec: 'av1',
+          audioCodec: 'aac',
+          currentContainer: 'avi',
+        ),
+        'mp4',
+      );
+      expect(
+        MediaFormatCompatibility.preferredContainer(
+          videoCodec: 'av1',
+          audioCodec: 'opus',
+          currentContainer: 'mp4',
+        ),
+        'webm',
+      );
+      expect(
+        MediaFormatCompatibility.preferredContainer(
+          videoCodec: 'av1',
+          audioCodec: 'aac',
+          currentContainer: 'mkv',
+        ),
+        'mkv',
       );
     });
   });

@@ -51,6 +51,43 @@ void main() {
     );
   });
 
+  testWidgets('AV1 appears only with the experimental switch on', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+
+    await tester.pumpWidget(buildSubject());
+    await tester.pumpAndSettle();
+
+    expect(find.text('AV1'), findsNothing);
+
+    await tester.tap(find.text('AV1 (experimental)'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('AV1'), findsOneWidget);
+
+    await tester.tap(find.text('AV1'));
+    await tester.pumpAndSettle();
+
+    expect(
+      await PreferencesService.getVideoCodec(),
+      PreferencesService.videoCodecAv1,
+    );
+
+    // Schalter wieder aus: AV1-Auswahl darf nicht bestehen bleiben.
+    await tester.tap(find.text('AV1 (experimental)'));
+    await tester.pumpAndSettle();
+
+    final selector = tester.widget<SegmentedButton<String>>(
+      find.byType(SegmentedButton<String>),
+    );
+    expect(selector.selected, {PreferencesService.videoCodecH264});
+    expect(
+      await PreferencesService.getVideoCodec(),
+      PreferencesService.videoCodecH264,
+    );
+  });
+
   testWidgets('shows the codec explanation', (tester) async {
     SharedPreferences.setMockInitialValues({});
 

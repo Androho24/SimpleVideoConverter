@@ -589,6 +589,12 @@ abstract class AppLocalizations {
   /// **'0 → lossless (very large file)\n18 → visually nearly lossless\n23 → standard (good balance)\n28 → visible quality loss\n51 → lowest quality\n\nRecommended: 18–28'**
   String get crfInfoContent;
 
+  /// CRF-Erklärung für die 0–63-Skala von VP9 und AV1
+  ///
+  /// In en, this message translates to:
+  /// **'0 → lossless (very large file)\n25 → visually nearly lossless\n30 → standard (good balance)\n38 → visible quality loss\n63 → lowest quality\n\nRecommended: 25–38\n\nVP9 and AV1 use a 0–63 scale: the same number means a different quality than with H.264/H.265.'**
+  String get crfInfoContentWideScale;
+
   /// Label für die Breite/Höhe-Felder
   ///
   /// In en, this message translates to:
@@ -670,7 +676,7 @@ abstract class AppLocalizations {
   /// Erklärung der Video-Codecs im Expertenmodus
   ///
   /// In en, this message translates to:
-  /// **'H.264 → best compatibility and usually faster\nH.265 → smaller files at comparable quality, slower\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.'**
+  /// **'H.264 → best compatibility and usually faster\nH.265 → smaller files at comparable quality, slower\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → best compression, software-only encoding, experimental\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.'**
   String get expertVideoCodecInfoContent;
 
   /// Label des Xvid-Codecs im Expertenmodus
@@ -678,6 +684,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Xvid (Legacy)'**
   String get xvidLegacyLabel;
+
+  /// Warnhinweis zur Encoding-Dauer von AV1
+  ///
+  /// In en, this message translates to:
+  /// **'AV1 is encoded in software only and is much slower than H.264/H.265.'**
+  String get av1SlowHint;
+
+  /// Zusatzhinweis für AV1 oberhalb von 1080p
+  ///
+  /// In en, this message translates to:
+  /// **'Above 720p it is worth scaling down first.'**
+  String get av1HighResHint;
+
+  /// Titel des experimentellen AV1-Schalters in den App-Einstellungen
+  ///
+  /// In en, this message translates to:
+  /// **'AV1 (experimental)'**
+  String get av1ExperimentalTitle;
+
+  /// Untertitel des experimentellen AV1-Schalters
+  ///
+  /// In en, this message translates to:
+  /// **'Adds AV1 to the codec selection in normal and expert mode. Modern codec with strong compression, not yet fully tested.'**
+  String get av1ExperimentalSubtitle;
 
   /// Inhalt des Audio-Codec-Info-Dialogs
   ///
@@ -1066,6 +1096,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'500 kbps–2 Mbps  → heavy compression, messaging\n4–8 Mbps → 1080p normal/good quality\n12 Mbps → 1080p high / 4K low quality\n20 Mbps → 4K streaming quality\n\nCustom entry: 500–40000 kbps or e.g. \"8 Mbps\"\n\nUnlike CRF, quality may vary between scenes. Use CRF for better results at the same file size.'**
   String get targetBitrateInfoContent;
+
+  /// Bitraten-Zusatz für VP9 und AV1
+  ///
+  /// In en, this message translates to:
+  /// **'VP9 and AV1 reach the same quality at roughly half these bitrates.'**
+  String get targetBitrateWideScaleHint;
 
   /// Settings-Eintrag, öffnet die Play-Store-Detailseite zum Bewerten
   ///

@@ -7,6 +7,9 @@ class PreferencesService {
   static const videoCodecH264 = 'h264';
   static const videoCodecH265 = 'h265';
 
+  /// Experimentell: nur wählbar, wenn [getAv1Experimental] true ist.
+  static const videoCodecAv1 = 'av1';
+
   static const _keyExpertMode = 'expertMode';
   static const _keyIsPro = 'isPro';
   static const _keyCpuWarningDismissed = 'cpuWarningDismissed';
@@ -19,6 +22,7 @@ class PreferencesService {
   static const _keyLastQualityIndex = 'lastQualityIndex';
   static const _keyAutoSaveVideos = 'autoSaveVideos';
   static const _keyVideoCodec = 'videoCodec';
+  static const _keyAv1Experimental = 'av1Experimental';
 
   static Future<bool> getAutoSaveVideos() async {
     final prefs = await SharedPreferences.getInstance();
@@ -30,18 +34,39 @@ class PreferencesService {
     await prefs.setBool(_keyAutoSaveVideos, value);
   }
 
+  /// Liefert den Codec für den normalen Modus. AV1 wird nur zurückgegeben,
+  /// solange der Experimentell-Schalter aktiv ist — wird er ausgeschaltet,
+  /// fällt eine gespeicherte AV1-Auswahl auf H.264 zurück.
   static Future<String> getVideoCodec() async {
     final prefs = await SharedPreferences.getInstance();
     final codec = prefs.getString(_keyVideoCodec);
-    return codec == videoCodecH265 ? videoCodecH265 : videoCodecH264;
+    if (codec == videoCodecH265) return videoCodecH265;
+    if (codec == videoCodecAv1 &&
+        (prefs.getBool(_keyAv1Experimental) ?? false)) {
+      return videoCodecAv1;
+    }
+    return videoCodecH264;
   }
 
   static Future<void> setVideoCodec(String value) async {
-    if (value != videoCodecH264 && value != videoCodecH265) {
+    if (value != videoCodecH264 &&
+        value != videoCodecH265 &&
+        value != videoCodecAv1) {
       throw ArgumentError.value(value, 'value', 'Unsupported video codec');
     }
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_keyVideoCodec, value);
+  }
+
+  /// Ob AV1 im normalen Modus als experimentelle Option angeboten wird.
+  static Future<bool> getAv1Experimental() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyAv1Experimental) ?? false;
+  }
+
+  static Future<void> setAv1Experimental(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyAv1Experimental, value);
   }
 
   static Future<bool> getExpertMode() async {

@@ -9,7 +9,28 @@ void main() {
     expect(FfmpegCodecOptions.videoEncoder('h264'), 'libx264');
     expect(FfmpegCodecOptions.videoEncoder('h265'), 'libx265');
     expect(FfmpegCodecOptions.videoEncoder('vp9'), 'libvpx-vp9');
+    expect(FfmpegCodecOptions.videoEncoder('av1'), 'libaom-av1');
     expect(FfmpegCodecOptions.videoEncoder('xvid'), 'libxvid');
+  });
+
+  test('uses the 0–63 constant-quality scale for AV1', () {
+    expect(
+      FfmpegCodecOptions.videoQualityArguments(
+        codec: 'av1',
+        bitrateMode: 'crf',
+        crf: 30,
+        targetBitrateKbps: 5000,
+      ),
+      '-crf 30 -b:v 0',
+    );
+  });
+
+  test('speeds up libaom and keeps tiling automatic', () {
+    expect(
+      FfmpegCodecOptions.videoEncoderArguments('av1'),
+      '-usage realtime -cpu-used 8 -row-mt 1 -lag-in-frames 0 -g 240 '
+      '-colorspace bt709 -color_primaries bt709 -color_trc bt709',
+    );
   });
 
   test('uses constant-quality arguments supported by VP9 and Xvid', () {
@@ -43,7 +64,7 @@ void main() {
   });
 
   test('keeps target bitrate mode consistent across codecs', () {
-    for (final codec in ['h264', 'h265', 'vp9', 'xvid']) {
+    for (final codec in ['h264', 'h265', 'vp9', 'av1', 'xvid']) {
       expect(
         FfmpegCodecOptions.videoQualityArguments(
           codec: codec,
@@ -66,5 +87,11 @@ void main() {
     expect(FfmpegCodecOptions.codecTagArguments('h265', 'mov'), '-tag:v hvc1');
     expect(FfmpegCodecOptions.codecTagArguments('h265', 'mkv'), isEmpty);
     expect(FfmpegCodecOptions.codecTagArguments('h264', 'mp4'), isEmpty);
+  });
+
+  test('uses av01 only for AV1 in MP4-family containers', () {
+    expect(FfmpegCodecOptions.codecTagArguments('av1', 'mp4'), '-tag:v av01');
+    expect(FfmpegCodecOptions.codecTagArguments('av1', 'webm'), isEmpty);
+    expect(FfmpegCodecOptions.codecTagArguments('av1', 'mkv'), isEmpty);
   });
 }

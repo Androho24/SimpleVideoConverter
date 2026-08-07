@@ -259,6 +259,10 @@ class AppLocalizationsTr extends AppLocalizations {
       '0 → kayıpsız (çok büyük dosya)\n18 → görsel olarak neredeyse kayıpsız\n23 → Standart (iyi denge)\n28 → gözle görülür kalite kaybı\n51 → en düşük kalite\n\nÖneri: 18–28';
 
   @override
+  String get crfInfoContentWideScale =>
+      '0 → kayıpsız (çok büyük dosya)\n25 → görsel olarak neredeyse kayıpsız\n30 → Standart (iyi denge)\n38 → gözle görülür kalite kaybı\n63 → en düşük kalite\n\nÖneri: 25–38\n\nVP9 ve AV1 0–63 ölçeğini kullanır: aynı sayı H.264/H.265’tekinden farklı bir kalite anlamına gelir.';
+
+  @override
   String get resolutionLabel => 'Çözünürlük';
 
   @override
@@ -302,10 +306,25 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → en iyi uyumluluk ve genellikle daha hızlı dönüşüm\nH.265 → benzer kalitede daha küçük dosyalar, daha yavaş\nVP9 → WebM ve MKV için verimli açık kodek, yazılımsal kodlama daha yavaş\nXvid → AVI ve eski oynatıcılar için eski MPEG-4 kodeği\n\nKullanılabilir çıkış formatları seçilen video ve ses kodeklerine bağlıdır.';
+      'H.264 → en iyi uyumluluk ve genellikle daha hızlı dönüşüm\nH.265 → benzer kalitede daha küçük dosyalar, daha yavaş\nVP9 → WebM ve MKV için verimli açık kodek, yazılımsal kodlama daha yavaş\nAV1 → en iyi sıkıştırma, yalnızca yazılımsal kodlama, deneysel\nXvid → AVI ve eski oynatıcılar için eski MPEG-4 kodeği\n\nKullanılabilir çıkış formatları seçilen video ve ses kodeklerine bağlıdır.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (eski)';
+
+  @override
+  String get av1SlowHint =>
+      'AV1 yalnızca yazılımla kodlanır ve H.264/H.265\'ten çok daha yavaştır.';
+
+  @override
+  String get av1HighResHint =>
+      '720p üzerinde önce çözünürlüğü düşürmek daha iyidir.';
+
+  @override
+  String get av1ExperimentalTitle => 'AV1 (deneysel)';
+
+  @override
+  String get av1ExperimentalSubtitle =>
+      'Normal modda ve uzman modunda kodek seçimine AV1\'i ekler. Güçlü sıkıştırma sunan yeni bir kodek, henüz tümüyle denenmedi.';
 
   @override
   String get audioCodecInfoContent =>
@@ -525,6 +544,10 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get targetBitrateInfoContent =>
       '500 kbps–2 Mbps  → yoğun sıkıştırma, mesajlaşma\n4–8 Mbps → 1080p normal/iyi kalite\n12 Mbps → 1080p yüksek / 4K düşük kalite\n20 Mbps → 4K akış kalitesi\n\nÖzel giriş: 500–40000 kbps veya ör. \"8 Mbps\"\n\nCRF\'den farklı olarak, kalite sahneler arasında değişebilir. Aynı dosya boyutunda daha iyi sonuçlar için CRF\'yi kullanın.';
+
+  @override
+  String get targetBitrateWideScaleHint =>
+      'VP9 ve AV1 aynı kaliteye bu bit hızlarının yaklaşık yarısıyla ulaşır.';
 
   @override
   String get rateAppTitle => 'Uygulamayı Değerlendir';

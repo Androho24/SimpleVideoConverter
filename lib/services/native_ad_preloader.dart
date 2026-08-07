@@ -18,6 +18,11 @@ import 'preferences_service.dart';
 /// Mehrfach-Aufrufe: idempotent (laufende oder fertige Loads werden nicht
 /// dupliziert).
 class NativeAdPreloader {
+  /// Obergrenze für das Warten auf einen laufenden Preload. Schützt davor, dass
+  /// ein ausbleibender Listener-Callback den Ad-Slot dauerhaft im Platzhalter
+  /// stehen lässt (siehe [consume]).
+  static const _preloadTimeout = Duration(seconds: 10);
+
   static Completer<NativeAd?>? _completer;
 
   /// Startet einen Preload, falls noch keiner läuft oder bereitliegt.
@@ -68,10 +73,29 @@ class NativeAdPreloader {
   ///
   /// - `null`: kein Preload aktiv → Widget muss selbst laden.
   /// - `Future<NativeAd?>`: entweder schon fertig (instant) oder noch in
-  ///   flight. Auflösung zu `null` heißt: Load ist fehlgeschlagen.
+  ///   flight. Auflösung zu `null` heißt: Load ist fehlgeschlagen oder hat
+  ///   [_preloadTimeout] überschritten — in beiden Fällen lädt der Aufrufer
+  ///   selbst weiter.
   static Future<NativeAd?>? consume() {
     final completer = _completer;
     _completer = null;
-    return completer?.future;
+    if (completer == null) return null;
+
+    var timedOut = false;
+    final handOver = completer.future.timeout(
+      _preloadTimeout,
+      onTimeout: () {
+        timedOut = true;
+        return null;
+      },
+    );
+    // Trudelt die Ad erst nach dem Timeout ein, hat sie keinen Besitzer mehr
+    // und würde sonst als Leak liegen bleiben.
+    unawaited(
+      completer.future.then((ad) {
+        if (timedOut && ad != null) unawaited(ad.dispose());
+      }),
+    );
+    return handOver;
   }
 }

@@ -83,6 +83,7 @@
 
  "crfInfoTitle": "CRF — Kvalita videa",
    "crfInfoContent": "0 → bezztrátové (velmi velký soubor)\n18 → vizuálně téměř bezztrátové\n23 → standardní (dobrá rovnováha)\n28 → viditelné ztráty kvality\n51 → nejnižší kvalita\n\nDoporučení: 18–28",
+   "crfInfoContentWideScale": "0 → bezztrátové (velmi velký soubor)\n25 → vizuálně téměř bezztrátové\n30 → standardní (dobrá rovnováha)\n38 → viditelné ztráty kvality\n63 → nejnižší kvalita\n\nDoporučení: 25–38\n\nVP9 a AV1 používají škálu 0–63: stejné číslo znamená jinou kvalitu než u H.264/H.265.",
 
  "resolutionLabel": "Rozlišení",
    "resolutionInfoTitle": "Běžná rozlišení",
@@ -100,8 +101,12 @@
    "audioBitrateInfoContent": "Ztlumeno → žádný zvuk\n64 kbps → řeč, podcasty\n96 kbps → dobrá kvalita řeči\n128 kbps → standardní hudba\n192 kbps → vysoká kvalita zvuku\n320 kbps → maximální kvalita MP3",
 
  "audioCodecLabel": "Audio kodek",
-   "expertVideoCodecInfoContent": "H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.",
+   "expertVideoCodecInfoContent": "H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nAV1 → nejlepší komprese, softwarové kódování, experimentální\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.",
    "xvidLegacyLabel": "Xvid (starší)",
+   "av1SlowHint": "AV1 se kóduje pouze softwarově a je výrazně pomalejší než H.264/H.265.",
+   "av1HighResHint": "Nad 720p se vyplatí video nejprve zmenšit.",
+   "av1ExperimentalTitle": "AV1 (experimentální)",
+   "av1ExperimentalSubtitle": "Přidá AV1 do výběru kodeků v normálním i expertním režimu. Moderní kodek se silnou kompresí, zatím není plně odzkoušený.",
    "audioCodecInfoContent": "AAC → standard pro MP4, nejlepší kompatibilita\nMP3 → široce používaný starší kodek\nOpus → moderní a efektivní, ideální pro WebM a MKV\nAC3 → Dolby Digital, pouze pro zdroje s prostorovým zvukem (≥ 3 kanály)\nVorbis → otevřený kodek pro WebM a MKV\n\nNekompatibilní výstupní formáty se automaticky deaktivují.",
    "outputFormatLabel": "Výstupní formát",
    "outputFormatInfoContent": "MP4 → univerzální, nejlepší kompatibilita\nMKV → flexibilní kontejner pro všechny nabízené kodeky\nMOV → pracovní postupy Apple/QuickTime\nAVI → starší formát s Xvid\nMPEG-TS → transportní proud pro TV a streamování\nWebM → moderní webový formát s VP9 a Opus nebo Vorbis\n\nNekompatibilní formáty jsou zobrazeny ztlumeně. Při výběru se automaticky nastaví výchozí video kodek a v případě potřeby kompatibilní audio kodek.",
@@ -177,6 +182,7 @@
   "targetBitrateLabel": "Cílová přenosová rychlost",
   "targetBitrateInfoTitle": "Cílová přenosová rychlost",
   "targetBitrateInfoContent": "500 kbps–2 Mbps  → silná komprese, zasílání zpráv\n4–8 Mbps → 1080p normální/dobrá kvalita\n12 Mbps → 1080p vysoká / 4K nízká kvalita\n20 Mbps → kvalita streamování 4K\n\nVlastní zadání: 500–40000 kbps nebo např. „8 Mbps“\n\nNa rozdíl od CRF se kvalita může lišit mezi jednotlivými scénami. Pro lepší výsledky při stejné velikosti souboru použijte CRF.",
+  "targetBitrateWideScaleHint": "VP9 a AV1 dosáhnou stejné kvality přibližně při polovině těchto datových toků.",
 
    "rateAppTitle": "Ohodnotit aplikaci",
    "proHintTitle": "Používat bez reklam",

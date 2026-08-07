@@ -20,11 +20,13 @@ import '../models/video_metadata.dart';
 import '../screens/conversion_screen.dart';
 import '../screens/settings_screen.dart';
 import '../services/ffmpeg_codec_options.dart';
+import '../services/media_format_compatibility.dart';
 import '../services/native_ad_preloader.dart';
 import '../services/output_size_estimator.dart';
 import '../services/preferences_service.dart';
 import '../services/pro_prompt_service.dart';
 import '../services/review_service.dart';
+import '../services/video_quality_scale.dart';
 import '../services/video_scale_service.dart';
 import '../widgets/app_header.dart';
 import '../widgets/convert_section.dart';
@@ -57,6 +59,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   int _selectedNavIndex = 0;
   bool _cpuWarningDismissed = false;
   String _videoCodec = PreferencesService.videoCodecH264;
+  bool _av1Experimental = false;
   ExpertSettings _expertSettings = const ExpertSettings();
   VideoPlayerController? _playerController;
   Timer? _seekDebounce;
@@ -109,6 +112,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final dismissed = await PreferencesService.getCpuWarningDismissed();
     final quality = await PreferencesService.getLastQualityIndex();
     final videoCodec = await PreferencesService.getVideoCodec();
+    final av1Experimental = await PreferencesService.getAv1Experimental();
     if (mounted) {
       setState(() {
         _isExpertMode = expert;
@@ -116,18 +120,49 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         _cpuWarningDismissed = dismissed;
         _selectedQualityIndex = quality;
         _videoCodec = videoCodec;
+        _av1Experimental = av1Experimental;
         _expertSettings = _expertSettings.copyWith(videoCodec: videoCodec);
       });
     }
   }
 
-  Future<void> _refreshVideoCodec() async {
+  Future<void> _refreshCodecPreferences() async {
     final videoCodec = await PreferencesService.getVideoCodec();
+    final av1Experimental = await PreferencesService.getAv1Experimental();
     if (!mounted) return;
-    if (_videoCodec != videoCodec) {
-      setState(() => _videoCodec = videoCodec);
-      _updateEstimatedSize();
+    if (_videoCodec == videoCodec && _av1Experimental == av1Experimental) {
+      return;
     }
+    setState(() {
+      _videoCodec = videoCodec;
+      _av1Experimental = av1Experimental;
+      // AV1 wurde gerade abgeschaltet: die Expertenauswahl darf nicht auf einem
+      // nicht mehr angebotenen Codec stehen bleiben.
+      if (!av1Experimental &&
+          _expertSettings.videoCodec ==
+              MediaFormatCompatibility.videoCodecAv1) {
+        _expertSettings = _fallbackFromAv1(_expertSettings);
+      }
+    });
+    _updateEstimatedSize();
+  }
+
+  /// Ersetzt AV1 durch H.264 und rechnet CRF sowie Container mit.
+  ExpertSettings _fallbackFromAv1(ExpertSettings settings) {
+    const target = MediaFormatCompatibility.videoCodecH264;
+    return settings.copyWith(
+      videoCodec: target,
+      crf: VideoQualityScale.convertCrf(
+        settings.crf,
+        fromCodec: settings.videoCodec,
+        toCodec: target,
+      ),
+      container: MediaFormatCompatibility.preferredContainer(
+        videoCodec: target,
+        audioCodec: settings.audioCodec,
+        currentContainer: settings.container,
+      ),
+    );
   }
 
   Future<void> _requestNotificationPermission() async {
@@ -498,9 +533,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
     final cacheDir = await ConversionScreen.getCacheDir();
     final selectedVideoCodec = await PreferencesService.getVideoCodec();
-    final videoEncoder = selectedVideoCodec == PreferencesService.videoCodecH265
-        ? 'libx265'
-        : 'libx264';
+    final videoEncoder = FfmpegCodecOptions.videoEncoder(selectedVideoCodec);
     final startSec = _trimStart * _metadata!.durationMs / 1000.0;
     final endSec = _trimEnd * _metadata!.durationMs / 1000.0;
     final totalDurationMs = _metadata!.durationMs.toDouble();
@@ -585,13 +618,35 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
           '${cacheDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.mp4';
       final vfFilter = VideoScaleService.standardFilter(quality.shortSide);
       final audioOpt = _isMuted ? '-an' : '-c:a aac -b:a 128k';
-      final videoCrf = videoEncoder == 'libx265'
-          ? (quality.crf + 5).clamp(0, 51)
-          : quality.crf;
-      final codecTagOpt = videoEncoder == 'libx265' ? '-tag:v hvc1' : '';
+      // Die CRF-Werte der Qualitätsstufen sind auf x264 geeicht. H.265 braucht
+      // rund 5 Stufen mehr für dasselbe Bild, AV1 arbeitet auf einer anderen
+      // Skala (0–63) und wird deshalb umgerechnet.
+      final videoCrf = switch (selectedVideoCodec) {
+        PreferencesService.videoCodecH265 => (quality.crf + 5).clamp(0, 51),
+        PreferencesService.videoCodecAv1 => VideoQualityScale.convertCrf(
+          quality.crf,
+          fromCodec: PreferencesService.videoCodecH264,
+          toCodec: PreferencesService.videoCodecAv1,
+        ),
+        _ => quality.crf,
+      };
+      final codecTagOpt = FfmpegCodecOptions.codecTagArguments(
+        selectedVideoCodec,
+        'mp4',
+      );
+      final qualityOpt = FfmpegCodecOptions.videoQualityArguments(
+        codec: selectedVideoCodec,
+        bitrateMode: 'crf',
+        crf: videoCrf,
+        targetBitrateKbps: 0,
+      );
+      final encoderOpt = FfmpegCodecOptions.videoEncoderArguments(
+        selectedVideoCodec,
+      );
       command =
           '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-          '-c:v $videoEncoder $codecTagOpt -pix_fmt yuv420p -crf $videoCrf -r 60 $audioOpt -y "$outputPath"';
+          '-c:v $videoEncoder $codecTagOpt $encoderOpt -pix_fmt yuv420p '
+          '$qualityOpt -r 60 $audioOpt -y "$outputPath"';
     }
 
     final originalName = _videoPath!.split('/').last;
@@ -662,7 +717,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                   ),
                 ),
               );
-              await _refreshVideoCodec();
+              await _refreshCodecPreferences();
             } else {
               final isExpert = index == 1;
               setState(() {
@@ -819,6 +874,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                   ExpertControls(
                     settings: _expertSettings,
                     isConverting: false,
+                    av1Enabled: _av1Experimental,
                     metadata: _metadata,
                     onChanged: (s) {
                       setState(() => _expertSettings = s);
