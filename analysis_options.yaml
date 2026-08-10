@@ -9,6 +9,13 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude:
+    # Fremdcode: gepatchte Kopie von video_player_android, siehe
+    # third_party/video_player_android/PATCHES.md. Deren Tests bringen eigene
+    # dev_dependencies mit, die hier nicht aufgelöst werden.
+    - third_party/**
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

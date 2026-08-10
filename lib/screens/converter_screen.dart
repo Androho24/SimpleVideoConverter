@@ -288,8 +288,17 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       await controller.initialize();
       controller.setLooping(true);
     } catch (_) {
-      await controller.dispose();
       previewFailed = true;
+    }
+    // Der platformView-Pfad meldet 0×0, wenn ExoPlayer READY erreicht, ohne je
+    // ein Video-Format zu liefern — etwa weil für den Codec kein Decoder da ist
+    // (siehe third_party/video_player_android/PATCHES.md). Die Vorschau würde
+    // dann nur Ton über schwarzem Bild abspielen, gelayoutet mit 1:1.
+    if (!previewFailed && controller.value.size.isEmpty) {
+      previewFailed = true;
+    }
+    if (previewFailed) {
+      await controller.dispose();
     }
 
     if (!mounted) return;

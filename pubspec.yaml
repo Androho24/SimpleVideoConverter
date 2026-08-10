@@ -2,7 +2,7 @@ name: simple_video_converter
 description: "Simple Video Converter mit FFmpegKit (libx264/libx265)"
 publish_to: 'none'
 
-version: 2.1.0+28
+version: 2.1.1+29
 
 environment:
   sdk: ^3.10.0
@@ -37,6 +37,14 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.1   # Icon-Generierung
+
+dependency_overrides:
+  # Gepatchte Kopie von video_player_android 2.12.0: der platformView-Pfad
+  # dereferenziert stromaufwärts exoPlayer.getVideoFormat() ohne Null-Prüfung und
+  # reißt den Prozess mit einer NPE ab, wenn ExoPlayer READY meldet, bevor ein
+  # Video-Format da ist. Details und Rück-Portierung: third_party/video_player_android/PATCHES.md
+  video_player_android:
+    path: third_party/video_player_android
 
 flutter:
   uses-material-design: true
