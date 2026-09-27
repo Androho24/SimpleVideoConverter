@@ -223,5 +223,11 @@
 
   "targetBitrateEditTooltip": "ป้อนบิตเรต",
 
-  "targetBitrateRangeHint": "ช่วงที่อนุญาต: {range}"
+  "targetBitrateRangeHint": "ช่วงที่อนุญาต: {range}",
+
+  "hwEncoderTitle": "ตัวเข้ารหัสฮาร์ดแวร์ (เร็ว)",
+  "hwEncoderSubtitle": "เร็วกว่ามาก แต่ต้องใช้บิตเรตประมาณสองเท่าเพื่อให้ได้คุณภาพเท่ากัน ใช้ได้เฉพาะโหมดบิตเรต",
+  "hwEncoderHdrHint": "วิดีโอ HDR — จะแปลงด้วยตัวเข้ารหัสซอฟต์แวร์เพื่อคง HDR ไว้",
+  "hwEncoderFallback": "ตัวเข้ารหัสฮาร์ดแวร์ล้มเหลว — กำลังแปลงด้วยตัวเข้ารหัสซอฟต์แวร์",
+  "hwEncoderContainerHint": "ตัวเข้ารหัสฮาร์ดแวร์ไม่รองรับ {format} — รูปแบบนี้จะแปลงด้วยตัวเข้ารหัสซอฟต์แวร์"
 }

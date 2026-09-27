@@ -589,4 +589,24 @@ class AppLocalizationsCs extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'Povolený rozsah: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Hardwarový enkodér (rychlý)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Mnohem rychlejší, ale pro stejnou kvalitu potřebuje zhruba dvojnásobný datový tok. Pouze v režimu datového toku.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'HDR video — převede se softwarovým enkodérem, aby se HDR zachovalo.';
+
+  @override
+  String get hwEncoderFallback =>
+      'Hardwarový enkodér selhal — převádí se softwarovým enkodérem.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'Hardwarový enkodér nepodporuje $format — tento formát se převede softwarovým enkodérem.';
+  }
 }

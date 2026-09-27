@@ -18,6 +18,11 @@ class ExpertSettings {
   final String container; // 'mp4', 'mkv', 'mov', 'avi', 'ts', 'webm'
   final bool audioOnly; // true = nur Audiospur extrahieren, kein Video
 
+  /// H.265 über den MediaCodec-Encoder des Geräts statt libx265. Nur im
+  /// Bitraten-Modus; ob ein Auftrag ihn nutzt, entscheidet
+  /// `FfmpegCodecOptions.usesHardwareEncoder`.
+  final bool hardwareEncoder;
+
   const ExpertSettings({
     this.crf = 23,
     this.bitrateMode = 'crf',
@@ -31,6 +36,7 @@ class ExpertSettings {
     this.audioChannels = 0,
     this.container = 'mp4',
     this.audioOnly = false,
+    this.hardwareEncoder = false,
   });
 
   ExpertSettings copyWith({
@@ -46,6 +52,7 @@ class ExpertSettings {
     int? audioChannels,
     String? container,
     bool? audioOnly,
+    bool? hardwareEncoder,
   }) {
     return ExpertSettings(
       crf: crf ?? this.crf,
@@ -60,6 +67,7 @@ class ExpertSettings {
       audioChannels: audioChannels ?? this.audioChannels,
       container: container ?? this.container,
       audioOnly: audioOnly ?? this.audioOnly,
+      hardwareEncoder: hardwareEncoder ?? this.hardwareEncoder,
     );
   }
 }

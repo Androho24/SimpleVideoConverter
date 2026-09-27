@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
+import android.media.MediaCodecList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -145,6 +146,7 @@ class MainActivity : FlutterActivity() {
                         })
                         result.success(null)
                     }
+                    "hasHardwareHevcEncoder" -> result.success(hasHardwareHevcEncoder())
                     else -> result.notImplemented()
                 }
             }
@@ -232,6 +234,31 @@ class MainActivity : FlutterActivity() {
             Log.e("MainActivity", "viewSavedVideo: unerwarteter Fehler", e)
             return false
         }
+    }
+
+    /**
+     * Gibt es auf dem Gerät einen Hardware-Encoder für HEVC? Grundlage für den
+     * Schalter „Hardware-Encoder“ im Expertenmodus (FFmpeg `hevc_mediacodec`).
+     *
+     * Ab API 29 meldet der Codec das selbst. Darunter hilft nur der Name: Die
+     * Software-Codecs von Android heißen `OMX.google.*` bzw. `c2.android.*`.
+     * Jeder Fehler ergibt false — dann erscheint der Schalter nicht.
+     */
+    private fun hasHardwareHevcEncoder(): Boolean = try {
+        MediaCodecList(MediaCodecList.REGULAR_CODECS).codecInfos.any { info ->
+            val isHevcEncoder = info.isEncoder &&
+                info.supportedTypes.any { it.equals("video/hevc", ignoreCase = true) }
+            val isHardware = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                info.isHardwareAccelerated
+            } else {
+                val name = info.name.lowercase()
+                !name.startsWith("omx.google.") && !name.startsWith("c2.android.")
+            }
+            isHevcEncoder && isHardware
+        }
+    } catch (e: Exception) {
+        Log.w("MainActivity", "hasHardwareHevcEncoder: MediaCodecList nicht lesbar", e)
+        false
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {

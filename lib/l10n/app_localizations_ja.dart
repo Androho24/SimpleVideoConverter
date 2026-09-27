@@ -579,4 +579,21 @@ class AppLocalizationsJa extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return '入力可能な範囲：$range';
   }
+
+  @override
+  String get hwEncoderTitle => 'ハードウェアエンコーダー（高速）';
+
+  @override
+  String get hwEncoderSubtitle => '大幅に高速ですが、同じ画質には約2倍のビットレートが必要です。ビットレートモードのみ。';
+
+  @override
+  String get hwEncoderHdrHint => 'HDR動画です。HDRを維持するため、ソフトウェアエンコーダーで変換します。';
+
+  @override
+  String get hwEncoderFallback => 'ハードウェアエンコーダーが失敗しました。ソフトウェアエンコーダーで変換します。';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'ハードウェアエンコーダーは$formatに対応していません。この形式はソフトウェアエンコーダーで変換します。';
+  }
 }

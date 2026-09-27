@@ -204,5 +204,11 @@
 
   "targetBitrateEditTooltip": "Bitsnelheid invoeren",
 
-  "targetBitrateRangeHint": "Toegestaan bereik: {range}"
+  "targetBitrateRangeHint": "Toegestaan bereik: {range}",
+
+  "hwEncoderTitle": "Hardware-encoder (snel)",
+  "hwEncoderSubtitle": "Veel sneller, maar heeft voor dezelfde kwaliteit ongeveer twee keer zoveel bitsnelheid nodig. Alleen in bitsnelheidmodus.",
+  "hwEncoderHdrHint": "HDR-video — wordt geconverteerd met de software-encoder zodat HDR behouden blijft.",
+  "hwEncoderFallback": "Hardware-encoder mislukt — er wordt geconverteerd met de software-encoder.",
+  "hwEncoderContainerHint": "De hardware-encoder ondersteunt {format} niet — dit formaat wordt geconverteerd met de software-encoder."
 }

@@ -193,12 +193,141 @@ void main() {
     );
     expect(menu.requestFocusOnTap, isFalse);
   });
+
+  group('hardware encoder switch', () {
+    final hwSwitch = find.byKey(const ValueKey('expert_hardware_encoder'));
+    final hdrHint = find.byKey(
+      const ValueKey('expert_hardware_encoder_hdr_hint'),
+    );
+
+    Future<void> selectCodec(WidgetTester tester, String codec) async {
+      final chip = find.byKey(ValueKey('expert_video_codec_$codec'));
+      await tester.ensureVisible(chip);
+      await tester.tap(chip);
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> toggleSwitch(WidgetTester tester) async {
+      await tester.ensureVisible(hwSwitch);
+      await tester.tap(hwSwitch);
+      await tester.pumpAndSettle();
+    }
+
+    ButtonSegment<String> crfSegment(WidgetTester tester) => tester
+        .widget<SegmentedButton<String>>(find.byType(SegmentedButton<String>))
+        .segments
+        .firstWhere((segment) => segment.value == 'crf');
+
+    testWidgets('appears only for H.265 on devices with hardware', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const _ExpertControlsHost(hardwareHevcAvailable: true),
+      );
+      await tester.pumpAndSettle();
+      expect(hwSwitch, findsNothing);
+
+      await selectCodec(tester, 'h265');
+      expect(hwSwitch, findsOneWidget);
+
+      await tester.pumpWidget(const _ExpertControlsHost(key: ValueKey('b')));
+      await tester.pumpAndSettle();
+      await selectCodec(tester, 'h265');
+      expect(hwSwitch, findsNothing);
+    });
+
+    testWidgets('forces bitrate mode and locks the CRF segment', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const _ExpertControlsHost(hardwareHevcAvailable: true),
+      );
+      await tester.pumpAndSettle();
+      await selectCodec(tester, 'h265');
+      expect(crfSegment(tester).enabled, isTrue);
+
+      await toggleSwitch(tester);
+
+      final state = tester.state<_ExpertControlsHostState>(
+        find.byType(_ExpertControlsHost),
+      );
+      expect(state.settings.hardwareEncoder, isTrue);
+      expect(state.settings.bitrateMode, 'bitrate');
+      expect(crfSegment(tester).enabled, isFalse);
+      expect(hdrHint, findsNothing);
+    });
+
+    testWidgets('is reset when switching away from H.265', (tester) async {
+      await tester.pumpWidget(
+        const _ExpertControlsHost(hardwareHevcAvailable: true),
+      );
+      await tester.pumpAndSettle();
+      await selectCodec(tester, 'h265');
+      await toggleSwitch(tester);
+
+      await selectCodec(tester, 'h264');
+      final state = tester.state<_ExpertControlsHostState>(
+        find.byType(_ExpertControlsHost),
+      );
+      expect(state.settings.hardwareEncoder, isFalse);
+
+      await selectCodec(tester, 'h265');
+      expect(tester.widget<SwitchListTile>(hwSwitch).value, isFalse);
+      expect(crfSegment(tester).enabled, isTrue);
+    });
+
+    testWidgets('keeps the switch on MKV but shows the software hint', (
+      tester,
+    ) async {
+      final containerHint = find.byKey(
+        const ValueKey('expert_hardware_encoder_container_hint'),
+      );
+      await tester.pumpWidget(
+        const _ExpertControlsHost(hardwareHevcAvailable: true),
+      );
+      await tester.pumpAndSettle();
+      await selectCodec(tester, 'h265');
+      await toggleSwitch(tester);
+      expect(containerHint, findsNothing);
+
+      final mkv = find.byKey(const ValueKey('expert_container_mkv'));
+      await tester.ensureVisible(mkv);
+      await tester.tap(mkv);
+      await tester.pumpAndSettle();
+
+      expect(tester.widget<SwitchListTile>(hwSwitch).value, isTrue);
+      expect(containerHint, findsOneWidget);
+      expect(find.textContaining('MKV is not supported'), findsOneWidget);
+    });
+
+    testWidgets('shows the software hint for HDR sources', (tester) async {
+      await tester.pumpWidget(
+        const _ExpertControlsHost(
+          hardwareHevcAvailable: true,
+          hdrTransfer: 'arib-std-b67',
+        ),
+      );
+      await tester.pumpAndSettle();
+      await selectCodec(tester, 'h265');
+      expect(hdrHint, findsNothing);
+
+      await toggleSwitch(tester);
+      expect(hdrHint, findsOneWidget);
+    });
+  });
 }
 
 class _ExpertControlsHost extends StatefulWidget {
   final bool av1Enabled;
+  final bool hardwareHevcAvailable;
+  final String? hdrTransfer;
 
-  const _ExpertControlsHost({this.av1Enabled = true});
+  const _ExpertControlsHost({
+    super.key,
+    this.av1Enabled = true,
+    this.hardwareHevcAvailable = false,
+    this.hdrTransfer,
+  });
 
   @override
   State<_ExpertControlsHost> createState() => _ExpertControlsHostState();
@@ -206,6 +335,15 @@ class _ExpertControlsHost extends StatefulWidget {
 
 class _ExpertControlsHostState extends State<_ExpertControlsHost> {
   ExpertSettings settings = const ExpertSettings(width: 1920, height: 1080);
+  // Einmal pro Host: Eine neue Instanz je Build gilt in ExpertControls als
+  // neues Video und löst dort endlos Updates aus.
+  late final metadata = VideoMetadata(
+    durationMs: 60000,
+    width: 1920,
+    height: 1080,
+    audioChannels: 6,
+    hdrTransfer: widget.hdrTransfer,
+  );
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -222,14 +360,10 @@ class _ExpertControlsHostState extends State<_ExpertControlsHost> {
         padding: const EdgeInsets.all(16),
         child: ExpertControls(
           settings: settings,
-          metadata: const VideoMetadata(
-            durationMs: 60000,
-            width: 1920,
-            height: 1080,
-            audioChannels: 6,
-          ),
+          metadata: metadata,
           isConverting: false,
           av1Enabled: widget.av1Enabled,
+          hardwareHevcAvailable: widget.hardwareHevcAvailable,
           onChanged: (value) => setState(() => settings = value),
         ),
       ),

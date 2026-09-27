@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../l10n/app_localizations.dart';
 import '../models/expert_settings.dart';
 import '../models/video_metadata.dart';
+import '../services/ffmpeg_codec_options.dart';
 import '../services/media_format_compatibility.dart';
 import '../services/output_size_estimator.dart';
 import '../services/video_quality_scale.dart';
@@ -27,6 +28,10 @@ class ExpertControls extends StatefulWidget {
   /// App-Einstellungen eingeschaltet wurde.
   final bool av1Enabled;
 
+  /// Hat das Gerät einen HEVC-Hardware-Encoder? Nur dann gibt es unter H.265
+  /// den Schalter „Hardware-Encoder“.
+  final bool hardwareHevcAvailable;
+
   const ExpertControls({
     super.key,
     required this.settings,
@@ -34,6 +39,7 @@ class ExpertControls extends StatefulWidget {
     required this.onChanged,
     this.metadata,
     this.av1Enabled = false,
+    this.hardwareHevcAvailable = false,
   });
 
   @override
@@ -259,8 +265,17 @@ class _ExpertControlsState extends State<ExpertControls> {
     return settings.copyWith(container: container);
   }
 
+  /// Der Hardware-Schalter gehört zu H.265. Wechselt der Codec, fällt er weg,
+  /// damit er bei einer späteren Rückkehr zu H.265 nicht unbemerkt noch an ist.
+  ExpertSettings _withValidHardwareEncoder(ExpertSettings settings) =>
+      settings.videoCodec == MediaFormatCompatibility.videoCodecH265
+      ? settings
+      : settings.copyWith(hardwareEncoder: false);
+
   void _emitCodecChange(ExpertSettings updated) {
-    final compatible = _withCompatibleContainer(updated);
+    final compatible = _withValidHardwareEncoder(
+      _withCompatibleContainer(updated),
+    );
     widget.onChanged(compatible);
     if (!updated.audioOnly &&
         compatible.container != widget.settings.container) {
@@ -386,12 +401,14 @@ class _ExpertControlsState extends State<ExpertControls> {
         : s.audioChannels;
 
     widget.onChanged(
-      s.copyWith(
-        container: container.id,
-        videoCodec: videoCodec,
-        audioCodec: audioCodec,
-        audioBitrate: audioBitrate,
-        audioChannels: audioChannels,
+      _withValidHardwareEncoder(
+        s.copyWith(
+          container: container.id,
+          videoCodec: videoCodec,
+          audioCodec: audioCodec,
+          audioBitrate: audioBitrate,
+          audioChannels: audioChannels,
+        ),
       ),
     );
   }
@@ -437,6 +454,14 @@ class _ExpertControlsState extends State<ExpertControls> {
     );
   }
 
+  Widget _hardwareHint(ThemeData theme, String text, Key key) => Text(
+    text,
+    key: key,
+    style: theme.textTheme.bodySmall?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    ),
+  );
+
   Widget _infoButton(BuildContext context, String title, String content) =>
       IconButton(
         icon: Icon(
@@ -460,6 +485,12 @@ class _ExpertControlsState extends State<ExpertControls> {
     final s = widget.settings;
     final theme = Theme.of(context);
     final labelStyle = theme.textTheme.labelMedium;
+    final showHardwareSwitch =
+        widget.hardwareHevcAvailable &&
+        s.videoCodec == MediaFormatCompatibility.videoCodecH265;
+    // Der Hardware-Encoder kennt kein CQ (auf keinem getesteten Gerät), daher
+    // nur Bitraten-Modus, solange der Schalter an ist.
+    final crfLocked = showHardwareSwitch && s.hardwareEncoder;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -472,7 +503,11 @@ class _ExpertControlsState extends State<ExpertControls> {
           SegmentedButton<String>(
             showSelectedIcon: false,
             segments: [
-              ButtonSegment(value: 'crf', label: Text(l.encodingModeCrf)),
+              ButtonSegment(
+                value: 'crf',
+                label: Text(l.encodingModeCrf),
+                enabled: !crfLocked,
+              ),
               ButtonSegment(
                 value: 'bitrate',
                 label: Text(l.encodingModeBitrate),
@@ -840,6 +875,46 @@ class _ExpertControlsState extends State<ExpertControls> {
                 ),
             ],
           ),
+          if (showHardwareSwitch) ...[
+            const SizedBox(height: 4),
+            SwitchListTile(
+              key: const ValueKey('expert_hardware_encoder'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(l.hwEncoderTitle),
+              subtitle: Text(l.hwEncoderSubtitle),
+              value: s.hardwareEncoder,
+              onChanged: widget.isConverting
+                  ? null
+                  : (on) => widget.onChanged(
+                      on
+                          ? s.copyWith(
+                              hardwareEncoder: true,
+                              bitrateMode: 'bitrate',
+                            )
+                          : s.copyWith(hardwareEncoder: false),
+                    ),
+            ),
+            // HDR braucht 10 Bit, der Hardware-Pfad kann nur 8 Bit; MKV
+            // scheitert auf den Testgeräten. Der Auftrag läuft dann mit
+            // libx265 — das soll vor dem Start sichtbar sein, nicht erst im
+            // Ergebnis. Der Schalter bleibt an und greift wieder, sobald
+            // Quelle und Format passen.
+            if (s.hardwareEncoder && (widget.metadata?.isHdr ?? false))
+              _hardwareHint(
+                theme,
+                l.hwEncoderHdrHint,
+                const ValueKey('expert_hardware_encoder_hdr_hint'),
+              ),
+            if (s.hardwareEncoder &&
+                !FfmpegCodecOptions.supportsHardwareContainer(s.container))
+              _hardwareHint(
+                theme,
+                l.hwEncoderContainerHint(
+                  MediaFormatCompatibility.labelFor(s.container),
+                ),
+                const ValueKey('expert_hardware_encoder_container_hint'),
+              ),
+          ],
           if (_showAv1Hint &&
               s.videoCodec == MediaFormatCompatibility.videoCodecAv1) ...[
             const SizedBox(height: 6),

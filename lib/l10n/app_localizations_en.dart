@@ -591,4 +591,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'Allowed range: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Hardware encoder (fast)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Much faster, but needs about twice the bitrate for the same quality. Bitrate mode only.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'HDR video — it will be converted with the software encoder so HDR is preserved.';
+
+  @override
+  String get hwEncoderFallback =>
+      'Hardware encoder failed — converting with the software encoder instead.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return '$format is not supported by the hardware encoder — this format will be converted with the software encoder.';
+  }
 }

@@ -6,13 +6,18 @@ import 'media_format_compatibility.dart';
 class FfmpegCodecOptions {
   const FfmpegCodecOptions._();
 
-  static String videoEncoder(String codec) => switch (codec) {
-    MediaFormatCompatibility.videoCodecH265 => 'libx265',
-    MediaFormatCompatibility.videoCodecVp9 => 'libvpx-vp9',
-    MediaFormatCompatibility.videoCodecAv1 => 'libaom-av1',
-    MediaFormatCompatibility.videoCodecXvid => 'libxvid',
-    _ => 'libx264',
-  };
+  /// [hardware] wählt für H.265 den MediaCodec-Encoder des Geräts. Ob er für
+  /// einen Auftrag greifen darf, entscheidet [usesHardwareEncoder].
+  static String videoEncoder(String codec, {bool hardware = false}) =>
+      switch (codec) {
+        MediaFormatCompatibility.videoCodecH265 when hardware =>
+          'hevc_mediacodec',
+        MediaFormatCompatibility.videoCodecH265 => 'libx265',
+        MediaFormatCompatibility.videoCodecVp9 => 'libvpx-vp9',
+        MediaFormatCompatibility.videoCodecAv1 => 'libaom-av1',
+        MediaFormatCompatibility.videoCodecXvid => 'libxvid',
+        _ => 'libx264',
+      };
 
   static String audioEncoder(String codec) => switch (codec) {
     MediaFormatCompatibility.audioCodecMp3 => 'libmp3lame',
@@ -41,6 +46,51 @@ class FfmpegCodecOptions {
   static bool supportsHdr(String codec) =>
       codec == MediaFormatCompatibility.videoCodecH265 ||
       codec == MediaFormatCompatibility.videoCodecAv1;
+
+  /// Container, in die `hevc_mediacodec` auf den Testgeräten zuverlässig
+  /// schreibt. MKV fehlt bewusst: Dort scheitert der Hardware-Lauf auch mit
+  /// `-flags:v -global_header` auf Pixel 10 und Xperia 5 V (Gerätetest
+  /// 2026-09-27, MP4/MOV/TS liefen auf beiden durch). Der Rückfall auf libx265
+  /// fing das zwar ab, aber nur nach einem verlorenen ersten Lauf.
+  static const hardwareContainers = {'mp4', 'mov', 'ts'};
+
+  static bool supportsHardwareContainer(String container) =>
+      hardwareContainers.contains(container);
+
+  /// Läuft dieser Auftrag über den Hardware-Encoder?
+  ///
+  /// Nur H.265 hat einen Hardware-Pfad. Eine HDR-Quelle bleibt bei libx265:
+  /// Der MediaCodec-Wrapper nimmt nur 8 Bit (`yuv420p`/`nv12`) an, HDR ginge
+  /// verloren. Ebenso ein Container außerhalb von [hardwareContainers]. Der
+  /// Schalter bleibt in beiden Fällen an, nur dieser Auftrag weicht aus.
+  static bool usesHardwareEncoder({
+    required String codec,
+    required String container,
+    required bool hardwareEncoder,
+    required bool hdrSource,
+  }) =>
+      hardwareEncoder &&
+      !hdrSource &&
+      codec == MediaFormatCompatibility.videoCodecH265 &&
+      supportsHardwareContainer(container);
+
+  /// Encoder-Optionen für `hevc_mediacodec`, ergänzend zu `-b:v` aus
+  /// [videoQualityArguments] (nur Bitraten-Modus) und `-pix_fmt yuv420p`.
+  ///
+  /// Gemessen auf Pixel 10 und Xperia 5 V (2026-09-25/27, siehe
+  /// `docs/codecs_av1_und_hardware_encoding.md` Abschnitt 1):
+  ///   * `-flags:v -global_header` ist Pflicht: Ohne das Flag bricht das
+  ///     Pixel nach MP4/MKV mit `IllegalStateException … Released state` ab,
+  ///     das Xperia liefert nur einen einzigen Keyframe.
+  ///   * `-g` explizit, sonst entscheidet der Hersteller (Pixel 1 s, Xperia
+  ///     gar keiner). Ziel sind ~5 s. Bei „Original“ ([fps] 0) ist die
+  ///     Quellrate unbekannt; mit 30 angenommen wird es bei 60-fps-Material
+  ///     alle 2,5 s ein Keyframe, das ist unkritisch.
+  ///   * `-bitrate_mode vbr`: CQ unterstützt keines der getesteten Geräte.
+  ///   * yuv420p statt nv12, nv12 war langsamer.
+  static String hardwareEncoderArguments({required int fps}) =>
+      '-bitrate_mode vbr -flags:v -global_header '
+      '-g ${(fps > 0 ? fps : 30) * 5}';
 
   /// Pixelformat und Farbtags, die eine HDR-Quelle unverändert erhalten.
   /// [transfer] ist `arib-std-b67` (HLG) oder `smpte2084` (PQ).

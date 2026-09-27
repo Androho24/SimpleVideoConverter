@@ -20,6 +20,7 @@ import '../models/video_metadata.dart';
 import '../screens/conversion_screen.dart';
 import '../screens/settings_screen.dart';
 import '../services/ffmpeg_codec_options.dart';
+import '../services/hardware_encoder_service.dart';
 import '../services/media_format_compatibility.dart';
 import '../services/native_ad_preloader.dart';
 import '../services/output_size_estimator.dart';
@@ -60,6 +61,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   bool _cpuWarningDismissed = false;
   String _videoCodec = PreferencesService.videoCodecH264;
   bool _av1Experimental = false;
+  bool _hardwareHevcAvailable = false;
   ExpertSettings _expertSettings = const ExpertSettings();
   VideoPlayerController? _playerController;
   Timer? _seekDebounce;
@@ -113,8 +115,10 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final quality = await PreferencesService.getLastQualityIndex();
     final videoCodec = await PreferencesService.getVideoCodec();
     final av1Experimental = await PreferencesService.getAv1Experimental();
+    final hardwareHevc = await HardwareEncoderService.hasHardwareHevcEncoder();
     if (mounted) {
       setState(() {
+        _hardwareHevcAvailable = hardwareHevc;
         _isExpertMode = expert;
         _selectedNavIndex = expert ? 1 : 0;
         _cpuWarningDismissed = dismissed;
@@ -624,6 +628,9 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
     final String command;
     final String outputPath;
+    // Nur gesetzt, wenn der Auftrag über den Hardware-Encoder läuft: derselbe
+    // Auftrag mit libx265, falls MediaCodec auf dem Gerät scheitert.
+    String? fallbackCommand;
 
     if (_isExpertMode) {
       final expert = _expertSettings;
@@ -673,25 +680,45 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         final audioOpt = expert.audioBitrate == 0
             ? '-an'
             : '-c:a $encoderName -b:a ${expert.audioBitrate}k $channelOpt';
-        final videoCodec = FfmpegCodecOptions.videoEncoder(expert.videoCodec);
+        final hardware = FfmpegCodecOptions.usesHardwareEncoder(
+          codec: expert.videoCodec,
+          container: expert.container,
+          hardwareEncoder: expert.hardwareEncoder,
+          hdrSource: _metadata!.isHdr,
+        );
         final codecTagOpt = FfmpegCodecOptions.codecTagArguments(
           expert.videoCodec,
           expert.container,
         );
-        final qualityOpt = FfmpegCodecOptions.videoQualityArguments(
-          codec: expert.videoCodec,
-          bitrateMode: expert.bitrateMode,
-          crf: expert.crf,
-          targetBitrateKbps: expert.targetBitrateKbps,
-        );
-        final encoderOpt = FfmpegCodecOptions.videoEncoderArguments(
-          expert.videoCodec,
-          hdr: keepsHdr,
-        );
-        command =
-            '-i $inputArg -ss $startSec -to $endSec $vfFilter '
-            '-c:v $videoCodec $codecTagOpt $encoderOpt $pixelFormatOpt '
-            '$qualityOpt $fpsOpt $audioOpt -y "$outputPath"';
+        String buildCommand({required bool hardware}) {
+          final videoCodec = FfmpegCodecOptions.videoEncoder(
+            expert.videoCodec,
+            hardware: hardware,
+          );
+          // Der Hardware-Encoder kann nur Bitrate. Der Rückfall auf libx265
+          // behält dieselbe Zielbitrate, damit die Datei so groß wird wie
+          // erwartet.
+          final qualityOpt = FfmpegCodecOptions.videoQualityArguments(
+            codec: expert.videoCodec,
+            bitrateMode: expert.hardwareEncoder
+                ? 'bitrate'
+                : expert.bitrateMode,
+            crf: expert.crf,
+            targetBitrateKbps: expert.targetBitrateKbps,
+          );
+          final encoderOpt = hardware
+              ? FfmpegCodecOptions.hardwareEncoderArguments(fps: expert.fps)
+              : FfmpegCodecOptions.videoEncoderArguments(
+                  expert.videoCodec,
+                  hdr: keepsHdr,
+                );
+          return '-i $inputArg -ss $startSec -to $endSec $vfFilter '
+              '-c:v $videoCodec $codecTagOpt $encoderOpt $pixelFormatOpt '
+              '$qualityOpt $fpsOpt $audioOpt -y "$outputPath"';
+        }
+
+        command = buildCommand(hardware: hardware);
+        if (hardware) fallbackCommand = buildCommand(hardware: false);
       }
     } else if (_isAudioOnly) {
       // ── Normal: nur Audio extrahieren (MP3 192k) ────────────────────────
@@ -766,6 +793,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         fullscreenDialog: true,
         builder: (_) => ConversionScreen(
           command: command,
+          fallbackCommand: fallbackCommand,
           outputPath: outputPath,
           totalDurationMs: totalDurationMs,
           defaultFileName: defaultFileName,
@@ -958,6 +986,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                     settings: _expertSettings,
                     isConverting: false,
                     av1Enabled: _av1Experimental,
+                    hardwareHevcAvailable: _hardwareHevcAvailable,
                     metadata: _metadata,
                     onChanged: (s) {
                       setState(() => _expertSettings = s);

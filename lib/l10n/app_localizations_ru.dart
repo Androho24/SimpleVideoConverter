@@ -595,4 +595,24 @@ class AppLocalizationsRu extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'Допустимый диапазон: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Аппаратный кодировщик (быстро)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Намного быстрее, но для того же качества нужен примерно вдвое больший битрейт. Только в режиме битрейта.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'HDR-видео — будет преобразовано программным кодировщиком, чтобы сохранить HDR.';
+
+  @override
+  String get hwEncoderFallback =>
+      'Сбой аппаратного кодировщика — преобразование программным кодировщиком.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'Аппаратный кодировщик не поддерживает $format — этот формат будет преобразован программным кодировщиком.';
+  }
 }

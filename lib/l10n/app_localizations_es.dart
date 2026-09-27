@@ -597,4 +597,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'Intervalo permitido: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Codificador por hardware (rápido)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Mucho más rápido, pero necesita aproximadamente el doble de velocidad de bits para la misma calidad. Solo en modo de velocidad de bits.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'Vídeo HDR: se convertirá con el codificador por software para conservar el HDR.';
+
+  @override
+  String get hwEncoderFallback =>
+      'El codificador por hardware ha fallado: se convertirá con el codificador por software.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'El codificador por hardware no admite $format: este formato se convertirá con el codificador por software.';
+  }
 }

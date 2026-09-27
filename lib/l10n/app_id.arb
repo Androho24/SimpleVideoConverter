@@ -204,5 +204,11 @@
 
   "targetBitrateEditTooltip": "Masukkan bitrate",
 
-  "targetBitrateRangeHint": "Rentang yang diizinkan: {range}"
+  "targetBitrateRangeHint": "Rentang yang diizinkan: {range}",
+
+  "hwEncoderTitle": "Encoder perangkat keras (cepat)",
+  "hwEncoderSubtitle": "Jauh lebih cepat, tetapi butuh sekitar dua kali laju bit untuk kualitas yang sama. Hanya mode laju bit.",
+  "hwEncoderHdrHint": "Video HDR — akan dikonversi dengan encoder perangkat lunak agar HDR tetap terjaga.",
+  "hwEncoderFallback": "Encoder perangkat keras gagal — mengonversi dengan encoder perangkat lunak.",
+  "hwEncoderContainerHint": "Encoder perangkat keras tidak mendukung {format} — format ini akan dikonversi dengan encoder perangkat lunak."
 }

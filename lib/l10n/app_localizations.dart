@@ -1186,6 +1186,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Allowed range: {range}'**
   String targetBitrateRangeHint(String range);
+
+  /// Titel des Schalters fuer den Hardware-Encoder (hevc_mediacodec) unter H.265 im Expertenmodus
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware encoder (fast)'**
+  String get hwEncoderTitle;
+
+  /// Untertitel des Hardware-Encoder-Schalters: schneller, etwa doppelte Bitrate fuer gleiche Qualitaet, nur Bitraten-Modus
+  ///
+  /// In en, this message translates to:
+  /// **'Much faster, but needs about twice the bitrate for the same quality. Bitrate mode only.'**
+  String get hwEncoderSubtitle;
+
+  /// Hinweis unter dem Hardware-Encoder-Schalter, wenn die Quelle HDR ist und deshalb mit libx265 konvertiert wird
+  ///
+  /// In en, this message translates to:
+  /// **'HDR video — it will be converted with the software encoder so HDR is preserved.'**
+  String get hwEncoderHdrHint;
+
+  /// SnackBar, wenn der Hardware-Encoder scheitert und automatisch mit libx265 wiederholt wird
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware encoder failed — converting with the software encoder instead.'**
+  String get hwEncoderFallback;
+
+  /// Hinweis unter dem Hardware-Encoder-Schalter, wenn das gewaehlte Ausgabeformat (z. B. MKV) nicht mit hevc_mediacodec funktioniert und deshalb libx265 genutzt wird
+  ///
+  /// In en, this message translates to:
+  /// **'{format} is not supported by the hardware encoder — this format will be converted with the software encoder.'**
+  String hwEncoderContainerHint(String format);
 }
 
 class _AppLocalizationsDelegate

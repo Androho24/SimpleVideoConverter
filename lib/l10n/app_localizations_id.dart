@@ -592,4 +592,24 @@ class AppLocalizationsId extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'Rentang yang diizinkan: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Encoder perangkat keras (cepat)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Jauh lebih cepat, tetapi butuh sekitar dua kali laju bit untuk kualitas yang sama. Hanya mode laju bit.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'Video HDR — akan dikonversi dengan encoder perangkat lunak agar HDR tetap terjaga.';
+
+  @override
+  String get hwEncoderFallback =>
+      'Encoder perangkat keras gagal — mengonversi dengan encoder perangkat lunak.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'Encoder perangkat keras tidak mendukung $format — format ini akan dikonversi dengan encoder perangkat lunak.';
+  }
 }

@@ -594,6 +594,26 @@ class AppLocalizationsPt extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'Intervalo permitido: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Codificador por hardware (rápido)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Muito mais rápido, mas precisa de cerca do dobro da taxa de bits para a mesma qualidade. Apenas no modo de taxa de bits.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'Vídeo HDR — será convertido com o codificador por software para preservar o HDR.';
+
+  @override
+  String get hwEncoderFallback =>
+      'O codificador por hardware falhou — a converter com o codificador por software.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'O codificador por hardware não suporta $format — este formato será convertido com o codificador por software.';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1185,5 +1205,25 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String targetBitrateRangeHint(String range) {
     return 'Intervalo permitido: $range';
+  }
+
+  @override
+  String get hwEncoderTitle => 'Codificador por hardware (rápido)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Muito mais rápido, mas precisa de cerca do dobro da taxa de bits para a mesma qualidade. Somente no modo de taxa de bits.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'Vídeo HDR — ele será convertido com o codificador por software para preservar o HDR.';
+
+  @override
+  String get hwEncoderFallback =>
+      'O codificador por hardware falhou — convertendo com o codificador por software.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'O codificador por hardware não é compatível com $format — este formato será convertido com o codificador por software.';
   }
 }

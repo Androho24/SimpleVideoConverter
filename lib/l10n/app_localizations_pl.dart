@@ -593,4 +593,24 @@ class AppLocalizationsPl extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'Dozwolony zakres: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Koder sprzętowy (szybki)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Znacznie szybszy, ale przy tej samej jakości potrzebuje mniej więcej dwukrotnie wyższej szybkości transmisji. Tylko w trybie szybkości transmisji.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'Wideo HDR — zostanie przekonwertowane koderem programowym, aby zachować HDR.';
+
+  @override
+  String get hwEncoderFallback =>
+      'Koder sprzętowy zawiódł — konwersja koderem programowym.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'Koder sprzętowy nie obsługuje formatu $format — ten format zostanie przekonwertowany koderem programowym.';
+  }
 }

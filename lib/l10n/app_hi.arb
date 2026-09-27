@@ -191,5 +191,11 @@
 
   "targetBitrateEditTooltip": "बिटरेट दर्ज करें",
 
-  "targetBitrateRangeHint": "मान्य सीमा: {range}"
+  "targetBitrateRangeHint": "मान्य सीमा: {range}",
+
+  "hwEncoderTitle": "हार्डवेयर एन्कोडर (तेज़)",
+  "hwEncoderSubtitle": "काफ़ी तेज़, लेकिन समान गुणवत्ता के लिए लगभग दोगुना बिटरेट चाहिए। केवल बिटरेट मोड में।",
+  "hwEncoderHdrHint": "HDR वीडियो — HDR बनाए रखने के लिए इसे सॉफ़्टवेयर एन्कोडर से बदला जाएगा।",
+  "hwEncoderFallback": "हार्डवेयर एन्कोडर विफल रहा — अब सॉफ़्टवेयर एन्कोडर से बदला जा रहा है।",
+  "hwEncoderContainerHint": "हार्डवेयर एन्कोडर {format} को सपोर्ट नहीं करता — यह फ़ॉर्मैट सॉफ़्टवेयर एन्कोडर से बदला जाएगा।"
 }

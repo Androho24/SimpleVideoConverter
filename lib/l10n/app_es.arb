@@ -204,5 +204,11 @@
 
   "targetBitrateEditTooltip": "Introducir velocidad de bits",
 
-  "targetBitrateRangeHint": "Intervalo permitido: {range}"
+  "targetBitrateRangeHint": "Intervalo permitido: {range}",
+
+  "hwEncoderTitle": "Codificador por hardware (rápido)",
+  "hwEncoderSubtitle": "Mucho más rápido, pero necesita aproximadamente el doble de velocidad de bits para la misma calidad. Solo en modo de velocidad de bits.",
+  "hwEncoderHdrHint": "Vídeo HDR: se convertirá con el codificador por software para conservar el HDR.",
+  "hwEncoderFallback": "El codificador por hardware ha fallado: se convertirá con el codificador por software.",
+  "hwEncoderContainerHint": "El codificador por hardware no admite {format}: este formato se convertirá con el codificador por software."
 }

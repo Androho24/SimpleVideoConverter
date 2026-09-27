@@ -24,6 +24,11 @@ import '../widgets/native_ad_widget.dart';
 
 class ConversionScreen extends StatefulWidget {
   final String command;
+
+  /// Ersatzbefehl mit dem Software-Encoder, falls [command] über einen
+  /// Hardware-Encoder läuft. Scheitert der erste Lauf, wird genau einmal damit
+  /// neu gestartet — MediaCodec verhält sich je nach Gerät unterschiedlich.
+  final String? fallbackCommand;
   final String outputPath;
   final double totalDurationMs;
   final String defaultFileName;
@@ -31,6 +36,7 @@ class ConversionScreen extends StatefulWidget {
   const ConversionScreen({
     super.key,
     required this.command,
+    this.fallbackCommand,
     required this.outputPath,
     required this.totalDurationMs,
     required this.defaultFileName,
@@ -64,6 +70,7 @@ class _ConversionScreenState extends State<ConversionScreen>
   bool _isDone = false;
   bool _isCancelled = false;
   bool _isSaved = false;
+  bool _usedFallback = false;
   late String _currentOutputPath;
 
   static const _audioExtensions = {'mp3', 'm4a', 'opus', 'aac', 'ogg'};
@@ -172,7 +179,10 @@ class _ConversionScreenState extends State<ConversionScreen>
 
   void _startConversion() {
     unawaited(ConversionServiceManager.startService(widget.defaultFileName));
+    _runFfmpeg(widget.command);
+  }
 
+  void _runFfmpeg(String command) {
     FFmpegKitConfig.enableStatisticsCallback((stats) {
       // FFmpeg meldet zwischendurch "time=N/A" (bei Dateien mit Tonspur
       // deutlich häufiger). Daraus wird nativ ein ungültiger Zeitwert, der
@@ -197,7 +207,7 @@ class _ConversionScreenState extends State<ConversionScreen>
       );
     });
 
-    FFmpegKit.executeAsync(widget.command, (session) async {
+    FFmpegKit.executeAsync(command, (session) async {
       FFmpegKitConfig.enableStatisticsCallback(null);
       final rc = await session.getReturnCode();
 
@@ -236,6 +246,37 @@ class _ConversionScreenState extends State<ConversionScreen>
           if (!mounted) return;
           await _saveVideoToGallery();
         }
+      } else if (widget.fallbackCommand != null && !_usedFallback) {
+        // Hardware-Encoder gescheitert: einmal mit libx265 wiederholen. Der
+        // Service läuft weiter, nur Fortschritt und Datei beginnen neu.
+        _usedFallback = true;
+        await _deleteOutput();
+        final log = await session.getLogsAsString();
+        // Eigene Kennung, damit Gerätefehler des Hardware-Pfads im Feld
+        // getrennt von echten Konvertierungsfehlern sichtbar sind.
+        unawaited(
+          FirebaseCrashlytics.instance.recordError(
+            Exception('FFmpeg hardware encoder failed'),
+            null,
+            reason: _sanitizeFfmpegLog(log),
+          ),
+        );
+        if (!mounted || _isCancelled) {
+          await ConversionServiceManager.stopService();
+          return;
+        }
+        setState(() {
+          _progress = 0.0;
+          _speed = 0.0;
+          _outputSizeBytes = 0;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.hwEncoderFallback),
+            duration: const Duration(seconds: 5),
+          ),
+        );
+        _runFfmpeg(widget.fallbackCommand!);
       } else {
         await ConversionServiceManager.stopService();
         await _deleteOutput();

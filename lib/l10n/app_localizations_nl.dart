@@ -592,4 +592,24 @@ class AppLocalizationsNl extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'Toegestaan bereik: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Hardware-encoder (snel)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Veel sneller, maar heeft voor dezelfde kwaliteit ongeveer twee keer zoveel bitsnelheid nodig. Alleen in bitsnelheidmodus.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'HDR-video — wordt geconverteerd met de software-encoder zodat HDR behouden blijft.';
+
+  @override
+  String get hwEncoderFallback =>
+      'Hardware-encoder mislukt — er wordt geconverteerd met de software-encoder.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'De hardware-encoder ondersteunt $format niet — dit formaat wordt geconverteerd met de software-encoder.';
+  }
 }

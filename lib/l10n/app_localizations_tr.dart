@@ -595,4 +595,24 @@ class AppLocalizationsTr extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'İzin verilen aralık: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Donanım kodlayıcı (hızlı)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Çok daha hızlı, ancak aynı kalite için yaklaşık iki kat bit hızı gerekir. Yalnızca bit hızı modunda.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'HDR video — HDR\'nin korunması için yazılım kodlayıcıyla dönüştürülecek.';
+
+  @override
+  String get hwEncoderFallback =>
+      'Donanım kodlayıcı başarısız oldu — yazılım kodlayıcıyla dönüştürülüyor.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'Donanım kodlayıcı $format biçimini desteklemiyor — bu biçim yazılım kodlayıcıyla dönüştürülecek.';
+  }
 }

@@ -205,5 +205,11 @@
 
   "targetBitrateEditTooltip": "Zadat datový tok",
 
-  "targetBitrateRangeHint": "Povolený rozsah: {range}"
+  "targetBitrateRangeHint": "Povolený rozsah: {range}",
+
+  "hwEncoderTitle": "Hardwarový enkodér (rychlý)",
+  "hwEncoderSubtitle": "Mnohem rychlejší, ale pro stejnou kvalitu potřebuje zhruba dvojnásobný datový tok. Pouze v režimu datového toku.",
+  "hwEncoderHdrHint": "HDR video — převede se softwarovým enkodérem, aby se HDR zachovalo.",
+  "hwEncoderFallback": "Hardwarový enkodér selhal — převádí se softwarovým enkodérem.",
+  "hwEncoderContainerHint": "Hardwarový enkodér nepodporuje {format} — tento formát se převede softwarovým enkodérem."
 }

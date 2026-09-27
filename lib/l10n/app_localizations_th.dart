@@ -586,4 +586,24 @@ class AppLocalizationsTh extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'ช่วงที่อนุญาต: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'ตัวเข้ารหัสฮาร์ดแวร์ (เร็ว)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'เร็วกว่ามาก แต่ต้องใช้บิตเรตประมาณสองเท่าเพื่อให้ได้คุณภาพเท่ากัน ใช้ได้เฉพาะโหมดบิตเรต';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'วิดีโอ HDR — จะแปลงด้วยตัวเข้ารหัสซอฟต์แวร์เพื่อคง HDR ไว้';
+
+  @override
+  String get hwEncoderFallback =>
+      'ตัวเข้ารหัสฮาร์ดแวร์ล้มเหลว — กำลังแปลงด้วยตัวเข้ารหัสซอฟต์แวร์';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'ตัวเข้ารหัสฮาร์ดแวร์ไม่รองรับ $format — รูปแบบนี้จะแปลงด้วยตัวเข้ารหัสซอฟต์แวร์';
+  }
 }

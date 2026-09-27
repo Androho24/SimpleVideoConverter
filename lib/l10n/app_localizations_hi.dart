@@ -591,4 +591,24 @@ class AppLocalizationsHi extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'मान्य सीमा: $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'हार्डवेयर एन्कोडर (तेज़)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'काफ़ी तेज़, लेकिन समान गुणवत्ता के लिए लगभग दोगुना बिटरेट चाहिए। केवल बिटरेट मोड में।';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'HDR वीडियो — HDR बनाए रखने के लिए इसे सॉफ़्टवेयर एन्कोडर से बदला जाएगा।';
+
+  @override
+  String get hwEncoderFallback =>
+      'हार्डवेयर एन्कोडर विफल रहा — अब सॉफ़्टवेयर एन्कोडर से बदला जा रहा है।';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'हार्डवेयर एन्कोडर $format को सपोर्ट नहीं करता — यह फ़ॉर्मैट सॉफ़्टवेयर एन्कोडर से बदला जाएगा।';
+  }
 }

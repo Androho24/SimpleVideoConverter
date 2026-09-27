@@ -1,6 +1,7 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:simple_video_converter/services/ffmpeg_codec_options.dart';
 
@@ -127,6 +128,106 @@ void main() {
       expect(hdr, contains('-usage realtime'));
       expect(hdr, contains('-cpu-used 8'));
       expect(hdr, contains('-lag-in-frames 0'));
+    });
+  });
+
+  group('Hardware-HEVC', () {
+    test('selects hevc_mediacodec only for H.265 with hardware', () {
+      expect(
+        FfmpegCodecOptions.videoEncoder('h265', hardware: true),
+        'hevc_mediacodec',
+      );
+      expect(FfmpegCodecOptions.videoEncoder('h265'), 'libx265');
+      expect(
+        FfmpegCodecOptions.videoEncoder('h264', hardware: true),
+        'libx264',
+      );
+    });
+
+    test('uses hardware only for H.265 SDR jobs with the switch on', () {
+      bool uses(
+        String codec, {
+        String container = 'mp4',
+        bool on = true,
+        bool hdr = false,
+      }) => FfmpegCodecOptions.usesHardwareEncoder(
+        codec: codec,
+        container: container,
+        hardwareEncoder: on,
+        hdrSource: hdr,
+      );
+
+      expect(uses('h265'), isTrue);
+      expect(uses('h265', on: false), isFalse);
+      expect(uses('h265', hdr: true), isFalse);
+      expect(uses('h264'), isFalse);
+      expect(uses('av1'), isFalse);
+      expect(uses('h265', container: 'mov'), isTrue);
+      expect(uses('h265', container: 'ts'), isTrue);
+      // Auf Pixel 10 und Xperia 5 V gescheitert, siehe hardwareContainers.
+      expect(uses('h265', container: 'mkv'), isFalse);
+    });
+
+    test('always sets the global header and a VBR bitrate mode', () {
+      final args = FfmpegCodecOptions.hardwareEncoderArguments(fps: 30);
+      expect(args, contains('-flags:v -global_header'));
+      expect(args, contains('-bitrate_mode vbr'));
+      expect(args, isNot(contains('-crf')));
+      expect(args, isNot(contains('x265')));
+    });
+
+    test('places a keyframe about every five seconds', () {
+      expect(
+        FfmpegCodecOptions.hardwareEncoderArguments(fps: 24),
+        endsWith('-g 120'),
+      );
+      expect(
+        FfmpegCodecOptions.hardwareEncoderArguments(fps: 60),
+        endsWith('-g 300'),
+      );
+      // „Original“: Quell-fps unbekannt, 30 angenommen.
+      expect(
+        FfmpegCodecOptions.hardwareEncoderArguments(fps: 0),
+        endsWith('-g 150'),
+      );
+    });
+
+    test('survives FFmpegKit command parsing with hvc1 and without CRF', () {
+      final segment = [
+        '-c:v ${FfmpegCodecOptions.videoEncoder('h265', hardware: true)}',
+        FfmpegCodecOptions.codecTagArguments('h265', 'mp4'),
+        FfmpegCodecOptions.hardwareEncoderArguments(fps: 0),
+        '-pix_fmt yuv420p',
+        FfmpegCodecOptions.videoQualityArguments(
+          codec: 'h265',
+          bitrateMode: 'bitrate',
+          crf: 28,
+          targetBitrateKbps: 8000,
+        ),
+      ].join(' ');
+      final arguments = FFmpegKitConfig.parseArguments(
+        '-i input.mp4 $segment -y output.mp4',
+      );
+
+      String valueOf(String option) => arguments[arguments.indexOf(option) + 1];
+
+      expect(valueOf('-c:v'), 'hevc_mediacodec');
+      expect(valueOf('-tag:v'), 'hvc1');
+      expect(valueOf('-flags:v'), '-global_header');
+      expect(valueOf('-bitrate_mode'), 'vbr');
+      expect(valueOf('-g'), '150');
+      expect(valueOf('-pix_fmt'), 'yuv420p');
+      expect(valueOf('-b:v'), '8000k');
+      expect(arguments, isNot(contains('-crf')));
+    });
+
+    test('adds hvc1 for MOV but no tag for MKV and TS', () {
+      expect(
+        FfmpegCodecOptions.codecTagArguments('h265', 'mov'),
+        '-tag:v hvc1',
+      );
+      expect(FfmpegCodecOptions.codecTagArguments('h265', 'mkv'), isEmpty);
+      expect(FfmpegCodecOptions.codecTagArguments('h265', 'ts'), isEmpty);
     });
   });
 }

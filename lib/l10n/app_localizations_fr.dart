@@ -596,4 +596,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String targetBitrateRangeHint(String range) {
     return 'Plage autorisée : $range';
   }
+
+  @override
+  String get hwEncoderTitle => 'Encodeur matériel (rapide)';
+
+  @override
+  String get hwEncoderSubtitle =>
+      'Beaucoup plus rapide, mais nécessite environ le double du débit binaire pour la même qualité. Mode débit binaire uniquement.';
+
+  @override
+  String get hwEncoderHdrHint =>
+      'Vidéo HDR — elle sera convertie avec l\'encodeur logiciel afin de préserver le HDR.';
+
+  @override
+  String get hwEncoderFallback =>
+      'Échec de l\'encodeur matériel — conversion avec l\'encodeur logiciel.';
+
+  @override
+  String hwEncoderContainerHint(String format) {
+    return 'L\'encodeur matériel ne prend pas en charge $format — ce format sera converti avec l\'encodeur logiciel.';
+  }
 }

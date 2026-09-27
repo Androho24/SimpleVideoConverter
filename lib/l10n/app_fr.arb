@@ -204,5 +204,11 @@
 
   "targetBitrateEditTooltip": "Saisir le débit",
 
-  "targetBitrateRangeHint": "Plage autorisée : {range}"
+  "targetBitrateRangeHint": "Plage autorisée : {range}",
+
+  "hwEncoderTitle": "Encodeur matériel (rapide)",
+  "hwEncoderSubtitle": "Beaucoup plus rapide, mais nécessite environ le double du débit binaire pour la même qualité. Mode débit binaire uniquement.",
+  "hwEncoderHdrHint": "Vidéo HDR — elle sera convertie avec l'encodeur logiciel afin de préserver le HDR.",
+  "hwEncoderFallback": "Échec de l'encodeur matériel — conversion avec l'encodeur logiciel.",
+  "hwEncoderContainerHint": "L'encodeur matériel ne prend pas en charge {format} — ce format sera converti avec l'encodeur logiciel."
 }

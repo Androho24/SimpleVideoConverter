@@ -512,5 +512,16 @@
   "@targetBitrateEditTooltip": {"description": "Tooltip des Stift-Buttons neben der Ziel-Bitrate"},
 
   "targetBitrateRangeHint": "Allowed range: {range}",
-  "@targetBitrateRangeHint": {"description": "Hinweis/Fehlertext im Bitraten-Dialog mit dem erlaubten Bereich", "placeholders": {"range": {"type": "String"}}}
+  "@targetBitrateRangeHint": {"description": "Hinweis/Fehlertext im Bitraten-Dialog mit dem erlaubten Bereich", "placeholders": {"range": {"type": "String"}}},
+
+  "hwEncoderTitle": "Hardware encoder (fast)",
+  "@hwEncoderTitle": {"description": "Titel des Schalters fuer den Hardware-Encoder (hevc_mediacodec) unter H.265 im Expertenmodus"},
+  "hwEncoderSubtitle": "Much faster, but needs about twice the bitrate for the same quality. Bitrate mode only.",
+  "@hwEncoderSubtitle": {"description": "Untertitel des Hardware-Encoder-Schalters: schneller, etwa doppelte Bitrate fuer gleiche Qualitaet, nur Bitraten-Modus"},
+  "hwEncoderHdrHint": "HDR video — it will be converted with the software encoder so HDR is preserved.",
+  "@hwEncoderHdrHint": {"description": "Hinweis unter dem Hardware-Encoder-Schalter, wenn die Quelle HDR ist und deshalb mit libx265 konvertiert wird"},
+  "hwEncoderFallback": "Hardware encoder failed — converting with the software encoder instead.",
+  "@hwEncoderFallback": {"description": "SnackBar, wenn der Hardware-Encoder scheitert und automatisch mit libx265 wiederholt wird"},
+  "hwEncoderContainerHint": "{format} is not supported by the hardware encoder — this format will be converted with the software encoder.",
+  "@hwEncoderContainerHint": {"description": "Hinweis unter dem Hardware-Encoder-Schalter, wenn das gewaehlte Ausgabeformat (z. B. MKV) nicht mit hevc_mediacodec funktioniert und deshalb libx265 genutzt wird", "placeholders": {"format": {"type": "String"}}}
 }
