@@ -624,4 +624,29 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'कस्टम';
+
+  @override
+  String get aspectRatioLabel => 'आस्पेक्ट रेशियो';
+
+  @override
+  String get aspectOriginal => 'मूल';
+
+  @override
+  String get aspectCustom => 'कस्टम';
+
+  @override
+  String get fitModeLabel => 'फ़िट';
+
+  @override
+  String get fitPad => 'पट्टियाँ';
+
+  @override
+  String get fitCrop => 'क्रॉप';
+
+  @override
+  String get fitStretch => 'खींचें';
+
+  @override
+  String get fitModeInfoContent =>
+      'लक्ष्य का आस्पेक्ट रेशियो वीडियो से अलग है।\n\nपट्टियाँ → पूरी तस्वीर दिखती है, बाकी जगह काली पट्टियाँ भरती हैं\nक्रॉप → बीच का हिस्सा काटा जाता है, किनारे हट जाते हैं\nखींचें → फ़्रेम भरने के लिए तस्वीर खिंच जाती है';
 }

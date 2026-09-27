@@ -628,4 +628,29 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Своё';
+
+  @override
+  String get aspectRatioLabel => 'Соотношение сторон';
+
+  @override
+  String get aspectOriginal => 'Исходное';
+
+  @override
+  String get aspectCustom => 'Своё';
+
+  @override
+  String get fitModeLabel => 'Подгонка';
+
+  @override
+  String get fitPad => 'Полосы';
+
+  @override
+  String get fitCrop => 'Обрезать';
+
+  @override
+  String get fitStretch => 'Растянуть';
+
+  @override
+  String get fitModeInfoContent =>
+      'У результата другое соотношение сторон, чем у видео.\n\nПолосы → видно всё изображение, остаток заполняют чёрные полосы\nОбрезать → вырезается центр, края теряются\nРастянуть → изображение искажается, чтобы заполнить кадр';
 }

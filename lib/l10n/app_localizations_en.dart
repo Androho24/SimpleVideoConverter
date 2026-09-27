@@ -624,4 +624,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Custom';
+
+  @override
+  String get aspectRatioLabel => 'Aspect ratio';
+
+  @override
+  String get aspectOriginal => 'Original';
+
+  @override
+  String get aspectCustom => 'Custom';
+
+  @override
+  String get fitModeLabel => 'Fit';
+
+  @override
+  String get fitPad => 'Bars';
+
+  @override
+  String get fitCrop => 'Crop';
+
+  @override
+  String get fitStretch => 'Stretch';
+
+  @override
+  String get fitModeInfoContent =>
+      'The target has a different aspect ratio than the video.\n\nBars → the whole picture stays visible, black bars fill the rest\nCrop → the center is cut out, the edges are lost\nStretch → the picture is distorted to fill the frame';
 }

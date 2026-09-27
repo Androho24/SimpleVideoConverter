@@ -234,5 +234,14 @@
 
   "resolutionPresetLabel": "ค่าที่ตั้งไว้",
   "resolutionOriginal": "ต้นฉบับ",
-  "resolutionCustom": "กำหนดเอง"
+  "resolutionCustom": "กำหนดเอง",
+
+  "aspectRatioLabel": "อัตราส่วนภาพ",
+  "aspectOriginal": "ต้นฉบับ",
+  "aspectCustom": "กำหนดเอง",
+  "fitModeLabel": "การปรับให้พอดี",
+  "fitPad": "แถบดำ",
+  "fitCrop": "ครอป",
+  "fitStretch": "ยืด",
+  "fitModeInfoContent": "ปลายทางมีอัตราส่วนภาพต่างจากวิดีโอ\n\nแถบดำ → เห็นภาพทั้งหมด ส่วนที่เหลือเติมด้วยแถบสีดำ\nครอป → ตัดเอาส่วนกลางภาพ ขอบจะหายไป\nยืด → ภาพจะถูกยืดจนเต็มกรอบ"
 }

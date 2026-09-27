@@ -13,6 +13,18 @@ class ExpertSettings {
   /// Dropdown; maßgeblich für die Konvertierung sind [width] und [height].
   final int resolutionPreset;
   static const customResolution = -1;
+
+  /// Gewähltes Seitenverhältnis: [aspectOriginal], eine Vorgabe aus
+  /// `VideoScaleService.aspectRatios` (z. B. '16:9') oder [aspectCustom] nach
+  /// freier Eingabe. Wie [resolutionPreset] nur für die Anzeige.
+  final String aspectRatio;
+  static const aspectOriginal = 'original';
+  static const aspectCustom = 'custom';
+
+  /// Anpassung bei abweichendem Seitenverhältnis: 'pad' (Balken), 'crop'
+  /// (Ausschnitt aus der Mitte) oder 'stretch'. Siehe
+  /// `VideoScaleService.expertGraph`.
+  final String fitMode;
   final int width; // 0 = Original beibehalten
   final int height; // 0 = Original beibehalten
   final int fps; // 0 = Original-FPS beibehalten
@@ -33,6 +45,8 @@ class ExpertSettings {
     this.bitrateMode = 'crf',
     this.targetBitrateKbps = 5000,
     this.resolutionPreset = 0,
+    this.aspectRatio = aspectOriginal,
+    this.fitMode = 'pad', // VideoScaleService.fitPad
     this.width = 0,
     this.height = 0,
     this.fps = 0,
@@ -50,6 +64,8 @@ class ExpertSettings {
     String? bitrateMode,
     int? targetBitrateKbps,
     int? resolutionPreset,
+    String? aspectRatio,
+    String? fitMode,
     int? width,
     int? height,
     int? fps,
@@ -66,6 +82,8 @@ class ExpertSettings {
       bitrateMode: bitrateMode ?? this.bitrateMode,
       targetBitrateKbps: targetBitrateKbps ?? this.targetBitrateKbps,
       resolutionPreset: resolutionPreset ?? this.resolutionPreset,
+      aspectRatio: aspectRatio ?? this.aspectRatio,
+      fitMode: fitMode ?? this.fitMode,
       width: width ?? this.width,
       height: height ?? this.height,
       fps: fps ?? this.fps,

@@ -215,5 +215,14 @@
 
   "resolutionPresetLabel": "Ustawienie wstępne",
   "resolutionOriginal": "Oryginalna",
-  "resolutionCustom": "Niestandardowa"
+  "resolutionCustom": "Niestandardowa",
+
+  "aspectRatioLabel": "Proporcje obrazu",
+  "aspectOriginal": "Oryginalne",
+  "aspectCustom": "Niestandardowe",
+  "fitModeLabel": "Dopasowanie",
+  "fitPad": "Pasy",
+  "fitCrop": "Przytnij",
+  "fitStretch": "Rozciągnij",
+  "fitModeInfoContent": "Cel ma inne proporcje niż wideo.\n\nPasy → cały obraz pozostaje widoczny, resztę wypełniają czarne pasy\nPrzytnij → wycinany jest środek obrazu, krawędzie znikają\nRozciągnij → obraz zostaje zniekształcony, aby wypełnić ramkę"
 }

@@ -625,4 +625,29 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Kustom';
+
+  @override
+  String get aspectRatioLabel => 'Rasio aspek';
+
+  @override
+  String get aspectOriginal => 'Asli';
+
+  @override
+  String get aspectCustom => 'Kustom';
+
+  @override
+  String get fitModeLabel => 'Penyesuaian';
+
+  @override
+  String get fitPad => 'Bilah';
+
+  @override
+  String get fitCrop => 'Pangkas';
+
+  @override
+  String get fitStretch => 'Regangkan';
+
+  @override
+  String get fitModeInfoContent =>
+      'Target memiliki rasio aspek yang berbeda dari video.\n\nBilah → seluruh gambar tetap terlihat, bilah hitam mengisi sisanya\nPangkas → bagian tengah dipotong, tepinya hilang\nRegangkan → gambar direntangkan hingga memenuhi bingkai';
 }

@@ -628,4 +628,29 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Özel';
+
+  @override
+  String get aspectRatioLabel => 'En-boy oranı';
+
+  @override
+  String get aspectOriginal => 'Orijinal';
+
+  @override
+  String get aspectCustom => 'Özel';
+
+  @override
+  String get fitModeLabel => 'Sığdırma';
+
+  @override
+  String get fitPad => 'Şeritler';
+
+  @override
+  String get fitCrop => 'Kırp';
+
+  @override
+  String get fitStretch => 'Uzat';
+
+  @override
+  String get fitModeInfoContent =>
+      'Hedefin en-boy oranı videodan farklı.\n\nŞeritler → görüntünün tamamı görünür, kalan alanı siyah şeritler doldurur\nKırp → ortası kesilir, kenarlar kaybolur\nUzat → görüntü çerçeveyi dolduracak şekilde bozulur';
 }

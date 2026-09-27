@@ -1240,6 +1240,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Custom'**
   String get resolutionCustom;
+
+  /// Label des Seitenverhaeltnis-Dropdowns im Expertenmodus (Original, 16:9, 4:3, 1:1, 9:16)
+  ///
+  /// In en, this message translates to:
+  /// **'Aspect ratio'**
+  String get aspectRatioLabel;
+
+  /// Eintrag im Seitenverhaeltnis-Dropdown: Verhaeltnis der Quelle beibehalten
+  ///
+  /// In en, this message translates to:
+  /// **'Original'**
+  String get aspectOriginal;
+
+  /// Anzeige im Seitenverhaeltnis-Dropdown, wenn Breite/Hoehe ohne Kette frei eingegeben wurden
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get aspectCustom;
+
+  /// Ueberschrift der Auswahl, wie ein Video an ein anderes Seitenverhaeltnis angepasst wird (Balken/Zuschneiden/Strecken)
+  ///
+  /// In en, this message translates to:
+  /// **'Fit'**
+  String get fitModeLabel;
+
+  /// Anpassung: ganzes Bild mit schwarzen Balken (Letterbox/Pillarbox). Kurz, Segment-Button
+  ///
+  /// In en, this message translates to:
+  /// **'Bars'**
+  String get fitPad;
+
+  /// Anpassung: Ausschnitt aus der Bildmitte. Kurz, Segment-Button
+  ///
+  /// In en, this message translates to:
+  /// **'Crop'**
+  String get fitCrop;
+
+  /// Anpassung: Bild verzerren/strecken. Kurz, Segment-Button
+  ///
+  /// In en, this message translates to:
+  /// **'Stretch'**
+  String get fitStretch;
+
+  /// Info-Dialog zur Anpassung bei anderem Seitenverhaeltnis
+  ///
+  /// In en, this message translates to:
+  /// **'The target has a different aspect ratio than the video.\n\nBars → the whole picture stays visible, black bars fill the rest\nCrop → the center is cut out, the edges are lost\nStretch → the picture is distorted to fill the frame'**
+  String get fitModeInfoContent;
 }
 
 class _AppLocalizationsDelegate

@@ -622,4 +622,29 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Vlastní';
+
+  @override
+  String get aspectRatioLabel => 'Poměr stran';
+
+  @override
+  String get aspectOriginal => 'Původní';
+
+  @override
+  String get aspectCustom => 'Vlastní';
+
+  @override
+  String get fitModeLabel => 'Přizpůsobení';
+
+  @override
+  String get fitPad => 'Pruhy';
+
+  @override
+  String get fitCrop => 'Oříznout';
+
+  @override
+  String get fitStretch => 'Roztáhnout';
+
+  @override
+  String get fitModeInfoContent =>
+      'Cíl má jiný poměr stran než video.\n\nPruhy → celý obraz zůstane viditelný, zbytek vyplní černé pruhy\nOříznout → vyřízne se střed obrazu, okraje se ztratí\nRoztáhnout → obraz se zdeformuje, aby vyplnil rámeček';
 }

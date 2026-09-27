@@ -532,5 +532,22 @@
   "resolutionOriginal": "Original",
   "@resolutionOriginal": {"description": "Eintrag im Auflösungs-Dropdown: Auflösung der Quelle beibehalten"},
   "resolutionCustom": "Custom",
-  "@resolutionCustom": {"description": "Anzeige im Auflösungs-Dropdown, wenn Breite/Höhe von Hand eingegeben wurden"}
+  "@resolutionCustom": {"description": "Anzeige im Auflösungs-Dropdown, wenn Breite/Höhe von Hand eingegeben wurden"},
+
+  "aspectRatioLabel": "Aspect ratio",
+  "@aspectRatioLabel": {"description": "Label des Seitenverhaeltnis-Dropdowns im Expertenmodus (Original, 16:9, 4:3, 1:1, 9:16)"},
+  "aspectOriginal": "Original",
+  "@aspectOriginal": {"description": "Eintrag im Seitenverhaeltnis-Dropdown: Verhaeltnis der Quelle beibehalten"},
+  "aspectCustom": "Custom",
+  "@aspectCustom": {"description": "Anzeige im Seitenverhaeltnis-Dropdown, wenn Breite/Hoehe ohne Kette frei eingegeben wurden"},
+  "fitModeLabel": "Fit",
+  "@fitModeLabel": {"description": "Ueberschrift der Auswahl, wie ein Video an ein anderes Seitenverhaeltnis angepasst wird (Balken/Zuschneiden/Strecken)"},
+  "fitPad": "Bars",
+  "@fitPad": {"description": "Anpassung: ganzes Bild mit schwarzen Balken (Letterbox/Pillarbox). Kurz, Segment-Button"},
+  "fitCrop": "Crop",
+  "@fitCrop": {"description": "Anpassung: Ausschnitt aus der Bildmitte. Kurz, Segment-Button"},
+  "fitStretch": "Stretch",
+  "@fitStretch": {"description": "Anpassung: Bild verzerren/strecken. Kurz, Segment-Button"},
+  "fitModeInfoContent": "The target has a different aspect ratio than the video.\n\nBars → the whole picture stays visible, black bars fill the rest\nCrop → the center is cut out, the edges are lost\nStretch → the picture is distorted to fill the frame",
+  "@fitModeInfoContent": {"description": "Info-Dialog zur Anpassung bei anderem Seitenverhaeltnis"}
 }

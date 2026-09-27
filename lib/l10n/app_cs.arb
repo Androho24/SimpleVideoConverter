@@ -216,5 +216,14 @@
 
   "resolutionPresetLabel": "Předvolba",
   "resolutionOriginal": "Původní",
-  "resolutionCustom": "Vlastní"
+  "resolutionCustom": "Vlastní",
+
+  "aspectRatioLabel": "Poměr stran",
+  "aspectOriginal": "Původní",
+  "aspectCustom": "Vlastní",
+  "fitModeLabel": "Přizpůsobení",
+  "fitPad": "Pruhy",
+  "fitCrop": "Oříznout",
+  "fitStretch": "Roztáhnout",
+  "fitModeInfoContent": "Cíl má jiný poměr stran než video.\n\nPruhy → celý obraz zůstane viditelný, zbytek vyplní černé pruhy\nOříznout → vyřízne se střed obrazu, okraje se ztratí\nRoztáhnout → obraz se zdeformuje, aby vyplnil rámeček"
 }

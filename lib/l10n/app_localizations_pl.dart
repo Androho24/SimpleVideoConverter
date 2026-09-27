@@ -626,4 +626,29 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Niestandardowa';
+
+  @override
+  String get aspectRatioLabel => 'Proporcje obrazu';
+
+  @override
+  String get aspectOriginal => 'Oryginalne';
+
+  @override
+  String get aspectCustom => 'Niestandardowe';
+
+  @override
+  String get fitModeLabel => 'Dopasowanie';
+
+  @override
+  String get fitPad => 'Pasy';
+
+  @override
+  String get fitCrop => 'Przytnij';
+
+  @override
+  String get fitStretch => 'Rozciągnij';
+
+  @override
+  String get fitModeInfoContent =>
+      'Cel ma inne proporcje niż wideo.\n\nPasy → cały obraz pozostaje widoczny, resztę wypełniają czarne pasy\nPrzytnij → wycinany jest środek obrazu, krawędzie znikają\nRozciągnij → obraz zostaje zniekształcony, aby wypełnić ramkę';
 }

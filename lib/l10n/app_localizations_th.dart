@@ -619,4 +619,29 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'กำหนดเอง';
+
+  @override
+  String get aspectRatioLabel => 'อัตราส่วนภาพ';
+
+  @override
+  String get aspectOriginal => 'ต้นฉบับ';
+
+  @override
+  String get aspectCustom => 'กำหนดเอง';
+
+  @override
+  String get fitModeLabel => 'การปรับให้พอดี';
+
+  @override
+  String get fitPad => 'แถบดำ';
+
+  @override
+  String get fitCrop => 'ครอป';
+
+  @override
+  String get fitStretch => 'ยืด';
+
+  @override
+  String get fitModeInfoContent =>
+      'ปลายทางมีอัตราส่วนภาพต่างจากวิดีโอ\n\nแถบดำ → เห็นภาพทั้งหมด ส่วนที่เหลือเติมด้วยแถบสีดำ\nครอป → ตัดเอาส่วนกลางภาพ ขอบจะหายไป\nยืด → ภาพจะถูกยืดจนเต็มกรอบ';
 }

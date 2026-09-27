@@ -630,4 +630,29 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Personalizado';
+
+  @override
+  String get aspectRatioLabel => 'Relación de aspecto';
+
+  @override
+  String get aspectOriginal => 'Original';
+
+  @override
+  String get aspectCustom => 'Personalizada';
+
+  @override
+  String get fitModeLabel => 'Ajuste';
+
+  @override
+  String get fitPad => 'Barras';
+
+  @override
+  String get fitCrop => 'Recortar';
+
+  @override
+  String get fitStretch => 'Estirar';
+
+  @override
+  String get fitModeInfoContent =>
+      'El destino tiene una relación de aspecto distinta a la del vídeo.\n\nBarras → se ve toda la imagen y unas barras negras rellenan el resto\nRecortar → se corta el centro y se pierden los bordes\nEstirar → la imagen se deforma hasta llenar el marco';
 }

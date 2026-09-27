@@ -1,6 +1,8 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../l10n/app_localizations.dart';
@@ -107,6 +109,7 @@ class _ExpertControlsState extends State<ExpertControls> {
         if (!mounted) return;
         var updated = widget.settings.copyWith(
           resolutionPreset: 0,
+          aspectRatio: ExpertSettings.aspectOriginal,
           width: widget.metadata!.width,
           height: widget.metadata!.height,
         );
@@ -139,22 +142,46 @@ class _ExpertControlsState extends State<ExpertControls> {
   // Auflösungs-Hilfsmethoden
   // ---------------------------------------------------------------------------
 
-  void _onWidthChanged(String v) {
-    int newWidth = int.tryParse(v) ?? 0;
-    if (newWidth > _maxDimension) {
-      newWidth = _maxDimension;
-      _widthController.text = _maxDimension.toString();
-      _widthController.selection = TextSelection.collapsed(
-        offset: _widthController.text.length,
-      );
-    }
+  /// Liest eine Seitenlänge aus dem Feld und kappt sie bei 4K.
+  int _readDimension(TextEditingController controller, String value) {
+    final parsed = int.tryParse(value) ?? 0;
+    if (parsed <= _maxDimension) return parsed;
+    controller.text = _maxDimension.toString();
+    controller.selection = TextSelection.collapsed(
+      offset: controller.text.length,
+    );
+    return _maxDimension;
+  }
+
+  int _evenDimension(double value) =>
+      ((value.round() ~/ 2) * 2).clamp(2, _maxDimension);
+
+  /// Das Verhältnis, das die Kette beim Tippen hält: die gewählte Vorgabe,
+  /// sonst das der Quelle.
+  double? _lockRatio(ExpertSettings s) {
+    final preset = VideoScaleService.aspectRatioValue(s.aspectRatio);
+    if (preset != null) return preset;
+    final meta = widget.metadata;
+    if (meta == null || meta.width <= 0 || meta.height <= 0) return null;
+    return meta.width / meta.height;
+  }
+
+  void _setDimensionFields(int width, int height) {
+    _widthController.text = width == 0 ? '' : width.toString();
+    _heightController.text = height == 0 ? '' : height.toString();
+  }
+
+  /// Eingabe in eines der Felder. Mit Kette folgt die andere Seite dem
+  /// gewählten Verhältnis, ohne Kette wird das Verhältnis „Benutzerdefiniert“.
+  void _onDimensionChanged({int? width, int? height}) {
     final s = widget.settings;
-    final meta = widget.metadata;
-    if (_aspectLocked && newWidth > 0 && meta != null && meta.height > 0) {
-      final aspectRatio = meta.width / meta.height;
-      int newHeight = (newWidth / aspectRatio).round();
-      newHeight = ((newHeight ~/ 2) * 2).clamp(2, _maxDimension);
-      _heightController.text = newHeight.toString();
+    final ratio = _aspectLocked ? _lockRatio(s) : null;
+    final typed = width ?? height!;
+    if (ratio != null && typed > 0) {
+      final (newWidth, newHeight) = width != null
+          ? (width, _evenDimension(width / ratio))
+          : (_evenDimension(height! * ratio), height);
+      _setDimensionFields(newWidth, newHeight);
       widget.onChanged(
         s.copyWith(
           width: newWidth,
@@ -162,97 +189,96 @@ class _ExpertControlsState extends State<ExpertControls> {
           resolutionPreset: ExpertSettings.customResolution,
         ),
       );
-    } else {
-      widget.onChanged(
-        s.copyWith(
-          width: newWidth,
-          resolutionPreset: ExpertSettings.customResolution,
-        ),
-      );
+      return;
     }
-  }
-
-  void _onHeightChanged(String v) {
-    int newHeight = int.tryParse(v) ?? 0;
-    if (newHeight > _maxDimension) {
-      newHeight = _maxDimension;
-      _heightController.text = _maxDimension.toString();
-      _heightController.selection = TextSelection.collapsed(
-        offset: _heightController.text.length,
-      );
-    }
-    final s = widget.settings;
-    final meta = widget.metadata;
-    if (_aspectLocked && newHeight > 0 && meta != null && meta.width > 0) {
-      final aspectRatio = meta.width / meta.height;
-      int newWidth = (newHeight * aspectRatio).round();
-      newWidth = ((newWidth ~/ 2) * 2).clamp(2, _maxDimension);
-      _widthController.text = newWidth.toString();
-      widget.onChanged(
-        s.copyWith(
-          width: newWidth,
-          height: newHeight,
-          resolutionPreset: ExpertSettings.customResolution,
-        ),
-      );
-    } else {
-      widget.onChanged(
-        s.copyWith(
-          height: newHeight,
-          resolutionPreset: ExpertSettings.customResolution,
-        ),
-      );
-    }
-  }
-
-  void _toggleAspectLock() {
-    final meta = widget.metadata;
-    if (!_aspectLocked && meta != null) {
-      // Sperren: dominante Seite des Originalvideos bestimmt welcher Wert berechnet wird
-      final currentWidth = int.tryParse(_widthController.text) ?? 0;
-      final currentHeight = int.tryParse(_heightController.text) ?? 0;
-      if (currentWidth > 0 || currentHeight > 0) {
-        if (meta.width >= meta.height) {
-          // Querformat: Breite dominant → Höhe neu berechnen
-          _onWidthChanged(
-            currentWidth > 0 ? currentWidth.toString() : meta.width.toString(),
-          );
-        } else {
-          // Hochformat: Höhe dominant → Breite neu berechnen
-          _onHeightChanged(
-            currentHeight > 0
-                ? currentHeight.toString()
-                : meta.height.toString(),
-          );
-        }
-      }
-    }
-    setState(() => _aspectLocked = !_aspectLocked);
-  }
-
-  /// Setzt Breite und Höhe auf eine Auflösungsstufe. Wie im Normalmodus zählt
-  /// die kurze Seite, die lange folgt der Quelle — so passt es auch bei
-  /// Hochkant-Videos. „Original“ übernimmt die Quellmaße unverändert.
-  void _selectResolutionPreset(int preset) {
-    final meta = widget.metadata;
-    if (meta == null) return;
-    final (width, height) = preset == 0
-        ? (meta.width, meta.height)
-        : VideoScaleService.estimatedStandardDimensions(
-            sourceWidth: meta.width,
-            sourceHeight: meta.height,
-            targetShortSide: preset,
-          );
-    _widthController.text = width.toString();
-    _heightController.text = height.toString();
-    setState(() => _aspectLocked = true);
     widget.onChanged(
-      widget.settings.copyWith(
-        resolutionPreset: preset,
+      s.copyWith(
         width: width,
         height: height,
+        resolutionPreset: ExpertSettings.customResolution,
+        aspectRatio: _aspectLocked ? null : ExpertSettings.aspectCustom,
       ),
     );
+  }
+
+  void _onWidthChanged(String v) =>
+      _onDimensionChanged(width: _readDimension(_widthController, v));
+
+  void _onHeightChanged(String v) =>
+      _onDimensionChanged(height: _readDimension(_heightController, v));
+
+  /// Beim Sperren fällt eine freie Eingabe auf das Verhältnis der Quelle
+  /// zurück, eine Vorgabe bleibt. Die lange Seite des Ziels bleibt stehen,
+  /// die andere wird nachgerechnet.
+  void _toggleAspectLock() {
+    if (_aspectLocked) {
+      setState(() => _aspectLocked = false);
+      return;
+    }
+    setState(() => _aspectLocked = true);
+    final s = widget.settings;
+    final base = s.aspectRatio == ExpertSettings.aspectCustom
+        ? s.copyWith(aspectRatio: ExpertSettings.aspectOriginal)
+        : s;
+    final ratio = _lockRatio(base);
+    var (width, height) = (s.width, s.height);
+    if (ratio != null && (width > 0 || height > 0)) {
+      final keepWidth = ratio >= 1 ? width > 0 : height <= 0;
+      if (keepWidth) {
+        height = _evenDimension(width / ratio);
+      } else {
+        width = _evenDimension(height * ratio);
+      }
+      _setDimensionFields(width, height);
+    }
+    widget.onChanged(base.copyWith(width: width, height: height));
+  }
+
+  /// Rechnet Breite und Höhe aus Auflösungsstufe, Seitenverhältnis und
+  /// Anpassung von [base] neu (siehe `VideoScaleService.expertFrameDimensions`).
+  /// Bei „Benutzerdefiniert“ dient die kurze Seite der aktuellen Maße als
+  /// Stufe, ein freies Verhältnis wird zu „Original“.
+  void _applyFrame(ExpertSettings base) {
+    final meta = widget.metadata;
+    if (meta == null) return;
+    final aspect = base.aspectRatio == ExpertSettings.aspectCustom
+        ? ExpertSettings.aspectOriginal
+        : base.aspectRatio;
+    final shortSide = base.resolutionPreset == ExpertSettings.customResolution
+        ? min(base.width, base.height)
+        : base.resolutionPreset;
+    final (width, height) = VideoScaleService.expertFrameDimensions(
+      sourceWidth: meta.width,
+      sourceHeight: meta.height,
+      shortSide: shortSide,
+      aspectRatio: VideoScaleService.aspectRatioValue(aspect),
+      fitMode: base.fitMode,
+    );
+    _setDimensionFields(width, height);
+    setState(() => _aspectLocked = true);
+    widget.onChanged(
+      base.copyWith(aspectRatio: aspect, width: width, height: height),
+    );
+  }
+
+  /// Wie im Normalmodus zählt bei den Stufen die kurze Seite — so passt es
+  /// auch bei Hochkant-Videos. „Original“ übernimmt die Quellmaße.
+  void _selectResolutionPreset(int preset) =>
+      _applyFrame(widget.settings.copyWith(resolutionPreset: preset));
+
+  void _selectAspectRatio(String aspect) =>
+      _applyFrame(widget.settings.copyWith(aspectRatio: aspect));
+
+  /// Beim Zuschneiden ist der Rahmen kleiner als bei Balken (nie
+  /// hochskalieren), deshalb rechnet eine Vorgabe die Maße neu. Freie Maße
+  /// bleiben stehen.
+  void _selectFitMode(String fitMode) {
+    final s = widget.settings.copyWith(fitMode: fitMode);
+    if (VideoScaleService.aspectRatioValue(s.aspectRatio) != null) {
+      _applyFrame(s);
+    } else {
+      widget.onChanged(s);
+    }
   }
 
   /// Stufen ab der kurzen Seite der Quelle wären Hochskalieren (oder gleich
@@ -263,6 +289,16 @@ class _ExpertControlsState extends State<ExpertControls> {
     return preset < VideoScaleService.sourceShortSide(meta.width, meta.height);
   }
 
+  InputDecorationTheme get _menuDecoration => InputDecorationTheme(
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+  );
+
+  MenuStyle get _menuStyle => MenuStyle(
+    shape: WidgetStatePropertyAll(
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    ),
+  );
+
   Widget _buildResolutionPresetMenu(AppLocalizations l, ExpertSettings s) =>
       DropdownMenu<int>(
         key: ValueKey('expert_resolution_preset_${s.resolutionPreset}'),
@@ -271,14 +307,8 @@ class _ExpertControlsState extends State<ExpertControls> {
         requestFocusOnTap: false,
         initialSelection: s.resolutionPreset,
         label: Text(l.resolutionPresetLabel),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        ),
-        menuStyle: MenuStyle(
-          shape: WidgetStatePropertyAll(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          ),
-        ),
+        inputDecorationTheme: _menuDecoration,
+        menuStyle: _menuStyle,
         dropdownMenuEntries: [
           DropdownMenuEntry(value: 0, label: l.resolutionOriginal),
           for (final preset in _resolutionPresets)
@@ -301,6 +331,51 @@ class _ExpertControlsState extends State<ExpertControls> {
           }
         },
       );
+
+  Widget _buildAspectRatioMenu(AppLocalizations l, ExpertSettings s) =>
+      DropdownMenu<String>(
+        key: ValueKey('expert_aspect_ratio_${s.aspectRatio}'),
+        expandedInsets: EdgeInsets.zero,
+        enabled: !widget.isConverting && widget.metadata != null,
+        requestFocusOnTap: false,
+        initialSelection: s.aspectRatio,
+        label: Text(l.aspectRatioLabel),
+        inputDecorationTheme: _menuDecoration,
+        menuStyle: _menuStyle,
+        dropdownMenuEntries: [
+          DropdownMenuEntry(
+            value: ExpertSettings.aspectOriginal,
+            label: l.aspectOriginal,
+          ),
+          for (final aspect in VideoScaleService.aspectRatios.keys)
+            DropdownMenuEntry(value: aspect, label: aspect),
+          // Nur Anzeige: entsteht durch Eingabe ohne Kette.
+          if (s.aspectRatio == ExpertSettings.aspectCustom)
+            DropdownMenuEntry(
+              value: ExpertSettings.aspectCustom,
+              label: l.aspectCustom,
+              enabled: false,
+            ),
+        ],
+        onSelected: (v) {
+          if (v != null && v != ExpertSettings.aspectCustom) {
+            _selectAspectRatio(v);
+          }
+        },
+      );
+
+  /// Nur sichtbar, wenn das Ziel ein anderes Seitenverhältnis hat als die
+  /// Quelle — sonst gibt es nichts anzupassen.
+  bool _showFitMode(ExpertSettings s) {
+    final meta = widget.metadata;
+    return meta != null &&
+        VideoScaleService.changesAspect(
+          width: s.width,
+          height: s.height,
+          sourceWidth: meta.width,
+          sourceHeight: meta.height,
+        );
+  }
 
   Widget _buildLockButton(AppLocalizations l) {
     final meta = widget.metadata;
@@ -761,7 +836,13 @@ class _ExpertControlsState extends State<ExpertControls> {
             ],
           ),
           const SizedBox(height: 4),
-          _buildResolutionPresetMenu(l, s),
+          Row(
+            children: [
+              Expanded(child: _buildResolutionPresetMenu(l, s)),
+              const SizedBox(width: 8),
+              Expanded(child: _buildAspectRatioMenu(l, s)),
+            ],
+          ),
           const SizedBox(height: 12),
           Row(
             children: [
@@ -803,6 +884,41 @@ class _ExpertControlsState extends State<ExpertControls> {
             ],
           ),
           const SizedBox(height: 12),
+
+          // ── Anpassung bei anderem Seitenverhältnis ─────────────────────────
+          if (_showFitMode(s)) ...[
+            Row(
+              children: [
+                Text(l.fitModeLabel, style: labelStyle),
+                const SizedBox(width: 2),
+                _infoButton(context, l.fitModeLabel, l.fitModeInfoContent),
+              ],
+            ),
+            const SizedBox(height: 4),
+            SegmentedButton<String>(
+              key: const ValueKey('expert_fit_mode'),
+              showSelectedIcon: false,
+              segments: [
+                ButtonSegment(
+                  value: VideoScaleService.fitPad,
+                  label: Text(l.fitPad),
+                ),
+                ButtonSegment(
+                  value: VideoScaleService.fitCrop,
+                  label: Text(l.fitCrop),
+                ),
+                ButtonSegment(
+                  value: VideoScaleService.fitStretch,
+                  label: Text(l.fitStretch),
+                ),
+              ],
+              selected: {s.fitMode},
+              onSelectionChanged: widget.isConverting
+                  ? null
+                  : (sel) => _selectFitMode(sel.first),
+            ),
+            const SizedBox(height: 12),
+          ],
 
           // ── FPS ─────────────────────────────────────────────────────────────
           Row(

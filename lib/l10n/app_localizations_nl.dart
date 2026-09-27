@@ -625,4 +625,29 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Aangepast';
+
+  @override
+  String get aspectRatioLabel => 'Beeldverhouding';
+
+  @override
+  String get aspectOriginal => 'Origineel';
+
+  @override
+  String get aspectCustom => 'Aangepast';
+
+  @override
+  String get fitModeLabel => 'Aanpassing';
+
+  @override
+  String get fitPad => 'Balken';
+
+  @override
+  String get fitCrop => 'Bijsnijden';
+
+  @override
+  String get fitStretch => 'Uitrekken';
+
+  @override
+  String get fitModeInfoContent =>
+      'Het doel heeft een andere beeldverhouding dan de video.\n\nBalken → het hele beeld blijft zichtbaar, zwarte balken vullen de rest\nBijsnijden → het midden wordt uitgesneden, de randen vallen weg\nUitrekken → het beeld wordt vervormd tot het kader vol is';
 }

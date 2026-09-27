@@ -215,5 +215,14 @@
 
   "resolutionPresetLabel": "Préréglage",
   "resolutionOriginal": "Originale",
-  "resolutionCustom": "Personnalisée"
+  "resolutionCustom": "Personnalisée",
+
+  "aspectRatioLabel": "Format d'image",
+  "aspectOriginal": "Original",
+  "aspectCustom": "Personnalisé",
+  "fitModeLabel": "Ajustement",
+  "fitPad": "Bandes",
+  "fitCrop": "Recadrer",
+  "fitStretch": "Étirer",
+  "fitModeInfoContent": "La cible a un format d'image différent de celui de la vidéo.\n\nBandes → toute l'image reste visible, des bandes noires comblent le reste\nRecadrer → le centre est découpé, les bords sont perdus\nÉtirer → l'image est déformée pour remplir le cadre"
 }

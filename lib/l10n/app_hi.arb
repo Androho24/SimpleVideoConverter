@@ -202,5 +202,14 @@
 
   "resolutionPresetLabel": "प्रीसेट",
   "resolutionOriginal": "मूल",
-  "resolutionCustom": "कस्टम"
+  "resolutionCustom": "कस्टम",
+
+  "aspectRatioLabel": "आस्पेक्ट रेशियो",
+  "aspectOriginal": "मूल",
+  "aspectCustom": "कस्टम",
+  "fitModeLabel": "फ़िट",
+  "fitPad": "पट्टियाँ",
+  "fitCrop": "क्रॉप",
+  "fitStretch": "खींचें",
+  "fitModeInfoContent": "लक्ष्य का आस्पेक्ट रेशियो वीडियो से अलग है।\n\nपट्टियाँ → पूरी तस्वीर दिखती है, बाकी जगह काली पट्टियाँ भरती हैं\nक्रॉप → बीच का हिस्सा काटा जाता है, किनारे हट जाते हैं\nखींचें → फ़्रेम भरने के लिए तस्वीर खिंच जाती है"
 }

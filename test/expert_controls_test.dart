@@ -414,6 +414,115 @@ void main() {
       expect(host(tester).settings.height, 1080);
     });
   });
+
+  group('aspect ratio and fit', () {
+    final aspectMenu = find.byWidgetPredicate((widget) {
+      final key = widget.key;
+      return widget is DropdownMenu<String> &&
+          key is ValueKey<String> &&
+          key.value.startsWith('expert_aspect_ratio_');
+    });
+    final fitMode = find.byKey(const ValueKey('expert_fit_mode'));
+
+    ExpertSettings settings(WidgetTester tester) => tester
+        .state<_ExpertControlsHostState>(find.byType(_ExpertControlsHost))
+        .settings;
+
+    Future<void> chooseAspect(WidgetTester tester, String label) async {
+      await tester.ensureVisible(aspectMenu);
+      await tester.tap(aspectMenu);
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(MenuItemButton, label).last);
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> chooseFit(WidgetTester tester, String label) async {
+      final segment = find.descendant(of: fitMode, matching: find.text(label));
+      await tester.ensureVisible(segment);
+      await tester.tap(segment);
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('hides the fit choice while the ratio matches the source', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const _ExpertControlsHost());
+      await tester.pumpAndSettle();
+      expect(fitMode, findsNothing);
+    });
+
+    testWidgets('pads to 4:3 by default and crops on request', (tester) async {
+      await tester.pumpWidget(const _ExpertControlsHost());
+      await tester.pumpAndSettle();
+
+      await chooseAspect(tester, '4:3');
+      expect(settings(tester).aspectRatio, '4:3');
+      expect(settings(tester).fitMode, 'pad');
+      expect((settings(tester).width, settings(tester).height), (1440, 1080));
+      expect(fitMode, findsOneWidget);
+
+      await chooseFit(tester, 'Crop');
+      expect(settings(tester).fitMode, 'crop');
+      expect((settings(tester).width, settings(tester).height), (1440, 1080));
+    });
+
+    testWidgets('crop to 9:16 shrinks the frame instead of upscaling', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const _ExpertControlsHost());
+      await tester.pumpAndSettle();
+
+      await chooseAspect(tester, '9:16');
+      expect((settings(tester).width, settings(tester).height), (1080, 1920));
+
+      await chooseFit(tester, 'Crop');
+      expect((settings(tester).width, settings(tester).height), (608, 1080));
+      expect(find.widgetWithText(TextField, '608'), findsOneWidget);
+
+      await chooseAspect(tester, 'Original');
+      expect((settings(tester).width, settings(tester).height), (1920, 1080));
+      expect(fitMode, findsNothing);
+    });
+
+    testWidgets('locked typing follows the chosen ratio', (tester) async {
+      await tester.pumpWidget(const _ExpertControlsHost());
+      await tester.pumpAndSettle();
+      await chooseAspect(tester, '4:3');
+
+      final widthField = find.widgetWithText(TextField, '1440');
+      await tester.ensureVisible(widthField);
+      await tester.enterText(widthField, '960');
+      await tester.pumpAndSettle();
+
+      expect((settings(tester).width, settings(tester).height), (960, 720));
+      expect(settings(tester).aspectRatio, '4:3');
+    });
+
+    testWidgets('free typing becomes a custom ratio with bars', (tester) async {
+      await tester.pumpWidget(const _ExpertControlsHost());
+      await tester.pumpAndSettle();
+
+      final lock = find.byIcon(Icons.link);
+      await tester.ensureVisible(lock);
+      await tester.tap(lock);
+      await tester.pumpAndSettle();
+
+      final heightField = find.widgetWithText(TextField, '1080');
+      await tester.enterText(heightField, '1440');
+      await tester.pumpAndSettle();
+
+      expect(settings(tester).aspectRatio, 'custom');
+      expect((settings(tester).width, settings(tester).height), (1920, 1440));
+      expect(fitMode, findsOneWidget);
+      expect(settings(tester).fitMode, 'pad');
+
+      // Wieder sperren: zurück aufs Verhältnis der Quelle.
+      await tester.tap(find.byIcon(Icons.link_off));
+      await tester.pumpAndSettle();
+      expect(settings(tester).aspectRatio, 'original');
+      expect((settings(tester).width, settings(tester).height), (1920, 1080));
+    });
+  });
 }
 
 class _ExpertControlsHost extends StatefulWidget {

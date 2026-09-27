@@ -228,4 +228,138 @@ void main() {
       expect(arguments[filterOption + 2], 'output.mp4');
     });
   });
+
+  group('expertFrameDimensions', () {
+    (int, int) frame(
+      int w,
+      int h, {
+      int shortSide = 0,
+      String? aspect,
+      String fit = VideoScaleService.fitPad,
+    }) => VideoScaleService.expertFrameDimensions(
+      sourceWidth: w,
+      sourceHeight: h,
+      shortSide: shortSide,
+      aspectRatio: aspect == null
+          ? null
+          : VideoScaleService.aspectRatioValue(aspect),
+      fitMode: fit,
+    );
+
+    test('keeps the source or a preset when the ratio stays', () {
+      expect(frame(1920, 1080), (1920, 1080));
+      expect(frame(1920, 1080, shortSide: 720), (1280, 720));
+      expect(frame(1080, 1920, shortSide: 480), (480, 854));
+    });
+
+    test('bars keep the short side and extend the long one', () {
+      expect(frame(1440, 1080, aspect: '16:9'), (1920, 1080));
+      expect(frame(1920, 1080, aspect: '4:3'), (1440, 1080));
+      expect(frame(1920, 1080, aspect: '9:16'), (1080, 1920));
+      expect(frame(1920, 1080, aspect: '1:1'), (1080, 1080));
+      expect(frame(1920, 1080, shortSide: 720, aspect: '4:3'), (960, 720));
+    });
+
+    test('crop takes the largest centered frame without upscaling', () {
+      String crop = VideoScaleService.fitCrop;
+      expect(frame(1920, 1080, aspect: '4:3', fit: crop), (1440, 1080));
+      expect(frame(1440, 1080, aspect: '16:9', fit: crop), (1440, 810));
+      expect(frame(1920, 1080, aspect: '9:16', fit: crop), (608, 1080));
+      expect(frame(1920, 1080, aspect: '1:1', fit: crop), (1080, 1080));
+      expect(frame(1920, 1080, shortSide: 720, aspect: '4:3', fit: crop), (
+        960,
+        720,
+      ));
+      // Die Stufe liegt über dem Ausschnitt: kein Hochskalieren.
+      expect(frame(1920, 1080, shortSide: 720, aspect: '9:16', fit: crop), (
+        608,
+        1080,
+      ));
+    });
+
+    test('stretch uses the same frame as bars', () {
+      expect(
+        frame(1920, 1080, aspect: '4:3', fit: VideoScaleService.fitStretch),
+        frame(1920, 1080, aspect: '4:3'),
+      );
+    });
+
+    test('always produces even dimensions', () {
+      for (final aspect in VideoScaleService.aspectRatios.keys) {
+        for (final fit in [
+          VideoScaleService.fitPad,
+          VideoScaleService.fitCrop,
+        ]) {
+          final (w, h) = frame(1918, 1078, aspect: aspect, fit: fit);
+          expect(w.isEven && h.isEven, isTrue, reason: '$aspect $fit');
+        }
+      }
+    });
+  });
+
+  group('expertGraph', () {
+    String graph(int w, int h, {String fit = VideoScaleService.fitPad}) =>
+        VideoScaleService.expertGraph(
+          width: w,
+          height: h,
+          fitMode: fit,
+          sourceWidth: 1920,
+          sourceHeight: 1080,
+        );
+
+    test('keeps the single-side and no-scale cases', () {
+      expect(graph(0, 0), isEmpty);
+      expect(graph(1280, 0), 'scale=1280:-2');
+      expect(graph(0, 720), 'scale=-2:720');
+    });
+
+    test('scales plainly when the ratio stays, within rounding', () {
+      expect(graph(1280, 720), 'scale=1280:720:reset_sar=1');
+      // 608×1080 wäre exakt 607,5×1080 — kein Verhältniswechsel.
+      expect(
+        VideoScaleService.expertGraph(
+          width: 1080,
+          height: 608,
+          fitMode: VideoScaleService.fitPad,
+          sourceWidth: 1920,
+          sourceHeight: 1080,
+        ),
+        'scale=1080:608:reset_sar=1',
+      );
+    });
+
+    test('pads, crops or stretches a different ratio', () {
+      expect(
+        graph(1440, 1080),
+        'scale=1440:1080:force_original_aspect_ratio=decrease'
+        ':force_divisible_by=2:reset_sar=1,'
+        'pad=1440:1080:(ow-iw)/2:(oh-ih)/2',
+      );
+      expect(
+        graph(1440, 1080, fit: VideoScaleService.fitCrop),
+        'scale=1440:1080:force_original_aspect_ratio=increase:reset_sar=1,'
+        'crop=1440:1080',
+      );
+      expect(
+        graph(1440, 1080, fit: VideoScaleService.fitStretch),
+        'scale=1440:1080:reset_sar=1',
+      );
+    });
+
+    test('survives FFmpegKit parsing as one argument, also with HDR', () {
+      for (final fit in [VideoScaleService.fitPad, VideoScaleService.fitCrop]) {
+        final vf = VideoScaleService.filterArgument(
+          graph(1080, 1920, fit: fit),
+          hdrTransfer: 'arib-std-b67',
+        );
+        final arguments = FFmpegKitConfig.parseArguments(
+          '-i input.mp4 $vf -c:v libx264 output.mp4',
+        );
+        final value = arguments[arguments.indexOf('-vf') + 1];
+        expect(value, startsWith('scale=1080:1920:'));
+        expect(value, contains('tonemap=tonemap=hable'));
+        expect(arguments[arguments.indexOf('-vf') + 2], '-c:v');
+      }
+    });
+  });
 }

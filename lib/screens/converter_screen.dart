@@ -650,20 +650,13 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         // ── Expert: Video konvertieren ────────────────────────────────────
         outputPath =
             '${cacheDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.${expert.container}';
-        // scale: W:-2 = Breite fix, Höhe proportional (gerade Zahl)
-        //        -2:H = Höhe fix, Breite proportional
-        //        W:H  = beide fix
-        //        leer = kein Skalieren
-        final String scaleGraph;
-        if (expert.width != 0 && expert.height != 0) {
-          scaleGraph = 'scale=${expert.width}:${expert.height}';
-        } else if (expert.width != 0) {
-          scaleGraph = 'scale=${expert.width}:-2';
-        } else if (expert.height != 0) {
-          scaleGraph = 'scale=-2:${expert.height}';
-        } else {
-          scaleGraph = '';
-        }
+        final scaleGraph = VideoScaleService.expertGraph(
+          width: expert.width,
+          height: expert.height,
+          fitMode: expert.fitMode,
+          sourceWidth: _metadata!.width,
+          sourceHeight: _metadata!.height,
+        );
         final keepsHdr = _keepsHdr(expert.videoCodec);
         final vfFilter = VideoScaleService.filterArgument(
           scaleGraph,

@@ -215,5 +215,14 @@
 
   "resolutionPresetLabel": "Predefinição",
   "resolutionOriginal": "Original",
-  "resolutionCustom": "Personalizada"
+  "resolutionCustom": "Personalizada",
+
+  "aspectRatioLabel": "Proporção",
+  "aspectOriginal": "Original",
+  "aspectCustom": "Personalizada",
+  "fitModeLabel": "Ajuste",
+  "fitPad": "Barras",
+  "fitCrop": "Recortar",
+  "fitStretch": "Esticar",
+  "fitModeInfoContent": "O destino tem uma proporção diferente da do vídeo.\n\nBarras → a imagem inteira fica visível, barras pretas preenchem o resto\nRecortar → o centro é recortado, as margens perdem-se\nEsticar → a imagem é deformada até preencher o enquadramento"
 }

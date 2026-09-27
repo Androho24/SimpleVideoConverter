@@ -609,4 +609,29 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'カスタム';
+
+  @override
+  String get aspectRatioLabel => 'アスペクト比';
+
+  @override
+  String get aspectOriginal => '元の比率';
+
+  @override
+  String get aspectCustom => 'カスタム';
+
+  @override
+  String get fitModeLabel => '合わせ方';
+
+  @override
+  String get fitPad => '黒帯';
+
+  @override
+  String get fitCrop => '切り抜き';
+
+  @override
+  String get fitStretch => '引き伸ばし';
+
+  @override
+  String get fitModeInfoContent =>
+      '出力のアスペクト比が動画と異なります。\n\n黒帯 → 映像全体が表示され、余白は黒帯になります\n切り抜き → 中央を切り抜き、端は失われます\n引き伸ばし → 枠に合わせて映像を変形します';
 }

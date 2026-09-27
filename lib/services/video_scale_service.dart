@@ -118,6 +118,136 @@ class VideoScaleService {
         ':reset_sar=1';
   }
 
+  /// Seitenverhältnis-Vorgaben im Expertenmodus (Breite / Höhe).
+  static const aspectRatios = {
+    '16:9': 16 / 9,
+    '4:3': 4 / 3,
+    '1:1': 1.0,
+    '9:16': 9 / 16,
+  };
+
+  /// Zahlenwert einer Vorgabe aus [aspectRatios], null für „Original“ und
+  /// „Benutzerdefiniert“.
+  static double? aspectRatioValue(String id) => aspectRatios[id];
+
+  /// Anpassung, wenn das Zielformat ein anderes Seitenverhältnis hat als die
+  /// Quelle.
+  static const fitPad = 'pad';
+  static const fitCrop = 'crop';
+  static const fitStretch = 'stretch';
+
+  /// Weicht [width]×[height] mehr als 1 % vom Seitenverhältnis der Quelle ab?
+  /// Die Toleranz fängt die Rundung auf gerade Maße ab (1080p-Hochkant aus
+  /// 1920×1080 ergibt z. B. 608×1080 statt 607,5×1080).
+  static bool changesAspect({
+    required int width,
+    required int height,
+    required int sourceWidth,
+    required int sourceHeight,
+  }) {
+    if (width <= 0 || height <= 0 || sourceWidth <= 0 || sourceHeight <= 0) {
+      return false;
+    }
+    final source = sourceWidth / sourceHeight;
+    return ((width / height) - source).abs() / source > 0.01;
+  }
+
+  /// Zielmaße im Expertenmodus aus Auflösungsstufe ([shortSide], 0 = Quelle)
+  /// und Seitenverhältnis ([aspectRatio], null = wie die Quelle).
+  ///
+  /// Nie hochskalieren, deshalb je nach [fitMode] verschieden:
+  ///   * Balken/Strecken: Die kurze Seite des Rahmens bleibt die der Quelle
+  ///     (bzw. der Stufe), die lange folgt dem Zielverhältnis. 4:3 1440×1080
+  ///     → 16:9 ergibt 1920×1080 mit Balken, 16:9 → 9:16 ergibt 1080×1920.
+  ///   * Zuschneiden: Der größte Ausschnitt im Zielverhältnis, der in die
+  ///     Quelle passt, höchstens auf die Stufe verkleinert. 1920×1080 → 9:16
+  ///     ergibt 608×1080; mit dem Balken-Rahmen 1080×1920 müsste der Inhalt auf
+  ///     das 1,8-Fache vergrößert werden.
+  static (int, int) expertFrameDimensions({
+    required int sourceWidth,
+    required int sourceHeight,
+    required int shortSide,
+    required double? aspectRatio,
+    required String fitMode,
+  }) {
+    if (sourceWidth <= 0 || sourceHeight <= 0) return (0, 0);
+    if (aspectRatio == null) {
+      return shortSide <= 0
+          ? (sourceWidth, sourceHeight)
+          : estimatedStandardDimensions(
+              sourceWidth: sourceWidth,
+              sourceHeight: sourceHeight,
+              targetShortSide: shortSide,
+            );
+    }
+
+    final int frameShort;
+    if (fitMode == fitCrop) {
+      final sourceRatio = sourceWidth / sourceHeight;
+      final (cropWidth, cropHeight) = sourceRatio > aspectRatio
+          ? (sourceHeight * aspectRatio, sourceHeight.toDouble())
+          : (sourceWidth.toDouble(), sourceWidth / aspectRatio);
+      final cropShort = cropWidth < cropHeight ? cropWidth : cropHeight;
+      frameShort = shortSide > 0 && shortSide < cropShort
+          ? _floorEven(shortSide)
+          : _nearestEven(cropShort);
+    } else {
+      final sourceShort = sourceShortSide(sourceWidth, sourceHeight);
+      frameShort = _floorEven(
+        shortSide > 0 && shortSide < sourceShort ? shortSide : sourceShort,
+      );
+    }
+    final longFactor = aspectRatio >= 1 ? aspectRatio : 1 / aspectRatio;
+    final frameLong = _nearestEven(frameShort * longFactor);
+    return aspectRatio >= 1 ? (frameLong, frameShort) : (frameShort, frameLong);
+  }
+
+  /// Scale-Graph des Expertenmodus ohne `-vf`-Präfix. Leer bei 0×0.
+  ///
+  /// Ist nur eine Seite gesetzt, rechnet FFmpeg die andere per `-2` selbst.
+  /// Sind beide gesetzt und weicht das Verhältnis von der Quelle ab, greift
+  /// [fitMode]; Strecken ist nur noch eine bewusste Wahl (bis 2026-09 war es
+  /// das stillschweigende Verhalten).
+  ///
+  /// `reset_sar=1` steht bewusst in jeder Variante mit festen Maßen: Die Maße
+  /// stammen aus quadratischen Anzeige-Pixeln (siehe [displayDimensions]).
+  /// Ohne die Option übernimmt `scale` das Pixelverhältnis einer anamorphen
+  /// Quelle, und `force_original_aspect_ratio` rechnet mit den gespeicherten
+  /// statt den angezeigten Maßen: Ein 1440×1080-Video mit SAR 4:3 (Anzeige
+  /// 16:9) landete bei „4:3 mit Balken“ gestaucht ohne Balken im Bild.
+  /// Geprüft mit FFmpeg 8 (Desktop), cropdetect + PSNR gegen eine Referenz.
+  static String expertGraph({
+    required int width,
+    required int height,
+    required String fitMode,
+    required int sourceWidth,
+    required int sourceHeight,
+  }) {
+    if (width <= 0 && height <= 0) return '';
+    if (height <= 0) return 'scale=$width:-2';
+    if (width <= 0) return 'scale=-2:$height';
+
+    final fits = changesAspect(
+      width: width,
+      height: height,
+      sourceWidth: sourceWidth,
+      sourceHeight: sourceHeight,
+    );
+    if (!fits || fitMode == fitStretch) {
+      return 'scale=$width:$height:reset_sar=1';
+    }
+    if (fitMode == fitCrop) {
+      // crop schneidet ohne x/y mittig aus.
+      return 'scale=$width:$height:force_original_aspect_ratio=increase'
+          ':reset_sar=1,crop=$width:$height';
+    }
+    // force_divisible_by hält das eingepasste Bild auf geraden Maßen, damit
+    // die Balken links/rechts bzw. oben/unten gleich breit werden.
+    return 'scale=$width:$height:force_original_aspect_ratio=decrease'
+        ':force_divisible_by=2:reset_sar=1,'
+        'pad=$width:$height:(ow-iw)/2:(oh-ih)/2';
+  }
+
   /// Die Transferfunktion einer HDR-Quelle, sonst null. `arib-std-b67` ist HLG
   /// (so nimmt die Pixel-Kamera auf), `smpte2084` ist PQ/HDR10.
   static String? hdrTransfer(dynamic colorTransfer) {

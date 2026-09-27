@@ -215,5 +215,14 @@
 
   "resolutionPresetLabel": "Preset",
   "resolutionOriginal": "Asli",
-  "resolutionCustom": "Kustom"
+  "resolutionCustom": "Kustom",
+
+  "aspectRatioLabel": "Rasio aspek",
+  "aspectOriginal": "Asli",
+  "aspectCustom": "Kustom",
+  "fitModeLabel": "Penyesuaian",
+  "fitPad": "Bilah",
+  "fitCrop": "Pangkas",
+  "fitStretch": "Regangkan",
+  "fitModeInfoContent": "Target memiliki rasio aspek yang berbeda dari video.\n\nBilah → seluruh gambar tetap terlihat, bilah hitam mengisi sisanya\nPangkas → bagian tengah dipotong, tepinya hilang\nRegangkan → gambar direntangkan hingga memenuhi bingkai"
 }

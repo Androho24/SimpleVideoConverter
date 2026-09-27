@@ -625,4 +625,29 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Benutzerdefiniert';
+
+  @override
+  String get aspectRatioLabel => 'Seitenverhältnis';
+
+  @override
+  String get aspectOriginal => 'Original';
+
+  @override
+  String get aspectCustom => 'Benutzerdefiniert';
+
+  @override
+  String get fitModeLabel => 'Anpassung';
+
+  @override
+  String get fitPad => 'Balken';
+
+  @override
+  String get fitCrop => 'Zuschneiden';
+
+  @override
+  String get fitStretch => 'Strecken';
+
+  @override
+  String get fitModeInfoContent =>
+      'Das Ziel hat ein anderes Seitenverhältnis als das Video.\n\nBalken → das ganze Bild bleibt sichtbar, schwarze Balken füllen den Rest\nZuschneiden → die Bildmitte wird ausgeschnitten, die Ränder fallen weg\nStrecken → das Bild wird verzerrt, bis es den Rahmen füllt';
 }

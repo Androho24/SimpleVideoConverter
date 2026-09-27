@@ -215,5 +215,14 @@
 
   "resolutionPresetLabel": "Ön ayar",
   "resolutionOriginal": "Orijinal",
-  "resolutionCustom": "Özel"
+  "resolutionCustom": "Özel",
+
+  "aspectRatioLabel": "En-boy oranı",
+  "aspectOriginal": "Orijinal",
+  "aspectCustom": "Özel",
+  "fitModeLabel": "Sığdırma",
+  "fitPad": "Şeritler",
+  "fitCrop": "Kırp",
+  "fitStretch": "Uzat",
+  "fitModeInfoContent": "Hedefin en-boy oranı videodan farklı.\n\nŞeritler → görüntünün tamamı görünür, kalan alanı siyah şeritler doldurur\nKırp → ortası kesilir, kenarlar kaybolur\nUzat → görüntü çerçeveyi dolduracak şekilde bozulur"
 }

@@ -629,4 +629,29 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Personnalisée';
+
+  @override
+  String get aspectRatioLabel => 'Format d\'image';
+
+  @override
+  String get aspectOriginal => 'Original';
+
+  @override
+  String get aspectCustom => 'Personnalisé';
+
+  @override
+  String get fitModeLabel => 'Ajustement';
+
+  @override
+  String get fitPad => 'Bandes';
+
+  @override
+  String get fitCrop => 'Recadrer';
+
+  @override
+  String get fitStretch => 'Étirer';
+
+  @override
+  String get fitModeInfoContent =>
+      'La cible a un format d\'image différent de celui de la vidéo.\n\nBandes → toute l\'image reste visible, des bandes noires comblent le reste\nRecadrer → le centre est découpé, les bords sont perdus\nÉtirer → l\'image est déformée pour remplir le cadre';
 }

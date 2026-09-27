@@ -194,5 +194,14 @@
 
   "resolutionPresetLabel": "Шаблон",
   "resolutionOriginal": "Оригінальна",
-  "resolutionCustom": "Власна"
+  "resolutionCustom": "Власна",
+
+  "aspectRatioLabel": "Співвідношення сторін",
+  "aspectOriginal": "Оригінальне",
+  "aspectCustom": "Власне",
+  "fitModeLabel": "Припасування",
+  "fitPad": "Смуги",
+  "fitCrop": "Обрізати",
+  "fitStretch": "Розтягнути",
+  "fitModeInfoContent": "Ціль має інше співвідношення сторін, ніж відео.\n\nСмуги → видно все зображення, решту заповнюють чорні смуги\nОбрізати → вирізається центр, краї втрачаються\nРозтягнути → зображення спотворюється, щоб заповнити кадр"
 }

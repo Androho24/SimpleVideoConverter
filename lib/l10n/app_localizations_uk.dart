@@ -627,4 +627,29 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Власна';
+
+  @override
+  String get aspectRatioLabel => 'Співвідношення сторін';
+
+  @override
+  String get aspectOriginal => 'Оригінальне';
+
+  @override
+  String get aspectCustom => 'Власне';
+
+  @override
+  String get fitModeLabel => 'Припасування';
+
+  @override
+  String get fitPad => 'Смуги';
+
+  @override
+  String get fitCrop => 'Обрізати';
+
+  @override
+  String get fitStretch => 'Розтягнути';
+
+  @override
+  String get fitModeInfoContent =>
+      'Ціль має інше співвідношення сторін, ніж відео.\n\nСмуги → видно все зображення, решту заповнюють чорні смуги\nОбрізати → вирізається центр, краї втрачаються\nРозтягнути → зображення спотворюється, щоб заповнити кадр';
 }

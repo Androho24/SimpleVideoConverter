@@ -627,6 +627,31 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get resolutionCustom => 'Personalizada';
+
+  @override
+  String get aspectRatioLabel => 'Proporção';
+
+  @override
+  String get aspectOriginal => 'Original';
+
+  @override
+  String get aspectCustom => 'Personalizada';
+
+  @override
+  String get fitModeLabel => 'Ajuste';
+
+  @override
+  String get fitPad => 'Barras';
+
+  @override
+  String get fitCrop => 'Recortar';
+
+  @override
+  String get fitStretch => 'Esticar';
+
+  @override
+  String get fitModeInfoContent =>
+      'O destino tem uma proporção diferente da do vídeo.\n\nBarras → a imagem inteira fica visível, barras pretas preenchem o resto\nRecortar → o centro é recortado, as margens perdem-se\nEsticar → a imagem é deformada até preencher o enquadramento';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1252,4 +1277,29 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get resolutionCustom => 'Personalizada';
+
+  @override
+  String get aspectRatioLabel => 'Proporção';
+
+  @override
+  String get aspectOriginal => 'Original';
+
+  @override
+  String get aspectCustom => 'Personalizada';
+
+  @override
+  String get fitModeLabel => 'Ajuste';
+
+  @override
+  String get fitPad => 'Barras';
+
+  @override
+  String get fitCrop => 'Cortar';
+
+  @override
+  String get fitStretch => 'Esticar';
+
+  @override
+  String get fitModeInfoContent =>
+      'O destino tem uma proporção diferente da do vídeo.\n\nBarras → a imagem inteira continua visível e barras pretas preenchem o resto\nCortar → o centro é recortado e as bordas são perdidas\nEsticar → a imagem é distorcida até preencher o quadro';
 }
