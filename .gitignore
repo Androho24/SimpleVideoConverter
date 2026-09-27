@@ -64,3 +64,11 @@ android/local.properties
 # Session-Management (intern, nicht für GitHub)
 SESSION_TODO.md
 session_report_*.md
+
+# Lokale Arbeitsdateien im Projektwurzel: Testvideos, Messdaten, Logs
+/*.mp4
+/*.mov
+/*.mkv
+/*.webm
+/*.vmaf.json
+/log*.txt

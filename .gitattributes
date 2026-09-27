@@ -1,0 +1,18 @@
+# Im Repo immer LF, egal welches Werkzeug die Datei unter Windows schreibt.
+# Ohne das meldete git status Dutzende Dateien als geändert, deren Inhalt
+# gleich war — nur die Zeilenenden (CRLF von Android Studio / flutter
+# gen-l10n über cmd.exe) wichen ab.
+* text=auto eol=lf
+
+# Windows-Skripte brauchen CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Sicherheitshalber explizit binär.
+*.png binary
+*.jpg binary
+*.webp binary
+*.jks binary
+*.keystore binary
+*.ttf binary
+*.otf binary
