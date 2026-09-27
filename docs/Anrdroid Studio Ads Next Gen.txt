@@ -1,0 +1,44 @@
+ Oben in der Android-Studio-Symbolleiste findest du neben der Geräteauswahl und dem grünen Start-Dreieck ein Dropdown. Dort steht bei dir vermutlich aktuell main.dart.
+
+  1. Dieses Dropdown öffnen.
+  2. SimpleVideoConverter NextGen auswählen.
+  3. Danach wie gewohnt auf den grünen Start-Button klicken.
+
+  Falls die Konfiguration noch nicht angezeigt wird:
+
+  1. Android Studio einmal schließen und das Projekt neu öffnen.
+  2. Alternativ Run → Edit Configurations….
+  3. Eine vorhandene Flutter-Konfiguration auswählen.
+  4. Bei Additional run args Folgendes eintragen:
+
+  --dart-define=USE_NEXT_GEN_SDK=true
+
+  5. Mit Apply und OK bestätigen.
+
+  Die Konfiguration ist bereits unter .run/SimpleVideoConverter_NextGen.run.xml im Projekt hinterlegt. Wichtig ist nur, dass vor dem Start oben tatsächlich SimpleVideoConverter
+  NextGen ausgewählt ist.
+
+
+Danke. Noch eine Frage mit : flutter build appbundle --release --dart-define=USE_NEXT_GEN_SDK=true   ist das dann
+  automatisch signiert, oder muss ich da noch etwas hinzufügen?
+
+
+• Ja, der Befehl signiert das AAB automatisch, weil in android/app/build.gradle.kts:69 bereits die Release-Signierung
+  konfiguriert ist.
+
+  Du musst vorher nur android/app/key.properties anlegen:
+
+  storeFile=C:/Pfad/zu/deinem/upload-keystore.jks
+  storePassword=DEIN_PASSWORT
+  keyAlias=DEIN_ALIAS
+  keyPassword=DEIN_PASSWORT
+
+  Danach genügt:
+
+  flutter build appbundle --release --dart-define=USE_NEXT_GEN_SDK=true
+
+  Ohne gültige key.properties beziehungsweise ohne erreichbaren Keystore schlägt der Build mit einer Signing-
+  Fehlermeldung fehl. Zusätzliche Signing-Parameter im Flutter-Befehl brauchst du nicht.
+
+  Falls du Google Play App Signing nutzt: Das AAB wird lokal mit deinem Upload-Key signiert; Google signiert daraus
+  anschließend die an Nutzer ausgelieferten APKs mit dem App-Signing-Key.

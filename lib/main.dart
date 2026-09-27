@@ -1,6 +1,8 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -25,31 +27,23 @@ void main() async {
   );
   SystemBarsService.start();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await PurchaseService.initialize();
 
-  // Alle Flutter-Fehler an Crashlytics weiterleiten
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  // Alle Flutter-Fehler an Crashlytics weiterleiten. Hier landen auch Fehler
+  // aus Platform-Channel-Callbacks (ServicesBinding meldet sie per
+  // FlutterError.reportError) — z.B. der AdMessageCodec-TypeError, der nie
+  // bei PlatformDispatcher.onError ankommt.
+  FlutterError.onError = (details) {
+    FirebaseCrashlytics.instance.recordFlutterError(
+      details,
+      fatal: !_isTransientPluginError(details.exception, details.stack),
+    );
+  };
   // Dart-Fehler außerhalb des Flutter-Frameworks (z.B. in async code)
   PlatformDispatcher.instance.onError = (error, stack) {
-    // Transiente Plugin-Fehler nicht als fatal melden:
-    // - MissingPluginException aus dem ffmpeg_kit-Channel: tritt auf, wenn ein
-    //   nativer FFmpeg-Komplettierungs-Callback nach Engine-Detach feuert.
-    //   Die App selbst läuft weiter; ein "Fatal Crash" wäre irreführend.
-    // - TypeError im AdMessageCodec: google_mobile_ads 9.0.0 deklariert
-    //   AdError.domain/.message als non-nullable String, das Android-Next-Gen-SDK
-    //   liefert dort aber teils null (AdMessageCodec.java schreibt sie ungeprüft
-    //   raus). Trifft nur ohnehin fehlgeschlagene Ad-Loads; die App läuft weiter.
-    //   Greift der Stacktrace-Match nicht (obfuskierter Build), wird der Fehler
-    //   wie bisher als fatal gemeldet — also kein Risiko, echte Bugs zu verlieren.
-    final isTransientPluginError =
-        error is MissingPluginException ||
-        (error is PlatformException && error.code == 'channel-error') ||
-        (error is TypeError &&
-            stack.toString().contains('ad_instance_manager.dart'));
     FirebaseCrashlytics.instance.recordError(
       error,
       stack,
-      fatal: !isTransientPluginError,
+      fatal: !_isTransientPluginError(error, stack),
     );
     return true;
   };
@@ -104,7 +98,26 @@ void main() async {
     );
   });
   runApp(const App());
+  // Erst nach runApp: isAvailable() wartet ohne Timeout auf den Billing-Dienst.
+  // Antwortet der nicht, hing sonst der Start im Splash Screen fest.
+  unawaited(PurchaseService.initialize());
 }
+
+/// Transiente Plugin-Fehler, die nicht als fatal gemeldet werden:
+/// - MissingPluginException aus dem ffmpeg_kit-Channel: tritt auf, wenn ein
+///   nativer FFmpeg-Komplettierungs-Callback nach Engine-Detach feuert.
+///   Die App selbst läuft weiter; ein "Fatal Crash" wäre irreführend.
+/// - TypeError im AdMessageCodec: google_mobile_ads 9.0.0 deklariert
+///   AdError.domain/.message als non-nullable String, das Android-Next-Gen-SDK
+///   liefert dort aber teils null (AdMessageCodec.java schreibt sie ungeprüft
+///   raus). Trifft nur ohnehin fehlgeschlagene Ad-Loads; die App läuft weiter.
+///   Greift der Stacktrace-Match nicht (obfuskierter Build), wird der Fehler
+///   wie bisher als fatal gemeldet — also kein Risiko, echte Bugs zu verlieren.
+bool _isTransientPluginError(Object error, StackTrace? stack) =>
+    error is MissingPluginException ||
+    (error is PlatformException && error.code == 'channel-error') ||
+    (error is TypeError &&
+        stack.toString().contains('ad_instance_manager.dart'));
 
 class App extends StatelessWidget {
   const App({super.key});
