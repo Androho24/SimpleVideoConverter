@@ -224,5 +224,9 @@
   "fitPad": "Pasy",
   "fitCrop": "Przytnij",
   "fitStretch": "Rozciągnij",
-  "fitModeInfoContent": "Cel ma inne proporcje niż wideo.\n\nPasy → cały obraz pozostaje widoczny, resztę wypełniają czarne pasy\nPrzytnij → wycinany jest środek obrazu, krawędzie znikają\nRozciągnij → obraz zostaje zniekształcony, aby wypełnić ramkę"
+  "fitModeInfoContent": "Cel ma inne proporcje niż wideo.\n\nPasy → cały obraz pozostaje widoczny, resztę wypełniają czarne pasy\nPrzytnij → wycinany jest środek obrazu, krawędzie znikają\nRozciągnij → obraz zostaje zniekształcony, aby wypełnić ramkę",
+
+  "deleteOriginal": "Usuń oryginał",
+  "originalTrashed": "Oryginał przeniesiono do kosza — można go stamtąd przywrócić.",
+  "originalTrashFailed": "Nie udało się usunąć oryginału."
 }

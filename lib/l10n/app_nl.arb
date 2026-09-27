@@ -224,5 +224,9 @@
   "fitPad": "Balken",
   "fitCrop": "Bijsnijden",
   "fitStretch": "Uitrekken",
-  "fitModeInfoContent": "Het doel heeft een andere beeldverhouding dan de video.\n\nBalken → het hele beeld blijft zichtbaar, zwarte balken vullen de rest\nBijsnijden → het midden wordt uitgesneden, de randen vallen weg\nUitrekken → het beeld wordt vervormd tot het kader vol is"
+  "fitModeInfoContent": "Het doel heeft een andere beeldverhouding dan de video.\n\nBalken → het hele beeld blijft zichtbaar, zwarte balken vullen de rest\nBijsnijden → het midden wordt uitgesneden, de randen vallen weg\nUitrekken → het beeld wordt vervormd tot het kader vol is",
+
+  "deleteOriginal": "Origineel verwijderen",
+  "originalTrashed": "Origineel naar de prullenbak verplaatst — daar kun je het herstellen.",
+  "originalTrashFailed": "Het origineel kon niet worden verwijderd."
 }

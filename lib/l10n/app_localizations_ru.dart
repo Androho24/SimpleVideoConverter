@@ -653,4 +653,14 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'У результата другое соотношение сторон, чем у видео.\n\nПолосы → видно всё изображение, остаток заполняют чёрные полосы\nОбрезать → вырезается центр, края теряются\nРастянуть → изображение искажается, чтобы заполнить кадр';
+
+  @override
+  String get deleteOriginal => 'Удалить оригинал';
+
+  @override
+  String get originalTrashed =>
+      'Оригинал перемещён в корзину — оттуда его можно восстановить.';
+
+  @override
+  String get originalTrashFailed => 'Не удалось удалить оригинал.';
 }

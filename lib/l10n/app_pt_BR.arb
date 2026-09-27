@@ -222,5 +222,9 @@
   "fitPad": "Barras",
   "fitCrop": "Cortar",
   "fitStretch": "Esticar",
-  "fitModeInfoContent": "O destino tem uma proporção diferente da do vídeo.\n\nBarras → a imagem inteira continua visível e barras pretas preenchem o resto\nCortar → o centro é recortado e as bordas são perdidas\nEsticar → a imagem é distorcida até preencher o quadro"
+  "fitModeInfoContent": "O destino tem uma proporção diferente da do vídeo.\n\nBarras → a imagem inteira continua visível e barras pretas preenchem o resto\nCortar → o centro é recortado e as bordas são perdidas\nEsticar → a imagem é distorcida até preencher o quadro",
+
+  "deleteOriginal": "Excluir original",
+  "originalTrashed": "Original movido para a lixeira — você pode restaurá-lo por lá.",
+  "originalTrashFailed": "Não foi possível excluir o original."
 }

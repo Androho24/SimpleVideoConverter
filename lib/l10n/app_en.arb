@@ -549,5 +549,12 @@
   "fitStretch": "Stretch",
   "@fitStretch": {"description": "Anpassung: Bild verzerren/strecken. Kurz, Segment-Button"},
   "fitModeInfoContent": "The target has a different aspect ratio than the video.\n\nBars → the whole picture stays visible, black bars fill the rest\nCrop → the center is cut out, the edges are lost\nStretch → the picture is distorted to fill the frame",
-  "@fitModeInfoContent": {"description": "Info-Dialog zur Anpassung bei anderem Seitenverhaeltnis"}
+  "@fitModeInfoContent": {"description": "Info-Dialog zur Anpassung bei anderem Seitenverhaeltnis"},
+
+  "deleteOriginal": "Delete original",
+  "@deleteOriginal": {"description": "Button nach dem Speichern: Quellvideo in den Papierkorb legen (Android-Dialog bestaetigt)"},
+  "originalTrashed": "Original moved to the trash — you can restore it from there.",
+  "@originalTrashed": {"description": "SnackBar: Quellvideo liegt im Papierkorb und laesst sich dort wiederherstellen"},
+  "originalTrashFailed": "The original could not be deleted.",
+  "@originalTrashFailed": {"description": "SnackBar: Quellvideo konnte nicht in den Papierkorb gelegt werden"}
 }

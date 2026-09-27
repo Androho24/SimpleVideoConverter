@@ -655,4 +655,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'El destino tiene una relación de aspecto distinta a la del vídeo.\n\nBarras → se ve toda la imagen y unas barras negras rellenan el resto\nRecortar → se corta el centro y se pierden los bordes\nEstirar → la imagen se deforma hasta llenar el marco';
+
+  @override
+  String get deleteOriginal => 'Eliminar original';
+
+  @override
+  String get originalTrashed =>
+      'Original movido a la papelera: puedes restaurarlo desde allí.';
+
+  @override
+  String get originalTrashFailed => 'No se ha podido eliminar el original.';
 }

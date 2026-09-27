@@ -652,4 +652,14 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'Ціль має інше співвідношення сторін, ніж відео.\n\nСмуги → видно все зображення, решту заповнюють чорні смуги\nОбрізати → вирізається центр, краї втрачаються\nРозтягнути → зображення спотворюється, щоб заповнити кадр';
+
+  @override
+  String get deleteOriginal => 'Видалити оригінал';
+
+  @override
+  String get originalTrashed =>
+      'Оригінал переміщено до кошика — звідти його можна відновити.';
+
+  @override
+  String get originalTrashFailed => 'Не вдалося видалити оригінал.';
 }

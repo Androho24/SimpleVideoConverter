@@ -29,6 +29,10 @@ class ConversionScreen extends StatefulWidget {
   /// Hardware-Encoder läuft. Scheitert der erste Lauf, wird genau einmal damit
   /// neu gestartet — MediaCodec verhält sich je nach Gerät unterschiedlich.
   final String? fallbackCommand;
+
+  /// MediaStore-Verweis auf das Quellvideo. Ist er da, bietet der Screen nach
+  /// dem Speichern „Original löschen“ an (Papierkorb, ab Android 11).
+  final String? originalTrashUri;
   final String outputPath;
   final double totalDurationMs;
   final String defaultFileName;
@@ -37,6 +41,7 @@ class ConversionScreen extends StatefulWidget {
     super.key,
     required this.command,
     this.fallbackCommand,
+    this.originalTrashUri,
     required this.outputPath,
     required this.totalDurationMs,
     required this.defaultFileName,
@@ -71,6 +76,7 @@ class _ConversionScreenState extends State<ConversionScreen>
   bool _isCancelled = false;
   bool _isSaved = false;
   bool _usedFallback = false;
+  bool _originalTrashed = false;
   late String _currentOutputPath;
 
   static const _audioExtensions = {'mp3', 'm4a', 'opus', 'aac', 'ogg'};
@@ -219,7 +225,7 @@ class _ConversionScreenState extends State<ConversionScreen>
         await _deleteOutput();
         // Fallback, falls der Screen noch steht (z.B. Abbruch durch FFmpeg
         // selbst statt über den Abbrechen-Button).
-        if (mounted) Navigator.pop(context);
+        _closeIfCurrent();
         return;
       }
       if (!mounted) return;
@@ -307,10 +313,24 @@ class _ConversionScreenState extends State<ConversionScreen>
               backgroundColor: Colors.red,
             ),
           );
-          Navigator.pop(context);
+          _closeIfCurrent();
         }
       }
     });
+  }
+
+  /// Schließt den Screen aus dem Completion-Callback — aber nur, wenn er
+  /// noch die oberste Route ist.
+  ///
+  /// `mounted` reicht dafür nicht: `_onCancelPressed` poppt sofort, und
+  /// während der Schließ-Animation (~300 ms) ist der Screen weiter gemountet.
+  /// Stoppt FFmpeg in dieser Zeit — der Hardware-Encoder tut das fast sofort —,
+  /// hätte ein zweites `Navigator.pop` den Hauptbildschirm entfernt: schwarzer
+  /// Bildschirm (interner Test 2026-09-27, Pixel 10, H.265-Hardware). Ebenso
+  /// würde ein offener Dialog statt des Screens geschlossen.
+  void _closeIfCurrent() {
+    if (!mounted) return;
+    if (ModalRoute.of(context)?.isCurrent ?? false) Navigator.pop(context);
   }
 
   // ---------------------------------------------------------------------------
@@ -400,6 +420,27 @@ class _ConversionScreenState extends State<ConversionScreen>
           SnackBar(content: Text(l.saveError), backgroundColor: Colors.red),
         );
       }
+    }
+  }
+
+  /// Legt das Quellvideo über den Papierkorb-Dialog von Android ab. Erst nach
+  /// dem Speichern angeboten: Das Original bleibt, bis das Ergebnis sicher in
+  /// der Galerie liegt, und das Löschen ist ein eigener, bestätigter Schritt.
+  Future<void> _trashOriginal(String trashUri) async {
+    final l = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final trashed = await GalleryService.trashOriginal(trashUri);
+      if (!trashed || !mounted) return;
+      setState(() => _originalTrashed = true);
+      messenger.showSnackBar(SnackBar(content: Text(l.originalTrashed)));
+    } catch (_) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l.originalTrashFailed),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -529,7 +570,7 @@ class _ConversionScreenState extends State<ConversionScreen>
                   builder: (context) {
                     final l = AppLocalizations.of(context)!;
                     if (_isSaved) {
-                      return Row(
+                      final openButtons = Row(
                         children: [
                           Expanded(
                             child: OutlinedButton.icon(
@@ -583,6 +624,29 @@ class _ConversionScreenState extends State<ConversionScreen>
                                 ),
                               ),
                             ),
+                          ),
+                        ],
+                      );
+                      final trashUri = widget.originalTrashUri;
+                      if (trashUri == null || _originalTrashed) {
+                        return openButtons;
+                      }
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          openButtons,
+                          const SizedBox(height: 8),
+                          TextButton.icon(
+                            key: const ValueKey('delete_original'),
+                            icon: const Icon(Icons.delete_outline),
+                            label: Text(l.deleteOriginal),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Theme.of(
+                                context,
+                              ).colorScheme.error,
+                            ),
+                            onPressed: () => _trashOriginal(trashUri),
                           ),
                         ],
                       );

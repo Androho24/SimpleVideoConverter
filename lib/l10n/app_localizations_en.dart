@@ -649,4 +649,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'The target has a different aspect ratio than the video.\n\nBars → the whole picture stays visible, black bars fill the rest\nCrop → the center is cut out, the edges are lost\nStretch → the picture is distorted to fill the frame';
+
+  @override
+  String get deleteOriginal => 'Delete original';
+
+  @override
+  String get originalTrashed =>
+      'Original moved to the trash — you can restore it from there.';
+
+  @override
+  String get originalTrashFailed => 'The original could not be deleted.';
 }

@@ -1288,6 +1288,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The target has a different aspect ratio than the video.\n\nBars → the whole picture stays visible, black bars fill the rest\nCrop → the center is cut out, the edges are lost\nStretch → the picture is distorted to fill the frame'**
   String get fitModeInfoContent;
+
+  /// Button nach dem Speichern: Quellvideo in den Papierkorb legen (Android-Dialog bestaetigt)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete original'**
+  String get deleteOriginal;
+
+  /// SnackBar: Quellvideo liegt im Papierkorb und laesst sich dort wiederherstellen
+  ///
+  /// In en, this message translates to:
+  /// **'Original moved to the trash — you can restore it from there.'**
+  String get originalTrashed;
+
+  /// SnackBar: Quellvideo konnte nicht in den Papierkorb gelegt werden
+  ///
+  /// In en, this message translates to:
+  /// **'The original could not be deleted.'**
+  String get originalTrashFailed;
 }
 
 class _AppLocalizationsDelegate

@@ -650,4 +650,14 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'Target memiliki rasio aspek yang berbeda dari video.\n\nBilah → seluruh gambar tetap terlihat, bilah hitam mengisi sisanya\nPangkas → bagian tengah dipotong, tepinya hilang\nRegangkan → gambar direntangkan hingga memenuhi bingkai';
+
+  @override
+  String get deleteOriginal => 'Hapus video asli';
+
+  @override
+  String get originalTrashed =>
+      'Video asli dipindahkan ke sampah — Anda bisa memulihkannya dari sana.';
+
+  @override
+  String get originalTrashFailed => 'Video asli tidak dapat dihapus.';
 }

@@ -652,6 +652,16 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'O destino tem uma proporção diferente da do vídeo.\n\nBarras → a imagem inteira fica visível, barras pretas preenchem o resto\nRecortar → o centro é recortado, as margens perdem-se\nEsticar → a imagem é deformada até preencher o enquadramento';
+
+  @override
+  String get deleteOriginal => 'Eliminar original';
+
+  @override
+  String get originalTrashed =>
+      'Original movido para o lixo — pode restaurá-lo a partir daí.';
+
+  @override
+  String get originalTrashFailed => 'Não foi possível eliminar o original.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1302,4 +1312,14 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get fitModeInfoContent =>
       'O destino tem uma proporção diferente da do vídeo.\n\nBarras → a imagem inteira continua visível e barras pretas preenchem o resto\nCortar → o centro é recortado e as bordas são perdidas\nEsticar → a imagem é distorcida até preencher o quadro';
+
+  @override
+  String get deleteOriginal => 'Excluir original';
+
+  @override
+  String get originalTrashed =>
+      'Original movido para a lixeira — você pode restaurá-lo por lá.';
+
+  @override
+  String get originalTrashFailed => 'Não foi possível excluir o original.';
 }

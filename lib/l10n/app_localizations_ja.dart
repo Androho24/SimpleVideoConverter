@@ -634,4 +634,13 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       '出力のアスペクト比が動画と異なります。\n\n黒帯 → 映像全体が表示され、余白は黒帯になります\n切り抜き → 中央を切り抜き、端は失われます\n引き伸ばし → 枠に合わせて映像を変形します';
+
+  @override
+  String get deleteOriginal => '元の動画を削除';
+
+  @override
+  String get originalTrashed => '元の動画をゴミ箱に移動しました。ゴミ箱から復元できます。';
+
+  @override
+  String get originalTrashFailed => '元の動画を削除できませんでした。';
 }

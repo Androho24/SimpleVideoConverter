@@ -653,4 +653,14 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'Hedefin en-boy oranı videodan farklı.\n\nŞeritler → görüntünün tamamı görünür, kalan alanı siyah şeritler doldurur\nKırp → ortası kesilir, kenarlar kaybolur\nUzat → görüntü çerçeveyi dolduracak şekilde bozulur';
+
+  @override
+  String get deleteOriginal => 'Orijinali sil';
+
+  @override
+  String get originalTrashed =>
+      'Orijinal çöp kutusuna taşındı — oradan geri yükleyebilirsiniz.';
+
+  @override
+  String get originalTrashFailed => 'Orijinal silinemedi.';
 }

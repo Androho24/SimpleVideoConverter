@@ -647,4 +647,14 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'Cíl má jiný poměr stran než video.\n\nPruhy → celý obraz zůstane viditelný, zbytek vyplní černé pruhy\nOříznout → vyřízne se střed obrazu, okraje se ztratí\nRoztáhnout → obraz se zdeformuje, aby vyplnil rámeček';
+
+  @override
+  String get deleteOriginal => 'Smazat originál';
+
+  @override
+  String get originalTrashed =>
+      'Originál byl přesunut do koše — odtud ho lze obnovit.';
+
+  @override
+  String get originalTrashFailed => 'Originál se nepodařilo smazat.';
 }

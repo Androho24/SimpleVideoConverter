@@ -365,5 +365,9 @@
   "fitPad": "Balken",
   "fitCrop": "Zuschneiden",
   "fitStretch": "Strecken",
-  "fitModeInfoContent": "Das Ziel hat ein anderes Seitenverhältnis als das Video.\n\nBalken → das ganze Bild bleibt sichtbar, schwarze Balken füllen den Rest\nZuschneiden → die Bildmitte wird ausgeschnitten, die Ränder fallen weg\nStrecken → das Bild wird verzerrt, bis es den Rahmen füllt"
+  "fitModeInfoContent": "Das Ziel hat ein anderes Seitenverhältnis als das Video.\n\nBalken → das ganze Bild bleibt sichtbar, schwarze Balken füllen den Rest\nZuschneiden → die Bildmitte wird ausgeschnitten, die Ränder fallen weg\nStrecken → das Bild wird verzerrt, bis es den Rahmen füllt",
+
+  "deleteOriginal": "Original löschen",
+  "originalTrashed": "Original in den Papierkorb verschoben — dort lässt es sich wiederherstellen.",
+  "originalTrashFailed": "Das Original konnte nicht gelöscht werden."
 }

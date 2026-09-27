@@ -644,4 +644,14 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'ปลายทางมีอัตราส่วนภาพต่างจากวิดีโอ\n\nแถบดำ → เห็นภาพทั้งหมด ส่วนที่เหลือเติมด้วยแถบสีดำ\nครอป → ตัดเอาส่วนกลางภาพ ขอบจะหายไป\nยืด → ภาพจะถูกยืดจนเต็มกรอบ';
+
+  @override
+  String get deleteOriginal => 'ลบต้นฉบับ';
+
+  @override
+  String get originalTrashed =>
+      'ย้ายต้นฉบับไปที่ถังขยะแล้ว — กู้คืนได้จากที่นั่น';
+
+  @override
+  String get originalTrashFailed => 'ไม่สามารถลบต้นฉบับได้';
 }

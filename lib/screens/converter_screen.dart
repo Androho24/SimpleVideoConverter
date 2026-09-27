@@ -20,9 +20,11 @@ import '../models/video_metadata.dart';
 import '../screens/conversion_screen.dart';
 import '../screens/settings_screen.dart';
 import '../services/ffmpeg_codec_options.dart';
+import '../services/gallery_service.dart';
 import '../services/hardware_encoder_service.dart';
 import '../services/media_format_compatibility.dart';
 import '../services/native_ad_preloader.dart';
+import '../services/output_file_name.dart';
 import '../services/output_size_estimator.dart';
 import '../services/preferences_service.dart';
 import '../services/pro_prompt_service.dart';
@@ -46,6 +48,8 @@ class VideoConverterApp extends StatefulWidget {
 class _VideoConverterAppState extends State<VideoConverterApp> {
   // State
   String? _videoPath;
+  // Verweis auf das Original für „Original löschen“ nach dem Speichern.
+  String? _originalTrashUri;
   VideoMetadata? _metadata;
   double _trimStart = 0.0;
   double _trimEnd = 1.0;
@@ -89,13 +93,14 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   /// Bereinigt beim App-Start den Cache:
   /// - conversions/-Ordner (unsere Output-Dateien)
-  /// - UUID-Ordner im Cache-Root (Temp-Dateien von image_picker)
+  /// - UUID-Ordner im Cache-Root (Kopien der Videoauswahl)
   Future<void> _cleanAppCache() async {
     try {
       // Unseren conversions/-Ordner bereinigen
       await ConversionScreen.cleanCacheDir();
 
-      // image_picker hinterlässt UUID-Ordner direkt im Cache-Root
+      // Die Videoauswahl (OriginalVideoPicker.kt bzw. image_picker auf iOS)
+      // hinterlässt UUID-Ordner direkt im Cache-Root
       final cacheRoot = await getTemporaryDirectory();
       final entries = cacheRoot.listSync();
       for (final entry in entries) {
@@ -222,13 +227,21 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   Future<void> _pickVideo() async {
     setState(() => _isLoading = true);
 
-    final XFile? picked;
+    final String? path;
+    String? trashUri;
     try {
-      picked = await ImagePicker().pickVideo(source: ImageSource.gallery);
+      if (Platform.isAndroid) {
+        final picked = await GalleryService.pickVideo();
+        path = picked?.path;
+        trashUri = picked?.trashUri;
+      } else {
+        path = (await ImagePicker().pickVideo(
+          source: ImageSource.gallery,
+        ))?.path;
+      }
     } catch (_) {
-      // image_picker kann auf manchen Geräten (z. B. Chromebooks, exotische SAF-URIs)
-      // PlatformException(no_valid_video_uri) werfen, wenn das vom System gelieferte
-      // Video-URI nicht in einen lesbaren Pfad aufgelöst werden kann.
+      // Die Auswahl kann scheitern, wenn sich die gewählte Datei nicht lesen
+      // lässt (Cloud-Anbieter offline, exotische Dokument-Anbieter).
       if (mounted) {
         setState(() => _isLoading = false);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -240,12 +253,10 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       }
       return;
     }
-    if (picked == null) {
+    if (path == null) {
       setState(() => _isLoading = false);
       return;
     }
-
-    final path = picked.path;
 
     final meta = await _extractMetadata(path);
 
@@ -329,6 +340,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     setState(() {
       _isLoading = false;
       _videoPath = path;
+      _originalTrashUri = trashUri;
       _metadata = meta;
       _trimStart = 0.0;
       _trimEnd = 1.0;
@@ -628,6 +640,9 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
     final String command;
     final String outputPath;
+    // Videos tragen den Namen des Originals, weil Gal ihn in die Galerie
+    // übernimmt. Audio geht über den Speichern-Dialog mit defaultFileName.
+    final videoBaseName = OutputFileName.baseName(_videoPath!);
     // Nur gesetzt, wenn der Auftrag über den Hardware-Encoder läuft: derselbe
     // Auftrag mit libx265, falls MediaCodec auf dem Gerät scheitert.
     String? fallbackCommand;
@@ -648,8 +663,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
             '-vn -c:a $encoderName -b:a ${expert.audioBitrate}k $channelOptAudio -y "$outputPath"';
       } else {
         // ── Expert: Video konvertieren ────────────────────────────────────
-        outputPath =
-            '${cacheDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.${expert.container}';
+        outputPath = '${cacheDir.path}/$videoBaseName.${expert.container}';
         final scaleGraph = VideoScaleService.expertGraph(
           width: expert.width,
           height: expert.height,
@@ -723,8 +737,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     } else {
       // ── Normal: Video konvertieren ────────────────────────────────────
       final quality = qualityOptions[_selectedQualityIndex];
-      outputPath =
-          '${cacheDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.mp4';
+      outputPath = '${cacheDir.path}/$videoBaseName.mp4';
       final keepsHdr = _keepsHdr(selectedVideoCodec);
       final vfFilter = VideoScaleService.standardFilter(
         quality.shortSide,
@@ -769,12 +782,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
           '$qualityOpt $audioOpt -y "$outputPath"';
     }
 
-    final originalName = _videoPath!.split('/').last;
-    final baseName = originalName.contains('.')
-        ? originalName.substring(0, originalName.lastIndexOf('.'))
-        : originalName;
     final ext = outputPath.split('.').last;
-    final defaultFileName = '$convertedPrefix$baseName.$ext';
+    final defaultFileName = '$convertedPrefix$videoBaseName.$ext';
 
     await _requestNotificationPermission();
 
@@ -787,6 +796,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         builder: (_) => ConversionScreen(
           command: command,
           fallbackCommand: fallbackCommand,
+          originalTrashUri: _originalTrashUri,
           outputPath: outputPath,
           totalDurationMs: totalDurationMs,
           defaultFileName: defaultFileName,

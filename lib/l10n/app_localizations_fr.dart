@@ -654,4 +654,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'La cible a un format d\'image différent de celui de la vidéo.\n\nBandes → toute l\'image reste visible, des bandes noires comblent le reste\nRecadrer → le centre est découpé, les bords sont perdus\nÉtirer → l\'image est déformée pour remplir le cadre';
+
+  @override
+  String get deleteOriginal => 'Supprimer l\'original';
+
+  @override
+  String get originalTrashed =>
+      'Original déplacé dans la corbeille — vous pouvez l\'y restaurer.';
+
+  @override
+  String get originalTrashFailed => 'Impossible de supprimer l\'original.';
 }

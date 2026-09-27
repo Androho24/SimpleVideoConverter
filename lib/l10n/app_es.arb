@@ -224,5 +224,9 @@
   "fitPad": "Barras",
   "fitCrop": "Recortar",
   "fitStretch": "Estirar",
-  "fitModeInfoContent": "El destino tiene una relación de aspecto distinta a la del vídeo.\n\nBarras → se ve toda la imagen y unas barras negras rellenan el resto\nRecortar → se corta el centro y se pierden los bordes\nEstirar → la imagen se deforma hasta llenar el marco"
+  "fitModeInfoContent": "El destino tiene una relación de aspecto distinta a la del vídeo.\n\nBarras → se ve toda la imagen y unas barras negras rellenan el resto\nRecortar → se corta el centro y se pierden los bordes\nEstirar → la imagen se deforma hasta llenar el marco",
+
+  "deleteOriginal": "Eliminar original",
+  "originalTrashed": "Original movido a la papelera: puedes restaurarlo desde allí.",
+  "originalTrashFailed": "No se ha podido eliminar el original."
 }

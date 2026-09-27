@@ -30,4 +30,40 @@ class GalleryService {
       return false;
     }
   }
+
+  /// Öffnet die Dateiauswahl des Systems (SAF) und kopiert das Video in den
+  /// Cache. Null bei Abbruch, wirft bei einem Lesefehler.
+  ///
+  /// Android statt image_picker, weil dessen Photo Picker nur eine Nummer als
+  /// Namen liefert und keinen Verweis, der sich in den Papierkorb legen lässt
+  /// (siehe OriginalVideoPicker.kt).
+  static Future<PickedVideo?> pickVideo() async {
+    final result = await _channel.invokeMapMethod<String, Object?>('pickVideo');
+    if (result == null) return null;
+    return PickedVideo(
+      path: result['path']! as String,
+      trashUri: result['trashUri'] as String?,
+    );
+  }
+
+  /// Legt das Original über den Papierkorb-Dialog von Android ab (ab
+  /// Android 11, 30 Tage wiederherstellbar). True, wenn der Nutzer bestätigt
+  /// hat; wirft, wenn Android den Verweis ablehnt.
+  static Future<bool> trashOriginal(String trashUri) async {
+    final ok = await _channel.invokeMethod<bool>('trashOriginal', {
+      'uri': trashUri,
+    });
+    return ok ?? false;
+  }
+}
+
+class PickedVideo {
+  /// Kopie im Cache, benannt wie das Original.
+  final String path;
+
+  /// MediaStore-Verweis auf das Original für „Original löschen“. Null unter
+  /// Android 11 oder wenn die Datei nicht aus dem MediaStore stammt.
+  final String? trashUri;
+
+  const PickedVideo({required this.path, this.trashUri});
 }

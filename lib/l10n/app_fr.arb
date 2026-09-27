@@ -224,5 +224,9 @@
   "fitPad": "Bandes",
   "fitCrop": "Recadrer",
   "fitStretch": "Étirer",
-  "fitModeInfoContent": "La cible a un format d'image différent de celui de la vidéo.\n\nBandes → toute l'image reste visible, des bandes noires comblent le reste\nRecadrer → le centre est découpé, les bords sont perdus\nÉtirer → l'image est déformée pour remplir le cadre"
+  "fitModeInfoContent": "La cible a un format d'image différent de celui de la vidéo.\n\nBandes → toute l'image reste visible, des bandes noires comblent le reste\nRecadrer → le centre est découpé, les bords sont perdus\nÉtirer → l'image est déformée pour remplir le cadre",
+
+  "deleteOriginal": "Supprimer l'original",
+  "originalTrashed": "Original déplacé dans la corbeille — vous pouvez l'y restaurer.",
+  "originalTrashFailed": "Impossible de supprimer l'original."
 }

@@ -652,4 +652,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'La destinazione ha proporzioni diverse da quelle del video.\n\nBande → l\'immagine resta intera, bande nere riempiono il resto\nRitaglia → viene ritagliato il centro, i bordi vanno persi\nAllunga → l\'immagine viene deformata per riempire il riquadro';
+
+  @override
+  String get deleteOriginal => 'Elimina originale';
+
+  @override
+  String get originalTrashed =>
+      'Originale spostato nel cestino: puoi ripristinarlo da lì.';
+
+  @override
+  String get originalTrashFailed => 'Impossibile eliminare l\'originale.';
 }

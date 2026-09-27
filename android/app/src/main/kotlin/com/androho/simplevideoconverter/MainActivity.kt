@@ -28,7 +28,10 @@ class MainActivity : FlutterActivity() {
     private val SERVICE_CHANNEL = "com.androho.simplevideoconverter/conversion_service"
     private val GALLERY_CHANNEL = "com.androho.simplevideoconverter/gallery"
     private val SYSTEM_BARS_CHANNEL = "com.androho.simplevideoconverter/system_bars"
+    // Muss zu `Gal.putVideo(…, album: 'Video Converter')` in conversion_screen.dart passen.
+    private val GALLERY_ALBUM = "Video Converter"
     private var adsChannel: MethodChannel? = null
+    private val originalVideoPicker = OriginalVideoPicker(this)
     private var pendingConsentResult: Boolean? = null
     private var systemBarsColor: Int? = null
     private var systemBarsDark: Boolean? = null
@@ -57,6 +60,12 @@ class MainActivity : FlutterActivity() {
                 notifyDartAboutConsent(canRequestAds)
             }
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (originalVideoPicker.onActivityResult(requestCode, resultCode, data)) return
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onResume() {
@@ -158,6 +167,9 @@ class MainActivity : FlutterActivity() {
                         val displayName = call.argument<String>("displayName") ?: ""
                         result.success(viewSavedVideo(displayName))
                     }
+                    "pickVideo" -> originalVideoPicker.pickVideo(result)
+                    "trashOriginal" ->
+                        originalVideoPicker.trashOriginal(call.argument<String>("uri"), result)
                     else -> result.notImplemented()
                 }
             }
@@ -199,11 +211,27 @@ class MainActivity : FlutterActivity() {
                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI
             }
             val projection = arrayOf(MediaStore.Video.Media._ID)
-            // Nach DATE_ADDED DESC sortieren — falls eine alte Datei mit
-            // gleichem Namen noch im Index liegt, wird die neueste genommen.
-            val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC"
-            val selection = "${MediaStore.Video.Media.DISPLAY_NAME} = ?"
-            val selectionArgs = arrayOf(displayName)
+            // Videos tragen den Namen des Originals. Liegt der Name im Album
+            // schon, benennt MediaStore die neue Datei um („Urlaub (1).mp4“,
+            // vor API 29 macht Gal „Urlaub1.mp4“) — ein exakter Vergleich fände
+            // dann die ältere. Deshalb: gleicher Namensanfang und gleiche
+            // Endung, im Album von Gal, und davon die zuletzt eingefügte.
+            // DATE_ADDED hat nur Sekunden, _ID steigt streng.
+            val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC, " +
+                "${MediaStore.Video.Media._ID} DESC"
+            val dot = displayName.lastIndexOf('.')
+            val stem = if (dot > 0) displayName.substring(0, dot) else displayName
+            val extension = if (dot > 0) displayName.substring(dot) else ""
+            val namePattern = likeEscape(stem) + "%" + likeEscape(extension)
+            val albumColumn = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                MediaStore.Video.Media.RELATIVE_PATH
+            } else {
+                @Suppress("DEPRECATION")
+                MediaStore.Video.Media.DATA
+            }
+            val selection = "${MediaStore.Video.Media.DISPLAY_NAME} LIKE ? ESCAPE '\\' " +
+                "AND $albumColumn LIKE ?"
+            val selectionArgs = arrayOf(namePattern, "%/$GALLERY_ALBUM/%")
 
             val uri: Uri? = contentResolver.query(
                 collection, projection, selection, selectionArgs, sortOrder
@@ -260,6 +288,10 @@ class MainActivity : FlutterActivity() {
         Log.w("MainActivity", "hasHardwareHevcEncoder: MediaCodecList nicht lesbar", e)
         false
     }
+
+    /** Maskiert `%`, `_` und `\` für LIKE … ESCAPE '\'. */
+    private fun likeEscape(value: String): String =
+        value.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
         // Engine wird bewusst NICHT zerstört — sie bleibt für die Prozess-Lebensdauer

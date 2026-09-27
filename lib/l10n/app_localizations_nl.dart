@@ -650,4 +650,14 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'Het doel heeft een andere beeldverhouding dan de video.\n\nBalken → het hele beeld blijft zichtbaar, zwarte balken vullen de rest\nBijsnijden → het midden wordt uitgesneden, de randen vallen weg\nUitrekken → het beeld wordt vervormd tot het kader vol is';
+
+  @override
+  String get deleteOriginal => 'Origineel verwijderen';
+
+  @override
+  String get originalTrashed =>
+      'Origineel naar de prullenbak verplaatst — daar kun je het herstellen.';
+
+  @override
+  String get originalTrashFailed => 'Het origineel kon niet worden verwijderd.';
 }

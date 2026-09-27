@@ -224,5 +224,9 @@
   "fitPad": "Bande",
   "fitCrop": "Ritaglia",
   "fitStretch": "Allunga",
-  "fitModeInfoContent": "La destinazione ha proporzioni diverse da quelle del video.\n\nBande → l'immagine resta intera, bande nere riempiono il resto\nRitaglia → viene ritagliato il centro, i bordi vanno persi\nAllunga → l'immagine viene deformata per riempire il riquadro"
+  "fitModeInfoContent": "La destinazione ha proporzioni diverse da quelle del video.\n\nBande → l'immagine resta intera, bande nere riempiono il resto\nRitaglia → viene ritagliato il centro, i bordi vanno persi\nAllunga → l'immagine viene deformata per riempire il riquadro",
+
+  "deleteOriginal": "Elimina originale",
+  "originalTrashed": "Originale spostato nel cestino: puoi ripristinarlo da lì.",
+  "originalTrashFailed": "Impossibile eliminare l'originale."
 }

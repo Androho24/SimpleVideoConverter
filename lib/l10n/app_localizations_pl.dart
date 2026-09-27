@@ -651,4 +651,14 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'Cel ma inne proporcje niż wideo.\n\nPasy → cały obraz pozostaje widoczny, resztę wypełniają czarne pasy\nPrzytnij → wycinany jest środek obrazu, krawędzie znikają\nRozciągnij → obraz zostaje zniekształcony, aby wypełnić ramkę';
+
+  @override
+  String get deleteOriginal => 'Usuń oryginał';
+
+  @override
+  String get originalTrashed =>
+      'Oryginał przeniesiono do kosza — można go stamtąd przywrócić.';
+
+  @override
+  String get originalTrashFailed => 'Nie udało się usunąć oryginału.';
 }

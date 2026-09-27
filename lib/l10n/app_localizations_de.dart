@@ -650,4 +650,15 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get fitModeInfoContent =>
       'Das Ziel hat ein anderes Seitenverhältnis als das Video.\n\nBalken → das ganze Bild bleibt sichtbar, schwarze Balken füllen den Rest\nZuschneiden → die Bildmitte wird ausgeschnitten, die Ränder fallen weg\nStrecken → das Bild wird verzerrt, bis es den Rahmen füllt';
+
+  @override
+  String get deleteOriginal => 'Original löschen';
+
+  @override
+  String get originalTrashed =>
+      'Original in den Papierkorb verschoben — dort lässt es sich wiederherstellen.';
+
+  @override
+  String get originalTrashFailed =>
+      'Das Original konnte nicht gelöscht werden.';
 }

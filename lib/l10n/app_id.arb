@@ -224,5 +224,9 @@
   "fitPad": "Bilah",
   "fitCrop": "Pangkas",
   "fitStretch": "Regangkan",
-  "fitModeInfoContent": "Target memiliki rasio aspek yang berbeda dari video.\n\nBilah → seluruh gambar tetap terlihat, bilah hitam mengisi sisanya\nPangkas → bagian tengah dipotong, tepinya hilang\nRegangkan → gambar direntangkan hingga memenuhi bingkai"
+  "fitModeInfoContent": "Target memiliki rasio aspek yang berbeda dari video.\n\nBilah → seluruh gambar tetap terlihat, bilah hitam mengisi sisanya\nPangkas → bagian tengah dipotong, tepinya hilang\nRegangkan → gambar direntangkan hingga memenuhi bingkai",
+
+  "deleteOriginal": "Hapus video asli",
+  "originalTrashed": "Video asli dipindahkan ke sampah — Anda bisa memulihkannya dari sana.",
+  "originalTrashFailed": "Video asli tidak dapat dihapus."
 }
