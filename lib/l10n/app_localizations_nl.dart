@@ -616,4 +616,13 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Hardware-encoder uitgeschakeld — deze ondersteunt alleen de bitsnelheidmodus.';
+
+  @override
+  String get resolutionPresetLabel => 'Voorinstelling';
+
+  @override
+  String get resolutionOriginal => 'Origineel';
+
+  @override
+  String get resolutionCustom => 'Aangepast';
 }

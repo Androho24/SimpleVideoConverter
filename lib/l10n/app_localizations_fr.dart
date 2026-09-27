@@ -620,4 +620,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Encodeur matériel désactivé — il ne prend en charge que le mode débit binaire.';
+
+  @override
+  String get resolutionPresetLabel => 'Préréglage';
+
+  @override
+  String get resolutionOriginal => 'Originale';
+
+  @override
+  String get resolutionCustom => 'Personnalisée';
 }

@@ -619,4 +619,13 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Donanım kodlayıcı kapatıldı — yalnızca bit hızı modunu destekler.';
+
+  @override
+  String get resolutionPresetLabel => 'Ön ayar';
+
+  @override
+  String get resolutionOriginal => 'Orijinal';
+
+  @override
+  String get resolutionCustom => 'Özel';
 }

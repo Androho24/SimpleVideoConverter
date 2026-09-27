@@ -212,5 +212,9 @@
   "hwEncoderHdrHint": "HDR video — převede se softwarovým enkodérem, aby se HDR zachovalo.",
   "hwEncoderFallback": "Hardwarový enkodér selhal — převádí se softwarovým enkodérem.",
   "hwEncoderContainerHint": "Hardwarový enkodér nepodporuje {format} — tento formát se převede softwarovým enkodérem.",
-  "hwEncoderDisabledForCrf": "Hardwarový enkodér vypnut — podporuje pouze režim datového toku."
+  "hwEncoderDisabledForCrf": "Hardwarový enkodér vypnut — podporuje pouze režim datového toku.",
+
+  "resolutionPresetLabel": "Předvolba",
+  "resolutionOriginal": "Původní",
+  "resolutionCustom": "Vlastní"
 }

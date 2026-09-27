@@ -616,4 +616,13 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Encoder perangkat keras dimatikan — hanya mendukung mode laju bit.';
+
+  @override
+  String get resolutionPresetLabel => 'Preset';
+
+  @override
+  String get resolutionOriginal => 'Asli';
+
+  @override
+  String get resolutionCustom => 'Kustom';
 }

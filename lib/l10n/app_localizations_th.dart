@@ -610,4 +610,13 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'ปิดตัวเข้ารหัสฮาร์ดแวร์แล้ว — รองรับเฉพาะโหมดบิตเรต';
+
+  @override
+  String get resolutionPresetLabel => 'ค่าที่ตั้งไว้';
+
+  @override
+  String get resolutionOriginal => 'ต้นฉบับ';
+
+  @override
+  String get resolutionCustom => 'กำหนดเอง';
 }

@@ -209,5 +209,9 @@
   "hwEncoderHdrHint": "Vídeo HDR — ele será convertido com o codificador por software para preservar o HDR.",
   "hwEncoderFallback": "O codificador por hardware falhou — convertendo com o codificador por software.",
   "hwEncoderContainerHint": "O codificador por hardware não é compatível com {format} — este formato será convertido com o codificador por software.",
-  "hwEncoderDisabledForCrf": "Codificador por hardware desativado — ele só é compatível com o modo de taxa de bits."
+  "hwEncoderDisabledForCrf": "Codificador por hardware desativado — ele só é compatível com o modo de taxa de bits.",
+
+  "resolutionPresetLabel": "Predefinição",
+  "resolutionOriginal": "Original",
+  "resolutionCustom": "Personalizada"
 }

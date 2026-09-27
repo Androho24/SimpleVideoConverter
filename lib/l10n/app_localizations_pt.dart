@@ -618,6 +618,15 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Codificador por hardware desativado — só suporta o modo de taxa de bits.';
+
+  @override
+  String get resolutionPresetLabel => 'Predefinição';
+
+  @override
+  String get resolutionOriginal => 'Original';
+
+  @override
+  String get resolutionCustom => 'Personalizada';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1234,4 +1243,13 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get hwEncoderDisabledForCrf =>
       'Codificador por hardware desativado — ele só é compatível com o modo de taxa de bits.';
+
+  @override
+  String get resolutionPresetLabel => 'Predefinição';
+
+  @override
+  String get resolutionOriginal => 'Original';
+
+  @override
+  String get resolutionCustom => 'Personalizada';
 }

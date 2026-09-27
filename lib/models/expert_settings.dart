@@ -8,6 +8,11 @@ class ExpertSettings {
   final String bitrateMode; // 'crf' oder 'bitrate'
   final int
   targetBitrateKbps; // Ziel-Bitrate in kbps (nur bei bitrateMode='bitrate')
+  /// Gewählte Auflösungsstufe als kurze Seite (1080 = 1080p). 0 = Original,
+  /// [customResolution] = von Hand eingegeben. Nur für die Anzeige im
+  /// Dropdown; maßgeblich für die Konvertierung sind [width] und [height].
+  final int resolutionPreset;
+  static const customResolution = -1;
   final int width; // 0 = Original beibehalten
   final int height; // 0 = Original beibehalten
   final int fps; // 0 = Original-FPS beibehalten
@@ -27,6 +32,7 @@ class ExpertSettings {
     this.crf = 23,
     this.bitrateMode = 'crf',
     this.targetBitrateKbps = 5000,
+    this.resolutionPreset = 0,
     this.width = 0,
     this.height = 0,
     this.fps = 0,
@@ -43,6 +49,7 @@ class ExpertSettings {
     int? crf,
     String? bitrateMode,
     int? targetBitrateKbps,
+    int? resolutionPreset,
     int? width,
     int? height,
     int? fps,
@@ -58,6 +65,7 @@ class ExpertSettings {
       crf: crf ?? this.crf,
       bitrateMode: bitrateMode ?? this.bitrateMode,
       targetBitrateKbps: targetBitrateKbps ?? this.targetBitrateKbps,
+      resolutionPreset: resolutionPreset ?? this.resolutionPreset,
       width: width ?? this.width,
       height: height ?? this.height,
       fps: fps ?? this.fps,

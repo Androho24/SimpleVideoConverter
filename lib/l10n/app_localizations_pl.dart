@@ -617,4 +617,13 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Koder sprzętowy wyłączony — obsługuje tylko tryb szybkości transmisji.';
+
+  @override
+  String get resolutionPresetLabel => 'Ustawienie wstępne';
+
+  @override
+  String get resolutionOriginal => 'Oryginalna';
+
+  @override
+  String get resolutionCustom => 'Niestandardowa';
 }

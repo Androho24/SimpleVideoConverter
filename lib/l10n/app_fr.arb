@@ -211,5 +211,9 @@
   "hwEncoderHdrHint": "Vidéo HDR — elle sera convertie avec l'encodeur logiciel afin de préserver le HDR.",
   "hwEncoderFallback": "Échec de l'encodeur matériel — conversion avec l'encodeur logiciel.",
   "hwEncoderContainerHint": "L'encodeur matériel ne prend pas en charge {format} — ce format sera converti avec l'encodeur logiciel.",
-  "hwEncoderDisabledForCrf": "Encodeur matériel désactivé — il ne prend en charge que le mode débit binaire."
+  "hwEncoderDisabledForCrf": "Encodeur matériel désactivé — il ne prend en charge que le mode débit binaire.",
+
+  "resolutionPresetLabel": "Préréglage",
+  "resolutionOriginal": "Originale",
+  "resolutionCustom": "Personnalisée"
 }

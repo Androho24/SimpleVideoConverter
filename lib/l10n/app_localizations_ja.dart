@@ -600,4 +600,13 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'ハードウェアエンコーダーをオフにしました。ビットレートモードのみに対応しています。';
+
+  @override
+  String get resolutionPresetLabel => 'プリセット';
+
+  @override
+  String get resolutionOriginal => '元の解像度';
+
+  @override
+  String get resolutionCustom => 'カスタム';
 }

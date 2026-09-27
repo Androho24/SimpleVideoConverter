@@ -211,5 +211,9 @@
   "hwEncoderHdrHint": "Wideo HDR — zostanie przekonwertowane koderem programowym, aby zachować HDR.",
   "hwEncoderFallback": "Koder sprzętowy zawiódł — konwersja koderem programowym.",
   "hwEncoderContainerHint": "Koder sprzętowy nie obsługuje formatu {format} — ten format zostanie przekonwertowany koderem programowym.",
-  "hwEncoderDisabledForCrf": "Koder sprzętowy wyłączony — obsługuje tylko tryb szybkości transmisji."
+  "hwEncoderDisabledForCrf": "Koder sprzętowy wyłączony — obsługuje tylko tryb szybkości transmisji.",
+
+  "resolutionPresetLabel": "Ustawienie wstępne",
+  "resolutionOriginal": "Oryginalna",
+  "resolutionCustom": "Niestandardowa"
 }

@@ -615,4 +615,13 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'हार्डवेयर एन्कोडर बंद किया गया — यह केवल बिटरेट मोड सपोर्ट करता है।';
+
+  @override
+  String get resolutionPresetLabel => 'प्रीसेट';
+
+  @override
+  String get resolutionOriginal => 'मूल';
+
+  @override
+  String get resolutionCustom => 'कस्टम';
 }

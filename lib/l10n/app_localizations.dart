@@ -1222,6 +1222,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hardware encoder turned off — it only supports bitrate mode.'**
   String get hwEncoderDisabledForCrf;
+
+  /// Label des Auflösungs-Dropdowns im Expertenmodus (Stufen wie 1080p, 720p)
+  ///
+  /// In en, this message translates to:
+  /// **'Preset'**
+  String get resolutionPresetLabel;
+
+  /// Eintrag im Auflösungs-Dropdown: Auflösung der Quelle beibehalten
+  ///
+  /// In en, this message translates to:
+  /// **'Original'**
+  String get resolutionOriginal;
+
+  /// Anzeige im Auflösungs-Dropdown, wenn Breite/Höhe von Hand eingegeben wurden
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get resolutionCustom;
 }
 
 class _AppLocalizationsDelegate

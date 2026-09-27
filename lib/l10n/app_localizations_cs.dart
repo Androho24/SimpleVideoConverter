@@ -613,4 +613,13 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Hardwarový enkodér vypnut — podporuje pouze režim datového toku.';
+
+  @override
+  String get resolutionPresetLabel => 'Předvolba';
+
+  @override
+  String get resolutionOriginal => 'Původní';
+
+  @override
+  String get resolutionCustom => 'Vlastní';
 }

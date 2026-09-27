@@ -618,4 +618,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Encoder hardware disattivato: supporta solo la modalità bitrate.';
+
+  @override
+  String get resolutionPresetLabel => 'Preset';
+
+  @override
+  String get resolutionOriginal => 'Originale';
+
+  @override
+  String get resolutionCustom => 'Personalizzata';
 }

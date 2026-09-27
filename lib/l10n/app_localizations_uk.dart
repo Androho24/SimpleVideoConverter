@@ -618,4 +618,13 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Апаратний кодувальник вимкнено — він підтримує лише режим бітрейту.';
+
+  @override
+  String get resolutionPresetLabel => 'Шаблон';
+
+  @override
+  String get resolutionOriginal => 'Оригінальна';
+
+  @override
+  String get resolutionCustom => 'Власна';
 }

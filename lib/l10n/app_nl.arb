@@ -211,5 +211,9 @@
   "hwEncoderHdrHint": "HDR-video — wordt geconverteerd met de software-encoder zodat HDR behouden blijft.",
   "hwEncoderFallback": "Hardware-encoder mislukt — er wordt geconverteerd met de software-encoder.",
   "hwEncoderContainerHint": "De hardware-encoder ondersteunt {format} niet — dit formaat wordt geconverteerd met de software-encoder.",
-  "hwEncoderDisabledForCrf": "Hardware-encoder uitgeschakeld — deze ondersteunt alleen de bitsnelheidmodus."
+  "hwEncoderDisabledForCrf": "Hardware-encoder uitgeschakeld — deze ondersteunt alleen de bitsnelheidmodus.",
+
+  "resolutionPresetLabel": "Voorinstelling",
+  "resolutionOriginal": "Origineel",
+  "resolutionCustom": "Aangepast"
 }

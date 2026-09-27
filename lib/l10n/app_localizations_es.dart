@@ -621,4 +621,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get hwEncoderDisabledForCrf =>
       'Codificador por hardware desactivado: solo admite el modo de velocidad de bits.';
+
+  @override
+  String get resolutionPresetLabel => 'Preajuste';
+
+  @override
+  String get resolutionOriginal => 'Original';
+
+  @override
+  String get resolutionCustom => 'Personalizado';
 }

@@ -211,5 +211,9 @@
   "hwEncoderHdrHint": "Video HDR: verrà convertito con l'encoder software per preservare l'HDR.",
   "hwEncoderFallback": "Encoder hardware non riuscito: conversione con l'encoder software.",
   "hwEncoderContainerHint": "L'encoder hardware non supporta {format}: questo formato verrà convertito con l'encoder software.",
-  "hwEncoderDisabledForCrf": "Encoder hardware disattivato: supporta solo la modalità bitrate."
+  "hwEncoderDisabledForCrf": "Encoder hardware disattivato: supporta solo la modalità bitrate.",
+
+  "resolutionPresetLabel": "Preset",
+  "resolutionOriginal": "Originale",
+  "resolutionCustom": "Personalizzata"
 }

@@ -10,10 +10,14 @@ import '../services/ffmpeg_codec_options.dart';
 import '../services/media_format_compatibility.dart';
 import '../services/output_size_estimator.dart';
 import '../services/video_quality_scale.dart';
+import '../services/video_scale_service.dart';
 import 'target_bitrate_dialog.dart';
 
 /// Maximale Auflösung pro Seite (4K).
 const _maxDimension = 3840;
+
+/// Auflösungsstufen im Dropdown, jeweils als kurze Seite.
+const _resolutionPresets = [2160, 1440, 1080, 720, 480, 360];
 
 /// Verfügbare Ziel-Bitraten (kbps) für den Bitrate-Modus (als Schnellauswahl).
 const _targetBitrateOptions = [500, 1000, 2000, 4000, 6000, 8000, 12000, 20000];
@@ -102,6 +106,7 @@ class _ExpertControlsState extends State<ExpertControls> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         var updated = widget.settings.copyWith(
+          resolutionPreset: 0,
           width: widget.metadata!.width,
           height: widget.metadata!.height,
         );
@@ -150,9 +155,20 @@ class _ExpertControlsState extends State<ExpertControls> {
       int newHeight = (newWidth / aspectRatio).round();
       newHeight = ((newHeight ~/ 2) * 2).clamp(2, _maxDimension);
       _heightController.text = newHeight.toString();
-      widget.onChanged(s.copyWith(width: newWidth, height: newHeight));
+      widget.onChanged(
+        s.copyWith(
+          width: newWidth,
+          height: newHeight,
+          resolutionPreset: ExpertSettings.customResolution,
+        ),
+      );
     } else {
-      widget.onChanged(s.copyWith(width: newWidth));
+      widget.onChanged(
+        s.copyWith(
+          width: newWidth,
+          resolutionPreset: ExpertSettings.customResolution,
+        ),
+      );
     }
   }
 
@@ -172,9 +188,20 @@ class _ExpertControlsState extends State<ExpertControls> {
       int newWidth = (newHeight * aspectRatio).round();
       newWidth = ((newWidth ~/ 2) * 2).clamp(2, _maxDimension);
       _widthController.text = newWidth.toString();
-      widget.onChanged(s.copyWith(width: newWidth, height: newHeight));
+      widget.onChanged(
+        s.copyWith(
+          width: newWidth,
+          height: newHeight,
+          resolutionPreset: ExpertSettings.customResolution,
+        ),
+      );
     } else {
-      widget.onChanged(s.copyWith(height: newHeight));
+      widget.onChanged(
+        s.copyWith(
+          height: newHeight,
+          resolutionPreset: ExpertSettings.customResolution,
+        ),
+      );
     }
   }
 
@@ -202,6 +229,78 @@ class _ExpertControlsState extends State<ExpertControls> {
     }
     setState(() => _aspectLocked = !_aspectLocked);
   }
+
+  /// Setzt Breite und Höhe auf eine Auflösungsstufe. Wie im Normalmodus zählt
+  /// die kurze Seite, die lange folgt der Quelle — so passt es auch bei
+  /// Hochkant-Videos. „Original“ übernimmt die Quellmaße unverändert.
+  void _selectResolutionPreset(int preset) {
+    final meta = widget.metadata;
+    if (meta == null) return;
+    final (width, height) = preset == 0
+        ? (meta.width, meta.height)
+        : VideoScaleService.estimatedStandardDimensions(
+            sourceWidth: meta.width,
+            sourceHeight: meta.height,
+            targetShortSide: preset,
+          );
+    _widthController.text = width.toString();
+    _heightController.text = height.toString();
+    setState(() => _aspectLocked = true);
+    widget.onChanged(
+      widget.settings.copyWith(
+        resolutionPreset: preset,
+        width: width,
+        height: height,
+      ),
+    );
+  }
+
+  /// Stufen ab der kurzen Seite der Quelle wären Hochskalieren (oder gleich
+  /// „Original“) und werden deshalb nicht angeboten.
+  bool _resolutionPresetEnabled(int preset) {
+    final meta = widget.metadata;
+    if (meta == null) return false;
+    return preset < VideoScaleService.sourceShortSide(meta.width, meta.height);
+  }
+
+  Widget _buildResolutionPresetMenu(AppLocalizations l, ExpertSettings s) =>
+      DropdownMenu<int>(
+        key: ValueKey('expert_resolution_preset_${s.resolutionPreset}'),
+        expandedInsets: EdgeInsets.zero,
+        enabled: !widget.isConverting && widget.metadata != null,
+        requestFocusOnTap: false,
+        initialSelection: s.resolutionPreset,
+        label: Text(l.resolutionPresetLabel),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+        ),
+        menuStyle: MenuStyle(
+          shape: WidgetStatePropertyAll(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+        ),
+        dropdownMenuEntries: [
+          DropdownMenuEntry(value: 0, label: l.resolutionOriginal),
+          for (final preset in _resolutionPresets)
+            DropdownMenuEntry(
+              value: preset,
+              label: '${preset}p',
+              enabled: _resolutionPresetEnabled(preset),
+            ),
+          // Nur Anzeige: entsteht durch Eingabe in die Felder.
+          if (s.resolutionPreset == ExpertSettings.customResolution)
+            DropdownMenuEntry(
+              value: ExpertSettings.customResolution,
+              label: l.resolutionCustom,
+              enabled: false,
+            ),
+        ],
+        onSelected: (v) {
+          if (v != null && v != ExpertSettings.customResolution) {
+            _selectResolutionPreset(v);
+          }
+        },
+      );
 
   Widget _buildLockButton(AppLocalizations l) {
     final meta = widget.metadata;
@@ -662,6 +761,8 @@ class _ExpertControlsState extends State<ExpertControls> {
             ],
           ),
           const SizedBox(height: 4),
+          _buildResolutionPresetMenu(l, s),
+          const SizedBox(height: 12),
           Row(
             children: [
               Expanded(

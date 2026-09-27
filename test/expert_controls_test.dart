@@ -327,15 +327,106 @@ void main() {
       expect(hdrHint, findsOneWidget);
     });
   });
+
+  group('resolution preset menu', () {
+    final menu = find.byWidgetPredicate((widget) {
+      final key = widget.key;
+      return widget is DropdownMenu<int> &&
+          key is ValueKey<String> &&
+          key.value.startsWith('expert_resolution_preset_');
+    });
+
+    _ExpertControlsHostState host(WidgetTester tester) =>
+        tester.state(find.byType(_ExpertControlsHost));
+
+    Future<void> choose(WidgetTester tester, String label) async {
+      await tester.ensureVisible(menu);
+      await tester.tap(menu);
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(MenuItemButton, label).last);
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('sets both sides from the short side of a landscape source', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const _ExpertControlsHost());
+      await tester.pumpAndSettle();
+
+      await choose(tester, '720p');
+
+      expect(host(tester).settings.resolutionPreset, 720);
+      expect(host(tester).settings.width, 1280);
+      expect(host(tester).settings.height, 720);
+      expect(find.widgetWithText(TextField, '1280'), findsOneWidget);
+    });
+
+    testWidgets('keeps portrait orientation', (tester) async {
+      await tester.pumpWidget(
+        const _ExpertControlsHost(sourceWidth: 1080, sourceHeight: 1920),
+      );
+      await tester.pumpAndSettle();
+
+      await choose(tester, '480p');
+
+      expect(host(tester).settings.width, 480);
+      expect(host(tester).settings.height, 854);
+    });
+
+    testWidgets('offers no presets at or above the source resolution', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const _ExpertControlsHost());
+      await tester.pumpAndSettle();
+
+      final entries = tester
+          .widget<DropdownMenu<int>>(menu)
+          .dropdownMenuEntries;
+      bool enabled(int value) =>
+          entries.firstWhere((entry) => entry.value == value).enabled;
+
+      expect(enabled(2160), isFalse);
+      expect(enabled(1080), isFalse);
+      expect(enabled(720), isTrue);
+    });
+
+    testWidgets('switches to custom after typing and back to original', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const _ExpertControlsHost());
+      await tester.pumpAndSettle();
+
+      final widthField = find.widgetWithText(TextField, '1920');
+      await tester.ensureVisible(widthField);
+      await tester.enterText(widthField, '1000');
+      await tester.pumpAndSettle();
+
+      expect(
+        host(tester).settings.resolutionPreset,
+        ExpertSettings.customResolution,
+      );
+      expect(find.text('Custom'), findsWidgets);
+
+      await choose(tester, 'Original');
+
+      expect(host(tester).settings.resolutionPreset, 0);
+      expect(host(tester).settings.width, 1920);
+      expect(host(tester).settings.height, 1080);
+    });
+  });
 }
 
 class _ExpertControlsHost extends StatefulWidget {
   final bool av1Enabled;
   final bool hardwareHevcAvailable;
   final String? hdrTransfer;
+  final int sourceWidth;
+  final int sourceHeight;
 
   const _ExpertControlsHost({
     super.key,
+    this.sourceWidth = 1920,
+    this.sourceHeight = 1080,
     this.av1Enabled = true,
     this.hardwareHevcAvailable = false,
     this.hdrTransfer,
@@ -346,13 +437,16 @@ class _ExpertControlsHost extends StatefulWidget {
 }
 
 class _ExpertControlsHostState extends State<_ExpertControlsHost> {
-  ExpertSettings settings = const ExpertSettings(width: 1920, height: 1080);
+  late ExpertSettings settings = ExpertSettings(
+    width: widget.sourceWidth,
+    height: widget.sourceHeight,
+  );
   // Einmal pro Host: Eine neue Instanz je Build gilt in ExpertControls als
   // neues Video und löst dort endlos Updates aus.
   late final metadata = VideoMetadata(
     durationMs: 60000,
-    width: 1920,
-    height: 1080,
+    width: widget.sourceWidth,
+    height: widget.sourceHeight,
     audioChannels: 6,
     hdrTransfer: widget.hdrTransfer,
   );

@@ -525,5 +525,12 @@
   "hwEncoderContainerHint": "{format} is not supported by the hardware encoder — this format will be converted with the software encoder.",
   "@hwEncoderContainerHint": {"description": "Hinweis unter dem Hardware-Encoder-Schalter, wenn das gewaehlte Ausgabeformat (z. B. MKV) nicht mit hevc_mediacodec funktioniert und deshalb libx265 genutzt wird", "placeholders": {"format": {"type": "String"}}},
   "hwEncoderDisabledForCrf": "Hardware encoder turned off — it only supports bitrate mode.",
-  "@hwEncoderDisabledForCrf": {"description": "SnackBar, wenn der Nutzer bei eingeschaltetem Hardware-Encoder den CRF-Modus waehlt und der Schalter deshalb ausgeht"}
+  "@hwEncoderDisabledForCrf": {"description": "SnackBar, wenn der Nutzer bei eingeschaltetem Hardware-Encoder den CRF-Modus waehlt und der Schalter deshalb ausgeht"},
+
+  "resolutionPresetLabel": "Preset",
+  "@resolutionPresetLabel": {"description": "Label des Auflösungs-Dropdowns im Expertenmodus (Stufen wie 1080p, 720p)"},
+  "resolutionOriginal": "Original",
+  "@resolutionOriginal": {"description": "Eintrag im Auflösungs-Dropdown: Auflösung der Quelle beibehalten"},
+  "resolutionCustom": "Custom",
+  "@resolutionCustom": {"description": "Anzeige im Auflösungs-Dropdown, wenn Breite/Höhe von Hand eingegeben wurden"}
 }
