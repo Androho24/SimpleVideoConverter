@@ -1216,6 +1216,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{format} is not supported by the hardware encoder — this format will be converted with the software encoder.'**
   String hwEncoderContainerHint(String format);
+
+  /// SnackBar, wenn der Nutzer bei eingeschaltetem Hardware-Encoder den CRF-Modus waehlt und der Schalter deshalb ausgeht
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware encoder turned off — it only supports bitrate mode.'**
+  String get hwEncoderDisabledForCrf;
 }
 
 class _AppLocalizationsDelegate

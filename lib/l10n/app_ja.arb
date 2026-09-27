@@ -189,5 +189,6 @@
   "hwEncoderSubtitle": "大幅に高速ですが、同じ画質には約2倍のビットレートが必要です。ビットレートモードのみ。",
   "hwEncoderHdrHint": "HDR動画です。HDRを維持するため、ソフトウェアエンコーダーで変換します。",
   "hwEncoderFallback": "ハードウェアエンコーダーが失敗しました。ソフトウェアエンコーダーで変換します。",
-  "hwEncoderContainerHint": "ハードウェアエンコーダーは{format}に対応していません。この形式はソフトウェアエンコーダーで変換します。"
+  "hwEncoderContainerHint": "ハードウェアエンコーダーは{format}に対応していません。この形式はソフトウェアエンコーダーで変換します。",
+  "hwEncoderDisabledForCrf": "ハードウェアエンコーダーをオフにしました。ビットレートモードのみに対応しています。"
 }

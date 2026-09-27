@@ -612,4 +612,8 @@ class AppLocalizationsId extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'Encoder perangkat keras tidak mendukung $format — format ini akan dikonversi dengan encoder perangkat lunak.';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'Encoder perangkat keras dimatikan — hanya mendukung mode laju bit.';
 }

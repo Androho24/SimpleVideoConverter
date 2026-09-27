@@ -614,6 +614,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'O codificador por hardware não suporta $format — este formato será convertido com o codificador por software.';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'Codificador por hardware desativado — só suporta o modo de taxa de bits.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1226,4 +1230,8 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String hwEncoderContainerHint(String format) {
     return 'O codificador por hardware não é compatível com $format — este formato será convertido com o codificador por software.';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'Codificador por hardware desativado — ele só é compatível com o modo de taxa de bits.';
 }

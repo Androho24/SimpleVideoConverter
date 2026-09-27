@@ -210,5 +210,6 @@
   "hwEncoderSubtitle": "Çok daha hızlı, ancak aynı kalite için yaklaşık iki kat bit hızı gerekir. Yalnızca bit hızı modunda.",
   "hwEncoderHdrHint": "HDR video — HDR'nin korunması için yazılım kodlayıcıyla dönüştürülecek.",
   "hwEncoderFallback": "Donanım kodlayıcı başarısız oldu — yazılım kodlayıcıyla dönüştürülüyor.",
-  "hwEncoderContainerHint": "Donanım kodlayıcı {format} biçimini desteklemiyor — bu biçim yazılım kodlayıcıyla dönüştürülecek."
+  "hwEncoderContainerHint": "Donanım kodlayıcı {format} biçimini desteklemiyor — bu biçim yazılım kodlayıcıyla dönüştürülecek.",
+  "hwEncoderDisabledForCrf": "Donanım kodlayıcı kapatıldı — yalnızca bit hızı modunu destekler."
 }

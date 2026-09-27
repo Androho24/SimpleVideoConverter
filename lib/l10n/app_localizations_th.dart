@@ -606,4 +606,8 @@ class AppLocalizationsTh extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'ตัวเข้ารหัสฮาร์ดแวร์ไม่รองรับ $format — รูปแบบนี้จะแปลงด้วยตัวเข้ารหัสซอฟต์แวร์';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'ปิดตัวเข้ารหัสฮาร์ดแวร์แล้ว — รองรับเฉพาะโหมดบิตเรต';
 }

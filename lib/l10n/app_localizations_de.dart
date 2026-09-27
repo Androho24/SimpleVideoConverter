@@ -612,4 +612,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return '$format unterstützt der Hardware-Encoder nicht — dieses Format wird mit dem Software-Encoder konvertiert.';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'Hardware-Encoder ausgeschaltet — er unterstützt nur den Bitrate-Modus.';
 }

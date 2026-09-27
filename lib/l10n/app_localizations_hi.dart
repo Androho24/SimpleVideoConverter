@@ -611,4 +611,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'हार्डवेयर एन्कोडर $format को सपोर्ट नहीं करता — यह फ़ॉर्मैट सॉफ़्टवेयर एन्कोडर से बदला जाएगा।';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'हार्डवेयर एन्कोडर बंद किया गया — यह केवल बिटरेट मोड सपोर्ट करता है।';
 }

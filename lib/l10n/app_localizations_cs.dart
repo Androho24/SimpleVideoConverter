@@ -609,4 +609,8 @@ class AppLocalizationsCs extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'Hardwarový enkodér nepodporuje $format — tento formát se převede softwarovým enkodérem.';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'Hardwarový enkodér vypnut — podporuje pouze režim datového toku.';
 }

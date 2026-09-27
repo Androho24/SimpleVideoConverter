@@ -614,4 +614,8 @@ class AppLocalizationsUk extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'Апаратний кодувальник не підтримує $format — цей формат буде конвертовано програмним кодувальником.';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'Апаратний кодувальник вимкнено — він підтримує лише режим бітрейту.';
 }

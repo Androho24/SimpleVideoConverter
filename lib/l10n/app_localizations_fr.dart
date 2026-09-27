@@ -616,4 +616,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'L\'encodeur matériel ne prend pas en charge $format — ce format sera converti avec l\'encodeur logiciel.';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'Encodeur matériel désactivé — il ne prend en charge que le mode débit binaire.';
 }

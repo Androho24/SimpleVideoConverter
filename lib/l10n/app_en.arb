@@ -523,5 +523,7 @@
   "hwEncoderFallback": "Hardware encoder failed — converting with the software encoder instead.",
   "@hwEncoderFallback": {"description": "SnackBar, wenn der Hardware-Encoder scheitert und automatisch mit libx265 wiederholt wird"},
   "hwEncoderContainerHint": "{format} is not supported by the hardware encoder — this format will be converted with the software encoder.",
-  "@hwEncoderContainerHint": {"description": "Hinweis unter dem Hardware-Encoder-Schalter, wenn das gewaehlte Ausgabeformat (z. B. MKV) nicht mit hevc_mediacodec funktioniert und deshalb libx265 genutzt wird", "placeholders": {"format": {"type": "String"}}}
+  "@hwEncoderContainerHint": {"description": "Hinweis unter dem Hardware-Encoder-Schalter, wenn das gewaehlte Ausgabeformat (z. B. MKV) nicht mit hevc_mediacodec funktioniert und deshalb libx265 genutzt wird", "placeholders": {"format": {"type": "String"}}},
+  "hwEncoderDisabledForCrf": "Hardware encoder turned off — it only supports bitrate mode.",
+  "@hwEncoderDisabledForCrf": {"description": "SnackBar, wenn der Nutzer bei eingeschaltetem Hardware-Encoder den CRF-Modus waehlt und der Schalter deshalb ausgeht"}
 }

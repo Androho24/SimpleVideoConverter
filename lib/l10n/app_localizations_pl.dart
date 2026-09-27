@@ -613,4 +613,8 @@ class AppLocalizationsPl extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'Koder sprzętowy nie obsługuje formatu $format — ten format zostanie przekonwertowany koderem programowym.';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'Koder sprzętowy wyłączony — obsługuje tylko tryb szybkości transmisji.';
 }

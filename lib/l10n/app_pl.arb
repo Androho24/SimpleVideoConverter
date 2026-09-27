@@ -210,5 +210,6 @@
   "hwEncoderSubtitle": "Znacznie szybszy, ale przy tej samej jakości potrzebuje mniej więcej dwukrotnie wyższej szybkości transmisji. Tylko w trybie szybkości transmisji.",
   "hwEncoderHdrHint": "Wideo HDR — zostanie przekonwertowane koderem programowym, aby zachować HDR.",
   "hwEncoderFallback": "Koder sprzętowy zawiódł — konwersja koderem programowym.",
-  "hwEncoderContainerHint": "Koder sprzętowy nie obsługuje formatu {format} — ten format zostanie przekonwertowany koderem programowym."
+  "hwEncoderContainerHint": "Koder sprzętowy nie obsługuje formatu {format} — ten format zostanie przekonwertowany koderem programowym.",
+  "hwEncoderDisabledForCrf": "Koder sprzętowy wyłączony — obsługuje tylko tryb szybkości transmisji."
 }

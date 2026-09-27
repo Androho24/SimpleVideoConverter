@@ -351,5 +351,6 @@
   "hwEncoderSubtitle": "Deutlich schneller, braucht für die gleiche Qualität aber etwa die doppelte Bitrate. Nur im Bitrate-Modus.",
   "hwEncoderHdrHint": "HDR-Video — wird mit dem Software-Encoder konvertiert, damit HDR erhalten bleibt.",
   "hwEncoderFallback": "Hardware-Encoder fehlgeschlagen — es wird mit dem Software-Encoder konvertiert.",
-  "hwEncoderContainerHint": "{format} unterstützt der Hardware-Encoder nicht — dieses Format wird mit dem Software-Encoder konvertiert."
+  "hwEncoderContainerHint": "{format} unterstützt der Hardware-Encoder nicht — dieses Format wird mit dem Software-Encoder konvertiert.",
+  "hwEncoderDisabledForCrf": "Hardware-Encoder ausgeschaltet — er unterstützt nur den Bitrate-Modus."
 }

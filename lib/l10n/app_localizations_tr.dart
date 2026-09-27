@@ -615,4 +615,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'Donanım kodlayıcı $format biçimini desteklemiyor — bu biçim yazılım kodlayıcıyla dönüştürülecek.';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'Donanım kodlayıcı kapatıldı — yalnızca bit hızı modunu destekler.';
 }

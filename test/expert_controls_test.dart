@@ -236,7 +236,7 @@ void main() {
       expect(hwSwitch, findsNothing);
     });
 
-    testWidgets('forces bitrate mode and locks the CRF segment', (
+    testWidgets('forces bitrate mode; choosing CRF turns it off again', (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -253,8 +253,20 @@ void main() {
       );
       expect(state.settings.hardwareEncoder, isTrue);
       expect(state.settings.bitrateMode, 'bitrate');
-      expect(crfSegment(tester).enabled, isFalse);
+      expect(crfSegment(tester).enabled, isTrue);
       expect(hdrHint, findsNothing);
+
+      final crf = find.text('Quality (CRF)');
+      await tester.ensureVisible(crf);
+      await tester.tap(crf);
+      await tester.pumpAndSettle();
+
+      expect(state.settings.bitrateMode, 'crf');
+      expect(state.settings.hardwareEncoder, isFalse);
+      expect(
+        find.textContaining('Hardware encoder turned off'),
+        findsOneWidget,
+      );
     });
 
     testWidgets('is reset when switching away from H.265', (tester) async {

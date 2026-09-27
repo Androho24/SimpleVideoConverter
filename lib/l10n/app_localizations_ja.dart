@@ -596,4 +596,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String hwEncoderContainerHint(String format) {
     return 'ハードウェアエンコーダーは$formatに対応していません。この形式はソフトウェアエンコーダーで変換します。';
   }
+
+  @override
+  String get hwEncoderDisabledForCrf =>
+      'ハードウェアエンコーダーをオフにしました。ビットレートモードのみに対応しています。';
 }

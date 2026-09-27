@@ -211,5 +211,6 @@
   "hwEncoderSubtitle": "Mnohem rychlejší, ale pro stejnou kvalitu potřebuje zhruba dvojnásobný datový tok. Pouze v režimu datového toku.",
   "hwEncoderHdrHint": "HDR video — převede se softwarovým enkodérem, aby se HDR zachovalo.",
   "hwEncoderFallback": "Hardwarový enkodér selhal — převádí se softwarovým enkodérem.",
-  "hwEncoderContainerHint": "Hardwarový enkodér nepodporuje {format} — tento formát se převede softwarovým enkodérem."
+  "hwEncoderContainerHint": "Hardwarový enkodér nepodporuje {format} — tento formát se převede softwarovým enkodérem.",
+  "hwEncoderDisabledForCrf": "Hardwarový enkodér vypnut — podporuje pouze režim datového toku."
 }

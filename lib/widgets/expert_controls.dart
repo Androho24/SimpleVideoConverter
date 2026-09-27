@@ -413,6 +413,28 @@ class _ExpertControlsState extends State<ExpertControls> {
     );
   }
 
+  /// Der Hardware-Encoder kennt kein CQ (auf keinem getesteten Gerät). Wer bei
+  /// eingeschaltetem Schalter CRF wählt, bekommt CRF und der Schalter geht aus
+  /// — statt eines gesperrten Segments ohne Erklärung. Der Schalter steht weit
+  /// unten bei der Codec-Auswahl, deshalb die SnackBar.
+  void _selectBitrateMode(String mode) {
+    final s = widget.settings;
+    if (mode == 'crf' && s.hardwareEncoder) {
+      widget.onChanged(s.copyWith(bitrateMode: mode, hardwareEncoder: false));
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.hwEncoderDisabledForCrf,
+            ),
+          ),
+        );
+      return;
+    }
+    widget.onChanged(s.copyWith(bitrateMode: mode));
+  }
+
   /// Gibt einen lesbaren Label für eine Ziel-Bitrate in kbps zurück.
   String _targetBitrateLabel(int kbps) {
     if (kbps < 1000) return '$kbps kbps';
@@ -488,9 +510,6 @@ class _ExpertControlsState extends State<ExpertControls> {
     final showHardwareSwitch =
         widget.hardwareHevcAvailable &&
         s.videoCodec == MediaFormatCompatibility.videoCodecH265;
-    // Der Hardware-Encoder kennt kein CQ (auf keinem getesteten Gerät), daher
-    // nur Bitraten-Modus, solange der Schalter an ist.
-    final crfLocked = showHardwareSwitch && s.hardwareEncoder;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -503,11 +522,7 @@ class _ExpertControlsState extends State<ExpertControls> {
           SegmentedButton<String>(
             showSelectedIcon: false,
             segments: [
-              ButtonSegment(
-                value: 'crf',
-                label: Text(l.encodingModeCrf),
-                enabled: !crfLocked,
-              ),
+              ButtonSegment(value: 'crf', label: Text(l.encodingModeCrf)),
               ButtonSegment(
                 value: 'bitrate',
                 label: Text(l.encodingModeBitrate),
@@ -516,7 +531,7 @@ class _ExpertControlsState extends State<ExpertControls> {
             selected: {s.bitrateMode},
             onSelectionChanged: widget.isConverting
                 ? null
-                : (sel) => widget.onChanged(s.copyWith(bitrateMode: sel.first)),
+                : (sel) => _selectBitrateMode(sel.first),
           ),
           const SizedBox(height: 12),
 
