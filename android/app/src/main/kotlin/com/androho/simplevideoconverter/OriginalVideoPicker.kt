@@ -44,7 +44,16 @@ class OriginalVideoPicker(private val activity: Activity) {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "video/*"
         }
-        activity.startActivityForResult(intent, REQUEST_PICK)
+        try {
+            activity.startActivityForResult(intent, REQUEST_PICK)
+        } catch (e: Exception) {
+            // Geräte ohne Dateiauswahl (manche TV-Boxen, abgespeckte Builds):
+            // Ohne das Zurücksetzen bliebe pendingResult belegt, und jeder
+            // weitere Versuch endete mit „busy“.
+            Log.w(TAG, "Dateiauswahl nicht verfügbar", e)
+            pendingResult = null
+            result.error("no_picker", e.message, null)
+        }
     }
 
     /** Legt das Original über den System-Dialog in den Papierkorb. Ergebnis: bestätigt ja/nein. */
