@@ -32,6 +32,7 @@ import '../services/pro_prompt_service.dart';
 import '../services/review_service.dart';
 import '../services/video_quality_scale.dart';
 import '../services/video_scale_service.dart';
+import '../services/video_source.dart';
 import '../widgets/app_header.dart';
 import '../widgets/convert_section.dart';
 import '../widgets/expert_controls.dart';
@@ -48,7 +49,11 @@ class VideoConverterApp extends StatefulWidget {
 
 class _VideoConverterAppState extends State<VideoConverterApp> {
   // State
-  String? _videoPath;
+  // Dateipfad oder content://-URI (siehe VideoSource). FFmpeg bekommt sie
+  // nie direkt, sondern über VideoSource.ffmpegPath.
+  String? _videoSource;
+  // Name des Originals für die Ausgabedatei; die URI verrät ihn nicht.
+  String? _videoDisplayName;
   // Verweis auf das Original für „Original löschen“ nach dem Speichern.
   String? _originalTrashUri;
   VideoMetadata? _metadata;
@@ -102,6 +107,9 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     try {
       // Unseren conversions/-Ordner bereinigen
       await ConversionScreen.cleanCacheDir();
+
+      // Leseberechtigungen direkt gelesener Videos aus früheren Starts
+      if (Platform.isAndroid) await GalleryService.releaseVideoAccess();
 
       // Die Videoauswahl (OriginalVideoPicker.kt bzw. image_picker auf iOS)
       // hinterlässt UUID-Ordner direkt im Cache-Root
@@ -234,7 +242,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       _loadProgress = null;
     });
 
-    final String? path;
+    final String? source;
+    String? displayName;
     String? trashUri;
     try {
       if (Platform.isAndroid) {
@@ -244,10 +253,11 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
           },
         );
         if (mounted) setState(() => _loadProgress = null);
-        path = picked?.path;
+        source = picked?.source;
+        displayName = picked?.displayName;
         trashUri = picked?.trashUri;
       } else {
-        path = (await ImagePicker().pickVideo(
+        source = (await ImagePicker().pickVideo(
           source: ImageSource.gallery,
         ))?.path;
       }
@@ -265,12 +275,34 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       }
       return;
     }
-    if (path == null) {
+    if (source == null) {
       setState(() => _isLoading = false);
       return;
     }
 
-    final meta = await _extractMetadata(path);
+    try {
+      await _loadPickedVideo(source, displayName, trashUri);
+    } finally {
+      // Hält nur die Berechtigung des Videos, das jetzt geladen ist — beim
+      // abgelehnten neuen Video also weiter die des alten.
+      if (Platform.isAndroid) {
+        unawaited(GalleryService.releaseVideoAccess(keep: _videoSource));
+      }
+    }
+  }
+
+  Future<void> _loadPickedVideo(
+    String source,
+    String? displayName,
+    String? trashUri,
+  ) async {
+    VideoMetadata meta;
+    try {
+      meta = await _extractMetadata(source);
+    } catch (_) {
+      // saf-Verweis nicht zu bekommen: Datei schon wieder weg.
+      meta = const VideoMetadata(durationMs: 0, width: 0, height: 0);
+    }
 
     if (meta.durationMs == 0 || meta.width == 0 || meta.height == 0) {
       if (mounted) {
@@ -301,13 +333,13 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         : VideoViewType.textureView;
 
     final VideoPlayerController controller;
-    if (path.startsWith('content://')) {
+    if (VideoSource.isContentUri(source)) {
       controller = VideoPlayerController.contentUri(
-        Uri.parse(path),
+        Uri.parse(source),
         viewType: viewType,
       );
     } else {
-      controller = VideoPlayerController.file(File(path), viewType: viewType);
+      controller = VideoPlayerController.file(File(source), viewType: viewType);
     }
 
     bool previewFailed = false;
@@ -351,7 +383,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
     setState(() {
       _isLoading = false;
-      _videoPath = path;
+      _videoSource = source;
+      _videoDisplayName = displayName;
       _originalTrashUri = trashUri;
       _metadata = meta;
       _trimStart = 0.0;
@@ -435,8 +468,10 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   // Metadaten extrahieren (via FFprobeKit)
   // -------------------------------------------------------------------------
 
-  Future<VideoMetadata> _extractMetadata(String path) async {
-    final session = await FFprobeKit.getMediaInformation(path);
+  Future<VideoMetadata> _extractMetadata(String source) async {
+    final session = await FFprobeKit.getMediaInformation(
+      await VideoSource.ffmpegPath(source),
+    );
     final info = session.getMediaInformation();
     final streams = info?.getStreams();
 
@@ -581,6 +616,32 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     );
   }
 
+  /// Das Original liegt im Papierkorb. „Original löschen“ darf nicht noch
+  /// einmal kommen. Eine Kopie im Cache bleibt konvertierbar, ein direkt
+  /// gelesenes Video ist dagegen weg und wird entladen.
+  void _onOriginalTrashed() {
+    if (!mounted) return;
+    if (VideoSource.isContentUri(_videoSource ?? '')) {
+      _unloadVideo();
+    } else {
+      setState(() => _originalTrashUri = null);
+    }
+  }
+
+  /// Zurück zum leeren Platzhalter, etwa wenn die Quelle nicht mehr lesbar ist.
+  void _unloadVideo() {
+    final controller = _playerController;
+    setState(() {
+      _videoSource = null;
+      _videoDisplayName = null;
+      _originalTrashUri = null;
+      _metadata = null;
+      _playerController = null;
+    });
+    controller?.dispose();
+    if (Platform.isAndroid) unawaited(GalleryService.releaseVideoAccess());
+  }
+
   void _updateEstimatedSize() {
     if (_metadata == null) return;
     final durationSec =
@@ -652,7 +713,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   Future<void> _convertVideo() async {
     if (_isConverting) return;
-    if (_videoPath == null || _metadata == null) {
+    final source = _videoSource;
+    if (source == null || _metadata == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(AppLocalizations.of(context)!.noVideoLoaded)),
       );
@@ -683,17 +745,34 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final videoEncoder = FfmpegCodecOptions.videoEncoder(selectedVideoCodec);
     final startSec = _trimStart * _metadata!.durationMs / 1000.0;
     final endSec = _trimEnd * _metadata!.durationMs / 1000.0;
-    final totalDurationMs = _metadata!.durationMs.toDouble();
-    // content://-URIs und Pfade mit Leerzeichen korrekt escapen
-    final inputArg = _videoPath!.startsWith('content://')
-        ? _videoPath!
-        : '"$_videoPath"';
+    // Länge der Ausgabe, nicht der Quelle: Mit -ss/-to hinter -i beginnt die
+    // Zeit in FFmpegs Statistik bei 0 und endet bei endSec - startSec. Mit
+    // der vollen Länge blieben Fortschritt, Restzeit und Hochrechnung der
+    // Endgröße beim Trimmen um den Faktor Gesamt/Ausschnitt daneben.
+    final totalDurationMs = (endSec - startSec) * 1000.0;
+    // Eigener saf-Verweis für diesen Lauf (VideoSource). Scheitert er, ist
+    // das direkt gelesene Original inzwischen weg oder nicht mehr lesbar.
+    final String inputArg;
+    try {
+      inputArg = await VideoSource.ffmpegArgument(source);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _isConverting = false);
+      _unloadVideo();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.invalidVideoFile),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
 
     final String command;
     final String outputPath;
     // Videos tragen den Namen des Originals, weil Gal ihn in die Galerie
     // übernimmt. Audio geht über den Speichern-Dialog mit defaultFileName.
-    final videoBaseName = OutputFileName.baseName(_videoPath!);
+    final videoBaseName = OutputFileName.baseName(_videoDisplayName ?? source);
     // Nur gesetzt, wenn der Auftrag über den Hardware-Encoder läuft: derselbe
     // Auftrag mit libx265, falls MediaCodec auf dem Gerät scheitert.
     String? fallbackCommand;
@@ -748,7 +827,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
           expert.videoCodec,
           expert.container,
         );
-        String buildCommand({required bool hardware}) {
+        String buildCommand({required bool hardware, required String input}) {
           final videoCodec = FfmpegCodecOptions.videoEncoder(
             expert.videoCodec,
             hardware: hardware,
@@ -770,13 +849,23 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                   expert.videoCodec,
                   hdr: keepsHdr,
                 );
-          return '-i $inputArg -ss $startSec -to $endSec $vfFilter '
+          return '-i $input -ss $startSec -to $endSec $vfFilter '
               '-c:v $videoCodec $codecTagOpt $encoderOpt $pixelFormatOpt '
               '$qualityOpt $fpsOpt $audioOpt -y "$outputPath"';
         }
 
-        command = buildCommand(hardware: hardware);
-        if (hardware) fallbackCommand = buildCommand(hardware: false);
+        command = buildCommand(hardware: hardware, input: inputArg);
+        if (hardware) {
+          // Der Ersatzlauf braucht einen eigenen saf-Verweis, den ersten hat
+          // der Hardware-Lauf beim Schließen verbraucht. Ohne ihn läuft der
+          // Auftrag eben ohne Rückfall.
+          try {
+            fallbackCommand = buildCommand(
+              hardware: false,
+              input: await VideoSource.ffmpegArgument(source),
+            );
+          } catch (_) {}
+        }
       }
     } else if (_isAudioOnly) {
       // ── Normal: nur Audio extrahieren (MP3 192k) ────────────────────────
@@ -848,6 +937,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
           command: command,
           fallbackCommand: fallbackCommand,
           originalTrashUri: _originalTrashUri,
+          onOriginalTrashed: _onOriginalTrashed,
           outputPath: outputPath,
           totalDurationMs: totalDurationMs,
           defaultFileName: defaultFileName,
@@ -865,7 +955,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   @override
   Widget build(BuildContext context) {
-    final hasVideo = _videoPath != null && _metadata != null;
+    final hasVideo = _videoSource != null && _metadata != null;
 
     final l = AppLocalizations.of(context)!;
     return PopScope(

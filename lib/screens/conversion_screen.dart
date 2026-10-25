@@ -34,7 +34,13 @@ class ConversionScreen extends StatefulWidget {
   /// MediaStore-Verweis auf das Quellvideo. Ist er da, bietet der Screen nach
   /// dem Speichern „Original löschen“ an (Papierkorb, ab Android 11).
   final String? originalTrashUri;
+
+  /// Nach bestätigtem Löschen des Originals. Die Hauptansicht entlädt dann
+  /// ein direkt gelesenes Video, dessen Quelle es nicht mehr gibt.
+  final VoidCallback? onOriginalTrashed;
   final String outputPath;
+
+  /// Länge der Ausgabe, beim Trimmen also des Ausschnitts.
   final double totalDurationMs;
   final String defaultFileName;
 
@@ -43,6 +49,7 @@ class ConversionScreen extends StatefulWidget {
     required this.command,
     this.fallbackCommand,
     this.originalTrashUri,
+    this.onOriginalTrashed,
     required this.outputPath,
     required this.totalDurationMs,
     required this.defaultFileName,
@@ -420,7 +427,7 @@ class _ConversionScreenState extends State<ConversionScreen>
   Future<void> _saveVideoToGallery() async {
     final l = AppLocalizations.of(context)!;
     try {
-      await Gal.putVideo(_currentOutputPath, album: 'Video Converter');
+      await GalleryService.saveVideo(_currentOutputPath);
       if (!mounted) return;
       await ConversionServiceManager.stopService();
       if (!mounted) return;
@@ -444,6 +451,7 @@ class _ConversionScreenState extends State<ConversionScreen>
       final trashed = await GalleryService.trashOriginal(trashUri);
       if (!trashed || !mounted) return;
       setState(() => _originalTrashed = true);
+      widget.onOriginalTrashed?.call();
       messenger.showSnackBar(SnackBar(content: Text(l.originalTrashed)));
     } catch (_) {
       messenger.showSnackBar(

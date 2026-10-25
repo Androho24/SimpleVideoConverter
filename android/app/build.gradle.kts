@@ -94,13 +94,17 @@ flutter {
 dependencies {
     implementation("com.google.android.ump:user-messaging-platform:4.0.0")
 
-    // Die aktuellen Adapter sind von Google gegen Next-Gen 1.2.1 getestet.
-    // Dies hebt die transitive 1.1.1-Version des Flutter-Plugins gezielt an.
-    implementation("com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:1.2.1")
+    // Next-Gen-Version wie in google_mobile_ads 9.2.0 (1.5.0). Meta und
+    // Liftoff sind von Google genau dagegen getestet, Pangle gegen 1.4.0.
+    // Beim Plugin-Update hier und bei den Adaptern mitziehen: Die Adapter
+    // nennen auf den Next-Gen-Mediationsseiten ihre getestete SDK-Version.
+    implementation("com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:1.5.0")
 
-    // Offiziell dokumentierte Next-Gen-kompatible Bidding-Adapter.
-    implementation("com.google.ads.mediation:facebook:6.21.0.4")
-    implementation("com.google.ads.mediation:pangle:8.1.0.5.0")
+    // Offiziell dokumentierte Next-Gen-kompatible Bidding-Adapter. Alle drei
+    // lesen den UMP-Consent selbst (Additional Consent).
+    implementation("com.google.ads.mediation:facebook:6.22.0.1")
+    implementation("com.google.ads.mediation:pangle:8.3.0.4.0")
+    implementation("com.google.ads.mediation:vungle:7.7.9.0")
 
     // Native Firebase-Artefakte für den Zugriff aus Kotlin (ConsentModeHelper).
     // Die FlutterFire-Plugins deklarieren diese nur als 'implementation' und stellen

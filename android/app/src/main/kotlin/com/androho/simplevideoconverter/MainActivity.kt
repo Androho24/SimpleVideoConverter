@@ -28,7 +28,8 @@ class MainActivity : FlutterActivity() {
     private val SERVICE_CHANNEL = "com.androho.simplevideoconverter/conversion_service"
     private val GALLERY_CHANNEL = "com.androho.simplevideoconverter/gallery"
     private val SYSTEM_BARS_CHANNEL = "com.androho.simplevideoconverter/system_bars"
-    // Muss zu `Gal.putVideo(…, album: 'Video Converter')` in conversion_screen.dart passen.
+    // Ordner unter Movies/ (VideoGallerySaver). Muss zu `Gal.putVideo(…, album:
+    // 'Video Converter')` in gallery_service.dart passen, dem Weg unter Android 10.
     private val GALLERY_ALBUM = "Video Converter"
     private var adsChannel: MethodChannel? = null
     private val originalVideoPicker = OriginalVideoPicker(this)
@@ -172,9 +173,14 @@ class MainActivity : FlutterActivity() {
                         val displayName = call.argument<String>("displayName") ?: ""
                         result.success(viewSavedVideo(displayName))
                     }
+                    "saveVideo" -> saveVideo(call.argument<String>("path"), result)
                     "pickVideo" -> originalVideoPicker.pickVideo(result)
                     "trashOriginal" ->
                         originalVideoPicker.trashOriginal(call.argument<String>("uri"), result)
+                    "releaseVideoAccess" -> {
+                        originalVideoPicker.releaseAccess(call.argument<String>("keep"))
+                        result.success(null)
+                    }
                     else -> result.notImplemented()
                 }
             }
@@ -197,6 +203,38 @@ class MainActivity : FlutterActivity() {
                     else -> result.notImplemented()
                 }
             }
+    }
+
+    /**
+     * Speichert das Video nach Movies/[GALLERY_ALBUM]. Ergebnis false unter
+     * Android 10: Dann speichert die Dart-Seite über Gal (siehe VideoGallerySaver).
+     */
+    private fun saveVideo(path: String?, result: MethodChannel.Result) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            result.success(false)
+            return
+        }
+        if (path == null) {
+            result.error("invalid_args", "path erforderlich", null)
+            return
+        }
+        // Große Videos zu kopieren dauert — nicht auf dem Main-Thread.
+        Thread {
+            val error = try {
+                VideoGallerySaver.save(applicationContext, path, GALLERY_ALBUM)
+                null
+            } catch (e: Exception) {
+                Log.w("MainActivity", "Speichern in die Galerie fehlgeschlagen", e)
+                e
+            }
+            runOnUiThread {
+                if (error == null) {
+                    result.success(true)
+                } else {
+                    result.error("save_failed", error.message, null)
+                }
+            }
+        }.start()
     }
 
     /**

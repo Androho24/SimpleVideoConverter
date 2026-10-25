@@ -1,7 +1,10 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:io';
+
 import 'package:flutter/services.dart';
+import 'package:gal/gal.dart';
 
 /// Bridge zur nativen Galerie-Integration auf Android.
 ///
@@ -31,8 +34,26 @@ class GalleryService {
     }
   }
 
-  /// Öffnet die Dateiauswahl des Systems (SAF) und kopiert das Video in den
-  /// Cache. Null bei Abbruch, wirft bei einem Lesefehler.
+  /// Speichert ein Video nach `Movies/Video Converter` (ab Android 10, siehe
+  /// VideoGallerySaver.kt). Gal kann das nicht: Mit Album legt es Videos
+  /// unter `Pictures/` ab. Unter Android 10 und auf iOS bleibt es deshalb bei
+  /// Gal, weil das Speichern dort eine Berechtigung braucht, die Gal abfragt.
+  /// Wirft bei einem Fehler.
+  static Future<void> saveVideo(String path) async {
+    if (Platform.isAndroid) {
+      final saved = await _channel.invokeMethod<bool>('saveVideo', {
+        'path': path,
+      });
+      if (saved ?? false) return;
+    }
+    // Muss zu GALLERY_ALBUM in MainActivity.kt passen.
+    await Gal.putVideo(path, album: 'Video Converter');
+  }
+
+  /// Öffnet die Dateiauswahl des Systems (SAF). Videos auf dem Gerät kommen
+  /// als `content://`-URI zurück und werden direkt gelesen, andere (Cloud)
+  /// werden in den Cache kopiert. Null bei Abbruch, wirft bei einem
+  /// Lesefehler.
   ///
   /// Android statt image_picker, weil dessen Photo Picker nur eine Nummer als
   /// Namen liefert und keinen Verweis, der sich in den Papierkorb legen lässt
@@ -40,7 +61,7 @@ class GalleryService {
   ///
   /// [onCopyProgress] erhält den Kopierfortschritt 0.0–1.0. Der erste Aufruf
   /// heißt auch: Die Auswahl ist zu, das Kopieren läuft. Ohne bekannte
-  /// Dateigröße kommt keiner.
+  /// Dateigröße oder beim Direktlesen kommt keiner.
   static Future<PickedVideo?> pickVideo({
     void Function(double fraction)? onCopyProgress,
   }) async {
@@ -57,9 +78,19 @@ class GalleryService {
     }
     if (result == null) return null;
     return PickedVideo(
-      path: result['path']! as String,
+      source: result['source']! as String,
+      displayName: result['displayName'] as String?,
       trashUri: result['trashUri'] as String?,
     );
+  }
+
+  /// Gibt die dauerhaften Leseberechtigungen direkt gelesener Videos frei,
+  /// außer der für [keep] (die Quelle des geladenen Videos). Fehler sind
+  /// unkritisch: Übrige Berechtigungen räumt der nächste Aufruf ab.
+  static Future<void> releaseVideoAccess({String? keep}) async {
+    try {
+      await _channel.invokeMethod<void>('releaseVideoAccess', {'keep': keep});
+    } catch (_) {}
   }
 
   /// Legt das Original über den Papierkorb-Dialog von Android ab (ab
@@ -74,12 +105,16 @@ class GalleryService {
 }
 
 class PickedVideo {
-  /// Kopie im Cache, benannt wie das Original.
-  final String path;
+  /// `content://`-URI des Originals oder Pfad der Kopie im Cache (benannt wie
+  /// das Original). Für FFmpeg über `VideoSource.ffmpegPath` auflösen.
+  final String source;
+
+  /// Dateiname des Originals, null wenn der Anbieter keinen nennt.
+  final String? displayName;
 
   /// MediaStore-Verweis auf das Original für „Original löschen“. Null unter
   /// Android 11 oder wenn die Datei nicht aus dem MediaStore stammt.
   final String? trashUri;
 
-  const PickedVideo({required this.path, this.trashUri});
+  const PickedVideo({required this.source, this.displayName, this.trashUri});
 }

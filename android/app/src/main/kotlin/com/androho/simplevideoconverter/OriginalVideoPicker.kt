@@ -6,6 +6,8 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.system.Os
+import android.system.OsConstants
 import android.util.Log
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
@@ -21,6 +23,12 @@ import java.util.UUID
  * MediaStore-Eintrag, den der Papierkorb-Dialog annimmt. Gerätetest
  * 2026-09-27, Pixel 10. Keiner der Wege braucht Medien-Leserechte: Die Auswahl
  * selbst gibt Zugriff auf genau diese eine Datei.
+ *
+ * Videos auf dem Gerät werden nicht kopiert, sondern direkt gelesen (Vorschau
+ * per `content://`, FFmpeg per `saf:`): Das Kopieren war bei großen Videos
+ * die ganze Ladezeit und belegte den Speicher doppelt. Nur Cloud- und andere
+ * Anbieter, deren Datenstrom keine echte Datei ist, laufen weiter über die
+ * Kopie im Cache.
  */
 class OriginalVideoPicker(private val activity: Activity) {
 
@@ -33,6 +41,17 @@ class OriginalVideoPicker(private val activity: Activity) {
         // MediaStore einen FUSE-Aufruf pro 8 KB — bei einem 1-GB-Video über
         // 130.000 Stück. 1 MB bündelt das.
         private const val COPY_BUFFER_BYTES = 1024 * 1024
+
+        // Anbieter, deren Dokumente echte Dateien auf dem Gerät sind. Bei
+        // allen anderen (Drive, OneDrive, …) kann der Datenstrom eine Pipe
+        // sein, in der FFmpeg nicht springen kann, oder bei jedem Öffnen einen
+        // Download auslösen, der offline scheitert.
+        private val LOCAL_AUTHORITIES = setOf(
+            "com.android.providers.media.documents",
+            "com.android.externalstorage.documents",
+            "com.android.providers.downloads.documents",
+            MediaStore.AUTHORITY,
+        )
     }
 
     private var pendingResult: MethodChannel.Result? = null
@@ -45,7 +64,8 @@ class OriginalVideoPicker(private val activity: Activity) {
 
     /**
      * Öffnet die Dateiauswahl. Ergebnis: null bei Abbruch, sonst
-     * `path` (Kopie im Cache, echter Name), `displayName` und `trashUri`
+     * `source` (die `content://`-URI bei Dateien auf dem Gerät, sonst der Pfad
+     * der Kopie im Cache mit echtem Namen), `displayName` und `trashUri`
      * (MediaStore-URI des Originals, nur ab Android 11 und nur für Dateien aus
      * dem MediaStore — sonst null, dann gibt es keinen Löschen-Button).
      */
@@ -86,6 +106,25 @@ class OriginalVideoPicker(private val activity: Activity) {
         }
     }
 
+    /**
+     * Gibt alle dauerhaften Leseberechtigungen frei außer der für [keep] (die
+     * URI des gerade geladenen Videos, null für alle). Android begrenzt sie auf
+     * 128 bzw. ab Android 11 512 pro App.
+     */
+    fun releaseAccess(keep: String?) {
+        val resolver = activity.contentResolver
+        for (permission in resolver.persistedUriPermissions) {
+            if (permission.uri.toString() == keep) continue
+            try {
+                resolver.releasePersistableUriPermission(
+                    permission.uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (e: Exception) {
+                Log.w(TAG, "Freigabe abgelehnt: ${permission.uri}", e)
+            }
+        }
+    }
+
     /** @return true, wenn der Request hierher gehörte. */
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (requestCode != REQUEST_PICK && requestCode != REQUEST_TRASH) return false
@@ -100,10 +139,11 @@ class OriginalVideoPicker(private val activity: Activity) {
             result.success(null)
             return true
         }
-        // Große Videos zu kopieren dauert — nicht auf dem Main-Thread.
+        // Große Videos zu kopieren dauert, und auch das Öffnen zur Prüfung geht
+        // über den Anbieter — nicht auf dem Main-Thread.
         Thread {
             val reply = try {
-                copyToCache(picked)
+                resolvePicked(picked)
             } catch (e: Exception) {
                 Log.w(TAG, "Kopieren fehlgeschlagen", e)
                 null
@@ -128,12 +168,58 @@ class OriginalVideoPicker(private val activity: Activity) {
         return true
     }
 
+    private fun resolvePicked(uri: Uri): Map<String, Any?> {
+        val (displayName, totalBytes) = queryNameAndSize(uri)
+        val source = if (canReadDirectly(uri)) {
+            uri.toString()
+        } else {
+            copyToCache(uri, displayName, totalBytes)
+        }
+        return mapOf(
+            "source" to source,
+            "displayName" to displayName,
+            "trashUri" to mediaStoreUri(uri)?.toString(),
+        )
+    }
+
+    /**
+     * Direkt lesbar, wenn das Dokument von einem lokalen Anbieter stammt, als
+     * echte Datei geöffnet wird (FFmpeg muss darin springen können, etwa zum
+     * moov-Atom am Dateiende) und die Leseberechtigung dauerhaft wird.
+     *
+     * Dauerhaft, weil die normale Berechtigung aus der Auswahl an der Activity
+     * hängt, die Flutter-Engine aber länger lebt: Nach Zurück und erneutem
+     * Öffnen wäre das Video noch geladen, aber nicht mehr lesbar. Freigegeben
+     * wird über [releaseAccess].
+     */
+    private fun canReadDirectly(uri: Uri): Boolean {
+        if (uri.authority !in LOCAL_AUTHORITIES) return false
+        val isRegularFile = try {
+            activity.contentResolver.openFileDescriptor(uri, "r")?.use {
+                OsConstants.S_ISREG(Os.fstat(it.fileDescriptor).st_mode)
+            } ?: false
+        } catch (e: Exception) {
+            Log.i(TAG, "Nicht direkt lesbar: $uri: $e")
+            false
+        }
+        if (!isRegularFile) return false
+        return try {
+            activity.contentResolver.takePersistableUriPermission(
+                uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+            true
+        } catch (e: SecurityException) {
+            Log.i(TAG, "Keine dauerhafte Berechtigung für $uri: $e")
+            false
+        }
+    }
+
     /**
      * Kopiert wie image_picker nach `cache/<UUID>/<Name>`. Den UUID-Ordner räumt
      * der App-Start wieder ab (`_cleanAppCache` in converter_screen.dart).
+     * @return Pfad der Kopie.
      */
-    private fun copyToCache(uri: Uri): Map<String, Any?> {
-        val (displayName, totalBytes) = queryNameAndSize(uri)
+    private fun copyToCache(uri: Uri, displayName: String?, totalBytes: Long?): String {
         // Nur was als Dateiname im Cache nicht geht; die Bereinigung für den
         // Ausgabenamen macht OutputFileName auf der Dart-Seite.
         val safeName = displayName
@@ -164,11 +250,7 @@ class OriginalVideoPicker(private val activity: Activity) {
                 }
             }
         }
-        return mapOf(
-            "path" to target.path,
-            "displayName" to displayName,
-            "trashUri" to mediaStoreUri(uri)?.toString(),
-        )
+        return target.path
     }
 
     private fun reportProgress(fraction: Double) {

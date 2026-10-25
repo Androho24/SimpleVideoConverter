@@ -2,7 +2,7 @@ name: simple_video_converter
 description: "Simple Video Converter mit FFmpegKit (libx264/libx265)"
 publish_to: 'none'
 
-version: 2.2.0+31
+version: 2.2.1+32
 
 environment:
   sdk: ^3.10.0
@@ -25,7 +25,7 @@ dependencies:
   firebase_core: ^4.12.1              # Firebase Grundpaket (Pflicht für alle Firebase-Dienste)
   firebase_analytics: ^12.3.0       # Google Analytics für Firebase
   firebase_crashlytics: ^5.2.0      # Crash-Reporting
-  google_mobile_ads: ^9.0.0         # Offizielles Flutter-Plugin; Android nutzt per Dart-Define das Next-Gen SDK
+  google_mobile_ads: ^9.2.0         # Offizielles Flutter-Plugin; Android nutzt per Dart-Define das Next-Gen SDK
   in_app_purchase: 3.3.0             # Einmaliger Kauf „Werbung entfernen" – 3.3.0 nutzt Billing 8.0.0 (in_app_purchase_android 0.5.0), erfüllt Play-Pflicht ≥ 7.0.0
   in_app_review: ^2.0.12             # Google Play In-App-Review-Dialog
   gal: ^2.3.2                        # Video in Galerie speichern ohne RAM-Laden
