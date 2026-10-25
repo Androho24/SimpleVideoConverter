@@ -28,9 +28,20 @@ class OriginalVideoPicker(private val activity: Activity) {
         private const val TAG = "OriginalVideoPicker"
         private const val REQUEST_PICK = 7301
         private const val REQUEST_TRASH = 7302
+
+        // Der Standardpuffer von copyTo (8 KB) bedeutet bei Dateien aus dem
+        // MediaStore einen FUSE-Aufruf pro 8 KB — bei einem 1-GB-Video über
+        // 130.000 Stück. 1 MB bündelt das.
+        private const val COPY_BUFFER_BYTES = 1024 * 1024
     }
 
     private var pendingResult: MethodChannel.Result? = null
+
+    /**
+     * Kopierfortschritt 0.0–1.0, auf dem Main-Thread, höchstens einmal pro
+     * Prozentpunkt. Bleibt stumm, wenn der Anbieter keine Dateigröße nennt.
+     */
+    var onCopyProgress: ((Double) -> Unit)? = null
 
     /**
      * Öffnet die Dateiauswahl. Ergebnis: null bei Abbruch, sonst
@@ -122,7 +133,7 @@ class OriginalVideoPicker(private val activity: Activity) {
      * der App-Start wieder ab (`_cleanAppCache` in converter_screen.dart).
      */
     private fun copyToCache(uri: Uri): Map<String, Any?> {
-        val displayName = queryDisplayName(uri)
+        val (displayName, totalBytes) = queryNameAndSize(uri)
         // Nur was als Dateiname im Cache nicht geht; die Bereinigung für den
         // Ausgabenamen macht OutputFileName auf der Dart-Seite.
         val safeName = displayName
@@ -134,7 +145,24 @@ class OriginalVideoPicker(private val activity: Activity) {
         val target = File(dir, safeName)
         activity.contentResolver.openInputStream(uri).use { input ->
             requireNotNull(input) { "Kein Datenstrom für $uri" }
-            target.outputStream().use { input.copyTo(it) }
+            target.outputStream().use { output ->
+                val buffer = ByteArray(COPY_BUFFER_BYTES)
+                var copied = 0L
+                var lastPercent = -1
+                while (true) {
+                    val read = input.read(buffer)
+                    if (read < 0) break
+                    output.write(buffer, 0, read)
+                    copied += read
+                    if (totalBytes != null && totalBytes > 0) {
+                        val percent = (copied * 100 / totalBytes).toInt().coerceAtMost(100)
+                        if (percent != lastPercent) {
+                            lastPercent = percent
+                            reportProgress(percent / 100.0)
+                        }
+                    }
+                }
+            }
         }
         return mapOf(
             "path" to target.path,
@@ -143,12 +171,28 @@ class OriginalVideoPicker(private val activity: Activity) {
         )
     }
 
-    private fun queryDisplayName(uri: Uri): String? = try {
+    private fun reportProgress(fraction: Double) {
+        val callback = onCopyProgress ?: return
+        activity.runOnUiThread { callback(fraction) }
+    }
+
+    /** Name und Größe in Bytes; beides null, wenn der Anbieter sie nicht kennt. */
+    private fun queryNameAndSize(uri: Uri): Pair<String?, Long?> = try {
         activity.contentResolver
-            .query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
-            ?.use { if (it.moveToFirst()) it.getString(0) else null }
+            .query(
+                uri,
+                arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
+                null, null, null
+            )
+            ?.use {
+                if (!it.moveToFirst()) return@use null to null
+                val name = if (it.isNull(0)) null else it.getString(0)
+                val size = if (it.isNull(1)) null else it.getLong(1)
+                name to size
+            }
+            ?: (null to null)
     } catch (e: Exception) {
-        null
+        null to null
     }
 
     /** Null, wenn das Dokument nicht aus dem MediaStore stammt (z. B. Cloud-Anbieter). */

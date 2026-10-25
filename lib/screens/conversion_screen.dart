@@ -18,6 +18,7 @@ import 'package:path_provider/path_provider.dart';
 import '../l10n/app_localizations.dart';
 import '../services/conversion_service_manager.dart';
 import '../services/gallery_service.dart';
+import '../services/output_size_estimator.dart';
 import '../services/preferences_service.dart';
 import '../services/review_service.dart';
 import '../widgets/native_ad_widget.dart';
@@ -165,19 +166,29 @@ class _ConversionScreenState extends State<ConversionScreen>
       }
     }
 
-    // Ausgabegröße
+    // Ausgabegröße, solange sie wächst mit hochgerechneter Endgröße. Die
+    // Schätzung vor dem Start kann den Inhalt nicht kennen, die Hochrechnung
+    // aus der laufenden Datei schon.
     if (_outputSizeBytes > 0) {
-      if (_outputSizeBytes < 1024 * 1024) {
-        parts.add('${(_outputSizeBytes / 1024).toStringAsFixed(0)} KB');
-      } else {
-        parts.add(
-          '${(_outputSizeBytes / (1024 * 1024)).toStringAsFixed(1)} MB',
-        );
-      }
+      final projected = _isDone
+          ? null
+          : OutputSizeEstimator.projectedFinalBytes(
+              currentBytes: _outputSizeBytes,
+              progress: _progress,
+            );
+      parts.add(
+        projected == null || projected <= _outputSizeBytes
+            ? _formatBytes(_outputSizeBytes)
+            : '${_formatBytes(_outputSizeBytes)} / ~${_formatBytes(projected)}',
+      );
     }
 
     return parts.join(' · ');
   }
+
+  static String _formatBytes(int bytes) => bytes < 1024 * 1024
+      ? '${(bytes / 1024).toStringAsFixed(0)} KB'
+      : '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
 
   // ---------------------------------------------------------------------------
   // Konvertierung

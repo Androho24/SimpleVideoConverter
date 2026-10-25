@@ -9,6 +9,7 @@ import 'package:disk_space_plus/disk_space_plus.dart';
 import 'package:ffmpeg_kit_flutter_new/ffprobe_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
@@ -59,6 +60,9 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   bool _isAudioOnly = false;
   bool _isLoading = false;
+  // Kopierfortschritt beim Laden; null, solange er unbekannt ist (Auswahl
+  // offen, Größe unbekannt oder Analyse nach dem Kopieren).
+  double? _loadProgress;
   bool _isConverting = false;
   bool _isExpertMode = false;
   int _selectedNavIndex = 0;
@@ -225,13 +229,21 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   // -------------------------------------------------------------------------
 
   Future<void> _pickVideo() async {
-    setState(() => _isLoading = true);
+    setState(() {
+      _isLoading = true;
+      _loadProgress = null;
+    });
 
     final String? path;
     String? trashUri;
     try {
       if (Platform.isAndroid) {
-        final picked = await GalleryService.pickVideo();
+        final picked = await GalleryService.pickVideo(
+          onCopyProgress: (fraction) {
+            if (mounted) setState(() => _loadProgress = fraction);
+          },
+        );
+        if (mounted) setState(() => _loadProgress = null);
         path = picked?.path;
         trashUri = picked?.trashUri;
       } else {
@@ -528,6 +540,45 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     });
     PreferencesService.setExpertMode(isExpert);
     _updateEstimatedSize();
+  }
+
+  /// „Video wird geladen…“, beim Kopieren mit Prozentangabe. Das Prozentformat
+  /// kommt aus intl, damit es ohne neuen Übersetzungstext zur Sprache passt.
+  String _loadingLabel(BuildContext context) {
+    final label = AppLocalizations.of(context)!.videoLoading;
+    final progress = _loadProgress;
+    if (progress == null) return label;
+    final percent = NumberFormat.percentPattern(
+      Localizations.localeOf(context).toString(),
+    ).format(progress);
+    return '$label $percent';
+  }
+
+  /// Große Ladeanzeige an Stelle des Platzhalters. Ohne Kopierfortschritt
+  /// dreht der Kreis unbestimmt (Analyse, Vorschau, unbekannte Größe).
+  Widget _buildLoadingPlaceholder(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 56,
+          height: 56,
+          child: CircularProgressIndicator(
+            value: _loadProgress,
+            strokeWidth: 5,
+            color: colors.primary,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          _loadingLabel(context),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
+        ),
+      ],
+    );
   }
 
   void _updateEstimatedSize() {
@@ -875,7 +926,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                       : const Icon(Icons.video_library),
                   label: Text(
                     _isLoading
-                        ? AppLocalizations.of(context)!.videoLoading
+                        ? _loadingLabel(context)
                         : AppLocalizations.of(context)!.selectVideo,
                   ),
                   onPressed: _isLoading ? null : _pickVideo,
@@ -890,28 +941,32 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                       onTap: _isLoading ? null : _pickVideo,
                       child: AspectRatio(
                         aspectRatio: 16 / 9,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.movie_outlined,
-                              size: 64,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.outlineVariant,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              AppLocalizations.of(context)!.selectVideo,
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(
+                        child: _isLoading
+                            ? _buildLoadingPlaceholder(context)
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.movie_outlined,
+                                    size: 64,
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.outlineVariant,
                                   ),
-                            ),
-                          ],
-                        ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    AppLocalizations.of(context)!.selectVideo,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.outlineVariant,
+                                        ),
+                                  ),
+                                ],
+                              ),
                       ),
                     ),
                   )

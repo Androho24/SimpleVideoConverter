@@ -34,7 +34,7 @@ void main() {
 
       expect(h265, lessThan(h264));
       expect(h264, closeTo(30.1, 0.1));
-      expect(h265, closeTo(19.9, 0.1));
+      expect(h265, closeTo(14.1, 0.1));
     });
 
     test('uses the actual no-upscale output dimensions', () {
@@ -105,6 +105,30 @@ void main() {
       expect(h265, lessThan(h264));
     });
 
+    test('five CRF steps lower grow H.264 by about 2.7x', () {
+      double estimate(int crf) => OutputSizeEstimator.estimateExpertMegabytes(
+        durationSeconds: 60,
+        metadata: oneMinute1080p,
+        settings: ExpertSettings(crf: crf, audioBitrate: 0),
+      );
+      // Gemessen auf einem Kameravideo: 13,5 statt 4,9 Mbit/s.
+      expect(estimate(18) / estimate(23), closeTo(2.69, 0.01));
+    });
+
+    test('wide-scale codecs use a flatter CRF curve', () {
+      double estimate(int crf) => OutputSizeEstimator.estimateExpertMegabytes(
+        durationSeconds: 60,
+        metadata: oneMinute1080p,
+        settings: ExpertSettings(
+          crf: crf,
+          videoCodec: 'vp9',
+          container: 'webm',
+          audioBitrate: 0,
+        ),
+      );
+      expect(estimate(26) / estimate(31), closeTo(2.0, 0.01));
+    });
+
     test('CRF estimate includes VP9 and Xvid reference values', () {
       final vp9 = OutputSizeEstimator.estimateExpertMegabytes(
         durationSeconds: 60,
@@ -159,6 +183,39 @@ void main() {
       );
 
       expect(estimate, closeTo(2.33, 0.01));
+    });
+  });
+
+  group('projection during conversion', () {
+    test('waits until enough has been encoded', () {
+      expect(
+        OutputSizeEstimator.projectedFinalBytes(
+          currentBytes: 1000,
+          progress: 0.04,
+        ),
+        isNull,
+      );
+      expect(
+        OutputSizeEstimator.projectedFinalBytes(currentBytes: 0, progress: 0.5),
+        isNull,
+      );
+    });
+
+    test('extrapolates the current size to the full duration', () {
+      expect(
+        OutputSizeEstimator.projectedFinalBytes(
+          currentBytes: 12000000,
+          progress: 0.25,
+        ),
+        48000000,
+      );
+      expect(
+        OutputSizeEstimator.projectedFinalBytes(
+          currentBytes: 5000,
+          progress: 1.0,
+        ),
+        5000,
+      );
     });
   });
 }

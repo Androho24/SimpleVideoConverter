@@ -260,12 +260,31 @@ void main() {
       expect(frame(1920, 1080, shortSide: 720, aspect: '4:3'), (960, 720));
     });
 
+    test('bars cap the long side at 4K', () {
+      expect(frame(1920, 1080, aspect: '21:9'), (2520, 1080));
+      expect(frame(1920, 1080, aspect: '9:21'), (1080, 2520));
+      expect(frame(3840, 2160, aspect: '21:9'), (3840, 1646));
+      expect(frame(3840, 2160, aspect: '9:21'), (1646, 3840));
+      expect(
+        frame(3840, 2160, aspect: '21:9', fit: VideoScaleService.fitStretch),
+        (3840, 1646),
+      );
+      // 9:16 aus 4K bleibt unter der Grenze.
+      expect(frame(3840, 2160, aspect: '9:16'), (2160, 3840));
+      // Eine längere Quelle setzt die Grenze selbst.
+      expect(frame(5120, 2160, aspect: '9:16'), (2160, 3840));
+      expect(frame(5760, 2160, aspect: '21:9'), (5040, 2160));
+    });
+
     test('crop takes the largest centered frame without upscaling', () {
       String crop = VideoScaleService.fitCrop;
       expect(frame(1920, 1080, aspect: '4:3', fit: crop), (1440, 1080));
       expect(frame(1440, 1080, aspect: '16:9', fit: crop), (1440, 810));
       expect(frame(1920, 1080, aspect: '9:16', fit: crop), (608, 1080));
       expect(frame(1920, 1080, aspect: '1:1', fit: crop), (1080, 1080));
+      expect(frame(1920, 1080, aspect: '21:9', fit: crop), (1918, 822));
+      expect(frame(3840, 2160, aspect: '21:9', fit: crop), (3840, 1646));
+      expect(frame(1920, 1080, aspect: '9:21', fit: crop), (462, 1078));
       expect(frame(1920, 1080, shortSide: 720, aspect: '4:3', fit: crop), (
         960,
         720,

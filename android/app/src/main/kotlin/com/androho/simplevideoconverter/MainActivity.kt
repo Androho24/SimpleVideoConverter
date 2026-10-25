@@ -160,7 +160,12 @@ class MainActivity : FlutterActivity() {
                 }
             }
 
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, GALLERY_CHANNEL)
+        val galleryChannel =
+            MethodChannel(flutterEngine.dartExecutor.binaryMessenger, GALLERY_CHANNEL)
+        originalVideoPicker.onCopyProgress = { fraction ->
+            galleryChannel.invokeMethod("pickProgress", fraction)
+        }
+        galleryChannel
             .setMethodCallHandler { call, result ->
                 when (call.method) {
                     "viewSavedVideo" -> {

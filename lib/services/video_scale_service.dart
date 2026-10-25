@@ -122,9 +122,18 @@ class VideoScaleService {
   static const aspectRatios = {
     '16:9': 16 / 9,
     '4:3': 4 / 3,
+    '21:9': 21 / 9,
     '1:1': 1.0,
     '9:16': 9 / 16,
+    '9:21': 9 / 21,
   };
+
+  /// Längste Rahmenseite, die Balken/Strecken erzeugen dürfen, sofern die
+  /// Quelle nicht selbst länger ist. 4K mit Balken auf 21:9 ergäbe sonst
+  /// 5040×2160 (10,9 MP): über Level 5.x von H.264/H.265 (ca. 8,9–9,4 MP),
+  /// jenseits der Breite der meisten Hardware-HEVC-Encoder (3840/4096) und
+  /// auf vielen Geräten nicht abspielbar.
+  static const maxFrameLongSide = 3840;
 
   /// Zahlenwert einer Vorgabe aus [aspectRatios], null für „Original“ und
   /// „Benutzerdefiniert“.
@@ -159,6 +168,8 @@ class VideoScaleService {
   ///   * Balken/Strecken: Die kurze Seite des Rahmens bleibt die der Quelle
   ///     (bzw. der Stufe), die lange folgt dem Zielverhältnis. 4:3 1440×1080
   ///     → 16:9 ergibt 1920×1080 mit Balken, 16:9 → 9:16 ergibt 1080×1920.
+  ///     Die lange Seite endet bei [maxFrameLongSide]: 4K → 21:9 ergibt
+  ///     3840×1646 statt 5040×2160.
   ///   * Zuschneiden: Der größte Ausschnitt im Zielverhältnis, der in die
   ///     Quelle passt, höchstens auf die Stufe verkleinert. 1920×1080 → 9:16
   ///     ergibt 608×1080; mit dem Balken-Rahmen 1080×1920 müsste der Inhalt auf
@@ -181,7 +192,9 @@ class VideoScaleService {
             );
     }
 
-    final int frameShort;
+    final longFactor = aspectRatio >= 1 ? aspectRatio : 1 / aspectRatio;
+    var maxLong = 1 << 30;
+    int frameShort;
     if (fitMode == fitCrop) {
       final sourceRatio = sourceWidth / sourceHeight;
       final (cropWidth, cropHeight) = sourceRatio > aspectRatio
@@ -196,9 +209,19 @@ class VideoScaleService {
       frameShort = _floorEven(
         shortSide > 0 && shortSide < sourceShort ? shortSide : sourceShort,
       );
+      // Zuschneiden bleibt ohnehin innerhalb der Quelle, nur der verlängerte
+      // Rahmen kann über 4K hinauswachsen.
+      final sourceLong = sourceWidth > sourceHeight
+          ? sourceWidth
+          : sourceHeight;
+      maxLong = sourceLong > maxFrameLongSide ? sourceLong : maxFrameLongSide;
+      if (frameShort * longFactor > maxLong) {
+        frameShort = _nearestEven(maxLong / longFactor);
+      }
     }
-    final longFactor = aspectRatio >= 1 ? aspectRatio : 1 / aspectRatio;
-    final frameLong = _nearestEven(frameShort * longFactor);
+    // Die Rundung auf gerade Maße darf die Grenze nicht überschreiten.
+    final roundedLong = _nearestEven(frameShort * longFactor);
+    final frameLong = roundedLong > maxLong ? maxLong : roundedLong;
     return aspectRatio >= 1 ? (frameLong, frameShort) : (frameShort, frameLong);
   }
 

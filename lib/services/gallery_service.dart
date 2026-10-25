@@ -37,8 +37,24 @@ class GalleryService {
   /// Android statt image_picker, weil dessen Photo Picker nur eine Nummer als
   /// Namen liefert und keinen Verweis, der sich in den Papierkorb legen lässt
   /// (siehe OriginalVideoPicker.kt).
-  static Future<PickedVideo?> pickVideo() async {
-    final result = await _channel.invokeMapMethod<String, Object?>('pickVideo');
+  ///
+  /// [onCopyProgress] erhält den Kopierfortschritt 0.0–1.0. Der erste Aufruf
+  /// heißt auch: Die Auswahl ist zu, das Kopieren läuft. Ohne bekannte
+  /// Dateigröße kommt keiner.
+  static Future<PickedVideo?> pickVideo({
+    void Function(double fraction)? onCopyProgress,
+  }) async {
+    _channel.setMethodCallHandler((call) async {
+      if (call.method == 'pickProgress') {
+        onCopyProgress?.call((call.arguments as num).toDouble());
+      }
+    });
+    final Map<String, Object?>? result;
+    try {
+      result = await _channel.invokeMapMethod<String, Object?>('pickVideo');
+    } finally {
+      _channel.setMethodCallHandler(null);
+    }
     if (result == null) return null;
     return PickedVideo(
       path: result['path']! as String,
