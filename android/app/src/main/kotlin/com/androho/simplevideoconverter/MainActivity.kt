@@ -156,7 +156,15 @@ class MainActivity : FlutterActivity() {
                         })
                         result.success(null)
                     }
-                    "hasHardwareHevcEncoder" -> result.success(hasHardwareHevcEncoder())
+                    "hasHardwareHevcEncoder" -> {
+                        // MediaCodecList fragt per Binder den Media-Server ab. Der
+                        // kann auf manchen Geräten sekundenlang hängen (ANR in der
+                        // Play Console) — daher nicht auf dem Main-Thread.
+                        Thread {
+                            val available = hasHardwareHevcEncoder()
+                            runOnUiThread { result.success(available) }
+                        }.start()
+                    }
                     else -> result.notImplemented()
                 }
             }
