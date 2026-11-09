@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Kekal",
   "subtitleModeTrack": "Pilihan",
   "subtitleTrackEmpty": "Tiada sari kata dalam bahagian video yang dipilih.",
+  "sharedVideoBusy": "Selesaikan penukaran semasa dahulu, kemudian kongsi video sekali lagi.",
   "burnInSubtitlesSelect": "Pilih fail SRT atau ASS",
   "burnInSubtitlesRemove": "Buang fail sari kata",
   "burnInSubtitlesUnsupported": "Sila pilih fail .srt atau .ass.",

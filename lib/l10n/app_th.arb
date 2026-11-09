@@ -256,6 +256,7 @@
   "subtitleModeBurnIn": "ถาวร",
   "subtitleModeTrack": "เปิด/ปิดได้",
   "subtitleTrackEmpty": "ไม่มีคำบรรยายในส่วนที่เลือกของวิดีโอ",
+  "sharedVideoBusy": "โปรดทำการแปลงปัจจุบันให้เสร็จก่อน แล้วแชร์วิดีโออีกครั้ง",
   "subtitleTextSizeLabel": "ขนาดข้อความ",
   "subtitleTextSizeSmall": "เล็ก",
   "subtitleTextSizeMedium": "กลาง",

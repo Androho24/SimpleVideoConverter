@@ -649,6 +649,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get subtitleTrackEmpty => '所选视频片段中没有字幕。';
 
   @override
+  String get sharedVideoBusy => '请先完成当前转换，然后重新分享视频。';
+
+  @override
   String get burnInSubtitlesSelect => '选择 SRT 或 ASS 文件';
 
   @override
@@ -1331,6 +1334,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get subtitleTrackEmpty => '所選的影片片段中沒有字幕。';
+
+  @override
+  String get sharedVideoBusy => '請先完成目前的轉檔，然後再次分享影片。';
 
   @override
   String get burnInSubtitlesSelect => '選擇 SRT 或 ASS 檔案';

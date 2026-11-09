@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Beégetett",
   "subtitleModeTrack": "Kapcsolható",
   "subtitleTrackEmpty": "A videó kiválasztott részében nincsenek feliratok.",
+  "sharedVideoBusy": "Előbb fejezd be az aktuális átalakítást, majd oszd meg újra a videót.",
   "burnInSubtitlesSelect": "SRT vagy ASS fájl kiválasztása",
   "burnInSubtitlesRemove": "Feliratfájl eltávolítása",
   "burnInSubtitlesUnsupported": "Válassz .srt vagy .ass fájlt.",

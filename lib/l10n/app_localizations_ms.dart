@@ -672,6 +672,10 @@ class AppLocalizationsMs extends AppLocalizations {
       'Tiada sari kata dalam bahagian video yang dipilih.';
 
   @override
+  String get sharedVideoBusy =>
+      'Selesaikan penukaran semasa dahulu, kemudian kongsi video sekali lagi.';
+
+  @override
   String get burnInSubtitlesSelect => 'Pilih fail SRT atau ASS';
 
   @override

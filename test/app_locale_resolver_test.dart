@@ -80,8 +80,8 @@ void main() {
   });
 
   group('every app language', () {
-    test('has all 33 locales', () {
-      expect(AppLocalizations.supportedLocales, hasLength(33));
+    test('has all 34 locales', () {
+      expect(AppLocalizations.supportedLocales, hasLength(34));
     });
 
     for (final locale in AppLocalizations.supportedLocales) {

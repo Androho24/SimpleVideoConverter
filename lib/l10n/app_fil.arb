@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Permanente",
   "subtitleModeTrack": "Opsyonal",
   "subtitleTrackEmpty": "Walang mga subtitle sa napiling bahagi ng video.",
+  "sharedVideoBusy": "Tapusin muna ang kasalukuyang pag-convert, saka ibahagi ulit ang video.",
   "burnInSubtitlesSelect": "Pumili ng SRT o ASS file",
   "burnInSubtitlesRemove": "Alisin ang subtitle file",
   "burnInSubtitlesUnsupported": "Pumili ng .srt o .ass file.",

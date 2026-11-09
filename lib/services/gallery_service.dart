@@ -17,6 +17,9 @@ class GalleryService {
     'com.androho.simplevideoconverter/gallery',
   );
 
+  static void Function(double fraction)? _onCopyProgress;
+  static void Function()? _onSharedVideoAvailable;
+
   /// Öffnet das gespeicherte Video mit dem angegebenen Dateinamen
   /// (DISPLAY_NAME aus MediaStore).
   ///
@@ -64,17 +67,47 @@ class GalleryService {
   /// Dateigröße oder beim Direktlesen kommt keiner.
   static Future<PickedVideo?> pickVideo({
     void Function(double fraction)? onCopyProgress,
-  }) async {
-    _channel.setMethodCallHandler((call) async {
-      if (call.method == 'pickProgress') {
-        onCopyProgress?.call((call.arguments as num).toDouble());
-      }
-    });
+  }) => _resolveVideo('pickVideo', onCopyProgress);
+
+  /// [onAvailable] läuft, sobald ein Video über „Teilen“ eintrifft, während
+  /// die App schon läuft. Beim Kaltstart kommt kein Hinweis, dort fragt der
+  /// Aufrufer selbst mit [hasSharedVideo] nach. Null beendet das Zuhören.
+  static void listenForSharedVideos(void Function()? onAvailable) {
+    _onSharedVideoAvailable = onAvailable;
+    _ensureHandler();
+  }
+
+  static Future<bool> hasSharedVideo() async {
+    try {
+      return await _channel.invokeMethod<bool>('hasSharedVideo') ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Holt das geteilte Video ab und kopiert es bei Bedarf. Null, wenn keines
+  /// wartet, wirft bei einem Lesefehler. Siehe [pickVideo].
+  static Future<PickedVideo?> takeSharedVideo({
+    void Function(double fraction)? onCopyProgress,
+  }) => _resolveVideo('takeSharedVideo', onCopyProgress);
+
+  static Future<void> discardSharedVideo() async {
+    try {
+      await _channel.invokeMethod<void>('discardSharedVideo');
+    } catch (_) {}
+  }
+
+  static Future<PickedVideo?> _resolveVideo(
+    String method,
+    void Function(double fraction)? onCopyProgress,
+  ) async {
+    _onCopyProgress = onCopyProgress;
+    _ensureHandler();
     final Map<String, Object?>? result;
     try {
-      result = await _channel.invokeMapMethod<String, Object?>('pickVideo');
+      result = await _channel.invokeMapMethod<String, Object?>(method);
     } finally {
-      _channel.setMethodCallHandler(null);
+      _onCopyProgress = null;
     }
     if (result == null) return null;
     return PickedVideo(
@@ -82,6 +115,19 @@ class GalleryService {
       displayName: result['displayName'] as String?,
       trashUri: result['trashUri'] as String?,
     );
+  }
+
+  /// Einmal gesetzt und nicht wieder entfernt: Der Hinweis auf geteilte Videos
+  /// muss auch zwischen zwei Auswahlvorgängen ankommen.
+  static void _ensureHandler() {
+    _channel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'pickProgress':
+          _onCopyProgress?.call((call.arguments as num).toDouble());
+        case 'sharedVideoAvailable':
+          _onSharedVideoAvailable?.call();
+      }
+    });
   }
 
   /// Gibt die dauerhaften Leseberechtigungen direkt gelesener Videos frei,

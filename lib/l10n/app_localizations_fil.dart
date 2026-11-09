@@ -674,6 +674,10 @@ class AppLocalizationsFil extends AppLocalizations {
       'Walang mga subtitle sa napiling bahagi ng video.';
 
   @override
+  String get sharedVideoBusy =>
+      'Tapusin muna ang kasalukuyang pag-convert, saka ibahagi ulit ang video.';
+
+  @override
   String get burnInSubtitlesSelect => 'Pumili ng SRT o ASS file';
 
   @override

@@ -674,6 +674,10 @@ class AppLocalizationsSl extends AppLocalizations {
       'V izbranem delu videoposnetka ni podnapisov.';
 
   @override
+  String get sharedVideoBusy =>
+      'Najprej dokončajte trenutno pretvorbo, nato znova delite videoposnetek.';
+
+  @override
   String get burnInSubtitlesSelect => 'Izberi datoteko SRT ali ASS';
 
   @override

@@ -675,6 +675,10 @@ class AppLocalizationsHu extends AppLocalizations {
       'A videó kiválasztott részében nincsenek feliratok.';
 
   @override
+  String get sharedVideoBusy =>
+      'Előbb fejezd be az aktuális átalakítást, majd oszd meg újra a videót.';
+
+  @override
   String get burnInSubtitlesSelect => 'SRT vagy ASS fájl kiválasztása';
 
   @override

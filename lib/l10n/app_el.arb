@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Μόνιμοι",
   "subtitleModeTrack": "Προαιρετικοί",
   "subtitleTrackEmpty": "Δεν υπάρχουν υπότιτλοι στο επιλεγμένο τμήμα του βίντεο.",
+  "sharedVideoBusy": "Ολοκληρώστε πρώτα την τρέχουσα μετατροπή και μετά κοινοποιήστε ξανά το βίντεο.",
   "burnInSubtitlesSelect": "Επιλογή αρχείου SRT ή ASS",
   "burnInSubtitlesRemove": "Αφαίρεση αρχείου υποτίτλων",
   "burnInSubtitlesUnsupported": "Επιλέξτε ένα αρχείο .srt ή .ass.",

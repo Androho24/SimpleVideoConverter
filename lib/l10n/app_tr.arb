@@ -237,6 +237,7 @@
   "subtitleModeBurnIn": "Kalıcı",
   "subtitleModeTrack": "Açılabilir",
   "subtitleTrackEmpty": "Videonun seçilen bölümünde altyazı yok.",
+  "sharedVideoBusy": "Önce mevcut dönüştürmeyi tamamlayın, ardından videoyu yeniden paylaşın.",
   "subtitleTextSizeLabel": "Metin boyutu",
   "subtitleTextSizeSmall": "Küçük",
   "subtitleTextSizeMedium": "Orta",

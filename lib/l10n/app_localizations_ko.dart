@@ -656,6 +656,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get subtitleTrackEmpty => '선택한 동영상 구간에 자막이 없습니다.';
 
   @override
+  String get sharedVideoBusy => '현재 변환을 먼저 완료한 다음 동영상을 다시 공유하세요.';
+
+  @override
   String get burnInSubtitlesSelect => 'SRT 또는 ASS 파일 선택';
 
   @override

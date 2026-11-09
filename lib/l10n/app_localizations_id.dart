@@ -672,6 +672,10 @@ class AppLocalizationsId extends AppLocalizations {
       'Tidak ada subtitle di bagian video yang dipilih.';
 
   @override
+  String get sharedVideoBusy =>
+      'Selesaikan konversi saat ini terlebih dahulu, lalu bagikan video lagi.';
+
+  @override
   String get burnInSubtitlesSelect => 'Pilih file SRT atau ASS';
 
   @override

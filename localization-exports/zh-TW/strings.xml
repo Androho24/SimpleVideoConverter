@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">影片轉檔工具</string>
-    <string name="notification_converting">轉檔中…</string>
-    <string name="notification_done_title">轉檔完成</string>
-    <string name="notification_done_tap">輕觸以儲存或捨棄</string>
-    <string name="notification_channel_progress">轉檔進度</string>
-    <string name="notification_channel_done">轉檔完成</string>
-</resources>

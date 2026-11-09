@@ -30,6 +30,7 @@ import 'app_localizations_ro.dart';
 import 'app_localizations_ru.dart';
 import 'app_localizations_sk.dart';
 import 'app_localizations_sl.dart';
+import 'app_localizations_sv.dart';
 import 'app_localizations_th.dart';
 import 'app_localizations_tr.dart';
 import 'app_localizations_uk.dart';
@@ -149,6 +150,7 @@ abstract class AppLocalizations {
     Locale('ru'),
     Locale('sk'),
     Locale('sl'),
+    Locale('sv'),
     Locale('th'),
     Locale('tr'),
     Locale('uk'),
@@ -1355,6 +1357,12 @@ abstract class AppLocalizations {
   /// **'There are no subtitles in the selected part of the video.'**
   String get subtitleTrackEmpty;
 
+  /// SnackBar: Ein Video wurde über Teilen geschickt, während die App konvertiert oder lädt
+  ///
+  /// In en, this message translates to:
+  /// **'Please finish the current conversion first, then share the video again.'**
+  String get sharedVideoBusy;
+
   /// Expertenmodus: Button, der die Dateiauswahl für Untertitel öffnet
   ///
   /// In en, this message translates to:
@@ -1470,6 +1478,7 @@ class _AppLocalizationsDelegate
     'ru',
     'sk',
     'sl',
+    'sv',
     'th',
     'tr',
     'uk',
@@ -1562,6 +1571,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsSk();
     case 'sl':
       return AppLocalizationsSl();
+    case 'sv':
+      return AppLocalizationsSv();
     case 'th':
       return AppLocalizationsTh();
     case 'tr':

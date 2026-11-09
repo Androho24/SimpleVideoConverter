@@ -237,6 +237,7 @@
   "subtitleModeBurnIn": "Permanentes",
   "subtitleModeTrack": "Activables",
   "subtitleTrackEmpty": "No hay subtítulos en la parte seleccionada del vídeo.",
+  "sharedVideoBusy": "Termina primero la conversión actual y vuelve a compartir el vídeo.",
   "subtitleTextSizeLabel": "Tamaño del texto",
   "subtitleTextSizeSmall": "Pequeño",
   "subtitleTextSizeMedium": "Mediano",

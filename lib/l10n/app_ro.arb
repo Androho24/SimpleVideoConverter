@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Permanente",
   "subtitleModeTrack": "Opționale",
   "subtitleTrackEmpty": "Nu există subtitrări în porțiunea selectată a videoclipului.",
+  "sharedVideoBusy": "Finalizează mai întâi conversia curentă, apoi partajează din nou videoclipul.",
   "burnInSubtitlesSelect": "Selectează un fișier SRT sau ASS",
   "burnInSubtitlesRemove": "Elimină fișierul de subtitrări",
   "burnInSubtitlesUnsupported": "Selectează un fișier .srt sau .ass.",

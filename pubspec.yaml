@@ -2,7 +2,7 @@ name: simple_video_converter
 description: "Simple Video Converter mit FFmpegKit (libx264/libx265)"
 publish_to: 'none'
 
-version: 2.2.1+32
+version: 2.3.0+33
 
 environment:
   sdk: ^3.10.0

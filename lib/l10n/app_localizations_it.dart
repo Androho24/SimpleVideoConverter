@@ -674,6 +674,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non ci sono sottotitoli nella parte selezionata del video.';
 
   @override
+  String get sharedVideoBusy =>
+      'Completa prima la conversione in corso, poi condividi di nuovo il video.';
+
+  @override
   String get burnInSubtitlesSelect => 'Seleziona file SRT o ASS';
 
   @override

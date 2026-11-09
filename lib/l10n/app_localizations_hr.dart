@@ -675,6 +675,10 @@ class AppLocalizationsHr extends AppLocalizations {
       'U odabranom dijelu videozapisa nema titlova.';
 
   @override
+  String get sharedVideoBusy =>
+      'Najprije dovršite trenutačnu pretvorbu, a zatim ponovno podijelite videozapis.';
+
+  @override
   String get burnInSubtitlesSelect => 'Odaberi SRT ili ASS datoteku';
 
   @override

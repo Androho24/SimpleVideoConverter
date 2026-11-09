@@ -237,6 +237,7 @@
   "subtitleModeBurnIn": "Permanentes",
   "subtitleModeTrack": "Ativáveis",
   "subtitleTrackEmpty": "Não existem legendas na parte selecionada do vídeo.",
+  "sharedVideoBusy": "Conclua primeiro a conversão atual e depois volte a partilhar o vídeo.",
   "subtitleTextSizeLabel": "Tamanho do texto",
   "subtitleTextSizeSmall": "Pequeno",
   "subtitleTextSizeMedium": "Médio",

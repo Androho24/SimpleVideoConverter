@@ -58,6 +58,19 @@
               android:resource="@style/NormalTheme"
               />
         </activity>
+        <!-- Eintrag im Teilen-Menü für einzelne Videos, siehe ShareVideoActivity. -->
+        <activity
+            android:name=".ShareVideoActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="video/*"/>
+            </intent-filter>
+        </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

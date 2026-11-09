@@ -237,6 +237,7 @@
   "subtitleModeBurnIn": "Постоянные",
   "subtitleModeTrack": "Отключаемые",
   "subtitleTrackEmpty": "В выбранной части видео нет субтитров.",
+  "sharedVideoBusy": "Сначала завершите текущую конвертацию, затем поделитесь видео ещё раз.",
   "subtitleTextSizeLabel": "Размер текста",
   "subtitleTextSizeSmall": "Мелкий",
   "subtitleTextSizeMedium": "Средний",

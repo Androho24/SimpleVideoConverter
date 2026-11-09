@@ -674,6 +674,10 @@ class AppLocalizationsPt extends AppLocalizations {
       'Não existem legendas na parte selecionada do vídeo.';
 
   @override
+  String get sharedVideoBusy =>
+      'Conclua primeiro a conversão atual e depois volte a partilhar o vídeo.';
+
+  @override
   String get burnInSubtitlesSelect => 'Selecionar ficheiro SRT ou ASS';
 
   @override
@@ -1384,6 +1388,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get subtitleTrackEmpty =>
       'Não há legendas na parte selecionada do vídeo.';
+
+  @override
+  String get sharedVideoBusy =>
+      'Conclua primeiro a conversão atual e depois compartilhe o vídeo novamente.';
 
   @override
   String get burnInSubtitlesSelect => 'Selecionar arquivo SRT ou ASS';

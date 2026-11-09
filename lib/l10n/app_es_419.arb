@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Incrustados",
   "subtitleModeTrack": "Activables",
   "subtitleTrackEmpty": "No hay subtítulos en la parte seleccionada del video.",
+  "sharedVideoBusy": "Termina primero la conversión actual y vuelve a compartir el video.",
   "burnInSubtitlesSelect": "Seleccionar archivo SRT o ASS",
   "burnInSubtitlesRemove": "Quitar archivo de subtítulos",
   "burnInSubtitlesUnsupported": "Selecciona un archivo .srt o .ass.",

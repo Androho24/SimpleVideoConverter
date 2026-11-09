@@ -139,11 +139,22 @@ class OriginalVideoPicker(private val activity: Activity) {
             result.success(null)
             return true
         }
-        // Große Videos zu kopieren dauert, und auch das Öffnen zur Prüfung geht
-        // über den Anbieter — nicht auf dem Main-Thread.
+        resolveInBackground(picked, result)
+        return true
+    }
+
+    /**
+     * Macht aus [uri] das Ergebnis wie bei [pickVideo]. Geteilte Videos landen
+     * meist in der Kopie, weil sich ihre Berechtigung nicht dauerhaft machen
+     * lässt (siehe [canReadDirectly]).
+     *
+     * Große Videos zu kopieren dauert, und auch das Öffnen zur Prüfung geht
+     * über den Anbieter — nicht auf dem Main-Thread.
+     */
+    fun resolveInBackground(uri: Uri, result: MethodChannel.Result) {
         Thread {
             val reply = try {
-                resolvePicked(picked)
+                resolvePicked(uri)
             } catch (e: Exception) {
                 Log.w(TAG, "Kopieren fehlgeschlagen", e)
                 null
@@ -156,7 +167,6 @@ class OriginalVideoPicker(private val activity: Activity) {
                 }
             }
         }.start()
-        return true
     }
 
     private fun claim(result: MethodChannel.Result): Boolean {

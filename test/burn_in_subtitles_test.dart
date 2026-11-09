@@ -77,7 +77,16 @@ void main() {
     });
 
     test('leaves regional western variants on Windows-1252', () {
-      for (final code in ['da', 'fi', 'fil', 'ms', 'nb', 'es_419', 'pt_BR']) {
+      for (final code in [
+        'da',
+        'fi',
+        'fil',
+        'ms',
+        'nb',
+        'sv',
+        'es_419',
+        'pt_BR',
+      ]) {
         expect(SubtitleService.legacyCharsetFor(code), isNull, reason: code);
       }
     });

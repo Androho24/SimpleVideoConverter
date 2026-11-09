@@ -673,6 +673,10 @@ class AppLocalizationsPl extends AppLocalizations {
       'W wybranym fragmencie filmu nie ma napisów.';
 
   @override
+  String get sharedVideoBusy =>
+      'Najpierw dokończ bieżącą konwersję, a potem udostępnij film ponownie.';
+
+  @override
   String get burnInSubtitlesSelect => 'Wybierz plik SRT lub ASS';
 
   @override

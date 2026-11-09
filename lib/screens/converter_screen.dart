@@ -70,6 +70,12 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   // offen, Größe unbekannt oder Analyse nach dem Kopieren).
   double? _loadProgress;
   bool _isConverting = false;
+
+  /// Der Konvertierungs-Screen ist offen. [_isConverting] gilt nur für die
+  /// Vorbereitung davor.
+  bool _conversionRunning = false;
+  bool _checkingSharedVideo = false;
+  late final Future<void> _cacheCleaned;
   bool _isExpertMode = false;
   int _selectedNavIndex = 0;
   bool _cpuWarningDismissed = false;
@@ -84,12 +90,84 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   void initState() {
     super.initState();
     _loadPreferences();
-    _cleanAppCache();
+    _cacheCleaned = _cleanAppCache();
     // Fallback: Falls die Prompts nach einer Konvertierung nicht gezeigt wurden
     // (App vorher geschlossen), spätestens beim nächsten Start nachholen.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _maybeShowEngagementPrompts();
     });
+    if (Platform.isAndroid) {
+      GalleryService.listenForSharedVideos(_openSharedVideo);
+      WidgetsBinding.instance.addPostFrameCallback((_) => _openSharedVideo());
+    }
+  }
+
+  /// Lädt ein über „Teilen“ geschicktes Video, wenn eines wartet.
+  ///
+  /// Während die App beschäftigt ist, wird es abgelehnt: Mitten in einer
+  /// Konvertierung ein neues Video zu laden, würde deren Quelle austauschen.
+  Future<void> _openSharedVideo() async {
+    // Beim Start können Hinweis und eigene Nachfrage zusammentreffen.
+    if (_checkingSharedVideo) return;
+    _checkingSharedVideo = true;
+    try {
+      if (!await GalleryService.hasSharedVideo()) return;
+      // Die Bereinigung löscht alle UUID-Ordner im Cache und damit sonst auch
+      // die gerade entstehende Kopie des geteilten Videos.
+      await _cacheCleaned;
+      if (!mounted) return;
+      if (_isLoading || _isConverting || _conversionRunning) {
+        await GalleryService.discardSharedVideo();
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.sharedVideoBusy),
+          ),
+        );
+        return;
+      }
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      setState(() {
+        _isLoading = true;
+        _loadProgress = null;
+      });
+    } finally {
+      _checkingSharedVideo = false;
+    }
+
+    final PickedVideo? picked;
+    try {
+      picked = await GalleryService.takeSharedVideo(
+        onCopyProgress: (fraction) {
+          if (mounted) setState(() => _loadProgress = fraction);
+        },
+      );
+    } catch (_) {
+      _stopLoadingWithError();
+      return;
+    }
+    if (!mounted) return;
+    setState(() => _loadProgress = null);
+    if (picked == null) {
+      setState(() => _isLoading = false);
+      return;
+    }
+    await _loadAndReleaseOtherVideos(
+      picked.source,
+      picked.displayName,
+      picked.trashUri,
+    );
+  }
+
+  void _stopLoadingWithError() {
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.invalidVideoFile),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
   /// Zeigt – falls fällig – nacheinander den Review-Dialog (ab 10 Konvertierungen)
@@ -194,6 +272,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   @override
   void dispose() {
+    if (Platform.isAndroid) GalleryService.listenForSharedVideos(null);
     _seekDebounce?.cancel();
     _playerController?.dispose();
     super.dispose();
@@ -231,15 +310,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     } catch (_) {
       // Die Auswahl kann scheitern, wenn sich die gewählte Datei nicht lesen
       // lässt (Cloud-Anbieter offline, exotische Dokument-Anbieter).
-      if (mounted) {
-        setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.invalidVideoFile),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
+      _stopLoadingWithError();
       return;
     }
     if (source == null) {
@@ -247,6 +318,14 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       return;
     }
 
+    await _loadAndReleaseOtherVideos(source, displayName, trashUri);
+  }
+
+  Future<void> _loadAndReleaseOtherVideos(
+    String source,
+    String? displayName,
+    String? trashUri,
+  ) async {
     try {
       await _loadPickedVideo(source, displayName, trashUri);
     } finally {
@@ -1016,6 +1095,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     await _requestNotificationPermission();
 
     if (!mounted) return;
+    _conversionRunning = true;
     setState(() => _isConverting = false);
     await Navigator.push(
       context,
@@ -1032,6 +1112,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         ),
       ),
     );
+    _conversionRunning = false;
     // Zurück in der Hauptansicht (Konvertierung ist gespeichert/verworfen) →
     // jetzt ggf. Review-/Pro-Prompt zeigen, ohne den Speichern-Flow zu stören.
     if (mounted) await _maybeShowEngagementPrompts();

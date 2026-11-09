@@ -676,6 +676,10 @@ class AppLocalizationsEl extends AppLocalizations {
       'Δεν υπάρχουν υπότιτλοι στο επιλεγμένο τμήμα του βίντεο.';
 
   @override
+  String get sharedVideoBusy =>
+      'Ολοκληρώστε πρώτα την τρέχουσα μετατροπή και μετά κοινοποιήστε ξανά το βίντεο.';
+
+  @override
   String get burnInSubtitlesSelect => 'Επιλογή αρχείου SRT ή ASS';
 
   @override

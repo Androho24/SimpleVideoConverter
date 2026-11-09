@@ -378,6 +378,7 @@
   "subtitleModeBurnIn": "Fest",
   "subtitleModeTrack": "Zuschaltbar",
   "subtitleTrackEmpty": "Im gewählten Ausschnitt des Videos gibt es keine Untertitel.",
+  "sharedVideoBusy": "Bitte schließe zuerst die aktuelle Konvertierung ab und teile das Video dann erneut.",
   "subtitleTextSizeLabel": "Textgröße",
   "subtitleTextSizeSmall": "Klein",
   "subtitleTextSizeMedium": "Mittel",

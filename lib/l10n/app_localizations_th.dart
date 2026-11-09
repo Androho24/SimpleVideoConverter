@@ -665,6 +665,10 @@ class AppLocalizationsTh extends AppLocalizations {
   String get subtitleTrackEmpty => 'ไม่มีคำบรรยายในส่วนที่เลือกของวิดีโอ';
 
   @override
+  String get sharedVideoBusy =>
+      'โปรดทำการแปลงปัจจุบันให้เสร็จก่อน แล้วแชร์วิดีโออีกครั้ง';
+
+  @override
   String get burnInSubtitlesSelect => 'เลือกไฟล์ SRT หรือ ASS';
 
   @override

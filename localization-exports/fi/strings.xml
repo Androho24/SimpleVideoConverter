@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Videomuunnin</string>
-    <string name="notification_converting">Muunnetaan…</string>
-    <string name="notification_done_title">Muunnos valmis</string>
-    <string name="notification_done_tap">Tallenna tai hylkää napauttamalla</string>
-    <string name="notification_channel_progress">Muunnoksen edistyminen</string>
-    <string name="notification_channel_done">Muunnos valmis</string>
-</resources>

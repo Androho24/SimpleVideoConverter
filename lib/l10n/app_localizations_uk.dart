@@ -673,6 +673,10 @@ class AppLocalizationsUk extends AppLocalizations {
   String get subtitleTrackEmpty => 'У вибраній частині відео немає субтитрів.';
 
   @override
+  String get sharedVideoBusy =>
+      'Спочатку завершіть поточне конвертування, а потім поділіться відео ще раз.';
+
+  @override
   String get burnInSubtitlesSelect => 'Вибрати файл SRT або ASS';
 
   @override

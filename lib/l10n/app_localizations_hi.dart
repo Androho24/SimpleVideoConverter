@@ -671,6 +671,10 @@ class AppLocalizationsHi extends AppLocalizations {
       'वीडियो के चुने गए हिस्से में कोई सबटाइटल नहीं है।';
 
   @override
+  String get sharedVideoBusy =>
+      'पहले मौजूदा कन्वर्ज़न पूरा करें, फिर वीडियो दोबारा शेयर करें।';
+
+  @override
   String get burnInSubtitlesSelect => 'SRT या ASS फ़ाइल चुनें';
 
   @override

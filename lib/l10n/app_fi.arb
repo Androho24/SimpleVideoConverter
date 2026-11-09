@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Pysyvä",
   "subtitleModeTrack": "Valittava",
   "subtitleTrackEmpty": "Videon valitussa osassa ei ole tekstityksiä.",
+  "sharedVideoBusy": "Viimeistele ensin nykyinen muunnos ja jaa video sitten uudelleen.",
   "burnInSubtitlesSelect": "Valitse SRT- tai ASS-tiedosto",
   "burnInSubtitlesRemove": "Poista tekstitystiedosto",
   "burnInSubtitlesUnsupported": "Valitse .srt- tai .ass-tiedosto.",

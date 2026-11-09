@@ -673,6 +673,10 @@ class AppLocalizationsFi extends AppLocalizations {
       'Videon valitussa osassa ei ole tekstityksiä.';
 
   @override
+  String get sharedVideoBusy =>
+      'Viimeistele ensin nykyinen muunnos ja jaa video sitten uudelleen.';
+
+  @override
   String get burnInSubtitlesSelect => 'Valitse SRT- tai ASS-tiedosto';
 
   @override

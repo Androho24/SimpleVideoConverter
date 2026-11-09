@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Convertor video</string>
-    <string name="notification_converting">Se convertește…</string>
-    <string name="notification_done_title">Conversie finalizată</string>
-    <string name="notification_done_tap">Atinge pentru a salva sau a renunța</string>
-    <string name="notification_channel_progress">Progresul conversiei</string>
-    <string name="notification_channel_done">Conversie finalizată</string>
-</resources>

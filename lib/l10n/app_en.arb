@@ -561,6 +561,8 @@
   "@subtitleModeTrack": {"description": "Expertenmodus: Segment – Untertitel als eigene Spur, im Player zuschaltbar. Muss kurz sein"},
   "subtitleTrackEmpty": "There are no subtitles in the selected part of the video.",
   "@subtitleTrackEmpty": {"description": "SnackBar: Für eine zuschaltbare Spur liegt kein Untertitel im gewählten Ausschnitt"},
+  "sharedVideoBusy": "Please finish the current conversion first, then share the video again.",
+  "@sharedVideoBusy": {"description": "SnackBar: Ein Video wurde über Teilen geschickt, während die App konvertiert oder lädt"},
   "burnInSubtitlesSelect": "Select SRT or ASS file",
   "@burnInSubtitlesSelect": {"description": "Expertenmodus: Button, der die Dateiauswahl für Untertitel öffnet"},
   "burnInSubtitlesRemove": "Remove subtitle file",

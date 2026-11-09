@@ -667,6 +667,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get subtitleTrackEmpty => 'Không có phụ đề trong đoạn video đã chọn.';
 
   @override
+  String get sharedVideoBusy =>
+      'Hãy hoàn tất quá trình chuyển đổi hiện tại trước, rồi chia sẻ lại video.';
+
+  @override
   String get burnInSubtitlesSelect => 'Chọn tệp SRT hoặc ASS';
 
   @override

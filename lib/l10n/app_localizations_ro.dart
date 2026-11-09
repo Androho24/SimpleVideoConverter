@@ -673,6 +673,10 @@ class AppLocalizationsRo extends AppLocalizations {
       'Nu există subtitrări în porțiunea selectată a videoclipului.';
 
   @override
+  String get sharedVideoBusy =>
+      'Finalizează mai întâi conversia curentă, apoi partajează din nou videoclipul.';
+
+  @override
   String get burnInSubtitlesSelect => 'Selectează un fișier SRT sau ASS';
 
   @override

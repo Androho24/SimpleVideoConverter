@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">동영상 변환기</string>
-    <string name="notification_converting">변환 중…</string>
-    <string name="notification_done_title">변환 완료</string>
-    <string name="notification_done_tap">탭하여 저장하거나 삭제하세요</string>
-    <string name="notification_channel_progress">변환 진행 상황</string>
-    <string name="notification_channel_done">변환 완료</string>
-</resources>

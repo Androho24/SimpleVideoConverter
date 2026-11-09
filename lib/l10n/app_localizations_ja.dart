@@ -654,6 +654,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get subtitleTrackEmpty => '動画の選択した範囲に字幕はありません。';
 
   @override
+  String get sharedVideoBusy => '現在の変換が終わってから、もう一度動画を共有してください。';
+
+  @override
   String get burnInSubtitlesSelect => 'SRTまたはASSファイルを選択';
 
   @override

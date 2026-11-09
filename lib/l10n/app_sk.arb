@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Natrvalo",
   "subtitleModeTrack": "Prepínateľné",
   "subtitleTrackEmpty": "Vo vybranej časti videa nie sú žiadne titulky.",
+  "sharedVideoBusy": "Najprv dokončite aktuálnu konverziu a potom video zdieľajte znova.",
   "burnInSubtitlesSelect": "Vybrať súbor SRT alebo ASS",
   "burnInSubtitlesRemove": "Odstrániť súbor s titulkami",
   "burnInSubtitlesUnsupported": "Vyberte súbor .srt alebo .ass.",

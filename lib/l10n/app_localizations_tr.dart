@@ -674,6 +674,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get subtitleTrackEmpty => 'Videonun seçilen bölümünde altyazı yok.';
 
   @override
+  String get sharedVideoBusy =>
+      'Önce mevcut dönüştürmeyi tamamlayın, ardından videoyu yeniden paylaşın.';
+
+  @override
   String get burnInSubtitlesSelect => 'SRT veya ASS dosyası seç';
 
   @override

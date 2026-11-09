@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "永久烧录",
   "subtitleModeTrack": "可开关",
   "subtitleTrackEmpty": "所选视频片段中没有字幕。",
+  "sharedVideoBusy": "请先完成当前转换，然后重新分享视频。",
   "burnInSubtitlesSelect": "选择 SRT 或 ASS 文件",
   "burnInSubtitlesRemove": "移除字幕文件",
   "burnInSubtitlesUnsupported": "请选择 .srt 或 .ass 文件。",

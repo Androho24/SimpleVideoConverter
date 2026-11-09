@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Trajni",
   "subtitleModeTrack": "Preklopni",
   "subtitleTrackEmpty": "V izbranem delu videoposnetka ni podnapisov.",
+  "sharedVideoBusy": "Najprej dokončajte trenutno pretvorbo, nato znova delite videoposnetek.",
   "burnInSubtitlesSelect": "Izberi datoteko SRT ali ASS",
   "burnInSubtitlesRemove": "Odstrani datoteko s podnapisi",
   "burnInSubtitlesUnsupported": "Izberite datoteko .srt ali .ass.",

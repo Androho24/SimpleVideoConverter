@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Videokonverter</string>
+    <string name="notification_converting">Konverterar…</string>
+    <string name="notification_done_title">Konverteringen är klar</string>
+    <string name="notification_done_tap">Tryck för att spara eller kasta</string>
+    <string name="notification_channel_progress">Konverteringsförlopp</string>
+    <string name="notification_channel_done">Slutförd konvertering</string>
+</resources>

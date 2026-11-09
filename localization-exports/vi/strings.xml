@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Chuyển video</string>
-    <string name="notification_converting">Đang chuyển đổi…</string>
-    <string name="notification_done_title">Chuyển đổi hoàn tất</string>
-    <string name="notification_done_tap">Nhấn để lưu hoặc bỏ</string>
-    <string name="notification_channel_progress">Tiến trình chuyển đổi</string>
-    <string name="notification_channel_done">Chuyển đổi hoàn tất</string>
-</resources>

@@ -669,6 +669,10 @@ class AppLocalizationsCs extends AppLocalizations {
       'Ve vybrané části videa nejsou žádné titulky.';
 
   @override
+  String get sharedVideoBusy =>
+      'Nejprve dokončete aktuální převod a poté video sdílejte znovu.';
+
+  @override
   String get burnInSubtitlesSelect => 'Vybrat soubor SRT nebo ASS';
 
   @override

@@ -25,6 +25,11 @@ import java.nio.charset.Charset
 
 class MainActivity : FlutterActivity() {
 
+    companion object {
+        /** Von [ShareVideoActivity], die URI steht in `data`. */
+        const val ACTION_SHARED_VIDEO = "com.androho.simplevideoconverter.SHARED_VIDEO"
+    }
+
     private val ADS_CHANNEL = "com.androho.simplevideoconverter/ads"
     private val SERVICE_CHANNEL = "com.androho.simplevideoconverter/conversion_service"
     private val GALLERY_CHANNEL = "com.androho.simplevideoconverter/gallery"
@@ -38,6 +43,8 @@ class MainActivity : FlutterActivity() {
     private var pendingConsentResult: Boolean? = null
     private var systemBarsColor: Int? = null
     private var systemBarsDark: Boolean? = null
+    private var sharedVideoChannel: MethodChannel? = null
+    private var pendingSharedVideo: Uri? = null
 
     override fun provideFlutterEngine(context: Context): FlutterEngine? =
         (application as SimpleVideoConverterApplication).getMainFlutterEngine()
@@ -49,6 +56,7 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applySystemBarStyle()
+        if (savedInstanceState == null) receiveSharedVideo(intent)
 
         // UMP-Consent-Flow anstoßen. Nach Abschluss initialisiert Flutter das
         // AdMob Next-Gen SDK samt Bidding-Adaptern.
@@ -63,6 +71,32 @@ class MainActivity : FlutterActivity() {
                 notifyDartAboutConsent(canRequestAds)
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        receiveSharedVideo(intent)
+    }
+
+    /**
+     * Merkt sich ein geteiltes Video, bis Dart es abholt. Der Hinweis erreicht
+     * Dart nur, wenn es schon läuft; beim Kaltstart fragt Dart selbst nach.
+     */
+    private fun receiveSharedVideo(intent: Intent?) {
+        pendingSharedVideo = sharedVideoUri(intent) ?: return
+        sharedVideoChannel?.invokeMethod("sharedVideoAvailable", null)
+    }
+
+    private fun sharedVideoUri(intent: Intent?): Uri? {
+        if (intent?.action != ACTION_SHARED_VIDEO) return null
+        // Aus den letzten Apps neu gestartet: Android liefert den alten Intent
+        // erneut, die Leseberechtigung dazu ist aber längst weg.
+        if (intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY != 0) return null
+        // MainActivity ist exportiert, die URI kann also von jeder App stammen.
+        // Über den eigenen FileProvider käme sie sonst an App-interne Dateien.
+        val uri = intent.data ?: return null
+        if (uri.scheme != "content" || uri.authority == "$packageName.fileProvider") return null
+        return uri
     }
 
     @Deprecated("Deprecated in Java")
@@ -173,6 +207,7 @@ class MainActivity : FlutterActivity() {
 
         val galleryChannel =
             MethodChannel(flutterEngine.dartExecutor.binaryMessenger, GALLERY_CHANNEL)
+        sharedVideoChannel = galleryChannel
         originalVideoPicker.onCopyProgress = { fraction ->
             galleryChannel.invokeMethod("pickProgress", fraction)
         }
@@ -185,6 +220,20 @@ class MainActivity : FlutterActivity() {
                     }
                     "saveVideo" -> saveVideo(call.argument<String>("path"), result)
                     "pickVideo" -> originalVideoPicker.pickVideo(result)
+                    "hasSharedVideo" -> result.success(pendingSharedVideo != null)
+                    "takeSharedVideo" -> {
+                        val uri = pendingSharedVideo
+                        pendingSharedVideo = null
+                        if (uri == null) {
+                            result.success(null)
+                        } else {
+                            originalVideoPicker.resolveInBackground(uri, result)
+                        }
+                    }
+                    "discardSharedVideo" -> {
+                        pendingSharedVideo = null
+                        result.success(null)
+                    }
                     "trashOriginal" ->
                         originalVideoPicker.trashOriginal(call.argument<String>("uri"), result)
                     "releaseVideoAccess" -> {

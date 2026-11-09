@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Indbrændt",
   "subtitleModeTrack": "Valgfrit spor",
   "subtitleTrackEmpty": "Der er ingen undertekster i den valgte del af videoen.",
+  "sharedVideoBusy": "Afslut først den igangværende konvertering, og del derefter videoen igen.",
   "burnInSubtitlesSelect": "Vælg SRT- eller ASS-fil",
   "burnInSubtitlesRemove": "Fjern undertekstfil",
   "burnInSubtitlesUnsupported": "Vælg en .srt- eller .ass-fil.",

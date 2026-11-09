@@ -199,6 +199,7 @@
   "subtitleModeBurnIn": "Cố định",
   "subtitleModeTrack": "Có thể bật/tắt",
   "subtitleTrackEmpty": "Không có phụ đề trong đoạn video đã chọn.",
+  "sharedVideoBusy": "Hãy hoàn tất quá trình chuyển đổi hiện tại trước, rồi chia sẻ lại video.",
   "burnInSubtitlesSelect": "Chọn tệp SRT hoặc ASS",
   "burnInSubtitlesRemove": "Xóa tệp phụ đề",
   "burnInSubtitlesUnsupported": "Vui lòng chọn tệp .srt hoặc .ass.",

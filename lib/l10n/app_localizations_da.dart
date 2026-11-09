@@ -673,6 +673,10 @@ class AppLocalizationsDa extends AppLocalizations {
       'Der er ingen undertekster i den valgte del af videoen.';
 
   @override
+  String get sharedVideoBusy =>
+      'Afslut først den igangværende konvertering, og del derefter videoen igen.';
+
+  @override
   String get burnInSubtitlesSelect => 'Vælg SRT- eller ASS-fil';
 
   @override

@@ -677,6 +677,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No hay subtítulos en la parte seleccionada del vídeo.';
 
   @override
+  String get sharedVideoBusy =>
+      'Termina primero la conversión actual y vuelve a compartir el vídeo.';
+
+  @override
   String get burnInSubtitlesSelect => 'Seleccionar archivo SRT o ASS';
 
   @override
@@ -1387,6 +1391,10 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
   @override
   String get subtitleTrackEmpty =>
       'No hay subtítulos en la parte seleccionada del video.';
+
+  @override
+  String get sharedVideoBusy =>
+      'Termina primero la conversión actual y vuelve a compartir el video.';
 
   @override
   String get burnInSubtitlesSelect => 'Seleccionar archivo SRT o ASS';
