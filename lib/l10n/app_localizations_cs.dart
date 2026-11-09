@@ -657,4 +657,53 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'Originál se nepodařilo smazat.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Vypálit titulky';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Titulky se trvale vykreslí do obrazu videa. Budou vždy viditelné a později je nelze vypnout.\n\nPodporuje soubory SRT a ASS. Formátování a pozice ASS zůstanou zachovány. U videí, která zůstanou v HDR, mohou titulky působit velmi jasně.';
+
+  @override
+  String get burnInSubtitlesSelect => 'Vybrat soubor SRT nebo ASS';
+
+  @override
+  String get burnInSubtitlesRemove => 'Odebrat soubor titulků';
+
+  @override
+  String get burnInSubtitlesUnsupported =>
+      'Vyberte prosím soubor .srt nebo .ass.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'Tento soubor titulků nelze přečíst nebo neobsahuje platné titulky.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'Soubor titulků už není k dispozici. Vyberte ho prosím znovu.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Velikost textu';
+
+  @override
+  String get subtitleTextSizeSmall => 'Malá';
+
+  @override
+  String get subtitleTextSizeMedium => 'Střední';
+
+  @override
+  String get subtitleTextSizeLarge => 'Velká';
+
+  @override
+  String get subtitlePositionLabel => 'Pozice';
+
+  @override
+  String get subtitlePositionBottom => 'Dole';
+
+  @override
+  String get subtitlePositionTop => 'Nahoře';
+
+  @override
+  String get subtitleBackgroundTitle => 'Šedé pozadí';
 }

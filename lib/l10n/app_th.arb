@@ -247,5 +247,20 @@
 
   "deleteOriginal": "ลบต้นฉบับ",
   "originalTrashed": "ย้ายต้นฉบับไปที่ถังขยะแล้ว — กู้คืนได้จากที่นั่น",
-  "originalTrashFailed": "ไม่สามารถลบต้นฉบับได้"
+  "originalTrashFailed": "ไม่สามารถลบต้นฉบับได้",
+  "burnInSubtitlesLabel": "ฝังคำบรรยาย",
+  "burnInSubtitlesInfoContent": "วาดคำบรรยายลงในภาพวิดีโออย่างถาวร คำบรรยายจะแสดงอยู่เสมอและไม่สามารถปิดได้ในภายหลัง\n\nรองรับไฟล์ SRT และ ASS โดยคงรูปแบบและตำแหน่งของ ASS ไว้ สำหรับวิดีโอที่ยังคงเป็น HDR คำบรรยายอาจดูสว่างมาก",
+  "burnInSubtitlesSelect": "เลือกไฟล์ SRT หรือ ASS",
+  "burnInSubtitlesRemove": "นำไฟล์คำบรรยายออก",
+  "burnInSubtitlesUnsupported": "กรุณาเลือกไฟล์ .srt หรือ .ass",
+  "burnInSubtitlesInvalid": "ไม่สามารถอ่านไฟล์คำบรรยายนี้ได้ หรือไฟล์ไม่มีคำบรรยายที่ถูกต้อง",
+  "burnInSubtitlesMissing": "ไฟล์คำบรรยายไม่พร้อมใช้งานแล้ว กรุณาเลือกอีกครั้ง",
+  "subtitleTextSizeLabel": "ขนาดข้อความ",
+  "subtitleTextSizeSmall": "เล็ก",
+  "subtitleTextSizeMedium": "กลาง",
+  "subtitleTextSizeLarge": "ใหญ่",
+  "subtitlePositionLabel": "ตำแหน่ง",
+  "subtitlePositionBottom": "ด้านล่าง",
+  "subtitlePositionTop": "ด้านบน",
+  "subtitleBackgroundTitle": "พื้นหลังสีเทา"
 }

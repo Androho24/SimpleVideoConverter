@@ -228,5 +228,20 @@
 
   "deleteOriginal": "Origineel verwijderen",
   "originalTrashed": "Origineel naar de prullenbak verplaatst — daar kun je het herstellen.",
-  "originalTrashFailed": "Het origineel kon niet worden verwijderd."
+  "originalTrashFailed": "Het origineel kon niet worden verwijderd.",
+  "burnInSubtitlesLabel": "Ondertitels inbranden",
+  "burnInSubtitlesInfoContent": "Brandt de ondertitels permanent in het videobeeld. Ze blijven altijd zichtbaar en kunnen later niet meer worden uitgeschakeld.\n\nOndersteunt SRT- en ASS-bestanden. ASS-opmaak en -posities blijven behouden. Bij video's die in HDR blijven, kunnen ondertitels erg fel lijken.",
+  "burnInSubtitlesSelect": "SRT- of ASS-bestand selecteren",
+  "burnInSubtitlesRemove": "Ondertitelbestand verwijderen",
+  "burnInSubtitlesUnsupported": "Selecteer een .srt- of .ass-bestand.",
+  "burnInSubtitlesInvalid": "Dit ondertitelbestand kan niet worden gelezen of bevat geen geldige ondertitels.",
+  "burnInSubtitlesMissing": "Het ondertitelbestand is niet meer beschikbaar. Selecteer het opnieuw.",
+  "subtitleTextSizeLabel": "Tekstgrootte",
+  "subtitleTextSizeSmall": "Klein",
+  "subtitleTextSizeMedium": "Middel",
+  "subtitleTextSizeLarge": "Groot",
+  "subtitlePositionLabel": "Positie",
+  "subtitlePositionBottom": "Onder",
+  "subtitlePositionTop": "Boven",
+  "subtitleBackgroundTitle": "Grijze achtergrond"
 }

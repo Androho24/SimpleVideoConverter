@@ -661,4 +661,53 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get originalTrashFailed =>
       'Das Original konnte nicht gelöscht werden.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Untertitel einbrennen';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Zeichnet die Untertitel dauerhaft ins Videobild. Sie sind immer sichtbar und lassen sich später nicht mehr ausschalten.\n\nUnterstützt SRT- und ASS-Dateien. ASS-Formatierungen und -Positionen bleiben erhalten. Bei HDR-Videos, die in HDR bleiben, können Untertitel sehr hell wirken.';
+
+  @override
+  String get burnInSubtitlesSelect => 'SRT- oder ASS-Datei auswählen';
+
+  @override
+  String get burnInSubtitlesRemove => 'Untertiteldatei entfernen';
+
+  @override
+  String get burnInSubtitlesUnsupported =>
+      'Bitte eine .srt- oder .ass-Datei auswählen.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'Diese Untertiteldatei ist nicht lesbar oder enthält keine gültigen Untertitel.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'Die Untertiteldatei ist nicht mehr verfügbar. Bitte erneut auswählen.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Textgröße';
+
+  @override
+  String get subtitleTextSizeSmall => 'Klein';
+
+  @override
+  String get subtitleTextSizeMedium => 'Mittel';
+
+  @override
+  String get subtitleTextSizeLarge => 'Groß';
+
+  @override
+  String get subtitlePositionLabel => 'Position';
+
+  @override
+  String get subtitlePositionBottom => 'Unten';
+
+  @override
+  String get subtitlePositionTop => 'Oben';
+
+  @override
+  String get subtitleBackgroundTitle => 'Grauer Hintergrund';
 }

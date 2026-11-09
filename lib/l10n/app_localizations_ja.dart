@@ -643,4 +643,50 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get originalTrashFailed => '元の動画を削除できませんでした。';
+
+  @override
+  String get burnInSubtitlesLabel => '字幕の焼き付け';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      '字幕を動画の映像に恒久的に描き込みます。字幕は常に表示され、後からオフにすることはできません。\n\nSRTファイルとASSファイルに対応しています。ASSの書式と位置は維持されます。HDRのまま出力する動画では、字幕が非常に明るく見えることがあります。';
+
+  @override
+  String get burnInSubtitlesSelect => 'SRTまたはASSファイルを選択';
+
+  @override
+  String get burnInSubtitlesRemove => '字幕ファイルの選択を解除';
+
+  @override
+  String get burnInSubtitlesUnsupported => '.srtまたは.assファイルを選択してください。';
+
+  @override
+  String get burnInSubtitlesInvalid => 'この字幕ファイルは読み取れないか、有効な字幕が含まれていません。';
+
+  @override
+  String get burnInSubtitlesMissing => '字幕ファイルを利用できなくなりました。もう一度選択してください。';
+
+  @override
+  String get subtitleTextSizeLabel => '文字サイズ';
+
+  @override
+  String get subtitleTextSizeSmall => '小';
+
+  @override
+  String get subtitleTextSizeMedium => '中';
+
+  @override
+  String get subtitleTextSizeLarge => '大';
+
+  @override
+  String get subtitlePositionLabel => '位置';
+
+  @override
+  String get subtitlePositionBottom => '下';
+
+  @override
+  String get subtitlePositionTop => '上';
+
+  @override
+  String get subtitleBackgroundTitle => 'グレーの背景';
 }

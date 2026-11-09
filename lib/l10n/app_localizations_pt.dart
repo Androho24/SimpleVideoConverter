@@ -662,6 +662,55 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'Não foi possível eliminar o original.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Incorporar legendas';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Desenha as legendas de forma permanente na imagem do vídeo. Ficam sempre visíveis e não podem ser desativadas mais tarde.\n\nSuporta ficheiros SRT e ASS. A formatação e as posições ASS são mantidas. Em vídeos que permanecem em HDR, as legendas podem parecer muito brilhantes.';
+
+  @override
+  String get burnInSubtitlesSelect => 'Selecionar ficheiro SRT ou ASS';
+
+  @override
+  String get burnInSubtitlesRemove => 'Remover ficheiro de legendas';
+
+  @override
+  String get burnInSubtitlesUnsupported =>
+      'Selecione um ficheiro .srt ou .ass.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'Não foi possível ler este ficheiro de legendas ou não contém legendas válidas.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'O ficheiro de legendas já não está disponível. Selecione-o novamente.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Tamanho do texto';
+
+  @override
+  String get subtitleTextSizeSmall => 'Pequeno';
+
+  @override
+  String get subtitleTextSizeMedium => 'Médio';
+
+  @override
+  String get subtitleTextSizeLarge => 'Grande';
+
+  @override
+  String get subtitlePositionLabel => 'Posição';
+
+  @override
+  String get subtitlePositionBottom => 'Em baixo';
+
+  @override
+  String get subtitlePositionTop => 'Em cima';
+
+  @override
+  String get subtitleBackgroundTitle => 'Fundo cinzento';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1322,4 +1371,52 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get originalTrashFailed => 'Não foi possível excluir o original.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Embutir legendas';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Desenha as legendas permanentemente na imagem do vídeo. Elas ficam sempre visíveis e não podem ser desativadas depois.\n\nCompatível com arquivos SRT e ASS. A formatação e as posições do ASS são mantidas. Em vídeos que permanecem em HDR, as legendas podem parecer muito brilhantes.';
+
+  @override
+  String get burnInSubtitlesSelect => 'Selecionar arquivo SRT ou ASS';
+
+  @override
+  String get burnInSubtitlesRemove => 'Remover arquivo de legendas';
+
+  @override
+  String get burnInSubtitlesUnsupported => 'Selecione um arquivo .srt ou .ass.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'Não foi possível ler este arquivo de legendas ou ele não contém legendas válidas.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'O arquivo de legendas não está mais disponível. Selecione-o novamente.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Tamanho do texto';
+
+  @override
+  String get subtitleTextSizeSmall => 'Pequeno';
+
+  @override
+  String get subtitleTextSizeMedium => 'Médio';
+
+  @override
+  String get subtitleTextSizeLarge => 'Grande';
+
+  @override
+  String get subtitlePositionLabel => 'Posição';
+
+  @override
+  String get subtitlePositionBottom => 'Embaixo';
+
+  @override
+  String get subtitlePositionTop => 'Em cima';
+
+  @override
+  String get subtitleBackgroundTitle => 'Fundo cinza';
 }

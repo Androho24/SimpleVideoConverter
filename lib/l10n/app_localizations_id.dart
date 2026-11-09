@@ -660,4 +660,52 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'Video asli tidak dapat dihapus.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Tanamkan Subtitle';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Menggambar subtitle secara permanen pada gambar video. Subtitle akan selalu terlihat dan tidak dapat dimatikan nanti.\n\nMendukung file SRT dan ASS. Format dan posisi ASS tetap dipertahankan. Pada video yang tetap HDR, subtitle dapat terlihat sangat terang.';
+
+  @override
+  String get burnInSubtitlesSelect => 'Pilih file SRT atau ASS';
+
+  @override
+  String get burnInSubtitlesRemove => 'Hapus file subtitle';
+
+  @override
+  String get burnInSubtitlesUnsupported => 'Silakan pilih file .srt atau .ass.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'File subtitle ini tidak dapat dibaca atau tidak berisi subtitle yang valid.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'File subtitle tidak lagi tersedia. Silakan pilih lagi.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Ukuran teks';
+
+  @override
+  String get subtitleTextSizeSmall => 'Kecil';
+
+  @override
+  String get subtitleTextSizeMedium => 'Sedang';
+
+  @override
+  String get subtitleTextSizeLarge => 'Besar';
+
+  @override
+  String get subtitlePositionLabel => 'Posisi';
+
+  @override
+  String get subtitlePositionBottom => 'Bawah';
+
+  @override
+  String get subtitlePositionTop => 'Atas';
+
+  @override
+  String get subtitleBackgroundTitle => 'Latar abu-abu';
 }

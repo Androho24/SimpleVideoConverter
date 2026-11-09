@@ -1306,6 +1306,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The original could not be deleted.'**
   String get originalTrashFailed;
+
+  /// Expertenmodus: Überschrift der Option zum Einbrennen von Untertiteln, direkt unter dem Output-Format
+  ///
+  /// In en, this message translates to:
+  /// **'Burn-in Subtitles'**
+  String get burnInSubtitlesLabel;
+
+  /// Expertenmodus: Info-Dialog zum Einbrennen von Untertiteln
+  ///
+  /// In en, this message translates to:
+  /// **'Draws the subtitles permanently into the video image. They always stay visible and cannot be turned off later.\n\nSupports SRT and ASS files. ASS styling and positions are kept. On HDR videos that stay in HDR, subtitles can look very bright.'**
+  String get burnInSubtitlesInfoContent;
+
+  /// Expertenmodus: Button, der die Dateiauswahl für Untertitel öffnet
+  ///
+  /// In en, this message translates to:
+  /// **'Select SRT or ASS file'**
+  String get burnInSubtitlesSelect;
+
+  /// Expertenmodus: Tooltip des Buttons, der die gewählte Untertiteldatei entfernt
+  ///
+  /// In en, this message translates to:
+  /// **'Remove subtitle file'**
+  String get burnInSubtitlesRemove;
+
+  /// SnackBar: Gewählte Datei hat weder die Endung .srt noch .ass
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an .srt or .ass file.'**
+  String get burnInSubtitlesUnsupported;
+
+  /// SnackBar: Untertiteldatei ist unlesbar, zu groß oder enthält keine gültigen Untertitel
+  ///
+  /// In en, this message translates to:
+  /// **'This subtitle file could not be read or contains no valid subtitles.'**
+  String get burnInSubtitlesInvalid;
+
+  /// SnackBar: Die zwischengespeicherte Untertiteldatei fehlt beim Start der Konvertierung
+  ///
+  /// In en, this message translates to:
+  /// **'The subtitle file is no longer available. Please select it again.'**
+  String get burnInSubtitlesMissing;
+
+  /// Expertenmodus: Überschrift der Textgröße für SRT-Untertitel
+  ///
+  /// In en, this message translates to:
+  /// **'Text size'**
+  String get subtitleTextSizeLabel;
+
+  /// Textgröße der Untertitel: klein
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get subtitleTextSizeSmall;
+
+  /// Textgröße der Untertitel: mittel
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get subtitleTextSizeMedium;
+
+  /// Textgröße der Untertitel: groß
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get subtitleTextSizeLarge;
+
+  /// Expertenmodus: Überschrift der Position von SRT-Untertiteln im Bild
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get subtitlePositionLabel;
+
+  /// Position der Untertitel: unten im Bild
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom'**
+  String get subtitlePositionBottom;
+
+  /// Position der Untertitel: oben im Bild
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get subtitlePositionTop;
+
+  /// Expertenmodus: Schalter für eine leicht durchsichtige graue Fläche hinter SRT-Untertiteln
+  ///
+  /// In en, this message translates to:
+  /// **'Grey background'**
+  String get subtitleBackgroundTitle;
 }
 
 class _AppLocalizationsDelegate

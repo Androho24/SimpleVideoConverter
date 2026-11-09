@@ -665,4 +665,52 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'No se ha podido eliminar el original.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Grabar subtítulos';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Dibuja los subtítulos de forma permanente en la imagen del vídeo. Siempre estarán visibles y no se podrán desactivar después.\n\nAdmite archivos SRT y ASS. Se conservan el formato y las posiciones de ASS. En los vídeos que se mantienen en HDR, los subtítulos pueden verse muy brillantes.';
+
+  @override
+  String get burnInSubtitlesSelect => 'Seleccionar archivo SRT o ASS';
+
+  @override
+  String get burnInSubtitlesRemove => 'Quitar archivo de subtítulos';
+
+  @override
+  String get burnInSubtitlesUnsupported => 'Selecciona un archivo .srt o .ass.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'No se ha podido leer este archivo de subtítulos o no contiene subtítulos válidos.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'El archivo de subtítulos ya no está disponible. Vuelve a seleccionarlo.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Tamaño del texto';
+
+  @override
+  String get subtitleTextSizeSmall => 'Pequeño';
+
+  @override
+  String get subtitleTextSizeMedium => 'Mediano';
+
+  @override
+  String get subtitleTextSizeLarge => 'Grande';
+
+  @override
+  String get subtitlePositionLabel => 'Posición';
+
+  @override
+  String get subtitlePositionBottom => 'Abajo';
+
+  @override
+  String get subtitlePositionTop => 'Arriba';
+
+  @override
+  String get subtitleBackgroundTitle => 'Fondo gris';
 }

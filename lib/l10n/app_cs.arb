@@ -229,5 +229,20 @@
 
   "deleteOriginal": "Smazat originál",
   "originalTrashed": "Originál byl přesunut do koše — odtud ho lze obnovit.",
-  "originalTrashFailed": "Originál se nepodařilo smazat."
+  "originalTrashFailed": "Originál se nepodařilo smazat.",
+  "burnInSubtitlesLabel": "Vypálit titulky",
+  "burnInSubtitlesInfoContent": "Titulky se trvale vykreslí do obrazu videa. Budou vždy viditelné a později je nelze vypnout.\n\nPodporuje soubory SRT a ASS. Formátování a pozice ASS zůstanou zachovány. U videí, která zůstanou v HDR, mohou titulky působit velmi jasně.",
+  "burnInSubtitlesSelect": "Vybrat soubor SRT nebo ASS",
+  "burnInSubtitlesRemove": "Odebrat soubor titulků",
+  "burnInSubtitlesUnsupported": "Vyberte prosím soubor .srt nebo .ass.",
+  "burnInSubtitlesInvalid": "Tento soubor titulků nelze přečíst nebo neobsahuje platné titulky.",
+  "burnInSubtitlesMissing": "Soubor titulků už není k dispozici. Vyberte ho prosím znovu.",
+  "subtitleTextSizeLabel": "Velikost textu",
+  "subtitleTextSizeSmall": "Malá",
+  "subtitleTextSizeMedium": "Střední",
+  "subtitleTextSizeLarge": "Velká",
+  "subtitlePositionLabel": "Pozice",
+  "subtitlePositionBottom": "Dole",
+  "subtitlePositionTop": "Nahoře",
+  "subtitleBackgroundTitle": "Šedé pozadí"
 }

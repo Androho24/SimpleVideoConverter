@@ -661,4 +661,52 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'Nie udało się usunąć oryginału.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Wypal napisy';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Trwale umieszcza napisy w obrazie wideo. Będą zawsze widoczne i nie będzie można ich później wyłączyć.\n\nObsługuje pliki SRT i ASS. Formatowanie i pozycje ASS zostają zachowane. W filmach pozostających w HDR napisy mogą wydawać się bardzo jasne.';
+
+  @override
+  String get burnInSubtitlesSelect => 'Wybierz plik SRT lub ASS';
+
+  @override
+  String get burnInSubtitlesRemove => 'Usuń plik napisów';
+
+  @override
+  String get burnInSubtitlesUnsupported => 'Wybierz plik .srt lub .ass.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'Nie można odczytać tego pliku napisów lub nie zawiera on prawidłowych napisów.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'Plik napisów nie jest już dostępny. Wybierz go ponownie.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Rozmiar tekstu';
+
+  @override
+  String get subtitleTextSizeSmall => 'Mały';
+
+  @override
+  String get subtitleTextSizeMedium => 'Średni';
+
+  @override
+  String get subtitleTextSizeLarge => 'Duży';
+
+  @override
+  String get subtitlePositionLabel => 'Pozycja';
+
+  @override
+  String get subtitlePositionBottom => 'Na dole';
+
+  @override
+  String get subtitlePositionTop => 'Na górze';
+
+  @override
+  String get subtitleBackgroundTitle => 'Szare tło';
 }

@@ -369,5 +369,20 @@
 
   "deleteOriginal": "Original löschen",
   "originalTrashed": "Original in den Papierkorb verschoben — dort lässt es sich wiederherstellen.",
-  "originalTrashFailed": "Das Original konnte nicht gelöscht werden."
+  "originalTrashFailed": "Das Original konnte nicht gelöscht werden.",
+  "burnInSubtitlesLabel": "Untertitel einbrennen",
+  "burnInSubtitlesInfoContent": "Zeichnet die Untertitel dauerhaft ins Videobild. Sie sind immer sichtbar und lassen sich später nicht mehr ausschalten.\n\nUnterstützt SRT- und ASS-Dateien. ASS-Formatierungen und -Positionen bleiben erhalten. Bei HDR-Videos, die in HDR bleiben, können Untertitel sehr hell wirken.",
+  "burnInSubtitlesSelect": "SRT- oder ASS-Datei auswählen",
+  "burnInSubtitlesRemove": "Untertiteldatei entfernen",
+  "burnInSubtitlesUnsupported": "Bitte eine .srt- oder .ass-Datei auswählen.",
+  "burnInSubtitlesInvalid": "Diese Untertiteldatei ist nicht lesbar oder enthält keine gültigen Untertitel.",
+  "burnInSubtitlesMissing": "Die Untertiteldatei ist nicht mehr verfügbar. Bitte erneut auswählen.",
+  "subtitleTextSizeLabel": "Textgröße",
+  "subtitleTextSizeSmall": "Klein",
+  "subtitleTextSizeMedium": "Mittel",
+  "subtitleTextSizeLarge": "Groß",
+  "subtitlePositionLabel": "Position",
+  "subtitlePositionBottom": "Unten",
+  "subtitlePositionTop": "Oben",
+  "subtitleBackgroundTitle": "Grauer Hintergrund"
 }

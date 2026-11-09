@@ -228,5 +228,20 @@
 
   "deleteOriginal": "Hapus video asli",
   "originalTrashed": "Video asli dipindahkan ke sampah — Anda bisa memulihkannya dari sana.",
-  "originalTrashFailed": "Video asli tidak dapat dihapus."
+  "originalTrashFailed": "Video asli tidak dapat dihapus.",
+  "burnInSubtitlesLabel": "Tanamkan Subtitle",
+  "burnInSubtitlesInfoContent": "Menggambar subtitle secara permanen pada gambar video. Subtitle akan selalu terlihat dan tidak dapat dimatikan nanti.\n\nMendukung file SRT dan ASS. Format dan posisi ASS tetap dipertahankan. Pada video yang tetap HDR, subtitle dapat terlihat sangat terang.",
+  "burnInSubtitlesSelect": "Pilih file SRT atau ASS",
+  "burnInSubtitlesRemove": "Hapus file subtitle",
+  "burnInSubtitlesUnsupported": "Silakan pilih file .srt atau .ass.",
+  "burnInSubtitlesInvalid": "File subtitle ini tidak dapat dibaca atau tidak berisi subtitle yang valid.",
+  "burnInSubtitlesMissing": "File subtitle tidak lagi tersedia. Silakan pilih lagi.",
+  "subtitleTextSizeLabel": "Ukuran teks",
+  "subtitleTextSizeSmall": "Kecil",
+  "subtitleTextSizeMedium": "Sedang",
+  "subtitleTextSizeLarge": "Besar",
+  "subtitlePositionLabel": "Posisi",
+  "subtitlePositionBottom": "Bawah",
+  "subtitlePositionTop": "Atas",
+  "subtitleBackgroundTitle": "Latar abu-abu"
 }

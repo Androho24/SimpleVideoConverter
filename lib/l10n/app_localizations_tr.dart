@@ -663,4 +663,53 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'Orijinal silinemedi.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Altyazıları göm';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Altyazıları video görüntüsüne kalıcı olarak işler. Her zaman görünür kalır ve daha sonra kapatılamaz.\n\nSRT ve ASS dosyalarını destekler. ASS biçimlendirmesi ve konumları korunur. HDR olarak kalan videolarda altyazılar çok parlak görünebilir.';
+
+  @override
+  String get burnInSubtitlesSelect => 'SRT veya ASS dosyası seç';
+
+  @override
+  String get burnInSubtitlesRemove => 'Altyazı dosyasını kaldır';
+
+  @override
+  String get burnInSubtitlesUnsupported =>
+      'Lütfen bir .srt veya .ass dosyası seçin.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'Bu altyazı dosyası okunamadı veya geçerli altyazı içermiyor.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'Altyazı dosyası artık kullanılamıyor. Lütfen yeniden seçin.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Metin boyutu';
+
+  @override
+  String get subtitleTextSizeSmall => 'Küçük';
+
+  @override
+  String get subtitleTextSizeMedium => 'Orta';
+
+  @override
+  String get subtitleTextSizeLarge => 'Büyük';
+
+  @override
+  String get subtitlePositionLabel => 'Konum';
+
+  @override
+  String get subtitlePositionBottom => 'Alt';
+
+  @override
+  String get subtitlePositionTop => 'Üst';
+
+  @override
+  String get subtitleBackgroundTitle => 'Gri arka plan';
 }

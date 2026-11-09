@@ -228,5 +228,20 @@
 
   "deleteOriginal": "Eliminar original",
   "originalTrashed": "Original movido para o lixo — pode restaurá-lo a partir daí.",
-  "originalTrashFailed": "Não foi possível eliminar o original."
+  "originalTrashFailed": "Não foi possível eliminar o original.",
+  "burnInSubtitlesLabel": "Incorporar legendas",
+  "burnInSubtitlesInfoContent": "Desenha as legendas de forma permanente na imagem do vídeo. Ficam sempre visíveis e não podem ser desativadas mais tarde.\n\nSuporta ficheiros SRT e ASS. A formatação e as posições ASS são mantidas. Em vídeos que permanecem em HDR, as legendas podem parecer muito brilhantes.",
+  "burnInSubtitlesSelect": "Selecionar ficheiro SRT ou ASS",
+  "burnInSubtitlesRemove": "Remover ficheiro de legendas",
+  "burnInSubtitlesUnsupported": "Selecione um ficheiro .srt ou .ass.",
+  "burnInSubtitlesInvalid": "Não foi possível ler este ficheiro de legendas ou não contém legendas válidas.",
+  "burnInSubtitlesMissing": "O ficheiro de legendas já não está disponível. Selecione-o novamente.",
+  "subtitleTextSizeLabel": "Tamanho do texto",
+  "subtitleTextSizeSmall": "Pequeno",
+  "subtitleTextSizeMedium": "Médio",
+  "subtitleTextSizeLarge": "Grande",
+  "subtitlePositionLabel": "Posição",
+  "subtitlePositionBottom": "Em baixo",
+  "subtitlePositionTop": "Em cima",
+  "subtitleBackgroundTitle": "Fundo cinzento"
 }

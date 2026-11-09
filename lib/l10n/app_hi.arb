@@ -215,5 +215,20 @@
 
   "deleteOriginal": "मूल वीडियो हटाएँ",
   "originalTrashed": "मूल वीडियो ट्रैश में भेजा गया — आप उसे वहाँ से वापस ला सकते हैं।",
-  "originalTrashFailed": "मूल वीडियो हटाया नहीं जा सका।"
+  "originalTrashFailed": "मूल वीडियो हटाया नहीं जा सका।",
+  "burnInSubtitlesLabel": "सबटाइटल बर्न करें",
+  "burnInSubtitlesInfoContent": "सबटाइटल को वीडियो की तस्वीर में स्थायी रूप से जोड़ देता है। वे हमेशा दिखाई देंगे और बाद में बंद नहीं किए जा सकेंगे।\n\nSRT और ASS फ़ाइलें समर्थित हैं। ASS की फ़ॉर्मैटिंग और स्थिति बनी रहती है। जो वीडियो HDR में ही रहते हैं, उनमें सबटाइटल बहुत चमकीले दिख सकते हैं।",
+  "burnInSubtitlesSelect": "SRT या ASS फ़ाइल चुनें",
+  "burnInSubtitlesRemove": "सबटाइटल फ़ाइल हटाएँ",
+  "burnInSubtitlesUnsupported": "कृपया .srt या .ass फ़ाइल चुनें।",
+  "burnInSubtitlesInvalid": "यह सबटाइटल फ़ाइल पढ़ी नहीं जा सकी या इसमें मान्य सबटाइटल नहीं हैं।",
+  "burnInSubtitlesMissing": "सबटाइटल फ़ाइल अब उपलब्ध नहीं है। कृपया इसे फिर से चुनें।",
+  "subtitleTextSizeLabel": "टेक्स्ट का आकार",
+  "subtitleTextSizeSmall": "छोटा",
+  "subtitleTextSizeMedium": "मध्यम",
+  "subtitleTextSizeLarge": "बड़ा",
+  "subtitlePositionLabel": "स्थिति",
+  "subtitlePositionBottom": "नीचे",
+  "subtitlePositionTop": "ऊपर",
+  "subtitleBackgroundTitle": "ग्रे बैकग्राउंड"
 }

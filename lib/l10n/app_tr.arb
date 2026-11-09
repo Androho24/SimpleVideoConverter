@@ -228,5 +228,20 @@
 
   "deleteOriginal": "Orijinali sil",
   "originalTrashed": "Orijinal çöp kutusuna taşındı — oradan geri yükleyebilirsiniz.",
-  "originalTrashFailed": "Orijinal silinemedi."
+  "originalTrashFailed": "Orijinal silinemedi.",
+  "burnInSubtitlesLabel": "Altyazıları göm",
+  "burnInSubtitlesInfoContent": "Altyazıları video görüntüsüne kalıcı olarak işler. Her zaman görünür kalır ve daha sonra kapatılamaz.\n\nSRT ve ASS dosyalarını destekler. ASS biçimlendirmesi ve konumları korunur. HDR olarak kalan videolarda altyazılar çok parlak görünebilir.",
+  "burnInSubtitlesSelect": "SRT veya ASS dosyası seç",
+  "burnInSubtitlesRemove": "Altyazı dosyasını kaldır",
+  "burnInSubtitlesUnsupported": "Lütfen bir .srt veya .ass dosyası seçin.",
+  "burnInSubtitlesInvalid": "Bu altyazı dosyası okunamadı veya geçerli altyazı içermiyor.",
+  "burnInSubtitlesMissing": "Altyazı dosyası artık kullanılamıyor. Lütfen yeniden seçin.",
+  "subtitleTextSizeLabel": "Metin boyutu",
+  "subtitleTextSizeSmall": "Küçük",
+  "subtitleTextSizeMedium": "Orta",
+  "subtitleTextSizeLarge": "Büyük",
+  "subtitlePositionLabel": "Konum",
+  "subtitlePositionBottom": "Alt",
+  "subtitlePositionTop": "Üst",
+  "subtitleBackgroundTitle": "Gri arka plan"
 }

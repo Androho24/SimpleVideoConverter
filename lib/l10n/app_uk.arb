@@ -207,5 +207,20 @@
 
   "deleteOriginal": "Видалити оригінал",
   "originalTrashed": "Оригінал переміщено до кошика — звідти його можна відновити.",
-  "originalTrashFailed": "Не вдалося видалити оригінал."
+  "originalTrashFailed": "Не вдалося видалити оригінал.",
+  "burnInSubtitlesLabel": "Вбудувати субтитри",
+  "burnInSubtitlesInfoContent": "Субтитри назавжди вбудовуються в зображення відео. Вони завжди будуть видимі, і пізніше їх не можна вимкнути.\n\nПідтримуються файли SRT і ASS. Оформлення та позиції ASS зберігаються. У відео, що залишаються в HDR, субтитри можуть виглядати дуже яскравими.",
+  "burnInSubtitlesSelect": "Вибрати файл SRT або ASS",
+  "burnInSubtitlesRemove": "Вилучити файл субтитрів",
+  "burnInSubtitlesUnsupported": "Будь ласка, виберіть файл .srt або .ass.",
+  "burnInSubtitlesInvalid": "Не вдалося прочитати цей файл субтитрів, або він не містить дійсних субтитрів.",
+  "burnInSubtitlesMissing": "Файл субтитрів більше не доступний. Будь ласка, виберіть його знову.",
+  "subtitleTextSizeLabel": "Розмір тексту",
+  "subtitleTextSizeSmall": "Малий",
+  "subtitleTextSizeMedium": "Середній",
+  "subtitleTextSizeLarge": "Великий",
+  "subtitlePositionLabel": "Розташування",
+  "subtitlePositionBottom": "Знизу",
+  "subtitlePositionTop": "Згори",
+  "subtitleBackgroundTitle": "Сірий фон"
 }

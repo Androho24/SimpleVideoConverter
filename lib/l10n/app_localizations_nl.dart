@@ -660,4 +660,53 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'Het origineel kon niet worden verwijderd.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Ondertitels inbranden';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Brandt de ondertitels permanent in het videobeeld. Ze blijven altijd zichtbaar en kunnen later niet meer worden uitgeschakeld.\n\nOndersteunt SRT- en ASS-bestanden. ASS-opmaak en -posities blijven behouden. Bij video\'s die in HDR blijven, kunnen ondertitels erg fel lijken.';
+
+  @override
+  String get burnInSubtitlesSelect => 'SRT- of ASS-bestand selecteren';
+
+  @override
+  String get burnInSubtitlesRemove => 'Ondertitelbestand verwijderen';
+
+  @override
+  String get burnInSubtitlesUnsupported =>
+      'Selecteer een .srt- of .ass-bestand.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'Dit ondertitelbestand kan niet worden gelezen of bevat geen geldige ondertitels.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'Het ondertitelbestand is niet meer beschikbaar. Selecteer het opnieuw.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Tekstgrootte';
+
+  @override
+  String get subtitleTextSizeSmall => 'Klein';
+
+  @override
+  String get subtitleTextSizeMedium => 'Middel';
+
+  @override
+  String get subtitleTextSizeLarge => 'Groot';
+
+  @override
+  String get subtitlePositionLabel => 'Positie';
+
+  @override
+  String get subtitlePositionBottom => 'Onder';
+
+  @override
+  String get subtitlePositionTop => 'Boven';
+
+  @override
+  String get subtitleBackgroundTitle => 'Grijze achtergrond';
 }

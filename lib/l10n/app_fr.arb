@@ -228,5 +228,20 @@
 
   "deleteOriginal": "Supprimer l'original",
   "originalTrashed": "Original déplacé dans la corbeille — vous pouvez l'y restaurer.",
-  "originalTrashFailed": "Impossible de supprimer l'original."
+  "originalTrashFailed": "Impossible de supprimer l'original.",
+  "burnInSubtitlesLabel": "Incruster les sous-titres",
+  "burnInSubtitlesInfoContent": "Inscrit les sous-titres de façon permanente dans l'image de la vidéo. Ils restent toujours visibles et ne peuvent plus être désactivés.\n\nPrend en charge les fichiers SRT et ASS. La mise en forme et les positions ASS sont conservées. Sur les vidéos qui restent en HDR, les sous-titres peuvent paraître très lumineux.",
+  "burnInSubtitlesSelect": "Sélectionner un fichier SRT ou ASS",
+  "burnInSubtitlesRemove": "Retirer le fichier de sous-titres",
+  "burnInSubtitlesUnsupported": "Veuillez sélectionner un fichier .srt ou .ass.",
+  "burnInSubtitlesInvalid": "Ce fichier de sous-titres est illisible ou ne contient aucun sous-titre valide.",
+  "burnInSubtitlesMissing": "Le fichier de sous-titres n'est plus disponible. Veuillez le sélectionner à nouveau.",
+  "subtitleTextSizeLabel": "Taille du texte",
+  "subtitleTextSizeSmall": "Petite",
+  "subtitleTextSizeMedium": "Moyenne",
+  "subtitleTextSizeLarge": "Grande",
+  "subtitlePositionLabel": "Position",
+  "subtitlePositionBottom": "En bas",
+  "subtitlePositionTop": "En haut",
+  "subtitleBackgroundTitle": "Fond gris"
 }

@@ -3,6 +3,7 @@
 
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit_config.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:simple_video_converter/models/burn_in_subtitle.dart';
 import 'package:simple_video_converter/services/video_scale_service.dart';
 
 void main() {
@@ -379,6 +380,175 @@ void main() {
         expect(value, contains('tonemap=tonemap=hable'));
         expect(arguments[arguments.indexOf('-vf') + 2], '-c:v');
       }
+    });
+  });
+
+  group('burn-in subtitles', () {
+    const path = '/data/user/0/app/cache/burn_in_subtitles/subtitle_1.srt';
+
+    test('uses the subtitles filter for SRT and the ass filter for ASS', () {
+      expect(
+        VideoScaleService.subtitleGraph(path, SubtitleFormat.srt),
+        'subtitles=filename=$path',
+      );
+      expect(
+        VideoScaleService.subtitleGraph('/cache/a.ass', SubtitleFormat.ass),
+        'ass=filename=/cache/a.ass',
+      );
+    });
+
+    test('escapes both filter parsing levels', () {
+      expect(
+        VideoScaleService.subtitleGraph(
+          r'''/d/it's [a], b; c: "d"\e.srt''',
+          SubtitleFormat.srt,
+        ),
+        r'''subtitles=filename=/d/it\\\'s \[a\]\, b\; c\\: \"d\"\\\\e.srt''',
+      );
+    });
+
+    test('comes after scaling and tone mapping', () {
+      final vf = VideoScaleService.filterArgument(
+        'scale=1280:720:reset_sar=1',
+        hdrTransfer: 'arib-std-b67',
+        subtitleFilter: 'subtitles=filename=$path',
+      );
+      expect(
+        vf.indexOf('scale=1280'),
+        lessThan(vf.indexOf('tonemap=tonemap=hable')),
+      );
+      expect(vf, endsWith('format=yuv420p,subtitles=filename=$path"'));
+    });
+
+    test('is the only filter when nothing else is requested', () {
+      expect(
+        VideoScaleService.filterArgument(
+          '',
+          subtitleFilter: 'ass=filename=/a.ass',
+        ),
+        '-vf "ass=filename=/a.ass"',
+      );
+    });
+
+    test('leaves the filter unchanged without a subtitle file', () {
+      expect(VideoScaleService.filterArgument(''), '');
+      expect(
+        VideoScaleService.filterArgument('scale=640:360'),
+        '-vf "scale=640:360"',
+      );
+    });
+
+    test('survives FFmpegKit parsing as one argument with odd paths', () {
+      final filter = VideoScaleService.subtitleGraph(
+        '''/cache/it's a "test".srt''',
+        SubtitleFormat.srt,
+      );
+      final vf = VideoScaleService.filterArgument(
+        'scale=640:360',
+        subtitleFilter: filter,
+      );
+      final arguments = FFmpegKitConfig.parseArguments(
+        '-i input.mp4 $vf -c:v libx264 output.mp4',
+      );
+      final index = arguments.indexOf('-vf');
+      expect(arguments[index + 1], 'scale=640:360,$filter');
+      expect(arguments[index + 2], '-c:v');
+    });
+
+    String style({
+      SubtitleTextSize textSize = SubtitleTextSize.medium,
+      SubtitlePosition position = SubtitlePosition.bottom,
+      bool background = false,
+      int width = 1920,
+      int height = 1080,
+    }) => VideoScaleService.srtForceStyle(
+      textSize: textSize,
+      position: position,
+      background: background,
+      frameWidth: width,
+      frameHeight: height,
+    );
+
+    test('default style on a landscape frame adds nothing', () {
+      expect(style(), '');
+      expect(
+        VideoScaleService.subtitleGraph(
+          path,
+          SubtitleFormat.srt,
+          forceStyle: style(),
+        ),
+        'subtitles=filename=$path',
+      );
+    });
+
+    test('text sizes apply on landscape frames', () {
+      expect(style(textSize: SubtitleTextSize.small), 'Fontsize=12.0');
+      expect(style(textSize: SubtitleTextSize.large), 'Fontsize=22.0');
+    });
+
+    test('portrait frames scale the text by the short side', () {
+      expect(style(width: 1080, height: 1920), 'Fontsize=9.0');
+      expect(
+        style(textSize: SubtitleTextSize.large, width: 1080, height: 1920),
+        'Fontsize=12.4',
+      );
+    });
+
+    test('square and unknown frames keep the default size', () {
+      expect(style(width: 1080, height: 1080), '');
+      expect(style(width: 0, height: 0), '');
+    });
+
+    test('top uses the legacy SSA alignment value', () {
+      expect(style(position: SubtitlePosition.top), 'Alignment=6');
+    });
+
+    test('background is one translucent box around all lines', () {
+      expect(
+        style(background: true),
+        'BorderStyle=4,BackColour=&H60404040,'
+        'OutlineColour=&HFF000000,Outline=1,Shadow=0',
+      );
+    });
+
+    test('force_style escapes commas for the filter graph', () {
+      expect(
+        VideoScaleService.subtitleGraph(
+          path,
+          SubtitleFormat.srt,
+          forceStyle: 'Fontsize=9.0,Alignment=6',
+        ),
+        'subtitles=filename=$path:force_style=Fontsize=9.0\\,Alignment=6',
+      );
+    });
+
+    test('force_style is ignored for ASS', () {
+      expect(
+        VideoScaleService.subtitleGraph(
+          '/a.ass',
+          SubtitleFormat.ass,
+          forceStyle: 'Fontsize=9.0',
+        ),
+        'ass=filename=/a.ass',
+      );
+    });
+
+    test('styled filter survives FFmpegKit parsing as one argument', () {
+      final filter = VideoScaleService.subtitleGraph(
+        path,
+        SubtitleFormat.srt,
+        forceStyle: style(background: true, width: 1080, height: 1920),
+      );
+      final vf = VideoScaleService.filterArgument(
+        'scale=1080:1920',
+        subtitleFilter: filter,
+      );
+      final arguments = FFmpegKitConfig.parseArguments(
+        '-i input.mp4 $vf -c:v libx264 output.mp4',
+      );
+      final index = arguments.indexOf('-vf');
+      expect(arguments[index + 1], 'scale=1080:1920,$filter');
+      expect(arguments[index + 2], '-c:v');
     });
   });
 }

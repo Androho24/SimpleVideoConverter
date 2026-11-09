@@ -207,5 +207,20 @@
 
   "deleteOriginal": "元の動画を削除",
   "originalTrashed": "元の動画をゴミ箱に移動しました。ゴミ箱から復元できます。",
-  "originalTrashFailed": "元の動画を削除できませんでした。"
+  "originalTrashFailed": "元の動画を削除できませんでした。",
+  "burnInSubtitlesLabel": "字幕の焼き付け",
+  "burnInSubtitlesInfoContent": "字幕を動画の映像に恒久的に描き込みます。字幕は常に表示され、後からオフにすることはできません。\n\nSRTファイルとASSファイルに対応しています。ASSの書式と位置は維持されます。HDRのまま出力する動画では、字幕が非常に明るく見えることがあります。",
+  "burnInSubtitlesSelect": "SRTまたはASSファイルを選択",
+  "burnInSubtitlesRemove": "字幕ファイルの選択を解除",
+  "burnInSubtitlesUnsupported": ".srtまたは.assファイルを選択してください。",
+  "burnInSubtitlesInvalid": "この字幕ファイルは読み取れないか、有効な字幕が含まれていません。",
+  "burnInSubtitlesMissing": "字幕ファイルを利用できなくなりました。もう一度選択してください。",
+  "subtitleTextSizeLabel": "文字サイズ",
+  "subtitleTextSizeSmall": "小",
+  "subtitleTextSizeMedium": "中",
+  "subtitleTextSizeLarge": "大",
+  "subtitlePositionLabel": "位置",
+  "subtitlePositionBottom": "下",
+  "subtitlePositionTop": "上",
+  "subtitleBackgroundTitle": "グレーの背景"
 }

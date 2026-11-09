@@ -228,5 +228,20 @@
 
   "deleteOriginal": "Usuń oryginał",
   "originalTrashed": "Oryginał przeniesiono do kosza — można go stamtąd przywrócić.",
-  "originalTrashFailed": "Nie udało się usunąć oryginału."
+  "originalTrashFailed": "Nie udało się usunąć oryginału.",
+  "burnInSubtitlesLabel": "Wypal napisy",
+  "burnInSubtitlesInfoContent": "Trwale umieszcza napisy w obrazie wideo. Będą zawsze widoczne i nie będzie można ich później wyłączyć.\n\nObsługuje pliki SRT i ASS. Formatowanie i pozycje ASS zostają zachowane. W filmach pozostających w HDR napisy mogą wydawać się bardzo jasne.",
+  "burnInSubtitlesSelect": "Wybierz plik SRT lub ASS",
+  "burnInSubtitlesRemove": "Usuń plik napisów",
+  "burnInSubtitlesUnsupported": "Wybierz plik .srt lub .ass.",
+  "burnInSubtitlesInvalid": "Nie można odczytać tego pliku napisów lub nie zawiera on prawidłowych napisów.",
+  "burnInSubtitlesMissing": "Plik napisów nie jest już dostępny. Wybierz go ponownie.",
+  "subtitleTextSizeLabel": "Rozmiar tekstu",
+  "subtitleTextSizeSmall": "Mały",
+  "subtitleTextSizeMedium": "Średni",
+  "subtitleTextSizeLarge": "Duży",
+  "subtitlePositionLabel": "Pozycja",
+  "subtitlePositionBottom": "Na dole",
+  "subtitlePositionTop": "Na górze",
+  "subtitleBackgroundTitle": "Szare tło"
 }

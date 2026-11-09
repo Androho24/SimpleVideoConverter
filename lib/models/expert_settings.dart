@@ -1,6 +1,8 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'burn_in_subtitle.dart';
+
 class ExpertSettings {
   // 0–51 bei x264/x265/Xvid (23=Standard), 0–63 bei VP9/AV1.
   // Umrechnung beim Codec-Wechsel: VideoQualityScale.convertCrf.
@@ -40,6 +42,14 @@ class ExpertSettings {
   /// `FfmpegCodecOptions.usesHardwareEncoder`.
   final bool hardwareEncoder;
 
+  /// Wird ins Bild eingebrannt, null = keine Untertitel (Standard).
+  final BurnInSubtitle? burnInSubtitle;
+
+  /// Darstellung für SRT-Dateien. Bleibt beim Wechsel der Datei erhalten.
+  final SubtitleTextSize subtitleTextSize;
+  final SubtitlePosition subtitlePosition;
+  final bool subtitleBackground;
+
   const ExpertSettings({
     this.crf = 23,
     this.bitrateMode = 'crf',
@@ -57,6 +67,10 @@ class ExpertSettings {
     this.container = 'mp4',
     this.audioOnly = false,
     this.hardwareEncoder = false,
+    this.burnInSubtitle,
+    this.subtitleTextSize = SubtitleTextSize.medium,
+    this.subtitlePosition = SubtitlePosition.bottom,
+    this.subtitleBackground = false,
   });
 
   ExpertSettings copyWith({
@@ -76,6 +90,11 @@ class ExpertSettings {
     String? container,
     bool? audioOnly,
     bool? hardwareEncoder,
+    BurnInSubtitle? burnInSubtitle,
+    bool clearBurnInSubtitle = false,
+    SubtitleTextSize? subtitleTextSize,
+    SubtitlePosition? subtitlePosition,
+    bool? subtitleBackground,
   }) {
     return ExpertSettings(
       crf: crf ?? this.crf,
@@ -94,6 +113,12 @@ class ExpertSettings {
       container: container ?? this.container,
       audioOnly: audioOnly ?? this.audioOnly,
       hardwareEncoder: hardwareEncoder ?? this.hardwareEncoder,
+      burnInSubtitle: clearBurnInSubtitle
+          ? null
+          : burnInSubtitle ?? this.burnInSubtitle,
+      subtitleTextSize: subtitleTextSize ?? this.subtitleTextSize,
+      subtitlePosition: subtitlePosition ?? this.subtitlePosition,
+      subtitleBackground: subtitleBackground ?? this.subtitleBackground,
     );
   }
 }

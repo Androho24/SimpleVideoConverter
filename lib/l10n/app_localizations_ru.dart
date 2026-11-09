@@ -663,4 +663,53 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'Не удалось удалить оригинал.';
+
+  @override
+  String get burnInSubtitlesLabel => 'Вшить субтитры';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'Субтитры навсегда встраиваются в изображение видео. Они всегда будут видны, и отключить их позже нельзя.\n\nПоддерживаются файлы SRT и ASS. Оформление и позиции ASS сохраняются. В видео, которые остаются в HDR, субтитры могут выглядеть очень яркими.';
+
+  @override
+  String get burnInSubtitlesSelect => 'Выбрать файл SRT или ASS';
+
+  @override
+  String get burnInSubtitlesRemove => 'Удалить файл субтитров';
+
+  @override
+  String get burnInSubtitlesUnsupported =>
+      'Пожалуйста, выберите файл .srt или .ass.';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'Не удалось прочитать этот файл субтитров, или он не содержит допустимых субтитров.';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'Файл субтитров больше не доступен. Пожалуйста, выберите его снова.';
+
+  @override
+  String get subtitleTextSizeLabel => 'Размер текста';
+
+  @override
+  String get subtitleTextSizeSmall => 'Мелкий';
+
+  @override
+  String get subtitleTextSizeMedium => 'Средний';
+
+  @override
+  String get subtitleTextSizeLarge => 'Крупный';
+
+  @override
+  String get subtitlePositionLabel => 'Положение';
+
+  @override
+  String get subtitlePositionBottom => 'Снизу';
+
+  @override
+  String get subtitlePositionTop => 'Сверху';
+
+  @override
+  String get subtitleBackgroundTitle => 'Серый фон';
 }

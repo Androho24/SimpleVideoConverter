@@ -659,4 +659,52 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'मूल वीडियो हटाया नहीं जा सका।';
+
+  @override
+  String get burnInSubtitlesLabel => 'सबटाइटल बर्न करें';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'सबटाइटल को वीडियो की तस्वीर में स्थायी रूप से जोड़ देता है। वे हमेशा दिखाई देंगे और बाद में बंद नहीं किए जा सकेंगे।\n\nSRT और ASS फ़ाइलें समर्थित हैं। ASS की फ़ॉर्मैटिंग और स्थिति बनी रहती है। जो वीडियो HDR में ही रहते हैं, उनमें सबटाइटल बहुत चमकीले दिख सकते हैं।';
+
+  @override
+  String get burnInSubtitlesSelect => 'SRT या ASS फ़ाइल चुनें';
+
+  @override
+  String get burnInSubtitlesRemove => 'सबटाइटल फ़ाइल हटाएँ';
+
+  @override
+  String get burnInSubtitlesUnsupported => 'कृपया .srt या .ass फ़ाइल चुनें।';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'यह सबटाइटल फ़ाइल पढ़ी नहीं जा सकी या इसमें मान्य सबटाइटल नहीं हैं।';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'सबटाइटल फ़ाइल अब उपलब्ध नहीं है। कृपया इसे फिर से चुनें।';
+
+  @override
+  String get subtitleTextSizeLabel => 'टेक्स्ट का आकार';
+
+  @override
+  String get subtitleTextSizeSmall => 'छोटा';
+
+  @override
+  String get subtitleTextSizeMedium => 'मध्यम';
+
+  @override
+  String get subtitleTextSizeLarge => 'बड़ा';
+
+  @override
+  String get subtitlePositionLabel => 'स्थिति';
+
+  @override
+  String get subtitlePositionBottom => 'नीचे';
+
+  @override
+  String get subtitlePositionTop => 'ऊपर';
+
+  @override
+  String get subtitleBackgroundTitle => 'ग्रे बैकग्राउंड';
 }

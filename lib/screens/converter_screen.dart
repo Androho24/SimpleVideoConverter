@@ -30,6 +30,7 @@ import '../services/output_size_estimator.dart';
 import '../services/preferences_service.dart';
 import '../services/pro_prompt_service.dart';
 import '../services/review_service.dart';
+import '../services/subtitle_service.dart';
 import '../services/video_quality_scale.dart';
 import '../services/video_scale_service.dart';
 import '../services/video_source.dart';
@@ -76,6 +77,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   bool _av1Experimental = false;
   bool _hardwareHevcAvailable = false;
   ExpertSettings _expertSettings = const ExpertSettings();
+  bool _isPickingSubtitle = false;
   VideoPlayerController? _playerController;
   Timer? _seekDebounce;
 
@@ -362,6 +364,10 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
     if (!mounted) return;
 
+    // Untertitel gehören zu genau einem Video: sie dürfen nicht unbemerkt im
+    // nächsten landen. Wer sie vor dem ersten Video wählt, behält sie.
+    final replacesVideo = _videoSource != null;
+
     final videoShortSide = VideoScaleService.sourceShortSide(
       meta.width,
       meta.height,
@@ -393,6 +399,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       _selectedQualityIndex = adjustedQualityIndex;
       _playerController = previewFailed ? null : controller;
     });
+    if (replacesVideo) _removeSubtitle();
 
     _updateEstimatedSize();
     await _maybeShowCpuWarning(_metadata!.durationMs);
@@ -638,8 +645,55 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       _metadata = null;
       _playerController = null;
     });
+    _removeSubtitle();
     controller?.dispose();
     if (Platform.isAndroid) unawaited(GalleryService.releaseVideoAccess());
+  }
+
+  // -------------------------------------------------------------------------
+  // Untertitel einbrennen
+  // -------------------------------------------------------------------------
+
+  Future<void> _pickSubtitle() async {
+    if (_isPickingSubtitle) return;
+    _isPickingSubtitle = true;
+    final l = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.of(context);
+    final languageCode = Localizations.localeOf(context).languageCode;
+    try {
+      final subtitle = await SubtitleService.pick(languageCode: languageCode);
+      if (subtitle == null || !mounted) return;
+      final previous = _expertSettings.burnInSubtitle;
+      setState(
+        () => _expertSettings = _expertSettings.copyWith(
+          burnInSubtitle: subtitle,
+        ),
+      );
+      if (previous != null) unawaited(SubtitleService.delete(previous));
+    } on SubtitleFileException catch (e) {
+      // Eine abgelehnte Datei lässt die bisherige Auswahl stehen.
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(switch (e.error) {
+            SubtitleFileError.unsupportedFormat => l.burnInSubtitlesUnsupported,
+            SubtitleFileError.invalid => l.burnInSubtitlesInvalid,
+          }),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      _isPickingSubtitle = false;
+    }
+  }
+
+  void _removeSubtitle() {
+    final subtitle = _expertSettings.burnInSubtitle;
+    if (subtitle == null) return;
+    setState(
+      () =>
+          _expertSettings = _expertSettings.copyWith(clearBurnInSubtitle: true),
+    );
+    unawaited(SubtitleService.delete(subtitle));
   }
 
   void _updateEstimatedSize() {
@@ -731,6 +785,26 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
       return;
     }
 
+    // Vor dem saf-Verweis weiter unten: der ließe sich nicht zurückgeben.
+    // Ohne Datei abbrechen statt ohne Untertitel konvertieren, sonst fällt das
+    // Fehlen erst im fertigen Video auf.
+    final subtitle = _isExpertMode && !_expertSettings.audioOnly
+        ? _expertSettings.burnInSubtitle
+        : null;
+    if (subtitle != null &&
+        !await SubtitleService.prepareForConversion(subtitle)) {
+      if (!mounted) return;
+      setState(() => _isConverting = false);
+      _removeSubtitle();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.burnInSubtitlesMissing),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     if (!mounted) return;
     final convertedPrefix = AppLocalizations.of(context)!.convertedPrefix;
 
@@ -802,9 +876,24 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
           sourceHeight: _metadata!.height,
         );
         final keepsHdr = _keepsHdr(expert.videoCodec);
+        final (frameWidth, frameHeight) =
+            OutputSizeEstimator.expertOutputDimensions(_metadata!, expert);
         final vfFilter = VideoScaleService.filterArgument(
           scaleGraph,
           hdrTransfer: keepsHdr ? null : _metadata!.hdrTransfer,
+          subtitleFilter: subtitle == null
+              ? null
+              : VideoScaleService.subtitleGraph(
+                  subtitle.path,
+                  subtitle.format,
+                  forceStyle: VideoScaleService.srtForceStyle(
+                    textSize: expert.subtitleTextSize,
+                    position: expert.subtitlePosition,
+                    background: expert.subtitleBackground,
+                    frameWidth: frameWidth,
+                    frameHeight: frameHeight,
+                  ),
+                ),
         );
         final pixelFormatOpt = keepsHdr
             ? FfmpegCodecOptions.hdrArguments(_metadata!.hdrTransfer!)
@@ -1140,6 +1229,8 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                       setState(() => _expertSettings = s);
                       _updateEstimatedSize();
                     },
+                    onPickSubtitle: _pickSubtitle,
+                    onRemoveSubtitle: _removeSubtitle,
                   ),
                   const SizedBox(height: 8),
                   ConvertSection(

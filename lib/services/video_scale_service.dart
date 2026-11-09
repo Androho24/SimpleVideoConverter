@@ -1,6 +1,8 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import '../models/burn_in_subtitle.dart';
+
 class VideoScaleService {
   const VideoScaleService._();
 
@@ -300,12 +302,113 @@ class VideoScaleService {
       'tonemap=tonemap=hable:desat=0,'
       'zscale=t=bt709:m=bt709:p=bt709:r=tv,format=yuv420p';
 
-  /// Setzt das komplette `-vf`-Argument aus [graph] und optionalem Tonemapping
-  /// zusammen. Leer, wenn beides entfällt.
-  static String filterArgument(String graph, {String? hdrTransfer}) {
+  /// Filter zum Einbrennen einer Untertiteldatei.
+  ///
+  /// ASS geht direkt an libass (`ass`), damit Stile, Positionen und
+  /// eingebettete Schriften der Datei unverändert gelten. SRT muss erst durch
+  /// FFmpegs Demuxer und Decoder (`subtitles`).
+  ///
+  /// [forceStyle] aus [srtForceStyle] gilt nur für SRT: Eine ASS-Datei bringt
+  /// ihre Gestaltung selbst mit, und `ass` kennt die Option gar nicht.
+  static String subtitleGraph(
+    String path,
+    SubtitleFormat format, {
+    String forceStyle = '',
+  }) {
+    final file = 'filename=${_escapeFilterValue(path)}';
+    if (format == SubtitleFormat.ass) return 'ass=$file';
+    return forceStyle.isEmpty
+        ? 'subtitles=$file'
+        : 'subtitles=$file:force_style=${_escapeFilterValue(forceStyle)}';
+  }
+
+  /// FFmpegs Standardgröße für SRT, bezogen auf eine Skripthöhe von 288.
+  static const _defaultSubtitleFontSize = 16;
+
+  /// `force_style`-Wert für SRT, leer bei unveränderter Standarddarstellung.
+  ///
+  /// Die Schrift wächst bei libass mit der Bildhöhe. Hochkant wäre der Text
+  /// dadurch riesig (ein langer Satz brach auf fünf Zeilen um), deshalb zählt
+  /// hier die kurze Seite: Quer und hochkant wirkt er auf dem Handy gleich
+  /// groß.
+  ///
+  /// `Alignment=6` ist „oben Mitte“: `force_style` nimmt die alte
+  /// SSA-Nummerierung, das `8` aus dem ASS-Format landet mittig links
+  /// (gegen FFmpeg 8 geprüft).
+  ///
+  /// `BorderStyle=4` legt eine gemeinsame Fläche um den ganzen Untertitel in
+  /// `BackColour` (&HAABBGGRR, Alpha 60 ≈ 60 % deckend). `BorderStyle=3`
+  /// zeichnet dagegen je Zeile eine eigene Fläche: Die überlappen bei
+  /// mehrzeiligem Text und werden dort doppelt dunkel. `Outline` ist der
+  /// Innenabstand; der Umriss selbst bleibt per Alpha FF unsichtbar, sonst
+  /// bekäme der Text zusätzlich einen schwarzen Rand.
+  static String srtForceStyle({
+    required SubtitleTextSize textSize,
+    required SubtitlePosition position,
+    required bool background,
+    required int frameWidth,
+    required int frameHeight,
+  }) {
+    final baseSize = switch (textSize) {
+      SubtitleTextSize.small => 12,
+      SubtitleTextSize.medium => _defaultSubtitleFontSize,
+      SubtitleTextSize.large => 22,
+    };
+    final isPortrait =
+        frameWidth > 0 && frameHeight > 0 && frameWidth < frameHeight;
+    final fontSize = isPortrait
+        ? baseSize * frameWidth / frameHeight
+        : baseSize;
+    return [
+      if (fontSize != _defaultSubtitleFontSize)
+        'Fontsize=${fontSize.toStringAsFixed(1)}',
+      if (position == SubtitlePosition.top) 'Alignment=6',
+      if (background) ...[
+        'BorderStyle=4',
+        'BackColour=&H60404040',
+        'OutlineColour=&HFF000000',
+        'Outline=1',
+        'Shadow=0',
+      ],
+    ].join(',');
+  }
+
+  /// FFmpeg entschlüsselt den Wert zweimal: erst der Filtergraph, dann die
+  /// Filteroption. Deshalb zwei Durchgänge, in umgekehrter Reihenfolge.
+  /// `"` kommt nur wegen FFmpegKits Argument-Parser dazu, der sonst das
+  /// Anführungszeichen um den Graphen beenden würde.
+  static String _escapeFilterValue(String value) {
+    final optionLevel = value.replaceAllMapped(
+      RegExp(r"[\\':]"),
+      (m) => '\\${m[0]}',
+    );
+    return optionLevel.replaceAllMapped(
+      RegExp(r'''[\\'\[\],;"]'''),
+      (m) => '\\${m[0]}',
+    );
+  }
+
+  /// Setzt das komplette `-vf`-Argument aus [graph], optionalem Tonemapping
+  /// und optionalem [subtitleFilter] zusammen. Leer, wenn alles entfällt.
+  ///
+  /// Untertitel stehen bewusst am Ende der Kette:
+  ///   * Sie werden in Zielauflösung gerendert, bleiben also scharf.
+  ///   * Zuschneiden kann sie nicht abschneiden, bei Balken landen sie im
+  ///     fertigen Rahmen.
+  ///   * Tonemapping würde ihre Farben sonst mit umrechnen.
+  ///
+  /// Das Trimmen stört nicht: `-ss` steht hinter `-i`, FFmpeg hängt den
+  /// Schnitt also hinter diesen Graphen, und der Filter sieht die Zeiten der
+  /// Quelle (lokal gegen FFmpeg 8 geprüft).
+  static String filterArgument(
+    String graph, {
+    String? hdrTransfer,
+    String? subtitleFilter,
+  }) {
     final parts = [
       if (graph.isNotEmpty) graph,
       if (hdrTransfer != null) hdrToSdrGraph(hdrTransfer),
+      ?subtitleFilter,
     ];
     return parts.isEmpty ? '' : '-vf "${parts.join(',')}"';
   }

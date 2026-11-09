@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../l10n/app_localizations.dart';
+import '../models/burn_in_subtitle.dart';
 import '../models/expert_settings.dart';
 import '../models/video_metadata.dart';
 import '../services/ffmpeg_codec_options.dart';
@@ -38,6 +39,11 @@ class ExpertControls extends StatefulWidget {
   /// den Schalter „Hardware-Encoder“.
   final bool hardwareHevcAvailable;
 
+  /// Öffnet die Dateiauswahl für „Burn-in Subtitles“. Die Auswahl selbst und
+  /// die Kopie in den Cache übernimmt der Screen über den `SubtitleService`.
+  final VoidCallback? onPickSubtitle;
+  final VoidCallback? onRemoveSubtitle;
+
   const ExpertControls({
     super.key,
     required this.settings,
@@ -46,6 +52,8 @@ class ExpertControls extends StatefulWidget {
     this.metadata,
     this.av1Enabled = false,
     this.hardwareHevcAvailable = false,
+    this.onPickSubtitle,
+    this.onRemoveSubtitle,
   });
 
   @override
@@ -671,6 +679,130 @@ class _ExpertControlsState extends State<ExpertControls> {
         onPressed: () => _showInfo(context, title, content),
       );
 
+  /// Ohne eigenen Schalter: Die Funktion ist genau dann aktiv, wenn eine Datei
+  /// gewählt ist. So gibt es keinen Zustand „an, aber ohne Datei“.
+  Widget _buildBurnInSubtitles(
+    AppLocalizations l,
+    ThemeData theme,
+    ExpertSettings s,
+  ) {
+    final subtitle = s.burnInSubtitle;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Text(l.burnInSubtitlesLabel, style: theme.textTheme.labelMedium),
+            const SizedBox(width: 2),
+            _infoButton(
+              context,
+              l.burnInSubtitlesLabel,
+              l.burnInSubtitlesInfoContent,
+            ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        if (subtitle == null)
+          OutlinedButton.icon(
+            key: const ValueKey('expert_subtitle_select'),
+            icon: const Icon(Icons.subtitles_outlined),
+            label: Text(l.burnInSubtitlesSelect),
+            onPressed: widget.isConverting ? null : widget.onPickSubtitle,
+          )
+        else
+          Row(
+            key: const ValueKey('expert_subtitle_selected'),
+            children: [
+              Icon(
+                Icons.subtitles_outlined,
+                size: 20,
+                color: theme.colorScheme.primary,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  subtitle.displayName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              IconButton(
+                key: const ValueKey('expert_subtitle_remove'),
+                icon: const Icon(Icons.close, size: 20),
+                tooltip: l.burnInSubtitlesRemove,
+                onPressed: widget.isConverting ? null : widget.onRemoveSubtitle,
+              ),
+            ],
+          ),
+        // ASS bringt seine Gestaltung selbst mit, sie bleibt unangetastet.
+        if (subtitle?.format == SubtitleFormat.srt) ..._srtStyleControls(l, s),
+      ],
+    );
+  }
+
+  List<Widget> _srtStyleControls(AppLocalizations l, ExpertSettings s) {
+    final labelStyle = Theme.of(context).textTheme.labelMedium;
+    return [
+      const SizedBox(height: 8),
+      Text(l.subtitleTextSizeLabel, style: labelStyle),
+      const SizedBox(height: 4),
+      SegmentedButton<SubtitleTextSize>(
+        key: const ValueKey('expert_subtitle_text_size'),
+        showSelectedIcon: false,
+        segments: [
+          ButtonSegment(
+            value: SubtitleTextSize.small,
+            label: Text(l.subtitleTextSizeSmall),
+          ),
+          ButtonSegment(
+            value: SubtitleTextSize.medium,
+            label: Text(l.subtitleTextSizeMedium),
+          ),
+          ButtonSegment(
+            value: SubtitleTextSize.large,
+            label: Text(l.subtitleTextSizeLarge),
+          ),
+        ],
+        selected: {s.subtitleTextSize},
+        onSelectionChanged: widget.isConverting
+            ? null
+            : (sel) =>
+                  widget.onChanged(s.copyWith(subtitleTextSize: sel.first)),
+      ),
+      const SizedBox(height: 12),
+      Text(l.subtitlePositionLabel, style: labelStyle),
+      const SizedBox(height: 4),
+      SegmentedButton<SubtitlePosition>(
+        key: const ValueKey('expert_subtitle_position'),
+        showSelectedIcon: false,
+        segments: [
+          ButtonSegment(
+            value: SubtitlePosition.bottom,
+            label: Text(l.subtitlePositionBottom),
+          ),
+          ButtonSegment(
+            value: SubtitlePosition.top,
+            label: Text(l.subtitlePositionTop),
+          ),
+        ],
+        selected: {s.subtitlePosition},
+        onSelectionChanged: widget.isConverting
+            ? null
+            : (sel) =>
+                  widget.onChanged(s.copyWith(subtitlePosition: sel.first)),
+      ),
+      SwitchListTile(
+        key: const ValueKey('expert_subtitle_background'),
+        contentPadding: EdgeInsets.zero,
+        title: Text(l.subtitleBackgroundTitle),
+        value: s.subtitleBackground,
+        onChanged: widget.isConverting
+            ? null
+            : (on) => widget.onChanged(s.copyWith(subtitleBackground: on)),
+      ),
+    ];
+  }
+
   // ---------------------------------------------------------------------------
   // UI
   // ---------------------------------------------------------------------------
@@ -1214,6 +1346,10 @@ class _ExpertControlsState extends State<ExpertControls> {
               );
             },
           ),
+          const SizedBox(height: 12),
+
+          // ── Untertitel einbrennen ───────────────────────────────────────────
+          _buildBurnInSubtitles(l, theme, s),
         ],
       ],
     );

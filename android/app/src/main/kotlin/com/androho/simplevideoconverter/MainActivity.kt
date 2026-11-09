@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.nio.charset.Charset
 
 class MainActivity : FlutterActivity() {
 
@@ -28,6 +29,7 @@ class MainActivity : FlutterActivity() {
     private val SERVICE_CHANNEL = "com.androho.simplevideoconverter/conversion_service"
     private val GALLERY_CHANNEL = "com.androho.simplevideoconverter/gallery"
     private val SYSTEM_BARS_CHANNEL = "com.androho.simplevideoconverter/system_bars"
+    private val SUBTITLES_CHANNEL = "com.androho.simplevideoconverter/subtitles"
     // Ordner unter Movies/ (VideoGallerySaver). Muss zu `Gal.putVideo(…, album:
     // 'Video Converter')` in gallery_service.dart passen, dem Weg unter Android 10.
     private val GALLERY_ALBUM = "Video Converter"
@@ -211,6 +213,29 @@ class MainActivity : FlutterActivity() {
                     else -> result.notImplemented()
                 }
             }
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, SUBTITLES_CHANNEL)
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "decodeLegacyText" -> result.success(
+                        decodeLegacyText(
+                            call.argument<ByteArray>("bytes"),
+                            call.argument<String>("charset"),
+                        ),
+                    )
+                    else -> result.notImplemented()
+                }
+            }
+    }
+
+    /** Null, wenn Android die Codierung nicht kennt; Dart nimmt dann Windows-1252. */
+    private fun decodeLegacyText(bytes: ByteArray?, charsetName: String?): String? {
+        if (bytes == null || charsetName == null) return null
+        return try {
+            String(bytes, Charset.forName(charsetName))
+        } catch (_: IllegalArgumentException) {
+            null
+        }
     }
 
     /**

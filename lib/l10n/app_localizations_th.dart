@@ -654,4 +654,52 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get originalTrashFailed => 'ไม่สามารถลบต้นฉบับได้';
+
+  @override
+  String get burnInSubtitlesLabel => 'ฝังคำบรรยาย';
+
+  @override
+  String get burnInSubtitlesInfoContent =>
+      'วาดคำบรรยายลงในภาพวิดีโออย่างถาวร คำบรรยายจะแสดงอยู่เสมอและไม่สามารถปิดได้ในภายหลัง\n\nรองรับไฟล์ SRT และ ASS โดยคงรูปแบบและตำแหน่งของ ASS ไว้ สำหรับวิดีโอที่ยังคงเป็น HDR คำบรรยายอาจดูสว่างมาก';
+
+  @override
+  String get burnInSubtitlesSelect => 'เลือกไฟล์ SRT หรือ ASS';
+
+  @override
+  String get burnInSubtitlesRemove => 'นำไฟล์คำบรรยายออก';
+
+  @override
+  String get burnInSubtitlesUnsupported => 'กรุณาเลือกไฟล์ .srt หรือ .ass';
+
+  @override
+  String get burnInSubtitlesInvalid =>
+      'ไม่สามารถอ่านไฟล์คำบรรยายนี้ได้ หรือไฟล์ไม่มีคำบรรยายที่ถูกต้อง';
+
+  @override
+  String get burnInSubtitlesMissing =>
+      'ไฟล์คำบรรยายไม่พร้อมใช้งานแล้ว กรุณาเลือกอีกครั้ง';
+
+  @override
+  String get subtitleTextSizeLabel => 'ขนาดข้อความ';
+
+  @override
+  String get subtitleTextSizeSmall => 'เล็ก';
+
+  @override
+  String get subtitleTextSizeMedium => 'กลาง';
+
+  @override
+  String get subtitleTextSizeLarge => 'ใหญ่';
+
+  @override
+  String get subtitlePositionLabel => 'ตำแหน่ง';
+
+  @override
+  String get subtitlePositionBottom => 'ด้านล่าง';
+
+  @override
+  String get subtitlePositionTop => 'ด้านบน';
+
+  @override
+  String get subtitleBackgroundTitle => 'พื้นหลังสีเทา';
 }
