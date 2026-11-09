@@ -52,18 +52,22 @@ class SubtitleService {
     return null;
   }
 
-  /// Altcodierung, die zu Dateien in [languageCode] am ehesten passt. Null
+  /// Altcodierung, die zu Dateien in [localeTag] am ehesten passt. Null
   /// heißt Windows-1252 (westliche Sprachen, und Hindi, das keine gängige
   /// Altcodierung für Untertitel hat).
-  static String? legacyCharsetFor(String languageCode) =>
-      switch (languageCode) {
-        'cs' || 'pl' => 'windows-1250',
-        'ru' || 'uk' => 'windows-1251',
-        'tr' => 'windows-1254',
-        'th' => 'TIS-620',
-        'ja' => 'Shift_JIS',
-        _ => null,
-      };
+  static String? legacyCharsetFor(String localeTag) => switch (localeTag) {
+    'cs' || 'hr' || 'hu' || 'pl' || 'ro' || 'sk' || 'sl' => 'windows-1250',
+    'ru' || 'uk' => 'windows-1251',
+    'el' => 'windows-1253',
+    'tr' => 'windows-1254',
+    'vi' => 'windows-1258',
+    'th' => 'TIS-620',
+    'ja' => 'Shift_JIS',
+    'ko' => 'EUC-KR',
+    'zh' => 'GBK',
+    'zh_TW' => 'Big5',
+    _ => null,
+  };
 
   /// Dekodiert eine Untertiteldatei, damit sie als UTF-8 gespeichert werden
   /// kann.
@@ -71,19 +75,19 @@ class SubtitleService {
   /// FFmpeg verlangt UTF-8 und bricht die ganze Konvertierung sonst mit
   /// „Invalid UTF-8 in decoded subtitles text“ ab, viele SRT-Dateien sind aber
   /// noch in einer Altcodierung. Welche, verrät die Datei nicht. Nur ohne BOM
-  /// und ohne gültiges UTF-8 entscheidet deshalb [languageCode] der App.
+  /// und ohne gültiges UTF-8 entscheidet deshalb [localeTag] der App.
   ///
   /// Die Altcodierungen dekodiert Android: Für Shift-JIS bräuchte Dart sonst
   /// eine Tabelle mit rund 7000 Zeichen. Scheitert das, bleibt Windows-1252,
   /// damit die Datei wenigstens nutzbar ist.
   static Future<String> decodeText(
     Uint8List bytes, {
-    required String languageCode,
+    required String localeTag,
   }) async {
     final unicode = _decodeUnicode(bytes);
     if (unicode != null) return unicode;
 
-    final charset = legacyCharsetFor(languageCode);
+    final charset = legacyCharsetFor(localeTag);
     if (charset != null) {
       try {
         final text = await _channel.invokeMethod<String>('decodeLegacyText', {
@@ -180,8 +184,8 @@ class SubtitleService {
   /// Die eigene Kopie hat einen festen ASCII-Namen, damit Sonderzeichen im
   /// Dateinamen weder im Filtergraphen noch in den Crashlytics-Logs landen.
   ///
-  /// [languageCode] ist die App-Sprache, siehe [decodeText].
-  static Future<BurnInSubtitle?> pick({required String languageCode}) async {
+  /// [localeTag] ist die App-Sprache, siehe [decodeText].
+  static Future<BurnInSubtitle?> pick({required String localeTag}) async {
     final FilePickerResult? result;
     try {
       result = await FilePicker.pickFiles(type: FileType.any);
@@ -200,7 +204,7 @@ class SubtitleService {
       if (pickedPath == null) {
         throw const SubtitleFileException(SubtitleFileError.invalid);
       }
-      return await _copyToCache(pickedPath, picked.name, format, languageCode);
+      return await _copyToCache(pickedPath, picked.name, format, localeTag);
     } on FileSystemException {
       throw const SubtitleFileException(SubtitleFileError.invalid);
     } finally {
@@ -212,7 +216,7 @@ class SubtitleService {
     String sourcePath,
     String displayName,
     SubtitleFormat format,
-    String languageCode,
+    String localeTag,
   ) async {
     final source = File(sourcePath);
     if (await source.length() > maxFileBytes) {
@@ -220,7 +224,7 @@ class SubtitleService {
     }
     final text = await decodeText(
       await source.readAsBytes(),
-      languageCode: languageCode,
+      localeTag: localeTag,
     );
     if (!hasSubtitles(text, format)) {
       throw const SubtitleFileException(SubtitleFileError.invalid);

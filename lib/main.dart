@@ -12,6 +12,7 @@ import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/converter_screen.dart';
 import 'services/ads_service.dart';
+import 'services/app_locale_resolver.dart';
 import 'services/purchase_service.dart';
 import 'services/system_bars_service.dart';
 import 'services/theme_controller.dart';
@@ -141,22 +142,7 @@ class App extends StatelessWidget {
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        localeListResolutionCallback: (locales, supported) {
-          for (final locale in locales ?? const <Locale>[]) {
-            for (final s in supported) {
-              if (s.languageCode == locale.languageCode &&
-                  s.countryCode == locale.countryCode) {
-                return s;
-              }
-            }
-          }
-          for (final locale in locales ?? const <Locale>[]) {
-            for (final s in supported) {
-              if (s.languageCode == locale.languageCode) return s;
-            }
-          }
-          return const Locale('en');
-        },
+        localeListResolutionCallback: AppLocaleResolver.resolve,
         home: const VideoConverterApp(),
       ),
     );

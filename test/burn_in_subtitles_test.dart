@@ -61,6 +61,27 @@ void main() {
       expect(SubtitleService.legacyCharsetFor('ja'), 'Shift_JIS');
     });
 
+    test('covers the Central European and Asian languages', () {
+      for (final code in ['hr', 'hu', 'ro', 'sk', 'sl']) {
+        expect(
+          SubtitleService.legacyCharsetFor(code),
+          'windows-1250',
+          reason: code,
+        );
+      }
+      expect(SubtitleService.legacyCharsetFor('el'), 'windows-1253');
+      expect(SubtitleService.legacyCharsetFor('vi'), 'windows-1258');
+      expect(SubtitleService.legacyCharsetFor('ko'), 'EUC-KR');
+      expect(SubtitleService.legacyCharsetFor('zh'), 'GBK');
+      expect(SubtitleService.legacyCharsetFor('zh_TW'), 'Big5');
+    });
+
+    test('leaves regional western variants on Windows-1252', () {
+      for (final code in ['da', 'fi', 'fil', 'ms', 'nb', 'es_419', 'pt_BR']) {
+        expect(SubtitleService.legacyCharsetFor(code), isNull, reason: code);
+      }
+    });
+
     test('leaves western languages and Hindi on Windows-1252', () {
       for (final code in [
         'en',
@@ -99,7 +120,7 @@ void main() {
     final legacyBytes = bytes([0x47, 0x72, 0xFC, 0xDF, 0x80]);
 
     Future<String> decode(Uint8List data, [String language = 'en']) =>
-        SubtitleService.decodeText(data, languageCode: language);
+        SubtitleService.decodeText(data, localeTag: language);
 
     test('keeps valid UTF-8 in every app language', () async {
       final encoded = Uint8List.fromList(utf8.encode('Grüße €'));

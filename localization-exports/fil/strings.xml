@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pang-convert</string>
+    <string name="notification_converting">Kino-convert…</string>
+    <string name="notification_done_title">Tapos na ang conversion</string>
+    <string name="notification_done_tap">I-tap para i-save o itapon</string>
+    <string name="notification_channel_progress">Progreso ng Conversion</string>
+    <string name="notification_channel_done">Tapos na ang Conversion</string>
+</resources>

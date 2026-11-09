@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Convertir video</string>
+    <string name="notification_converting">Convirtiendo…</string>
+    <string name="notification_done_title">Conversión completa</string>
+    <string name="notification_done_tap">Toca para guardar o descartar</string>
+    <string name="notification_channel_progress">Progreso de conversión</string>
+    <string name="notification_channel_done">Conversión completa</string>
+</resources>

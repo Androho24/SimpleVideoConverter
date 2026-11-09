@@ -88,7 +88,7 @@ The preview uses `VideoViewType.platformView` (SurfaceView) on Android. The defa
 - Standard Dart formatting (two-space indent), `snake_case.dart` files, `UpperCamelCase` types, `lowerCamelCase` members. Kotlin uses four-space indent and existing Android naming.
 - Code identifiers and test names are English; explanatory comments are German. Comments explain *why* — several encode measured findings and rejected alternatives, so prefer extending them over replacing them.
 - Keep widgets small; platform and persistence logic belongs in services, not UI classes.
-- User-visible text goes into `lib/l10n/app_en.arb` (the template, with `@`-descriptions) **and all 17 locale ARBs**, then `flutter gen-l10n`. Never hand-edit `app_localizations*.dart`.
+- User-visible text goes into `lib/l10n/app_en.arb` (the template, with `@`-descriptions) **and all 33 locale ARBs**, then `flutter gen-l10n`. Never hand-edit `app_localizations*.dart`.
 - Keep the GPL SPDX header on files that already carry it.
 
 ## Testing
@@ -124,7 +124,7 @@ Judge each request on its merits — do not assume it has already been thought t
   - the AV1 realtime settings are load-bearing: FFmpeg's wrapper caps `cpu-used` at 8 and libaom rejects any `lag-in-frames` between 0 and `max-gf-interval + 2`. The long comments there record measurements — extend them, do not tidy them away,
   - the preview runs on `VideoViewType.platformView` against upstream advice; anything touching the preview needs re-checking for scrolling, seeking, dialogs over the video, and repeated loads,
   - R8 has stripped FFmpegKit in release builds before (white screen, `channel-error`). A working debug build is not evidence about release;
-- risk a release requirement: UMP consent (`ConsentHelper`, `ConsentModeHelper`), foreground-service type and `POST_NOTIFICATIONS` for the conversion notification, real ad units leaking into debug builds, missing strings in any of the 17 locales, Play Billing acknowledgement;
+- risk a release requirement: UMP consent (`ConsentHelper`, `ConsentModeHelper`), foreground-service type and `POST_NOTIFICATIONS` for the conversion notification, real ad units leaking into debug builds, missing strings in any of the 33 locales, Play Billing acknowledgement;
 - add a second source of truth for Pro entitlement — it is the persisted `PreferencesService.getIsPro()` with `PurchaseService.isProStream` for live updates;
 - change the licensing position: the app is GPL-3.0 *because* it bundles FFmpegKit full-gpl with x264. Swapping the package variant or adding an incompatible dependency is a licensing decision, not a build tweak;
 - only fix a symptom while the actual cause stays in place;

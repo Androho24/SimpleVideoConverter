@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Penukar Video</string>
+    <string name="notification_converting">Menukar…</string>
+    <string name="notification_done_title">Penukaran selesai</string>
+    <string name="notification_done_tap">Ketik untuk simpan atau buang</string>
+    <string name="notification_channel_progress">Kemajuan penukaran</string>
+    <string name="notification_channel_done">Penukaran selesai</string>
+</resources>

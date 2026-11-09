@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">视频转换器</string>
+    <string name="notification_converting">正在转换…</string>
+    <string name="notification_done_title">转换完成</string>
+    <string name="notification_done_tap">点按以保存或舍弃</string>
+    <string name="notification_channel_progress">转换进度</string>
+    <string name="notification_channel_done">转换完成</string>
+</resources>

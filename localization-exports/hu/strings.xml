@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Videókonvertáló</string>
+    <string name="notification_converting">Átalakítás…</string>
+    <string name="notification_done_title">Az átalakítás kész</string>
+    <string name="notification_done_tap">Koppints a mentéshez vagy elvetéshez</string>
+    <string name="notification_channel_progress">Átalakítás folyamata</string>
+    <string name="notification_channel_done">Befejezett átalakítás</string>
+</resources>

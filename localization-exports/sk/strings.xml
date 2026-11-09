@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Konvertor videa</string>
+    <string name="notification_converting">Konvertuje sa…</string>
+    <string name="notification_done_title">Konverzia dokončená</string>
+    <string name="notification_done_tap">Klepnutím uložte alebo zahoďte</string>
+    <string name="notification_channel_progress">Priebeh konverzie</string>
+    <string name="notification_channel_done">Dokončenie konverzie</string>
+</resources>

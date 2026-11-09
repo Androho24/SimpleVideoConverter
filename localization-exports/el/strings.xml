@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Μετατρ. βίντεο</string>
+    <string name="notification_converting">Μετατροπή…</string>
+    <string name="notification_done_title">Η μετατροπή ολοκληρώθηκε</string>
+    <string name="notification_done_tap">Πατήστε για αποθήκευση ή απόρριψη</string>
+    <string name="notification_channel_progress">Πρόοδος μετατροπής</string>
+    <string name="notification_channel_done">Ολοκλήρωση μετατροπής</string>
+</resources>

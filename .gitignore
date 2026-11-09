@@ -36,6 +36,7 @@ firebase.json
 .pub/
 /build/
 /coverage/
+/docs/
 
 # Symbolication related
 app.*.symbols

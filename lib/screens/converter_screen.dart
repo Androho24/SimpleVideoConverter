@@ -624,9 +624,9 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     _isPickingSubtitle = true;
     final l = AppLocalizations.of(context)!;
     final messenger = ScaffoldMessenger.of(context);
-    final languageCode = Localizations.localeOf(context).languageCode;
+    final localeTag = Localizations.localeOf(context).toString();
     try {
-      final subtitle = await SubtitleService.pick(languageCode: languageCode);
+      final subtitle = await SubtitleService.pick(localeTag: localeTag);
       if (subtitle == null || !mounted) return;
       final previous = _expertSettings.burnInSubtitle;
       setState(

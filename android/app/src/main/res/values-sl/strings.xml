@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pretvorba videa</string>
+    <string name="notification_converting">Pretvarjanje…</string>
+    <string name="notification_done_title">Pretvorba je končana</string>
+    <string name="notification_done_tap">Tapnite za shranjevanje ali zavrženje</string>
+    <string name="notification_channel_progress">Napredek pretvorbe</string>
+    <string name="notification_channel_done">Končana pretvorba</string>
+</resources>

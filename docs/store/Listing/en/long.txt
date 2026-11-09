@@ -1,60 +1,57 @@
-<b>Video Converter & Compressor</b> is a <b>video converter</b> for Android that lets you <b>convert videos</b>, <b>resize videos</b>, <b>reduce video size</b>, and <b>convert video to audio</b> – <b>without watermarks</b>. Convert <b>MOV to MP4</b>, <b>MKV to MP4</b>, and other formats directly on your device with <b>FFmpeg</b>.
+<b>Video Converter & Compressor</b> uses FFmpeg to convert, compress, and trim videos right on your phone. No watermarks, no video uploads, open source.
 
-With <b>FFmpeg on Android</b>, you can <b>change video formats</b>, <b>compress</b> large files, <b>trim a video</b>, and quickly convert media to a suitable format. The app is ideal for common conversions such as <b>MOV to MP4</b>, <b>MKV to MP4</b>, or extracting audio from a video.
+Convert MOV, MKV, AVI, or WebM to MP4, turn MP4 into MP3, shrink large videos to save storage, resize them for sharing, or extract the audio as MP3.
 
-<b>Convert videos, resize videos, and extract audio – right on your device</b>  
-All processing takes place locally on your smartphone. This allows you to <b>convert videos</b>, <b>resize a video</b>, and <b>reduce file size</b> without uploading your files to the cloud.
+<b>Your videos stay on your device</b>
+All conversion happens locally on your phone. Your videos are not uploaded to any server or cloud service.
 
-<b>Two modes for every video conversion:</b>
+<b>Two modes for every job</b>
 
-⚡ <b>Simple Mode:</b>  
-Quickly convert your <b>video to MP4</b> using preset options. Ideal if you want to <b>resize a video</b>, <b>reduce video size</b>, and save storage space.
+⚡ <b>Normal Mode</b>
+Pick a quality preset and convert to MP4. Ideal for quickly reducing file size and freeing up storage.
 
-⚙️ <b>Expert Mode:</b>  
-Use advanced <b>FFmpeg settings</b> to <b>change video formats</b>, adjust resolution, choose codecs such as <b>H.265</b> and <b>AV1</b>, set the quality with <b>CRF</b> or a target <b>bitrate</b>, <b>add subtitles</b>, and manually select audio bitrates.
+⚙️ <b>Expert Mode</b>
+Use advanced <b>FFmpeg settings</b>: Choose the codec and output format, set the quality with CRF or a target bitrate, and adjust resolution, aspect ratio, frame rate, and audio settings.
 
-<b>Supported output formats:</b>  
-• <b>Video:</b> MP4, MKV, MOV, WebM, TS, AVI  
-• <b>Audio:</b> MP3, AAC, AC3, Opus, Vorbis
+<b>Supported output formats</b>
+• Video: MP4, MKV, MOV, WebM, TS, AVI
+• Audio: MP3, AAC, AC3, Opus, Vorbis
 
-<b>Key Features at a Glance:</b>
+<b>Features</b>
 
-🚫 <b>No Watermarks</b>  
-Create clean files without logos or distracting overlays.
+🚫 <b>No watermarks</b>
+Your videos stay clean, without logos or overlays.
 
-📉 <b>Compress Videos & Reduce File Size</b>  
-Compress large videos, reduce file size, and save storage space on your device.
+📉 <b>Compress videos</b>
+Reduce video size and save storage space on your device.
 
-🎬 <b>Convert Video Formats</b>  
-Use the app as a <b>video converter</b> for common formats such as <b>MP4</b>, <b>MKV</b>, <b>MOV</b>, <b>WebM</b>, <b>TS</b>, and <b>AVI</b>.
+🎬 <b>Convert formats</b>
+Convert videos to common formats, including MP4, MKV, and WebM.
 
-🎵 <b>Convert Video to Audio</b>  
-Extract audio tracks and save them as <b>MP3</b>, <b>AAC</b>, <b>AC3</b>, <b>Opus</b>, or <b>Vorbis</b>.
+🎵 <b>Extract audio</b>
+Save the sound of a video as an audio file, for example as MP3.
 
-✂️ <b>Trim Video</b>  
-Set exact start and end points before conversion.
+✂️ <b>Trim videos</b>
+Set exact start and end points before converting.
 
-💬 <b>Add Subtitles</b>  
-Add <b>SRT</b> or <b>ASS</b> subtitles in Expert Mode: <b>burned into the picture</b> permanently or as a <b>switchable track</b>.
+💬 <b>Add subtitles</b>
+Add SRT or ASS subtitles in Expert Mode, burned into the picture or as a switchable track.
 
-🎛️ <b>Modern Codecs & Precise Quality Control</b>  
-Encode with <b>H.264</b>, <b>H.265</b>, <b>VP9</b>, or <b>AV1</b>, and control the quality with <b>CRF</b> or a target <b>bitrate</b>.
+🎛️ <b>Modern codecs</b>
+Encode with H.264, H.265, VP9, or AV1. On supported devices, H.265 can use the hardware encoder for much faster conversions.
 
-📊 <b>Preview & Size Estimate</b>  
-Preview your video and check the estimated file size before conversion.
+🎨 <b>HDR support</b>
+HDR videos can stay in HDR with H.265 or AV1, or be converted to SDR with H.264.
 
-🛡️ <b>Local & Private</b>  
-Processing takes place entirely <b>locally on your smartphone</b>.  
-No external upload, no cloud processing.
+📊 <b>Preview and size estimate</b>
+Preview your video and see the estimated file size before converting.
 
-💎 <b>FFmpeg on Android</b>  
+💎 <b>FFmpeg on Android</b>
 Use proven <b>FFmpeg</b> technology directly in a simple Android app.
 
-🔓 <b>Open Source</b>  
-The app is <b>GPL-licensed</b> and the source code is publicly available.
+✨ <b>Remove ads</b>
+A one-time in-app purchase removes ads permanently and supports the project.
 
-✨ <b>Remove Ads Permanently</b>  
-With a one-time in-app purchase, you can permanently remove ads and support the project.
-
-<b>Open-source project (GPL):</b>  
+🔓 <b>Open source</b>
+Built on FFmpeg and licensed under the GPL. The source code is publicly available:
 https://github.com/Androho24/SimpleVideoConverter
