@@ -49,6 +49,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /localization-exports
+AGENTS.md
+CLAUDE.md
 
 # Secrets & Keys — niemals ins Repo!
 google-services.json
