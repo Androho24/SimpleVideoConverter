@@ -454,13 +454,13 @@ abstract class AppLocalizations {
   /// Titel des Info-Dialogs zur Video-Codec-Auswahl
   ///
   /// In en, this message translates to:
-  /// **'H.264 or H.265/HEVC?'**
+  /// **'H.264, H.265/HEVC or AV1?'**
   String get videoCodecInfoTitle;
 
   /// Erklärung der Unterschiede zwischen H.264 und H.265/HEVC
   ///
   /// In en, this message translates to:
-  /// **'H.264 offers the best compatibility and usually converts faster.\n\nH.265/HEVC can produce smaller files at comparable visual quality, but conversion takes longer. Older devices or apps may not be able to play the result.\n\nBoth encoders are included in the app and do not depend on codecs installed on the device.'**
+  /// **'H.264 offers the best compatibility and usually converts faster.\n\nH.265/HEVC can produce smaller files at comparable visual quality, but conversion takes longer. Older devices or apps may not be able to play the result.\n\nAV1 is a modern codec designed for small files. Older devices and apps often cannot play the result.\n\nAll encoders are included in the app and do not depend on codecs installed on the device.'**
   String get videoCodecInfoContent;
 
   /// Snackbar Fehler beim Speichern
@@ -676,7 +676,7 @@ abstract class AppLocalizations {
   /// Erklärung der Video-Codecs im Expertenmodus
   ///
   /// In en, this message translates to:
-  /// **'H.264 → best compatibility and usually faster encoding\nH.265 → smaller files at comparable quality, slower encoding\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → best compression, software-only encoding, experimental\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.'**
+  /// **'H.264 → best compatibility and usually faster encoding\nH.265 → smaller files at comparable quality, slower encoding\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → modern codec for small files, software-only encoding\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.'**
   String get expertVideoCodecInfoContent;
 
   /// Label des Xvid-Codecs im Expertenmodus
@@ -696,18 +696,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'For resolutions above 720p, consider scaling down first.'**
   String get av1HighResHint;
-
-  /// Titel des experimentellen AV1-Schalters in den App-Einstellungen
-  ///
-  /// In en, this message translates to:
-  /// **'AV1 (experimental)'**
-  String get av1ExperimentalTitle;
-
-  /// Untertitel des experimentellen AV1-Schalters
-  ///
-  /// In en, this message translates to:
-  /// **'Adds AV1 to the codec selection in normal and expert modes. A modern, highly efficient codec that has not yet been fully tested.'**
-  String get av1ExperimentalSubtitle;
 
   /// Inhalt des Audio-Codec-Info-Dialogs
   ///
@@ -1307,17 +1295,35 @@ abstract class AppLocalizations {
   /// **'The original could not be deleted.'**
   String get originalTrashFailed;
 
-  /// Expertenmodus: Überschrift der Option zum Einbrennen von Untertiteln, direkt unter dem Output-Format
+  /// Expertenmodus: Überschrift der Option zum Hinzufügen von Untertiteln, direkt unter dem Output-Format
   ///
   /// In en, this message translates to:
-  /// **'Burn-in Subtitles'**
+  /// **'Add Subtitles'**
   String get burnInSubtitlesLabel;
 
-  /// Expertenmodus: Info-Dialog zum Einbrennen von Untertiteln
+  /// Expertenmodus: Info-Dialog zu Untertiteln, erklärt die Modi fest und zuschaltbar
   ///
   /// In en, this message translates to:
-  /// **'Draws the subtitles permanently into the video image. They always stay visible and cannot be turned off later.\n\nSupports SRT and ASS files. ASS styling and positions are kept. On HDR videos that stay in HDR, subtitles can look very bright.'**
+  /// **'Permanent: The subtitles are drawn into the video image. They are visible in every player and cannot be turned off later. On videos that stay in HDR, they can look very bright.\n\nSwitchable: The subtitles are added as a separate track that can be turned on or off in the player. Not every player shows them, and they are often lost when the video is shared. Not available for AVI and MPEG-TS.\n\nSupports SRT and ASS files. ASS styling and positions are fully kept when permanent and in MKV files. Other formats keep only part of the styling and no positions.'**
   String get burnInSubtitlesInfoContent;
+
+  /// Expertenmodus: Segment – Untertitel fest ins Videobild gerendert, nicht abschaltbar. Muss kurz sein
+  ///
+  /// In en, this message translates to:
+  /// **'Permanent'**
+  String get subtitleModeBurnIn;
+
+  /// Expertenmodus: Segment – Untertitel als eigene Spur, im Player zuschaltbar. Muss kurz sein
+  ///
+  /// In en, this message translates to:
+  /// **'Switchable'**
+  String get subtitleModeTrack;
+
+  /// SnackBar: Für eine zuschaltbare Spur liegt kein Untertitel im gewählten Ausschnitt
+  ///
+  /// In en, this message translates to:
+  /// **'There are no subtitles in the selected part of the video.'**
+  String get subtitleTrackEmpty;
 
   /// Expertenmodus: Button, der die Dateiauswahl für Untertitel öffnet
   ///

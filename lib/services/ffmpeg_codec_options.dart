@@ -1,6 +1,7 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import '../models/burn_in_subtitle.dart';
 import 'media_format_compatibility.dart';
 
 class FfmpegCodecOptions {
@@ -164,5 +165,43 @@ class FfmpegCodecOptions {
       MediaFormatCompatibility.videoCodecAv1 => '-tag:v av01',
       _ => '',
     };
+  }
+
+  /// Nur MKV trägt ASS vollständig. MP4/MOV behalten Grundstile wie die Farbe,
+  /// WebM nur Fett und Kursiv, beide keine Positionen (gegen FFmpeg 8 geprüft).
+  static String subtitleTrackEncoder(String container, SubtitleFormat format) =>
+      switch (container) {
+        'mkv' => format == SubtitleFormat.ass ? 'ass' : 'srt',
+        'webm' => 'webvtt',
+        _ => 'mov_text',
+      };
+
+  /// Eingaben und Zuordnung für eine zuschaltbare Untertitelspur.
+  ///
+  /// Anders als sonst steht `-ss/-to` hier vor dem `-i` des Videos, und
+  /// [subtitlePath] muss schon auf den Ausschnitt zugeschnitten sein
+  /// (`SubtitleService.writeTrackFile`). Beides gegen FFmpeg 8 gemessen:
+  ///   * `-ss` hinter `-i` verwirft Cues vor dem Schnitt, verschiebt die
+  ///     übrigen aber nicht. Bei Schnitt ab 2 s bliebe ein Cue bei 3,5 s dort,
+  ///     statt bei 1,5 s zu erscheinen.
+  ///   * `-ss/-to` vor dem `-i` der Untertiteldatei verschiebt falsch (bei 2 s
+  ///     nur um 1 s) und schneidet das Ende nicht ab. MKV und WebM würden
+  ///     dadurch länger als das Video.
+  ///
+  /// `-map` ist nötig, weil die Datei eine zweite Eingabe ist. Dadurch fallen
+  /// Untertitelspuren der Quelle bewusst weg, sonst stünden zwei Spuren zur
+  /// Wahl. `0:V` statt `0:v` überspringt eingebettete Coverbilder.
+  static String subtitleTrackArguments({
+    required String input,
+    required String subtitlePath,
+    required double startSec,
+    required double endSec,
+    required String container,
+    required SubtitleFormat format,
+  }) {
+    final encoder = subtitleTrackEncoder(container, format);
+    return '-ss $startSec -to $endSec -i $input -i "$subtitlePath" '
+        '-map 0:V:0 -map 0:a:0? -map 1:0 '
+        '-c:s $encoder -disposition:s:0 default';
   }
 }

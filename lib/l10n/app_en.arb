@@ -163,10 +163,10 @@
   "videoCodecSubtitle": "Video codec for conversions in normal mode",
   "@videoCodecSubtitle": {"description": "Untertitel der Video-Codec-Auswahl"},
 
-  "videoCodecInfoTitle": "H.264 or H.265/HEVC?",
+  "videoCodecInfoTitle": "H.264, H.265/HEVC or AV1?",
   "@videoCodecInfoTitle": {"description": "Titel des Info-Dialogs zur Video-Codec-Auswahl"},
 
-  "videoCodecInfoContent": "H.264 offers the best compatibility and usually converts faster.\n\nH.265/HEVC can produce smaller files at comparable visual quality, but conversion takes longer. Older devices or apps may not be able to play the result.\n\nBoth encoders are included in the app and do not depend on codecs installed on the device.",
+  "videoCodecInfoContent": "H.264 offers the best compatibility and usually converts faster.\n\nH.265/HEVC can produce smaller files at comparable visual quality, but conversion takes longer. Older devices or apps may not be able to play the result.\n\nAV1 is a modern codec designed for small files. Older devices and apps often cannot play the result.\n\nAll encoders are included in the app and do not depend on codecs installed on the device.",
   "@videoCodecInfoContent": {"description": "Erklärung der Unterschiede zwischen H.264 und H.265/HEVC"},
 
   "saveError": "Error saving. There may not be enough storage space.",
@@ -274,7 +274,7 @@
   "audioCodecLabel": "Audio codec",
   "@audioCodecLabel": {"description": "Label für die Audio-Codec-Auswahl"},
 
-  "expertVideoCodecInfoContent": "H.264 → best compatibility and usually faster encoding\nH.265 → smaller files at comparable quality, slower encoding\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → best compression, software-only encoding, experimental\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.",
+  "expertVideoCodecInfoContent": "H.264 → best compatibility and usually faster encoding\nH.265 → smaller files at comparable quality, slower encoding\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → modern codec for small files, software-only encoding\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.",
   "@expertVideoCodecInfoContent": {"description": "Erklärung der Video-Codecs im Expertenmodus"},
 
   "xvidLegacyLabel": "Xvid (Legacy)",
@@ -285,12 +285,6 @@
 
   "av1HighResHint": "For resolutions above 720p, consider scaling down first.",
   "@av1HighResHint": {"description": "Zusatzhinweis für AV1 oberhalb von 720p"},
-
-  "av1ExperimentalTitle": "AV1 (experimental)",
-  "@av1ExperimentalTitle": {"description": "Titel des experimentellen AV1-Schalters in den App-Einstellungen"},
-
-  "av1ExperimentalSubtitle": "Adds AV1 to the codec selection in normal and expert modes. A modern, highly efficient codec that has not yet been fully tested.",
-  "@av1ExperimentalSubtitle": {"description": "Untertitel des experimentellen AV1-Schalters"},
 
   "audioCodecInfoContent": "AAC → standard for MP4, best compatibility\nMP3 → widely used legacy codec\nOpus → modern and efficient, ideal for WebM and MKV\nAC3 → Dolby Digital, shown only for surround sources (≥ 3 channels)\nVorbis → open codec for WebM and MKV\n\nIncompatible output formats are disabled automatically.",
   "@audioCodecInfoContent": {"description": "Inhalt des Audio-Codec-Info-Dialogs"},
@@ -557,10 +551,16 @@
   "@originalTrashed": {"description": "SnackBar: Quellvideo liegt im Papierkorb und laesst sich dort wiederherstellen"},
   "originalTrashFailed": "The original could not be deleted.",
   "@originalTrashFailed": {"description": "SnackBar: Quellvideo konnte nicht in den Papierkorb gelegt werden"},
-  "burnInSubtitlesLabel": "Burn-in Subtitles",
-  "@burnInSubtitlesLabel": {"description": "Expertenmodus: Überschrift der Option zum Einbrennen von Untertiteln, direkt unter dem Output-Format"},
-  "burnInSubtitlesInfoContent": "Draws the subtitles permanently into the video image. They always stay visible and cannot be turned off later.\n\nSupports SRT and ASS files. ASS styling and positions are kept. On HDR videos that stay in HDR, subtitles can look very bright.",
-  "@burnInSubtitlesInfoContent": {"description": "Expertenmodus: Info-Dialog zum Einbrennen von Untertiteln"},
+  "burnInSubtitlesLabel": "Add Subtitles",
+  "@burnInSubtitlesLabel": {"description": "Expertenmodus: Überschrift der Option zum Hinzufügen von Untertiteln, direkt unter dem Output-Format"},
+  "burnInSubtitlesInfoContent": "Permanent: The subtitles are drawn into the video image. They are visible in every player and cannot be turned off later. On videos that stay in HDR, they can look very bright.\n\nSwitchable: The subtitles are added as a separate track that can be turned on or off in the player. Not every player shows them, and they are often lost when the video is shared. Not available for AVI and MPEG-TS.\n\nSupports SRT and ASS files. ASS styling and positions are fully kept when permanent and in MKV files. Other formats keep only part of the styling and no positions.",
+  "@burnInSubtitlesInfoContent": {"description": "Expertenmodus: Info-Dialog zu Untertiteln, erklärt die Modi fest und zuschaltbar"},
+  "subtitleModeBurnIn": "Permanent",
+  "@subtitleModeBurnIn": {"description": "Expertenmodus: Segment – Untertitel fest ins Videobild gerendert, nicht abschaltbar. Muss kurz sein"},
+  "subtitleModeTrack": "Switchable",
+  "@subtitleModeTrack": {"description": "Expertenmodus: Segment – Untertitel als eigene Spur, im Player zuschaltbar. Muss kurz sein"},
+  "subtitleTrackEmpty": "There are no subtitles in the selected part of the video.",
+  "@subtitleTrackEmpty": {"description": "SnackBar: Für eine zuschaltbare Spur liegt kein Untertitel im gewählten Ausschnitt"},
   "burnInSubtitlesSelect": "Select SRT or ASS file",
   "@burnInSubtitlesSelect": {"description": "Expertenmodus: Button, der die Dateiauswahl für Untertitel öffnet"},
   "burnInSubtitlesRemove": "Remove subtitle file",

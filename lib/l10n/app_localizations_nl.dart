@@ -178,11 +178,11 @@ class AppLocalizationsNl extends AppLocalizations {
       'Videocodec voor conversies in de normale modus';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 of H.265/HEVC?';
+  String get videoCodecInfoTitle => 'H.264, H.265/HEVC of AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'H.264 biedt de beste compatibiliteit en converteert meestal sneller.\n\nH.265/HEVC kan bij een vergelijkbare beeldkwaliteit kleinere bestanden maken, maar de conversie duurt langer. Oudere apparaten of apps kunnen het resultaat mogelijk niet afspelen.\n\nBeide encoders zijn in de app opgenomen en zijn niet afhankelijk van codecs die op het apparaat zijn geïnstalleerd.';
+      'H.264 biedt de beste compatibiliteit en converteert meestal sneller.\n\nH.265/HEVC kan bij een vergelijkbare beeldkwaliteit kleinere bestanden maken, maar de conversie duurt langer. Oudere apparaten of apps kunnen het resultaat mogelijk niet afspelen.\n\nAV1 is een moderne codec die is ontworpen voor kleine bestanden. Oudere apparaten en apps kunnen het resultaat vaak niet afspelen.\n\nAlle encoders zijn in de app opgenomen en zijn niet afhankelijk van codecs die op het apparaat zijn geïnstalleerd.';
 
   @override
   String get saveError =>
@@ -305,7 +305,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → beste compatibiliteit en meestal snellere codering\nH.265 → kleinere bestanden bij vergelijkbare kwaliteit, langzamere codering\nVP9 → efficiënte open codec voor WebM en MKV, tragere softwarecodering\nAV1 → beste compressie, alleen softwarecodering, experimenteel\nXvid → oudere MPEG-4-codec voor AVI en oudere spelers\n\nDe beschikbare uitvoerformaten hangen af van de gekozen video- en audiocodecs.';
+      'H.264 → beste compatibiliteit en meestal snellere codering\nH.265 → kleinere bestanden bij vergelijkbare kwaliteit, langzamere codering\nVP9 → efficiënte open codec voor WebM en MKV, tragere softwarecodering\nAV1 → moderne codec voor kleine bestanden, alleen softwarecodering\nXvid → oudere MPEG-4-codec voor AVI en oudere spelers\n\nDe beschikbare uitvoerformaten hangen af van de gekozen video- en audiocodecs.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (legacy)';
@@ -316,13 +316,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get av1HighResHint => 'Boven 720p kun je beter eerst verkleinen.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (experimenteel)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Voegt AV1 toe aan de codeckeuze in de normale modus en de expertmodus. Moderne, zeer efficiënte codec die nog niet volledig is getest.';
 
   @override
   String get audioCodecInfoContent =>
@@ -662,11 +655,21 @@ class AppLocalizationsNl extends AppLocalizations {
   String get originalTrashFailed => 'Het origineel kon niet worden verwijderd.';
 
   @override
-  String get burnInSubtitlesLabel => 'Ondertitels inbranden';
+  String get burnInSubtitlesLabel => 'Ondertitels toevoegen';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Brandt de ondertitels permanent in het videobeeld. Ze blijven altijd zichtbaar en kunnen later niet meer worden uitgeschakeld.\n\nOndersteunt SRT- en ASS-bestanden. ASS-opmaak en -posities blijven behouden. Bij video\'s die in HDR blijven, kunnen ondertitels erg fel lijken.';
+      'Vast: de ondertitels worden in het videobeeld getekend. Ze zijn in elke speler zichtbaar en kunnen later niet meer worden uitgeschakeld. Bij video\'s die in HDR blijven, kunnen ze erg fel lijken.\n\nInschakelbaar: de ondertitels worden als aparte track toegevoegd die je in de speler kunt in- of uitschakelen. Niet elke speler toont ze en ze gaan vaak verloren als de video wordt gedeeld. Niet beschikbaar voor AVI en MPEG-TS.\n\nOndersteunt SRT- en ASS-bestanden. ASS-opmaak en -posities blijven bij “Vast” en in MKV-bestanden volledig behouden. Andere formaten behouden slechts een deel van de opmaak en geen posities.';
+
+  @override
+  String get subtitleModeBurnIn => 'Vast';
+
+  @override
+  String get subtitleModeTrack => 'Inschakelbaar';
+
+  @override
+  String get subtitleTrackEmpty =>
+      'Er zijn geen ondertitels in het geselecteerde deel van de video.';
 
   @override
   String get burnInSubtitlesSelect => 'SRT- of ASS-bestand selecteren';

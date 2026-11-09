@@ -8,7 +8,10 @@ enum SubtitleTextSize { small, medium, large }
 
 enum SubtitlePosition { bottom, top }
 
-/// Eine Untertiteldatei, die ins Video eingebrannt wird.
+/// Fest ins Bild gerendert oder als eigene, zuschaltbare Spur im Container.
+enum SubtitleMode { burnIn, track }
+
+/// Eine Untertiteldatei, die dem Video hinzugefügt wird, siehe [SubtitleMode].
 class BurnInSubtitle {
   /// App-interne Kopie im Cache, siehe `SubtitleService.pick`. Nur dieser
   /// Pfad erreicht FFmpeg, nie der Name der Originaldatei.

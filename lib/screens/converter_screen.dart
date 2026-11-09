@@ -15,6 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
 
 import '../l10n/app_localizations.dart';
+import '../models/burn_in_subtitle.dart';
 import '../models/expert_settings.dart';
 import '../models/quality_option.dart';
 import '../models/video_metadata.dart';
@@ -23,7 +24,6 @@ import '../screens/settings_screen.dart';
 import '../services/ffmpeg_codec_options.dart';
 import '../services/gallery_service.dart';
 import '../services/hardware_encoder_service.dart';
-import '../services/media_format_compatibility.dart';
 import '../services/native_ad_preloader.dart';
 import '../services/output_file_name.dart';
 import '../services/output_size_estimator.dart';
@@ -74,7 +74,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
   int _selectedNavIndex = 0;
   bool _cpuWarningDismissed = false;
   String _videoCodec = PreferencesService.videoCodecH264;
-  bool _av1Experimental = false;
   bool _hardwareHevcAvailable = false;
   ExpertSettings _expertSettings = const ExpertSettings();
   bool _isPickingSubtitle = false;
@@ -133,7 +132,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     final dismissed = await PreferencesService.getCpuWarningDismissed();
     final quality = await PreferencesService.getLastQualityIndex();
     final videoCodec = await PreferencesService.getVideoCodec();
-    final av1Experimental = await PreferencesService.getAv1Experimental();
     final hardwareHevc = await HardwareEncoderService.hasHardwareHevcEncoder();
     if (mounted) {
       setState(() {
@@ -143,7 +141,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         _cpuWarningDismissed = dismissed;
         _selectedQualityIndex = quality;
         _videoCodec = videoCodec;
-        _av1Experimental = av1Experimental;
         _expertSettings = _expertSettings.copyWith(videoCodec: videoCodec);
       });
     }
@@ -151,41 +148,9 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
 
   Future<void> _refreshCodecPreferences() async {
     final videoCodec = await PreferencesService.getVideoCodec();
-    final av1Experimental = await PreferencesService.getAv1Experimental();
-    if (!mounted) return;
-    if (_videoCodec == videoCodec && _av1Experimental == av1Experimental) {
-      return;
-    }
-    setState(() {
-      _videoCodec = videoCodec;
-      _av1Experimental = av1Experimental;
-      // AV1 wurde gerade abgeschaltet: die Expertenauswahl darf nicht auf einem
-      // nicht mehr angebotenen Codec stehen bleiben.
-      if (!av1Experimental &&
-          _expertSettings.videoCodec ==
-              MediaFormatCompatibility.videoCodecAv1) {
-        _expertSettings = _fallbackFromAv1(_expertSettings);
-      }
-    });
+    if (!mounted || _videoCodec == videoCodec) return;
+    setState(() => _videoCodec = videoCodec);
     _updateEstimatedSize();
-  }
-
-  /// Ersetzt AV1 durch H.264 und rechnet CRF sowie Container mit.
-  ExpertSettings _fallbackFromAv1(ExpertSettings settings) {
-    const target = MediaFormatCompatibility.videoCodecH264;
-    return settings.copyWith(
-      videoCodec: target,
-      crf: VideoQualityScale.convertCrf(
-        settings.crf,
-        fromCodec: settings.videoCodec,
-        toCodec: target,
-      ),
-      container: MediaFormatCompatibility.preferredContainer(
-        videoCodec: target,
-        audioCodec: settings.audioCodec,
-        currentContainer: settings.container,
-      ),
-    );
   }
 
   Future<void> _requestNotificationPermission() async {
@@ -824,6 +789,30 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
     // der vollen Länge blieben Fortschritt, Restzeit und Hochrechnung der
     // Endgröße beim Trimmen um den Faktor Gesamt/Ausschnitt daneben.
     final totalDurationMs = (endSec - startSec) * 1000.0;
+    final subtitleAsTrack =
+        subtitle != null &&
+        _expertSettings.effectiveSubtitleMode == SubtitleMode.track;
+    String? trackSubtitlePath;
+    if (subtitleAsTrack) {
+      // Auch hier vor dem saf-Verweis. Abbrechen statt ohne Spur konvertieren,
+      // wie oben bei fehlender Datei.
+      trackSubtitlePath = await SubtitleService.writeTrackFile(
+        subtitle,
+        startMs: (startSec * 1000).round(),
+        endMs: (endSec * 1000).round(),
+      );
+      if (trackSubtitlePath == null) {
+        if (!mounted) return;
+        setState(() => _isConverting = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.subtitleTrackEmpty),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+    }
     // Eigener saf-Verweis für diesen Lauf (VideoSource). Scheitert er, ist
     // das direkt gelesene Original inzwischen weg oder nicht mehr lesbar.
     final String inputArg;
@@ -881,7 +870,7 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
         final vfFilter = VideoScaleService.filterArgument(
           scaleGraph,
           hdrTransfer: keepsHdr ? null : _metadata!.hdrTransfer,
-          subtitleFilter: subtitle == null
+          subtitleFilter: subtitle == null || subtitleAsTrack
               ? null
               : VideoScaleService.subtitleGraph(
                   subtitle.path,
@@ -938,7 +927,17 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                   expert.videoCodec,
                   hdr: keepsHdr,
                 );
-          return '-i $input -ss $startSec -to $endSec $vfFilter '
+          final inputOpt = subtitleAsTrack
+              ? FfmpegCodecOptions.subtitleTrackArguments(
+                  input: input,
+                  subtitlePath: trackSubtitlePath!,
+                  startSec: startSec,
+                  endSec: endSec,
+                  container: expert.container,
+                  format: subtitle.format,
+                )
+              : '-i $input -ss $startSec -to $endSec';
+          return '$inputOpt $vfFilter '
               '-c:v $videoCodec $codecTagOpt $encoderOpt $pixelFormatOpt '
               '$qualityOpt $fpsOpt $audioOpt -y "$outputPath"';
         }
@@ -1222,7 +1221,6 @@ class _VideoConverterAppState extends State<VideoConverterApp> {
                   ExpertControls(
                     settings: _expertSettings,
                     isConverting: false,
-                    av1Enabled: _av1Experimental,
                     hardwareHevcAvailable: _hardwareHevcAvailable,
                     metadata: _metadata,
                     onChanged: (s) {

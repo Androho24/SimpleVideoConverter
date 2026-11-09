@@ -31,10 +31,6 @@ class ExpertControls extends StatefulWidget {
   final VideoMetadata? metadata;
   final ValueChanged<ExpertSettings> onChanged;
 
-  /// AV1 ist eine experimentelle Option und wird nur angeboten, wenn sie in den
-  /// App-Einstellungen eingeschaltet wurde.
-  final bool av1Enabled;
-
   /// Hat das Gerät einen HEVC-Hardware-Encoder? Nur dann gibt es unter H.265
   /// den Schalter „Hardware-Encoder“.
   final bool hardwareHevcAvailable;
@@ -50,7 +46,6 @@ class ExpertControls extends StatefulWidget {
     required this.isConverting,
     required this.onChanged,
     this.metadata,
-    this.av1Enabled = false,
     this.hardwareHevcAvailable = false,
     this.onPickSubtitle,
     this.onRemoveSubtitle,
@@ -734,8 +729,36 @@ class _ExpertControlsState extends State<ExpertControls> {
               ),
             ],
           ),
-        // ASS bringt seine Gestaltung selbst mit, sie bleibt unangetastet.
-        if (subtitle?.format == SubtitleFormat.srt) ..._srtStyleControls(l, s),
+        if (subtitle != null) ...[
+          const SizedBox(height: 8),
+          SegmentedButton<SubtitleMode>(
+            key: const ValueKey('expert_subtitle_mode'),
+            showSelectedIcon: false,
+            segments: [
+              ButtonSegment(
+                value: SubtitleMode.burnIn,
+                label: Text(l.subtitleModeBurnIn),
+              ),
+              ButtonSegment(
+                value: SubtitleMode.track,
+                label: Text(l.subtitleModeTrack),
+                enabled: MediaFormatCompatibility.supportsSubtitleTrack(
+                  s.container,
+                ),
+              ),
+            ],
+            selected: {s.effectiveSubtitleMode},
+            onSelectionChanged: widget.isConverting
+                ? null
+                : (sel) =>
+                      widget.onChanged(s.copyWith(subtitleMode: sel.first)),
+          ),
+        ],
+        // ASS bringt seine Gestaltung selbst mit, sie bleibt unangetastet. Eine
+        // Spur stellt der Player dar, die Einstellungen hätten dort keine Wirkung.
+        if (subtitle?.format == SubtitleFormat.srt &&
+            s.effectiveSubtitleMode == SubtitleMode.burnIn)
+          ..._srtStyleControls(l, s),
       ],
     );
   }
@@ -1218,7 +1241,7 @@ class _ExpertControlsState extends State<ExpertControls> {
                 MediaFormatCompatibility.videoCodecH264,
                 MediaFormatCompatibility.videoCodecH265,
                 MediaFormatCompatibility.videoCodecVp9,
-                if (widget.av1Enabled) MediaFormatCompatibility.videoCodecAv1,
+                MediaFormatCompatibility.videoCodecAv1,
                 MediaFormatCompatibility.videoCodecXvid,
               ])
                 _choiceChip(

@@ -178,11 +178,11 @@ class AppLocalizationsId extends AppLocalizations {
       'Codec video untuk konversi dalam mode normal';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 atau H.265/HEVC?';
+  String get videoCodecInfoTitle => 'H.264, H.265/HEVC, atau AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'H.264 menawarkan kompatibilitas terbaik dan biasanya dikonversi lebih cepat.\n\nH.265/HEVC dapat menghasilkan file yang lebih kecil dengan kualitas gambar yang sebanding, tetapi konversinya lebih lama. Perangkat atau aplikasi lama mungkin tidak dapat memutar hasilnya.\n\nKedua encoder sudah disertakan dalam aplikasi dan tidak bergantung pada codec yang terpasang di perangkat.';
+      'H.264 menawarkan kompatibilitas terbaik dan biasanya dikonversi lebih cepat.\n\nH.265/HEVC dapat menghasilkan file yang lebih kecil dengan kualitas gambar yang sebanding, tetapi konversinya lebih lama. Perangkat atau aplikasi lama mungkin tidak dapat memutar hasilnya.\n\nAV1 adalah codec modern yang dirancang untuk file berukuran kecil. Perangkat dan aplikasi lama sering kali tidak dapat memutar hasilnya.\n\nSemua encoder sudah disertakan dalam aplikasi dan tidak bergantung pada codec yang terpasang di perangkat.';
 
   @override
   String get saveError =>
@@ -305,7 +305,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → kompatibilitas terbaik dan biasanya lebih cepat\nH.265 → file lebih kecil dengan kualitas setara, lebih lambat\nVP9 → codec terbuka yang efisien untuk WebM dan MKV, encoding perangkat lunak lebih lambat\nAV1 → kompresi terbaik, hanya encoding perangkat lunak, eksperimental\nXvid → codec MPEG-4 lama untuk AVI dan pemutar lama\n\nFormat keluaran yang tersedia mengikuti codec video dan audio yang dipilih.';
+      'H.264 → kompatibilitas terbaik dan biasanya lebih cepat\nH.265 → file lebih kecil dengan kualitas setara, lebih lambat\nVP9 → codec terbuka yang efisien untuk WebM dan MKV, encoding perangkat lunak lebih lambat\nAV1 → codec modern untuk file kecil, hanya encoding perangkat lunak\nXvid → codec MPEG-4 lama untuk AVI dan pemutar lama\n\nFormat keluaran yang tersedia mengikuti codec video dan audio yang dipilih.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (lama)';
@@ -317,13 +317,6 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get av1HighResHint =>
       'Di atas 720p sebaiknya perkecil resolusi terlebih dahulu.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (eksperimental)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Menambahkan AV1 ke pilihan kodek di mode normal dan mode ahli. Kodek modern dengan kompresi yang sangat efisien, belum sepenuhnya teruji.';
 
   @override
   String get audioCodecInfoContent =>
@@ -662,11 +655,21 @@ class AppLocalizationsId extends AppLocalizations {
   String get originalTrashFailed => 'Video asli tidak dapat dihapus.';
 
   @override
-  String get burnInSubtitlesLabel => 'Tanamkan Subtitle';
+  String get burnInSubtitlesLabel => 'Tambahkan Subtitle';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Menggambar subtitle secara permanen pada gambar video. Subtitle akan selalu terlihat dan tidak dapat dimatikan nanti.\n\nMendukung file SRT dan ASS. Format dan posisi ASS tetap dipertahankan. Pada video yang tetap HDR, subtitle dapat terlihat sangat terang.';
+      'Permanen: Subtitle digambar pada gambar video. Subtitle terlihat di semua pemutar dan tidak dapat dimatikan nanti. Pada video yang tetap HDR, subtitle dapat terlihat sangat terang.\n\nOpsional: Subtitle ditambahkan sebagai trek terpisah yang dapat diaktifkan atau dinonaktifkan di pemutar. Tidak semua pemutar menampilkannya, dan subtitle sering hilang saat video dibagikan. Tidak tersedia untuk AVI dan MPEG-TS.\n\nMendukung file SRT dan ASS. Format dan posisi ASS dipertahankan sepenuhnya pada “Permanen” dan di file MKV. Format lain hanya mempertahankan sebagian format dan tidak mempertahankan posisi.';
+
+  @override
+  String get subtitleModeBurnIn => 'Permanen';
+
+  @override
+  String get subtitleModeTrack => 'Opsional';
+
+  @override
+  String get subtitleTrackEmpty =>
+      'Tidak ada subtitle di bagian video yang dipilih.';
 
   @override
   String get burnInSubtitlesSelect => 'Pilih file SRT atau ASS';

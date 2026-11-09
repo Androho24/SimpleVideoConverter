@@ -110,13 +110,14 @@ void main() {
     expect(find.byKey(const ValueKey(23)), findsOneWidget);
   });
 
-  testWidgets('AV1 chip is hidden unless the experimental option is on', (
-    tester,
-  ) async {
-    await tester.pumpWidget(const _ExpertControlsHost(av1Enabled: false));
+  testWidgets('AV1 chip is always offered', (tester) async {
+    await tester.pumpWidget(const _ExpertControlsHost());
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('expert_video_codec_av1')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('expert_video_codec_av1')),
+      findsOneWidget,
+    );
     expect(
       find.byKey(const ValueKey('expert_video_codec_vp9')),
       findsOneWidget,
@@ -526,7 +527,6 @@ void main() {
 }
 
 class _ExpertControlsHost extends StatefulWidget {
-  final bool av1Enabled;
   final bool hardwareHevcAvailable;
   final String? hdrTransfer;
   final int sourceWidth;
@@ -536,7 +536,6 @@ class _ExpertControlsHost extends StatefulWidget {
     super.key,
     this.sourceWidth = 1920,
     this.sourceHeight = 1080,
-    this.av1Enabled = true,
     this.hardwareHevcAvailable = false,
     this.hdrTransfer,
   });
@@ -577,7 +576,6 @@ class _ExpertControlsHostState extends State<_ExpertControlsHost> {
           settings: settings,
           metadata: metadata,
           isConverting: false,
-          av1Enabled: widget.av1Enabled,
           hardwareHevcAvailable: widget.hardwareHevcAvailable,
           onChanged: (value) => setState(() => settings = value),
         ),

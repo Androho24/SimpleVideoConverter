@@ -176,11 +176,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get videoCodecSubtitle => 'Video codec for conversions in normal mode';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 or H.265/HEVC?';
+  String get videoCodecInfoTitle => 'H.264, H.265/HEVC or AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'H.264 offers the best compatibility and usually converts faster.\n\nH.265/HEVC can produce smaller files at comparable visual quality, but conversion takes longer. Older devices or apps may not be able to play the result.\n\nBoth encoders are included in the app and do not depend on codecs installed on the device.';
+      'H.264 offers the best compatibility and usually converts faster.\n\nH.265/HEVC can produce smaller files at comparable visual quality, but conversion takes longer. Older devices or apps may not be able to play the result.\n\nAV1 is a modern codec designed for small files. Older devices and apps often cannot play the result.\n\nAll encoders are included in the app and do not depend on codecs installed on the device.';
 
   @override
   String get saveError =>
@@ -303,7 +303,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → best compatibility and usually faster encoding\nH.265 → smaller files at comparable quality, slower encoding\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → best compression, software-only encoding, experimental\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.';
+      'H.264 → best compatibility and usually faster encoding\nH.265 → smaller files at comparable quality, slower encoding\nVP9 → efficient open codec for WebM and MKV, slower software encoding\nAV1 → modern codec for small files, software-only encoding\nXvid → legacy MPEG-4 codec for AVI and older players\n\nThe output formats below are enabled according to the selected video and audio codecs.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (Legacy)';
@@ -315,13 +315,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get av1HighResHint =>
       'For resolutions above 720p, consider scaling down first.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (experimental)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Adds AV1 to the codec selection in normal and expert modes. A modern, highly efficient codec that has not yet been fully tested.';
 
   @override
   String get audioCodecInfoContent =>
@@ -661,11 +654,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get originalTrashFailed => 'The original could not be deleted.';
 
   @override
-  String get burnInSubtitlesLabel => 'Burn-in Subtitles';
+  String get burnInSubtitlesLabel => 'Add Subtitles';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Draws the subtitles permanently into the video image. They always stay visible and cannot be turned off later.\n\nSupports SRT and ASS files. ASS styling and positions are kept. On HDR videos that stay in HDR, subtitles can look very bright.';
+      'Permanent: The subtitles are drawn into the video image. They are visible in every player and cannot be turned off later. On videos that stay in HDR, they can look very bright.\n\nSwitchable: The subtitles are added as a separate track that can be turned on or off in the player. Not every player shows them, and they are often lost when the video is shared. Not available for AVI and MPEG-TS.\n\nSupports SRT and ASS files. ASS styling and positions are fully kept when permanent and in MKV files. Other formats keep only part of the styling and no positions.';
+
+  @override
+  String get subtitleModeBurnIn => 'Permanent';
+
+  @override
+  String get subtitleModeTrack => 'Switchable';
+
+  @override
+  String get subtitleTrackEmpty =>
+      'There are no subtitles in the selected part of the video.';
 
   @override
   String get burnInSubtitlesSelect => 'Select SRT or ASS file';

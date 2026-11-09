@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 
+import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:simple_video_converter/l10n/app_localizations.dart';
 import 'package:simple_video_converter/models/burn_in_subtitle.dart';
 import 'package:simple_video_converter/models/expert_settings.dart';
+import 'package:simple_video_converter/services/ffmpeg_codec_options.dart';
+import 'package:simple_video_converter/services/media_format_compatibility.dart';
 import 'package:simple_video_converter/services/subtitle_service.dart';
 import 'package:simple_video_converter/widgets/expert_controls.dart';
 
@@ -369,7 +372,7 @@ void main() {
 
       final outputFormat = find.byKey(const ValueKey('expert_container_mp4'));
       final hint = find.textContaining('is supported by');
-      final label = find.text('Burn-in Subtitles');
+      final label = find.text('Add Subtitles');
       expect(
         tester.getTopLeft(outputFormat).dy,
         lessThan(tester.getTopLeft(hint).dy),
@@ -421,7 +424,255 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Burn-in Subtitles'), findsNothing);
+      expect(find.text('Add Subtitles'), findsNothing);
+    });
+  });
+
+  group('clipForTrack', () {
+    const srt =
+        '1\r\n00:00:01,000 --> 00:00:02,000\r\nInside\r\n\r\n'
+        '2\r\n00:00:03,500 --> 00:00:04,500\r\nLine one\r\n1984\r\n\r\n'
+        '3\r\n00:00:08,000 --> 00:00:09,000\r\nLate\r\n';
+
+    test('shifts cues to the section and drops the ones outside', () {
+      expect(
+        SubtitleService.clipForTrack(
+          srt,
+          SubtitleFormat.srt,
+          startMs: 2000,
+          endMs: 5000,
+        ),
+        '1\n00:00:01,500 --> 00:00:02,500\nLine one\n1984\n',
+      );
+    });
+
+    test('shortens cues cut by the section borders', () {
+      expect(
+        SubtitleService.clipForTrack(
+          srt,
+          SubtitleFormat.srt,
+          startMs: 1500,
+          endMs: 4000,
+        ),
+        '1\n00:00:00,000 --> 00:00:00,500\nInside\n\n'
+        '2\n00:00:02,000 --> 00:00:02,500\nLine one\n1984\n',
+      );
+    });
+
+    test('drops cues after the end of a shorter video', () {
+      final clipped = SubtitleService.clipForTrack(
+        srt,
+        SubtitleFormat.srt,
+        startMs: 0,
+        endMs: 5000,
+      );
+      expect(clipped, isNot(contains('Late')));
+      expect(clipped, contains('00:00:03,500 --> 00:00:04,500'));
+    });
+
+    test('returns null when no cue is left', () {
+      expect(
+        SubtitleService.clipForTrack(
+          srt,
+          SubtitleFormat.srt,
+          startMs: 5000,
+          endMs: 7000,
+        ),
+        isNull,
+      );
+    });
+
+    test('keeps ASS styles and commas in the text', () {
+      const ass = '''
+[Script Info]
+ScriptType: v4.00+
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Comment: 0,0:00:00.00,0:00:01.00,Default,,0,0,0,,note
+Dialogue: 0,0:00:03.50,0:00:04.50,Fancy,,0,0,0,,{\\pos(5,5)}One, two
+Dialogue: 0,0:00:08.00,0:00:09.00,Fancy,,0,0,0,,Late
+''';
+      final clipped = SubtitleService.clipForTrack(
+        ass,
+        SubtitleFormat.ass,
+        startMs: 2000,
+        endMs: 5000,
+      )!;
+      expect(
+        clipped,
+        contains(
+          'Dialogue: 0,0:00:01.50,0:00:02.50,Fancy,,0,0,0,,{\\pos(5,5)}One, two',
+        ),
+      );
+      expect(clipped, isNot(contains('Late')));
+      expect(clipped, contains('[Script Info]'));
+    });
+  });
+
+  group('subtitle track arguments', () {
+    test('only containers with a text track allow it', () {
+      for (final container in ['mp4', 'mkv', 'mov', 'webm']) {
+        expect(
+          MediaFormatCompatibility.supportsSubtitleTrack(container),
+          isTrue,
+        );
+      }
+      for (final container in ['avi', 'ts']) {
+        expect(
+          MediaFormatCompatibility.supportsSubtitleTrack(container),
+          isFalse,
+        );
+      }
+    });
+
+    test('picks the encoder for container and format', () {
+      expect(
+        FfmpegCodecOptions.subtitleTrackEncoder('mp4', SubtitleFormat.ass),
+        'mov_text',
+      );
+      expect(
+        FfmpegCodecOptions.subtitleTrackEncoder('mov', SubtitleFormat.srt),
+        'mov_text',
+      );
+      expect(
+        FfmpegCodecOptions.subtitleTrackEncoder('webm', SubtitleFormat.ass),
+        'webvtt',
+      );
+      expect(
+        FfmpegCodecOptions.subtitleTrackEncoder('mkv', SubtitleFormat.srt),
+        'srt',
+      );
+      expect(
+        FfmpegCodecOptions.subtitleTrackEncoder('mkv', SubtitleFormat.ass),
+        'ass',
+      );
+    });
+
+    test('survives the FFmpegKit argument parser', () {
+      final args = FFmpegKitConfig.parseArguments(
+        FfmpegCodecOptions.subtitleTrackArguments(
+          input: '"/cache/my video.mp4"',
+          subtitlePath: '/cache/burn in/subtitle_1_track.srt',
+          startSec: 2.0,
+          endSec: 4.0,
+          container: 'mkv',
+          format: SubtitleFormat.srt,
+        ),
+      );
+      expect(args, [
+        '-ss', '2.0', '-to', '4.0', '-i', '/cache/my video.mp4', //
+        '-i', '/cache/burn in/subtitle_1_track.srt',
+        '-map', '0:V:0', '-map', '0:a:0?', '-map', '1:0',
+        '-c:s', 'srt', '-disposition:s:0', 'default',
+      ]);
+    });
+  });
+
+  group('subtitle mode', () {
+    const styleKey = ValueKey('expert_subtitle_text_size');
+    const modeKey = ValueKey('expert_subtitle_mode');
+
+    Widget host(
+      ExpertSettings settings, [
+      ValueChanged<ExpertSettings>? onChanged,
+    ]) => MaterialApp(
+      locale: const Locale('en'),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(
+        body: SingleChildScrollView(
+          child: ExpertControls(
+            settings: settings,
+            isConverting: false,
+            onChanged: onChanged ?? (_) {},
+          ),
+        ),
+      ),
+    );
+
+    test('defaults to burn-in and falls back for AVI and TS', () {
+      expect(const ExpertSettings().subtitleMode, SubtitleMode.burnIn);
+      const track = ExpertSettings(subtitleMode: SubtitleMode.track);
+      expect(track.effectiveSubtitleMode, SubtitleMode.track);
+      expect(
+        track.copyWith(container: 'avi').effectiveSubtitleMode,
+        SubtitleMode.burnIn,
+      );
+      expect(
+        track.copyWith(container: 'ts').effectiveSubtitleMode,
+        SubtitleMode.burnIn,
+      );
+    });
+
+    testWidgets('only shows once a file is selected', (tester) async {
+      await tester.pumpWidget(host(const ExpertSettings()));
+      await tester.pumpAndSettle();
+      expect(find.byKey(modeKey), findsNothing);
+
+      await tester.pumpWidget(
+        host(const ExpertSettings(burnInSubtitle: _subtitle)),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(modeKey), findsOneWidget);
+    });
+
+    testWidgets('reports the switch and hides the SRT style', (tester) async {
+      ExpertSettings? latest;
+      await tester.pumpWidget(
+        host(
+          const ExpertSettings(burnInSubtitle: _subtitle),
+          (s) => latest = s,
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final target = find.text('Switchable');
+      await tester.ensureVisible(target);
+      await tester.pumpAndSettle();
+      await tester.tap(target);
+      expect(latest?.subtitleMode, SubtitleMode.track);
+
+      await tester.pumpWidget(
+        host(
+          const ExpertSettings(
+            burnInSubtitle: _subtitle,
+            subtitleMode: SubtitleMode.track,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(styleKey), findsNothing);
+    });
+
+    testWidgets('AVI disables the track and keeps the SRT style', (
+      tester,
+    ) async {
+      ExpertSettings? latest;
+      await tester.pumpWidget(
+        host(
+          const ExpertSettings(
+            burnInSubtitle: _subtitle,
+            container: 'avi',
+            subtitleMode: SubtitleMode.track,
+          ),
+          (s) => latest = s,
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(styleKey), findsOneWidget);
+      final target = find.text('Switchable');
+      await tester.ensureVisible(target);
+      await tester.pumpAndSettle();
+      await tester.tap(target, warnIfMissed: false);
+      await tester.pumpAndSettle();
+      expect(latest, isNull);
     });
   });
 }

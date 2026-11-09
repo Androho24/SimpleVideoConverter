@@ -179,11 +179,11 @@ class AppLocalizationsTr extends AppLocalizations {
       'Normal moddaki dönüştürmeler için video kodeği';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 mü, H.265/HEVC mi?';
+  String get videoCodecInfoTitle => 'H.264, H.265/HEVC veya AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'H.264 en iyi uyumluluğu sunar ve genellikle daha hızlı dönüştürülür.\n\nH.265/HEVC, benzer görüntü kalitesinde daha küçük dosyalar oluşturabilir ancak dönüştürme daha uzun sürer. Eski cihazlar veya uygulamalar sonucu oynatamayabilir.\n\nHer iki kodlayıcı da uygulamaya dahildir ve cihazda yüklü codec bileşenlerine bağlı değildir.';
+      'H.264 en iyi uyumluluğu sunar ve genellikle daha hızlı dönüştürülür.\n\nH.265/HEVC, benzer görüntü kalitesinde daha küçük dosyalar oluşturabilir ancak dönüştürme daha uzun sürer. Eski cihazlar veya uygulamalar sonucu oynatamayabilir.\n\nAV1, küçük dosyalar için tasarlanmış modern bir kodektir. Eski cihazlar ve uygulamalar sonucu çoğu zaman oynatamaz.\n\nTüm kodlayıcılar uygulamaya dahildir ve cihazda yüklü codec bileşenlerine bağlı değildir.';
 
   @override
   String get saveError =>
@@ -306,7 +306,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → en iyi uyumluluk ve genellikle daha hızlı kodlama\nH.265 → benzer kalitede daha küçük dosyalar, daha yavaş kodlama\nVP9 → WebM ve MKV için verimli açık kodek, yazılımsal kodlama daha yavaş\nAV1 → en iyi sıkıştırma, yalnızca yazılımsal kodlama, deneysel\nXvid → AVI ve eski oynatıcılar için eski MPEG-4 kodeği\n\nKullanılabilir çıkış formatları seçilen video ve ses kodeklerine bağlıdır.';
+      'H.264 → en iyi uyumluluk ve genellikle daha hızlı kodlama\nH.265 → benzer kalitede daha küçük dosyalar, daha yavaş kodlama\nVP9 → WebM ve MKV için verimli açık kodek, yazılımsal kodlama daha yavaş\nAV1 → küçük dosyalar için modern kodek, yalnızca yazılımsal kodlama\nXvid → AVI ve eski oynatıcılar için eski MPEG-4 kodeği\n\nKullanılabilir çıkış formatları seçilen video ve ses kodeklerine bağlıdır.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (eski)';
@@ -318,13 +318,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get av1HighResHint =>
       '720p üzerinde önce çözünürlüğü düşürmek daha iyidir.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (deneysel)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Normal ve uzman modlarındaki kodek seçimine AV1\'i ekler. Yüksek verimli modern bir kodek, henüz tamamen test edilmedi.';
 
   @override
   String get audioCodecInfoContent =>
@@ -665,11 +658,20 @@ class AppLocalizationsTr extends AppLocalizations {
   String get originalTrashFailed => 'Orijinal silinemedi.';
 
   @override
-  String get burnInSubtitlesLabel => 'Altyazıları göm';
+  String get burnInSubtitlesLabel => 'Altyazı ekle';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Altyazıları video görüntüsüne kalıcı olarak işler. Her zaman görünür kalır ve daha sonra kapatılamaz.\n\nSRT ve ASS dosyalarını destekler. ASS biçimlendirmesi ve konumları korunur. HDR olarak kalan videolarda altyazılar çok parlak görünebilir.';
+      'Kalıcı: Altyazılar video görüntüsüne işlenir. Her oynatıcıda görünür ve daha sonra kapatılamaz. HDR olarak kalan videolarda çok parlak görünebilir.\n\nAçılabilir: Altyazılar, oynatıcıda açılıp kapatılabilen ayrı bir parça olarak eklenir. Her oynatıcı bunları göstermez ve video paylaşılırken çoğu zaman kaybolur. AVI ve MPEG-TS için kullanılamaz.\n\nSRT ve ASS dosyalarını destekler. ASS biçimlendirmesi ve konumları “Kalıcı” seçeneğinde ve MKV dosyalarında tamamen korunur. Diğer biçimler biçimlendirmenin yalnızca bir kısmını korur, konumları korumaz.';
+
+  @override
+  String get subtitleModeBurnIn => 'Kalıcı';
+
+  @override
+  String get subtitleModeTrack => 'Açılabilir';
+
+  @override
+  String get subtitleTrackEmpty => 'Videonun seçilen bölümünde altyazı yok.';
 
   @override
   String get burnInSubtitlesSelect => 'SRT veya ASS dosyası seç';

@@ -175,11 +175,11 @@ class AppLocalizationsCs extends AppLocalizations {
   String get videoCodecSubtitle => 'Video kodek pro převody v normálním režimu';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 nebo H.265/HEVC?';
+  String get videoCodecInfoTitle => 'H.264, H.265/HEVC nebo AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'H.264 nabízí nejlepší kompatibilitu a převod je obvykle rychlejší.\n\nH.265/HEVC může při srovnatelné kvalitě obrazu vytvářet menší soubory, převod však trvá déle. Starší zařízení nebo aplikace nemusí výsledné video přehrát.\n\nOba enkodéry jsou součástí aplikace a nezávisí na kodecích nainstalovaných v zařízení.';
+      'H.264 nabízí nejlepší kompatibilitu a převod je obvykle rychlejší.\n\nH.265/HEVC může při srovnatelné kvalitě obrazu vytvářet menší soubory, převod však trvá déle. Starší zařízení nebo aplikace nemusí výsledné video přehrát.\n\nAV1 je moderní kodek navržený pro malé soubory. Starší zařízení a aplikace výsledné video často nepřehrají.\n\nVšechny enkodéry jsou součástí aplikace a nezávisí na kodecích nainstalovaných v zařízení.';
 
   @override
   String get saveError => 'Chyba při ukládání. Možná nemáte dostatek místa.';
@@ -301,7 +301,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nAV1 → nejlepší komprese, pouze softwarové kódování, experimentální\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.';
+      'H.264 → nejlepší kompatibilita a obvykle rychlejší převod\nH.265 → menší soubory při srovnatelné kvalitě, pomalejší převod\nVP9 → efektivní otevřený kodek pro WebM a MKV, pomalejší softwarové kódování\nAV1 → moderní kodek pro malé soubory, pouze softwarové kódování\nXvid → starší kodek MPEG-4 pro AVI a starší přehrávače\n\nDostupné výstupní formáty se řídí zvolenými video a audio kodeky.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (starší)';
@@ -312,13 +312,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get av1HighResHint => 'Nad 720p se vyplatí video nejprve zmenšit.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (experimentální)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Přidá AV1 do výběru kodeků v normálním i expertním režimu. Moderní kodek se silnou kompresí, zatím není plně odzkoušený.';
 
   @override
   String get audioCodecInfoContent =>
@@ -659,11 +652,21 @@ class AppLocalizationsCs extends AppLocalizations {
   String get originalTrashFailed => 'Originál se nepodařilo smazat.';
 
   @override
-  String get burnInSubtitlesLabel => 'Vypálit titulky';
+  String get burnInSubtitlesLabel => 'Přidat titulky';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Titulky se trvale vykreslí do obrazu videa. Budou vždy viditelné a později je nelze vypnout.\n\nPodporuje soubory SRT a ASS. Formátování a pozice ASS zůstanou zachovány. U videí, která zůstanou v HDR, mohou titulky působit velmi jasně.';
+      'Trvalé: titulky se vykreslí do obrazu videa. Jsou viditelné v každém přehrávači a později je nelze vypnout. U videí, která zůstanou v HDR, mohou působit velmi jasně.\n\nVolitelné: titulky se přidají jako samostatná stopa, kterou lze v přehrávači zapnout nebo vypnout. Ne každý přehrávač je zobrazí a při sdílení videa se často ztratí. Není k dispozici pro AVI a MPEG-TS.\n\nPodporuje soubory SRT a ASS. Formátování a pozice ASS zůstanou plně zachovány u možnosti „Trvalé“ a v souborech MKV. Ostatní formáty zachovají jen část formátování a žádné pozice.';
+
+  @override
+  String get subtitleModeBurnIn => 'Trvalé';
+
+  @override
+  String get subtitleModeTrack => 'Volitelné';
+
+  @override
+  String get subtitleTrackEmpty =>
+      'Ve vybrané části videa nejsou žádné titulky.';
 
   @override
   String get burnInSubtitlesSelect => 'Vybrat soubor SRT nebo ASS';

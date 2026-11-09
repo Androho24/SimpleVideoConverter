@@ -178,11 +178,11 @@ class AppLocalizationsPt extends AppLocalizations {
       'Codec de vídeo para conversões no modo normal';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 ou H.265/HEVC?';
+  String get videoCodecInfoTitle => 'H.264, H.265/HEVC ou AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'O H.264 oferece a melhor compatibilidade e, normalmente, uma conversão mais rápida.\n\nO H.265/HEVC pode produzir ficheiros mais pequenos com uma qualidade de imagem comparável, mas a conversão demora mais. Dispositivos ou aplicações mais antigos poderão não reproduzir o resultado.\n\nAmbos os codificadores estão incluídos na aplicação e não dependem dos codecs instalados no dispositivo.';
+      'O H.264 oferece a melhor compatibilidade e, normalmente, uma conversão mais rápida.\n\nO H.265/HEVC pode produzir ficheiros mais pequenos com uma qualidade de imagem comparável, mas a conversão demora mais. Dispositivos ou aplicações mais antigos poderão não reproduzir o resultado.\n\nO AV1 é um codec moderno concebido para ficheiros pequenos. Dispositivos e aplicações mais antigos muitas vezes não conseguem reproduzir o resultado.\n\nTodos os codificadores estão incluídos na aplicação e não dependem dos codecs instalados no dispositivo.';
 
   @override
   String get saveError =>
@@ -305,7 +305,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → melhor compatibilidade e codificação geralmente mais rápida\nH.265 → ficheiros menores com qualidade comparável, codificação mais lenta\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → melhor compressão, codificação apenas por software, experimental\nXvid → codec MPEG-4 legado para AVI e leitores antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
+      'H.264 → melhor compatibilidade e codificação geralmente mais rápida\nH.265 → ficheiros menores com qualidade comparável, codificação mais lenta\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → codec moderno para ficheiros pequenos, codificação apenas por software\nXvid → codec MPEG-4 legado para AVI e leitores antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (legado)';
@@ -317,13 +317,6 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get av1HighResHint =>
       'Acima de 720p compensa reduzir primeiro a resolução.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (experimental)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Acrescenta o AV1 à seleção de codecs nos modos normal e avançado. Codec moderno e altamente eficiente, ainda não totalmente testado.';
 
   @override
   String get audioCodecInfoContent =>
@@ -664,11 +657,21 @@ class AppLocalizationsPt extends AppLocalizations {
   String get originalTrashFailed => 'Não foi possível eliminar o original.';
 
   @override
-  String get burnInSubtitlesLabel => 'Incorporar legendas';
+  String get burnInSubtitlesLabel => 'Adicionar legendas';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Desenha as legendas de forma permanente na imagem do vídeo. Ficam sempre visíveis e não podem ser desativadas mais tarde.\n\nSuporta ficheiros SRT e ASS. A formatação e as posições ASS são mantidas. Em vídeos que permanecem em HDR, as legendas podem parecer muito brilhantes.';
+      'Permanentes: as legendas são desenhadas na imagem do vídeo. Ficam visíveis em qualquer leitor e não podem ser desativadas mais tarde. Em vídeos que permanecem em HDR, podem parecer muito brilhantes.\n\nAtiváveis: as legendas são adicionadas como uma faixa separada, que pode ser ativada ou desativada no leitor. Nem todos os leitores as mostram e costumam perder-se ao partilhar o vídeo. Não disponível para AVI e MPEG-TS.\n\nSuporta ficheiros SRT e ASS. A formatação e as posições ASS são totalmente mantidas com «Permanentes» e em ficheiros MKV. Os outros formatos mantêm apenas parte da formatação e nenhuma posição.';
+
+  @override
+  String get subtitleModeBurnIn => 'Permanentes';
+
+  @override
+  String get subtitleModeTrack => 'Ativáveis';
+
+  @override
+  String get subtitleTrackEmpty =>
+      'Não existem legendas na parte selecionada do vídeo.';
 
   @override
   String get burnInSubtitlesSelect => 'Selecionar ficheiro SRT ou ASS';
@@ -887,11 +890,11 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
       'Codec de vídeo para conversões no modo normal';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 ou H.265/HEVC?';
+  String get videoCodecInfoTitle => 'H.264, H.265/HEVC ou AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'O H.264 oferece a melhor compatibilidade e geralmente converte mais rápido.\n\nO H.265/HEVC pode gerar arquivos menores com qualidade de imagem comparável, mas a conversão demora mais. Dispositivos ou aplicativos antigos talvez não consigam reproduzir o resultado.\n\nOs dois codificadores estão incluídos no aplicativo e não dependem dos codecs instalados no dispositivo.';
+      'O H.264 oferece a melhor compatibilidade e geralmente converte mais rápido.\n\nO H.265/HEVC pode gerar arquivos menores com qualidade de imagem comparável, mas a conversão demora mais. Dispositivos ou aplicativos antigos talvez não consigam reproduzir o resultado.\n\nO AV1 é um codec moderno criado para arquivos pequenos. Dispositivos e aplicativos antigos muitas vezes não conseguem reproduzir o resultado.\n\nTodos os codificadores estão incluídos no aplicativo e não dependem dos codecs instalados no dispositivo.';
 
   @override
   String get saveError =>
@@ -1014,7 +1017,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → melhor compatibilidade e codificação geralmente mais rápida\nH.265 → arquivos menores com qualidade comparável, codificação mais lenta\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → melhor compressão, codificação apenas por software, experimental\nXvid → codec MPEG-4 legado para AVI e players antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
+      'H.264 → melhor compatibilidade e codificação geralmente mais rápida\nH.265 → arquivos menores com qualidade comparável, codificação mais lenta\nVP9 → codec aberto e eficiente para WebM e MKV, codificação por software mais lenta\nAV1 → codec moderno para arquivos pequenos, codificação apenas por software\nXvid → codec MPEG-4 legado para AVI e players antigos\n\nOs formatos de saída disponíveis dependem dos codecs de vídeo e áudio selecionados.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (legado)';
@@ -1026,13 +1029,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get av1HighResHint =>
       'Acima de 720p vale a pena reduzir a resolução primeiro.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (experimental)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Adiciona o AV1 à seleção de codecs nos modos normal e avançado. Codec moderno e altamente eficiente, ainda não totalmente testado.';
 
   @override
   String get audioCodecInfoContent =>
@@ -1373,11 +1369,21 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get originalTrashFailed => 'Não foi possível excluir o original.';
 
   @override
-  String get burnInSubtitlesLabel => 'Embutir legendas';
+  String get burnInSubtitlesLabel => 'Adicionar legendas';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Desenha as legendas permanentemente na imagem do vídeo. Elas ficam sempre visíveis e não podem ser desativadas depois.\n\nCompatível com arquivos SRT e ASS. A formatação e as posições do ASS são mantidas. Em vídeos que permanecem em HDR, as legendas podem parecer muito brilhantes.';
+      'Permanentes: as legendas são desenhadas na imagem do vídeo. Elas ficam visíveis em qualquer player e não podem ser desativadas depois. Em vídeos que permanecem em HDR, podem parecer muito brilhantes.\n\nAtiváveis: as legendas são adicionadas como uma faixa separada, que pode ser ativada ou desativada no player. Nem todo player as exibe, e elas costumam se perder ao compartilhar o vídeo. Não disponível para AVI e MPEG-TS.\n\nCompatível com arquivos SRT e ASS. A formatação e as posições do ASS são totalmente mantidas em “Permanentes” e em arquivos MKV. Outros formatos mantêm apenas parte da formatação e nenhuma posição.';
+
+  @override
+  String get subtitleModeBurnIn => 'Permanentes';
+
+  @override
+  String get subtitleModeTrack => 'Ativáveis';
+
+  @override
+  String get subtitleTrackEmpty =>
+      'Não há legendas na parte selecionada do vídeo.';
 
   @override
   String get burnInSubtitlesSelect => 'Selecionar arquivo SRT ou ASS';

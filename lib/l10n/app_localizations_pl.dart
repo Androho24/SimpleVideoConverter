@@ -178,11 +178,11 @@ class AppLocalizationsPl extends AppLocalizations {
       'Kodek wideo dla konwersji w trybie normalnym';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 czy H.265/HEVC?';
+  String get videoCodecInfoTitle => 'H.264, H.265/HEVC czy AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'H.264 zapewnia najlepszą zgodność i zwykle szybszą konwersję.\n\nH.265/HEVC może tworzyć mniejsze pliki przy porównywalnej jakości obrazu, ale konwersja trwa dłużej. Starsze urządzenia lub aplikacje mogą nie odtworzyć wyniku.\n\nOba kodery są zawarte w aplikacji i nie zależą od kodeków zainstalowanych na urządzeniu.';
+      'H.264 zapewnia najlepszą zgodność i zwykle szybszą konwersję.\n\nH.265/HEVC może tworzyć mniejsze pliki przy porównywalnej jakości obrazu, ale konwersja trwa dłużej. Starsze urządzenia lub aplikacje mogą nie odtworzyć wyniku.\n\nAV1 to nowoczesny kodek zaprojektowany z myślą o małych plikach. Starsze urządzenia i aplikacje często nie odtworzą wyniku.\n\nWszystkie kodery są zawarte w aplikacji i nie zależą od kodeków zainstalowanych na urządzeniu.';
 
   @override
   String get saveError =>
@@ -305,7 +305,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → najlepsza kompatybilność i zwykle szybsze kodowanie\nH.265 → mniejsze pliki przy porównywalnej jakości, wolniejsze kodowanie\nVP9 → wydajny otwarty kodek dla WebM i MKV, wolniejsze kodowanie programowe\nAV1 → najlepsza kompresja, kodowanie wyłącznie programowe, eksperymentalny\nXvid → starszy kodek MPEG-4 dla AVI i starszych odtwarzaczy\n\nDostępne formaty wyjściowe zależą od wybranych kodeków obrazu i dźwięku.';
+      'H.264 → najlepsza kompatybilność i zwykle szybsze kodowanie\nH.265 → mniejsze pliki przy porównywalnej jakości, wolniejsze kodowanie\nVP9 → wydajny otwarty kodek dla WebM i MKV, wolniejsze kodowanie programowe\nAV1 → nowoczesny kodek do małych plików, kodowanie wyłącznie programowe\nXvid → starszy kodek MPEG-4 dla AVI i starszych odtwarzaczy\n\nDostępne formaty wyjściowe zależą od wybranych kodeków obrazu i dźwięku.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (starszy)';
@@ -317,13 +317,6 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get av1HighResHint =>
       'Powyżej 720p warto najpierw zmniejszyć rozdzielczość.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (eksperymentalny)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Dodaje AV1 do wyboru kodeków w trybie normalnym i eksperckim. Nowoczesny kodek o mocnej kompresji, jeszcze nie w pełni sprawdzony.';
 
   @override
   String get audioCodecInfoContent =>
@@ -663,11 +656,21 @@ class AppLocalizationsPl extends AppLocalizations {
   String get originalTrashFailed => 'Nie udało się usunąć oryginału.';
 
   @override
-  String get burnInSubtitlesLabel => 'Wypal napisy';
+  String get burnInSubtitlesLabel => 'Dodaj napisy';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Trwale umieszcza napisy w obrazie wideo. Będą zawsze widoczne i nie będzie można ich później wyłączyć.\n\nObsługuje pliki SRT i ASS. Formatowanie i pozycje ASS zostają zachowane. W filmach pozostających w HDR napisy mogą wydawać się bardzo jasne.';
+      'Stałe: napisy są rysowane na obrazie wideo. Są widoczne w każdym odtwarzaczu i nie można ich później wyłączyć. W filmach pozostających w HDR mogą wydawać się bardzo jasne.\n\nOpcjonalne: napisy są dodawane jako osobna ścieżka, którą można włączyć lub wyłączyć w odtwarzaczu. Nie każdy odtwarzacz je pokazuje, a podczas udostępniania filmu często znikają. Niedostępne dla AVI i MPEG-TS.\n\nObsługuje pliki SRT i ASS. Formatowanie i pozycje ASS są w pełni zachowane w trybie „Stałe” i w plikach MKV. Inne formaty zachowują tylko część formatowania i żadnych pozycji.';
+
+  @override
+  String get subtitleModeBurnIn => 'Stałe';
+
+  @override
+  String get subtitleModeTrack => 'Opcjonalne';
+
+  @override
+  String get subtitleTrackEmpty =>
+      'W wybranym fragmencie filmu nie ma napisów.';
 
   @override
   String get burnInSubtitlesSelect => 'Wybierz plik SRT lub ASS';

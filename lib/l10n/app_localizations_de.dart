@@ -178,11 +178,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Video-Codec für Konvertierungen im normalen Modus';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 oder H.265/HEVC?';
+  String get videoCodecInfoTitle => 'H.264, H.265/HEVC oder AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'H.264 bietet die beste Kompatibilität und wird meist schneller konvertiert.\n\nH.265/HEVC kann bei vergleichbarer Bildqualität kleinere Dateien erzeugen, benötigt aber länger. Ältere Geräte oder Apps können das Ergebnis möglicherweise nicht abspielen.\n\nBeide Encoder sind in der App enthalten und unabhängig von den auf dem Gerät installierten Codecs.';
+      'H.264 bietet die beste Kompatibilität und wird meist schneller konvertiert.\n\nH.265/HEVC kann bei vergleichbarer Bildqualität kleinere Dateien erzeugen, benötigt aber länger. Ältere Geräte oder Apps können das Ergebnis möglicherweise nicht abspielen.\n\nAV1 ist ein moderner Codec für kleine Dateien. Ältere Geräte und Apps können das Ergebnis oft nicht abspielen.\n\nAlle Encoder sind in der App enthalten und unabhängig von den auf dem Gerät installierten Codecs.';
 
   @override
   String get saveError =>
@@ -305,7 +305,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → beste Kompatibilität und meist schnellere Kodierung\nH.265 → kleinere Dateien bei vergleichbarer Qualität, langsamere Kodierung\nVP9 → effizienter offener Codec für WebM und MKV, langsamere Softwarekodierung\nAV1 → beste Kompression, ausschließlich Softwarekodierung, experimentell\nXvid → älterer MPEG-4-Codec für AVI und ältere Wiedergabegeräte\n\nDie verfügbaren Ausgabeformate richten sich nach dem gewählten Video- und Audio-Codec.';
+      'H.264 → beste Kompatibilität und meist schnellere Kodierung\nH.265 → kleinere Dateien bei vergleichbarer Qualität, langsamere Kodierung\nVP9 → effizienter offener Codec für WebM und MKV, langsamere Softwarekodierung\nAV1 → moderner Codec für kleine Dateien, ausschließlich Softwarekodierung\nXvid → älterer MPEG-4-Codec für AVI und ältere Wiedergabegeräte\n\nDie verfügbaren Ausgabeformate richten sich nach dem gewählten Video- und Audio-Codec.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (Legacy)';
@@ -317,13 +317,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get av1HighResHint =>
       'Oberhalb von 720p lohnt es sich, vorher herunterzuskalieren.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (experimentell)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Fügt AV1 zur Codec-Auswahl im Normal- und Expertenmodus hinzu. Moderner, hocheffizienter Codec, der noch nicht vollständig erprobt ist.';
 
   @override
   String get audioCodecInfoContent =>
@@ -663,11 +656,21 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Original konnte nicht gelöscht werden.';
 
   @override
-  String get burnInSubtitlesLabel => 'Untertitel einbrennen';
+  String get burnInSubtitlesLabel => 'Untertitel hinzufügen';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Zeichnet die Untertitel dauerhaft ins Videobild. Sie sind immer sichtbar und lassen sich später nicht mehr ausschalten.\n\nUnterstützt SRT- und ASS-Dateien. ASS-Formatierungen und -Positionen bleiben erhalten. Bei HDR-Videos, die in HDR bleiben, können Untertitel sehr hell wirken.';
+      'Fest: Die Untertitel werden ins Videobild gezeichnet. Sie sind in jedem Player sichtbar und lassen sich später nicht mehr ausschalten. Bei Videos, die in HDR bleiben, können sie sehr hell wirken.\n\nZuschaltbar: Die Untertitel werden als eigene Spur hinzugefügt, die sich im Player ein- und ausschalten lässt. Nicht jeder Player zeigt sie an, und beim Teilen des Videos gehen sie oft verloren. Nicht verfügbar für AVI und MPEG-TS.\n\nUnterstützt SRT- und ASS-Dateien. ASS-Formatierungen und -Positionen bleiben bei „Fest“ und in MKV-Dateien vollständig erhalten. Andere Formate behalten nur einen Teil der Formatierung und keine Positionen.';
+
+  @override
+  String get subtitleModeBurnIn => 'Fest';
+
+  @override
+  String get subtitleModeTrack => 'Zuschaltbar';
+
+  @override
+  String get subtitleTrackEmpty =>
+      'Im gewählten Ausschnitt des Videos gibt es keine Untertitel.';
 
   @override
   String get burnInSubtitlesSelect => 'SRT- oder ASS-Datei auswählen';

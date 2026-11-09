@@ -171,11 +171,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get videoCodecSubtitle => '通常モードの動画変換に使用するコーデック';
 
   @override
-  String get videoCodecInfoTitle => 'H.264 と H.265/HEVC の違い';
+  String get videoCodecInfoTitle => 'H.264、H.265/HEVC、AV1 の違い';
 
   @override
   String get videoCodecInfoContent =>
-      'H.264 は互換性が最も高く、通常はより速く変換できます。\n\nH.265/HEVC は同等の画質でファイルを小さくできますが、変換に時間がかかります。古い端末やアプリでは変換後の動画を再生できない場合があります。\n\nどちらのエンコーダーもアプリに含まれているため、端末にインストールされているコーデックには依存しません。';
+      'H.264 は互換性が最も高く、通常はより速く変換できます。\n\nH.265/HEVC は同等の画質でファイルを小さくできますが、変換に時間がかかります。古い端末やアプリでは変換後の動画を再生できない場合があります。\n\nAV1 はファイルを小さくするために設計された新しいコーデックです。古い端末やアプリでは変換後の動画を再生できないことがよくあります。\n\nすべてのエンコーダーがアプリに含まれているため、端末にインストールされているコーデックには依存しません。';
 
   @override
   String get saveError => '保存中にエラーが発生しました。空き容量が不足している可能性があります。';
@@ -297,7 +297,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → 互換性が最も高く、通常は高速\nH.265 → 同等品質でファイルが小さいが低速\nVP9 → WebMとMKV向けの高効率なオープンコーデック。ソフトウェアエンコードは低速\nAV1 → 圧縮率は最高、ソフトウェアエンコードのみ、実験的\nXvid → AVIや古いプレーヤー向けの旧式MPEG-4コーデック\n\n利用できる出力形式は、選択した映像・音声コーデックに応じて変わります。';
+      'H.264 → 互換性が最も高く、通常は高速\nH.265 → 同等品質でファイルが小さいが低速\nVP9 → WebMとMKV向けの高効率なオープンコーデック。ソフトウェアエンコードは低速\nAV1 → 小さなファイル向けの新しいコーデック、ソフトウェアエンコードのみ\nXvid → AVIや古いプレーヤー向けの旧式MPEG-4コーデック\n\n利用できる出力形式は、選択した映像・音声コーデックに応じて変わります。';
 
   @override
   String get xvidLegacyLabel => 'Xvid（レガシー）';
@@ -307,13 +307,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get av1HighResHint => '720pを超える場合は、先に解像度を下げることをおすすめします。';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1（実験的）';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      '通常モードとエキスパートモードのコーデック選択にAV1を追加します。圧縮効率の高い最新コーデックですが、検証はまだ十分ではありません。';
 
   @override
   String get audioCodecInfoContent =>
@@ -645,11 +638,20 @@ class AppLocalizationsJa extends AppLocalizations {
   String get originalTrashFailed => '元の動画を削除できませんでした。';
 
   @override
-  String get burnInSubtitlesLabel => '字幕の焼き付け';
+  String get burnInSubtitlesLabel => '字幕を追加';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      '字幕を動画の映像に恒久的に描き込みます。字幕は常に表示され、後からオフにすることはできません。\n\nSRTファイルとASSファイルに対応しています。ASSの書式と位置は維持されます。HDRのまま出力する動画では、字幕が非常に明るく見えることがあります。';
+      '常時表示: 字幕を動画の映像に描き込みます。どのプレーヤーでも表示され、後からオフにすることはできません。HDRのまま出力する動画では、非常に明るく見えることがあります。\n\n切替可能: 字幕を別のトラックとして追加し、プレーヤーでオン・オフを切り替えられます。表示に対応していないプレーヤーもあり、動画を共有すると失われることがよくあります。AVIとMPEG-TSでは使用できません。\n\nSRTファイルとASSファイルに対応しています。ASSの書式と位置は、「常時表示」とMKVファイルでは完全に維持されます。その他の形式では書式の一部のみが維持され、位置は維持されません。';
+
+  @override
+  String get subtitleModeBurnIn => '常時表示';
+
+  @override
+  String get subtitleModeTrack => '切替可能';
+
+  @override
+  String get subtitleTrackEmpty => '動画の選択した範囲に字幕はありません。';
 
   @override
   String get burnInSubtitlesSelect => 'SRTまたはASSファイルを選択';

@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit_config.dart';
@@ -258,6 +259,166 @@ class SubtitleService {
     } catch (_) {
       return false;
     }
+  }
+
+  /// Schreibt die auf den Ausschnitt zugeschnittene Fassung für eine
+  /// zuschaltbare Spur und gibt ihren Pfad zurück. Null, wenn im Ausschnitt
+  /// kein Untertitel liegt oder die Datei nicht lesbar ist.
+  static Future<String?> writeTrackFile(
+    BurnInSubtitle subtitle, {
+    required int startMs,
+    required int endMs,
+  }) async {
+    try {
+      final clipped = clipForTrack(
+        await File(subtitle.path).readAsString(),
+        subtitle.format,
+        startMs: startMs,
+        endMs: endMs,
+      );
+      if (clipped == null) return null;
+      final dot = subtitle.path.lastIndexOf('.');
+      final target = File(
+        '${subtitle.path.substring(0, dot)}_track'
+        '${subtitle.path.substring(dot)}',
+      );
+      await target.writeAsString(clipped, flush: true);
+      return target.path;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Schneidet Untertitel auf den Bereich [startMs]–[endMs] zu und legt ihn auf
+  /// null. Cues außerhalb entfallen, angeschnittene werden gekürzt. Null, wenn
+  /// keiner übrig bleibt.
+  ///
+  /// Das macht die App selbst, weil FFmpeg Textspuren beim Trimmen nicht
+  /// verlässlich mitverschiebt, siehe
+  /// `FfmpegCodecOptions.subtitleTrackArguments`. Ohne Zuschnitt würde eine
+  /// Datei, die länger als das Video ist, außerdem MKV und WebM verlängern.
+  static String? clipForTrack(
+    String content,
+    SubtitleFormat format, {
+    required int startMs,
+    required int endMs,
+  }) => format == SubtitleFormat.ass
+      ? _clipAss(content, startMs, endMs)
+      : _clipSrt(content, startMs, endMs);
+
+  static (int, int)? _clipRange(int from, int to, int startMs, int endMs) {
+    if (to <= startMs || from >= endMs) return null;
+    return (max(from, startMs) - startMs, min(to, endMs) - startMs);
+  }
+
+  /// Sekundenbruchteile als Millisekunden, „5“ ist also 500.
+  static int _timeToMs(String h, String m, String s, String fraction) =>
+      int.parse(h) * 3600000 +
+      int.parse(m) * 60000 +
+      int.parse(s) * 1000 +
+      int.parse(fraction.padRight(3, '0'));
+
+  static final _srtTiming = RegExp(
+    r'^\s*(\d+):(\d{2}):(\d{2})[,.](\d{1,3})\s*-->\s*'
+    r'(\d+):(\d{2}):(\d{2})[,.](\d{1,3})',
+  );
+  static final _digitsOnly = RegExp(r'^\s*\d+\s*$');
+
+  static String? _clipSrt(String content, int startMs, int endMs) {
+    final lines = const LineSplitter().convert(content);
+    final timings = [
+      for (var i = 0; i < lines.length; i++)
+        if (_srtTiming.hasMatch(lines[i])) i,
+    ];
+    final cues = <String>[];
+    for (var k = 0; k < timings.length; k++) {
+      final m = _srtTiming.firstMatch(lines[timings[k]])!;
+      final range = _clipRange(
+        _timeToMs(m[1]!, m[2]!, m[3]!, m[4]!),
+        _timeToMs(m[5]!, m[6]!, m[7]!, m[8]!),
+        startMs,
+        endMs,
+      );
+      if (range == null) continue;
+      final hasNext = k + 1 < timings.length;
+      final text = lines.sublist(
+        timings[k] + 1,
+        hasNext ? timings[k + 1] : lines.length,
+      );
+      // Die Zeile direkt vor der nächsten Zeitangabe ist deren Nummer.
+      if (hasNext && text.isNotEmpty && _digitsOnly.hasMatch(text.last)) {
+        text.removeLast();
+      }
+      while (text.isNotEmpty && text.last.trim().isEmpty) {
+        text.removeLast();
+      }
+      cues.add(
+        '${cues.length + 1}\n'
+        '${_srtTime(range.$1)} --> ${_srtTime(range.$2)}\n'
+        '${text.join('\n')}\n',
+      );
+    }
+    return cues.isEmpty ? null : cues.join('\n');
+  }
+
+  static String _srtTime(int ms) {
+    String two(int v) => v.toString().padLeft(2, '0');
+    return '${two(ms ~/ 3600000)}:${two(ms ~/ 60000 % 60)}:'
+        '${two(ms ~/ 1000 % 60)},${(ms % 1000).toString().padLeft(3, '0')}';
+  }
+
+  static final _assTime = RegExp(r'^\s*(\d+):(\d{2}):(\d{2})\.(\d{1,3})\s*$');
+
+  static String? _clipAss(String content, int startMs, int endMs) {
+    // Die Standardspalten, falls eine Format-Zeile fehlt.
+    var startColumn = 1;
+    var endColumn = 2;
+    var inEvents = false;
+    var kept = 0;
+    final output = <String>[];
+    for (final line in const LineSplitter().convert(content)) {
+      final trimmed = line.trim();
+      if (trimmed.startsWith('[')) {
+        inEvents = trimmed.toLowerCase() == '[events]';
+      } else if (inEvents && trimmed.toLowerCase().startsWith('format:')) {
+        final names = trimmed
+            .substring('format:'.length)
+            .split(',')
+            .map((name) => name.trim().toLowerCase())
+            .toList();
+        if (names.contains('start') && names.contains('end')) {
+          startColumn = names.indexOf('start');
+          endColumn = names.indexOf('end');
+        }
+      } else if (inEvents && trimmed.toLowerCase().startsWith('dialogue:')) {
+        final colon = line.indexOf(':');
+        final fields = line.substring(colon + 1).split(',');
+        if (max(startColumn, endColumn) >= fields.length) continue;
+        final from = _assTime.firstMatch(fields[startColumn]);
+        final to = _assTime.firstMatch(fields[endColumn]);
+        if (from == null || to == null) continue;
+        final range = _clipRange(
+          _timeToMs(from[1]!, from[2]!, from[3]!, from[4]!),
+          _timeToMs(to[1]!, to[2]!, to[3]!, to[4]!),
+          startMs,
+          endMs,
+        );
+        if (range == null) continue;
+        fields[startColumn] = _assClock(range.$1);
+        fields[endColumn] = _assClock(range.$2);
+        output.add('${line.substring(0, colon + 1)}${fields.join(',')}');
+        kept++;
+        continue;
+      }
+      output.add(line);
+    }
+    return kept == 0 ? null : '${output.join('\n')}\n';
+  }
+
+  static String _assClock(int ms) {
+    String two(int v) => v.toString().padLeft(2, '0');
+    return '${ms ~/ 3600000}:${two(ms ~/ 60000 % 60)}:'
+        '${two(ms ~/ 1000 % 60)}.${two(ms % 1000 ~/ 10)}';
   }
 
   static Future<void> delete(BurnInSubtitle subtitle) =>

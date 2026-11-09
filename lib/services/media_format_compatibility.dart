@@ -81,6 +81,10 @@ class MediaFormatCompatibility {
     ),
   ];
 
+  /// AVI hat keine brauchbare Textspur, MPEG-TS nur Bitmap-Untertitel.
+  static bool supportsSubtitleTrack(String container) =>
+      const {'mp4', 'mkv', 'mov', 'webm'}.contains(container);
+
   static bool supports({
     required String container,
     required String videoCodec,

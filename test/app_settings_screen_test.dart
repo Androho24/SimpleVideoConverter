@@ -38,7 +38,7 @@ void main() {
     );
     expect(selector.selected, {PreferencesService.videoCodecH264});
 
-    await tester.tap(find.text('H.265 / HEVC'));
+    await tester.tap(find.text('H.265'));
     await tester.pumpAndSettle();
 
     selector = tester.widget<SegmentedButton<String>>(
@@ -51,20 +51,11 @@ void main() {
     );
   });
 
-  testWidgets('AV1 appears only with the experimental switch on', (
-    tester,
-  ) async {
+  testWidgets('AV1 is always selectable', (tester) async {
     SharedPreferences.setMockInitialValues({});
 
     await tester.pumpWidget(buildSubject());
     await tester.pumpAndSettle();
-
-    expect(find.text('AV1'), findsNothing);
-
-    await tester.tap(find.text('AV1 (experimental)'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('AV1'), findsOneWidget);
 
     await tester.tap(find.text('AV1'));
     await tester.pumpAndSettle();
@@ -73,19 +64,6 @@ void main() {
       await PreferencesService.getVideoCodec(),
       PreferencesService.videoCodecAv1,
     );
-
-    // Schalter wieder aus: AV1-Auswahl darf nicht bestehen bleiben.
-    await tester.tap(find.text('AV1 (experimental)'));
-    await tester.pumpAndSettle();
-
-    final selector = tester.widget<SegmentedButton<String>>(
-      find.byType(SegmentedButton<String>),
-    );
-    expect(selector.selected, {PreferencesService.videoCodecH264});
-    expect(
-      await PreferencesService.getVideoCodec(),
-      PreferencesService.videoCodecH264,
-    );
   });
 
   testWidgets('shows the codec explanation', (tester) async {
@@ -93,12 +71,13 @@ void main() {
 
     await tester.pumpWidget(buildSubject());
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('H.264 or H.265/HEVC?'));
+    await tester.tap(find.byTooltip('H.264, H.265/HEVC or AV1?'));
     await tester.pumpAndSettle();
 
-    expect(find.text('H.264 or H.265/HEVC?'), findsOneWidget);
+    expect(find.text('H.264, H.265/HEVC or AV1?'), findsOneWidget);
+    expect(find.textContaining('AV1 is a modern codec'), findsOneWidget);
     expect(
-      find.textContaining('Both encoders are included in the app'),
+      find.textContaining('All encoders are included in the app'),
       findsOneWidget,
     );
   });

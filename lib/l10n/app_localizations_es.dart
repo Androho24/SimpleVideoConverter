@@ -179,11 +179,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Códec de vídeo para conversiones en modo normal';
 
   @override
-  String get videoCodecInfoTitle => '¿H.264 o H.265/HEVC?';
+  String get videoCodecInfoTitle => '¿H.264, H.265/HEVC o AV1?';
 
   @override
   String get videoCodecInfoContent =>
-      'H.264 ofrece la mejor compatibilidad y normalmente convierte más rápido.\n\nH.265/HEVC puede crear archivos más pequeños con una calidad de imagen comparable, pero la conversión tarda más. Es posible que dispositivos o aplicaciones antiguos no puedan reproducir el resultado.\n\nAmbos codificadores están incluidos en la aplicación y no dependen de los códecs instalados en el dispositivo.';
+      'H.264 ofrece la mejor compatibilidad y normalmente convierte más rápido.\n\nH.265/HEVC puede crear archivos más pequeños con una calidad de imagen comparable, pero la conversión tarda más. Es posible que dispositivos o aplicaciones antiguos no puedan reproducir el resultado.\n\nAV1 es un códec moderno pensado para archivos pequeños. Los dispositivos y aplicaciones antiguos a menudo no pueden reproducir el resultado.\n\nTodos los codificadores están incluidos en la aplicación y no dependen de los códecs instalados en el dispositivo.';
 
   @override
   String get saveError =>
@@ -307,7 +307,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get expertVideoCodecInfoContent =>
-      'H.264 → máxima compatibilidad y codificación normalmente más rápida\nH.265 → archivos más pequeños con calidad comparable, codificación más lenta\nVP9 → códec abierto y eficiente para WebM y MKV, codificación por software más lenta\nAV1 → la mejor compresión, codificación solo por software, experimental\nXvid → códec MPEG-4 heredado para AVI y reproductores antiguos\n\nLos formatos de salida disponibles dependen de los códecs de vídeo y audio elegidos.';
+      'H.264 → máxima compatibilidad y codificación normalmente más rápida\nH.265 → archivos más pequeños con calidad comparable, codificación más lenta\nVP9 → códec abierto y eficiente para WebM y MKV, codificación por software más lenta\nAV1 → códec moderno para archivos pequeños, codificación solo por software\nXvid → códec MPEG-4 heredado para AVI y reproductores antiguos\n\nLos formatos de salida disponibles dependen de los códecs de vídeo y audio elegidos.';
 
   @override
   String get xvidLegacyLabel => 'Xvid (heredado)';
@@ -319,13 +319,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get av1HighResHint =>
       'Por encima de 720p conviene reducir la resolución primero.';
-
-  @override
-  String get av1ExperimentalTitle => 'AV1 (experimental)';
-
-  @override
-  String get av1ExperimentalSubtitle =>
-      'Añade AV1 a la selección de códecs en los modos normal y experto. Un códec moderno y muy eficiente que aún no se ha probado por completo.';
 
   @override
   String get audioCodecInfoContent =>
@@ -667,11 +660,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get originalTrashFailed => 'No se ha podido eliminar el original.';
 
   @override
-  String get burnInSubtitlesLabel => 'Grabar subtítulos';
+  String get burnInSubtitlesLabel => 'Añadir subtítulos';
 
   @override
   String get burnInSubtitlesInfoContent =>
-      'Dibuja los subtítulos de forma permanente en la imagen del vídeo. Siempre estarán visibles y no se podrán desactivar después.\n\nAdmite archivos SRT y ASS. Se conservan el formato y las posiciones de ASS. En los vídeos que se mantienen en HDR, los subtítulos pueden verse muy brillantes.';
+      'Permanentes: los subtítulos se dibujan en la imagen del vídeo. Se ven en cualquier reproductor y no se pueden desactivar después. En los vídeos que se mantienen en HDR, pueden verse muy brillantes.\n\nActivables: los subtítulos se añaden como una pista independiente que se puede activar o desactivar en el reproductor. No todos los reproductores los muestran y suelen perderse al compartir el vídeo. No disponible para AVI y MPEG-TS.\n\nAdmite archivos SRT y ASS. El formato y las posiciones de ASS se conservan por completo con «Permanentes» y en archivos MKV. Otros formatos solo conservan parte del formato y ninguna posición.';
+
+  @override
+  String get subtitleModeBurnIn => 'Permanentes';
+
+  @override
+  String get subtitleModeTrack => 'Activables';
+
+  @override
+  String get subtitleTrackEmpty =>
+      'No hay subtítulos en la parte seleccionada del vídeo.';
 
   @override
   String get burnInSubtitlesSelect => 'Seleccionar archivo SRT o ASS';

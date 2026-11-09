@@ -1,6 +1,7 @@
 // Copyright (C) 2026 Androho Software info@androho.com
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import '../services/media_format_compatibility.dart';
 import 'burn_in_subtitle.dart';
 
 class ExpertSettings {
@@ -42,8 +43,19 @@ class ExpertSettings {
   /// `FfmpegCodecOptions.usesHardwareEncoder`.
   final bool hardwareEncoder;
 
-  /// Wird ins Bild eingebrannt, null = keine Untertitel (Standard).
+  /// Gewählte Untertiteldatei, null = keine Untertitel (Standard).
   final BurnInSubtitle? burnInSubtitle;
+
+  /// Wahl des Nutzers. Maßgeblich für die Konvertierung und die Anzeige ist
+  /// [effectiveSubtitleMode].
+  final SubtitleMode subtitleMode;
+
+  /// AVI und MPEG-TS können keine Textspur tragen, dort gilt immer „fest“. Die
+  /// Wahl selbst bleibt stehen und greift wieder, sobald das Format es erlaubt.
+  SubtitleMode get effectiveSubtitleMode =>
+      MediaFormatCompatibility.supportsSubtitleTrack(container)
+      ? subtitleMode
+      : SubtitleMode.burnIn;
 
   /// Darstellung für SRT-Dateien. Bleibt beim Wechsel der Datei erhalten.
   final SubtitleTextSize subtitleTextSize;
@@ -68,6 +80,7 @@ class ExpertSettings {
     this.audioOnly = false,
     this.hardwareEncoder = false,
     this.burnInSubtitle,
+    this.subtitleMode = SubtitleMode.burnIn,
     this.subtitleTextSize = SubtitleTextSize.medium,
     this.subtitlePosition = SubtitlePosition.bottom,
     this.subtitleBackground = false,
@@ -92,6 +105,7 @@ class ExpertSettings {
     bool? hardwareEncoder,
     BurnInSubtitle? burnInSubtitle,
     bool clearBurnInSubtitle = false,
+    SubtitleMode? subtitleMode,
     SubtitleTextSize? subtitleTextSize,
     SubtitlePosition? subtitlePosition,
     bool? subtitleBackground,
@@ -116,6 +130,7 @@ class ExpertSettings {
       burnInSubtitle: clearBurnInSubtitle
           ? null
           : burnInSubtitle ?? this.burnInSubtitle,
+      subtitleMode: subtitleMode ?? this.subtitleMode,
       subtitleTextSize: subtitleTextSize ?? this.subtitleTextSize,
       subtitlePosition: subtitlePosition ?? this.subtitlePosition,
       subtitleBackground: subtitleBackground ?? this.subtitleBackground,
